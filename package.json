@@ -1,0 +1,28 @@
+{
+  "name": "time80",
+  "version": "0.1.0",
+  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "prebuild:android": "expo prebuild -p android",
+    "apk:debug": "expo prebuild -p android --clean && cd android && ./gradlew assembleDebug",
+    "apk:release": "expo prebuild -p android --clean && cd android && ./gradlew assembleRelease",
+    "apk:release:standalone": "bash ./scripts/build-android-release.sh",
+    "doctor": "expo-doctor"
+  },
+  "dependencies": {
+    "expo": "~57.0.17",
+    "expo-notifications": "~57.0.8",
+    "expo-sqlite": "~57.0.3",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "~5.7.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "typescript": "~6.0.3"
+  }
+}
