@@ -1,111 +1,39 @@
-# Time80 v0.1
+# Time80 v0.2
 
-یک اپ شخصی Android برای نمونه‌برداری از نحوه مصرف زمان: هر چند دقیقه یک یادآوری، ثبت یک‌لمسی فعالیت، Timeline روزانه و گزارش Pareto.
+Android time-use diary implemented against [Implementation Specification 1.2](docs/Implementation_Specification_FA.md). This is a review build; see the [Persian implementation and validation report](docs/Implementation_Status_FA.md) for completed checks and device release gates.
 
-## تکنولوژی
-- React Native
-- Expo SDK 57
-- TypeScript
-- expo-sqlite
-- expo-notifications
-- react-native-safe-area-context
+## Development
 
-## قابلیت‌های پیاده‌سازی‌شده
-- فاصله Notification قابل تنظیم (15 تا 240 دقیقه)
-- ساعت شروع/پایان قابل تنظیم
-- انتخاب روزهای فعال هفته
-- صدا و لرزش قابل تنظیم
-- افزودن/ویرایش/Archive فعالیت
-- انتخاب Emoji به‌عنوان آیکون فعالیت
-- Check-in یک‌لمسی
-- باز کردن Check-in با لمس Notification
-- Timeline روزانه و تکمیل Slotهای ثبت‌نشده
-- گزارش امروز و 7 روز اخیر
-- سهم زمانی و درصد تجمعی Pareto
-- SQLite محلی؛ بدون Backend و بدون نیاز به اینترنت در استفاده روزمره
+Node 24, Java 17, and an Android SDK are required for native builds.
 
-## اجرای توسعه
-نیازمندی‌ها: Node.js 22.13+ و Android/Expo environment.
-
-```bash
-npm install
-npx expo start
+```sh
+npm ci
+npm run typecheck
+TZ=UTC npm test
+npx expo export --platform android
+npm run android
 ```
 
-برای آزمایش سریع روی گوشی، می‌توان از Expo Go استفاده کرد. برای رفتار نهایی Notification بهتر است Development/Standalone build تست شود.
+The Android notification scheduler includes a small, guarded postinstall patch. Expo Go cannot exercise this patch. Use a native development/release build for notification acceptance tests.
 
-## ساخت APK محلی
-Android SDK و JDK باید نصب و `ANDROID_HOME` تنظیم شده باشد.
+## Stable release signing
 
-```bash
-npm install
-npm run apk:debug
-```
+Set these GitHub repository secrets, then dispatch **Time80 validation and Android build** with `release=true`:
 
-APK در حالت معمول در این مسیر ساخته می‌شود:
+- `TIME80_KEYSTORE_BASE64`: base64 of the permanent release keystore.
+- `TIME80_KEYSTORE_PASSWORD`
+- `TIME80_KEY_ALIAS`
+- `TIME80_KEY_PASSWORD`
+- `TIME80_SIGNER_SHA256`: expected SHA-256 fingerprint of that key's signing certificate.
 
-```text
-android/app/build/outputs/apk/debug/app-debug.apk
-```
+Keep the same keystore, alias, and certificate for every v0.2+ update; back up the key securely outside this repository. The build fails if credentials are missing or the resulting certificate differs from the pinned fingerprint. It never falls back to debug signing for a release.
 
-## ساخت APK با EAS
-به Expo account نیاز دارد:
+For local release builds, provide the corresponding environment variables plus `TIME80_KEYSTORE_PATH` as an absolute path, then run `npm run apk:release`.
 
-```bash
-npm install -g eas-cli
-eas login
-eas build:configure
-eas build -p android --profile preview
-```
+## Data and ICATUS
 
-پروفایل `preview` در `eas.json` برای خروجی APK تنظیم شده است.
+Unknown and v0.1 databases are rejected without deletion. Specification 1.2 targets a fresh v0.2 baseline; v0.1 data migration is not included. Startup on an existing valid baseline does not reseed data. Foreign keys, check constraints, assignment revision history and a structural fingerprint protect the baseline.
 
-## نکته Android / Samsung
-- Android 13+ برای Notification مجوز کاربر می‌خواهد.
-- Android 12+ ممکن است برای زمان‌بندی دقیق به مجوز Alarms & reminders نیاز داشته باشد.
-- روی برخی گوشی‌های Samsung، Battery Optimization می‌تواند اعلان‌ها را به تأخیر بیندازد؛ در صورت مشاهده تأخیر، محدودیت باتری Time80 را بررسی کنید.
+The bundled classification is the official [UN Statistics Division ICATUS 2016](https://unstats.un.org/unsd/demographic-social/time-use/icatus-2016/) hierarchy, revision 2017-03-10: 9 major divisions, 56 divisions, 165 groups. Canonical source data and the independent Persian translation manifest carry SHA-256 hashes. Persian root labels are product translations; lower-level labels fall back to official English titles.
 
-## ساختار پروژه
-
-```text
-App.tsx
-src/
-  components/
-  db/database.ts
-  notifications/scheduler.ts
-  screens/
-    TodayScreen.tsx
-    CheckInScreen.tsx
-    ActivitiesScreen.tsx
-    InsightsScreen.tsx
-    SettingsScreen.tsx
-  types/models.ts
-  utils/time.ts
-assets/
-SRS-v0.1.md
-```
-
-## حریم خصوصی
-نسخه 0.1 هیچ داده‌ای را به سرور ارسال نمی‌کند. Activities، Time entries و Settings فقط در SQLite خود دستگاه ذخیره می‌شوند.
-
-## ساخت APK با GitHub Actions (پیشنهادی)
-پروژه شامل Workflow آماده در مسیر زیر است:
-
-```text
-.github/workflows/build-android-apk.yml
-```
-
-این Workflow روی GitHub Actions، پروژه native Android را با Expo Prebuild ایجاد می‌کند و سپس با `assembleRelease` یک APK مستقل می‌سازد. خروجی با نام زیر به‌عنوان Artifact آپلود می‌شود:
-
-```text
-Time80-v0.1-APK
-  └── Time80-v0.1.apk
-```
-
-راهنمای فارسی مرحله‌به‌مرحله را در `BUILD-APK-GITHUB-FA.md` ببینید.
-
-برای Build مشابه روی کامپیوتر محلی نیز می‌توان اجرا کرد:
-
-```bash
-./scripts/build-android-release.sh
-```
+Tests use real SQLite via Node and mock only Expo's platform interfaces. Android notification delivery, reboot behavior, Samsung battery restrictions, and signed in-place upgrades still require device testing.

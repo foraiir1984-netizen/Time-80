@@ -1,17 +1,32 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
-import * as Notifications from 'expo-notifications';
-import { initDatabase } from './src/db/database';
-import { checkInPeriodFromNotification } from './src/notifications/scheduler';
-import { ActivitiesScreen } from './src/screens/ActivitiesScreen';
-import { CheckInScreen } from './src/screens/CheckInScreen';
-import { InsightsScreen } from './src/screens/InsightsScreen';
-import { SettingsScreen } from './src/screens/SettingsScreen';
-import { TodayScreen } from './src/screens/TodayScreen';
-import { CheckInPeriod } from './src/types/models';
-
+import React, { useEffect, useState, useRef } from "react";
+import { ActivityIndicator, AppState, Text, View } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import {
+  NavigationContainer,
+  createNavigationContainerRef,
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as Notifications from "expo-notifications";
+import { initDatabase } from "./src/db/database";
+import { db } from "./src/db/connection";
+import { getMeta } from "./src/db/metaRepository";
+import { ensureSlotHorizon } from "./src/services/slotService";
+import { applySettingsPatch } from "./src/services/settingsService";
+import { timezone } from "./src/utils/slots";
+import {
+  reconcileNotifications,
+  resolveNotificationPeriod,
+} from "./src/notifications/scheduler";
+import { TodayScreen } from "./src/screens/TodayScreen";
+import { ActivitiesScreen } from "./src/screens/ActivitiesScreen";
+import { InsightsScreen } from "./src/screens/InsightsScreen";
+import { SettingsScreen } from "./src/screens/SettingsScreen";
+import { CheckInScreen } from "./src/screens/CheckInScreen";
+import { BacklogScreen } from "./src/screens/BacklogScreen";
+import { NotificationDiagnosticsScreen } from "./src/screens/NotificationDiagnosticsScreen";
+import { OnboardingScreen } from "./src/screens/OnboardingScreen";
+import { Button, ErrorText, ui, errorMessage } from "./src/components/Ui";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowBanner: true,
@@ -20,141 +35,191 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
-
-type Tab = 'today' | 'activities' | 'insights' | 'settings';
-
-const TABS: { key: Tab; label: string; icon: string }[] = [
-  { key: 'today', label: 'امروز', icon: '◷' },
-  { key: 'activities', label: 'فعالیت‌ها', icon: '◉' },
-  { key: 'insights', label: 'گزارش', icon: '▥' },
-  { key: 'settings', label: 'تنظیمات', icon: '⚙' },
-];
-
+const Stack = createNativeStackNavigator(),
+  Tabs = createBottomTabNavigator(),
+  navigation = createNavigationContainerRef<any>();
+function MainTabs() {
+  return (
+    <Tabs.Navigator
+      backBehavior="firstRoute"
+      screenOptions={{
+        headerShown: false,
+        tabBarLabelStyle: { fontSize: 12 },
+        tabBarActiveTintColor: "#21594b",
+      }}
+    >
+      <Tabs.Screen
+        name="Today"
+        component={TodayScreen}
+        options={{ title: "امروز" }}
+      />
+      <Tabs.Screen
+        name="Activities"
+        component={ActivitiesScreen}
+        options={{ title: "فعالیت‌ها" }}
+      />
+      <Tabs.Screen
+        name="Insights"
+        component={InsightsScreen}
+        options={{ title: "گزارش" }}
+      />
+      <Tabs.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: "تنظیمات" }}
+      />
+    </Tabs.Navigator>
+  );
+}
 export default function App() {
-  const [ready, setReady] = useState(false);
-  const [tab, setTab] = useState<Tab>('today');
-  const [checkInPeriod, setCheckInPeriod] = useState<CheckInPeriod | null>(null);
-  const [refreshKey, setRefreshKey] = useState(0);
-  const bump = useCallback(() => setRefreshKey((v) => v + 1), []);
-
-  const consumeNotification = useCallback((response: Notifications.NotificationResponse) => {
-    const period = checkInPeriodFromNotification(response.notification);
-    if (period) setCheckInPeriod(period);
-  }, []);
-
+  const [ready, setReady] = useState(false),
+    [onboard, setOnboard] = useState(false),
+    [error, setError] = useState(""),
+    [attempt, setAttempt] = useState(0);
   useEffect(() => {
-    let mounted = true;
-    initDatabase()
-      .then(async () => {
-        const last = await Notifications.getLastNotificationResponseAsync();
-        if (last && mounted) {
-          consumeNotification(last);
-          await Notifications.clearLastNotificationResponseAsync();
+    let alive = true;
+    async function start() {
+      try {
+        await initDatabase();
+        if ((await getMeta(await db(), "schedule_timezone")) !== timezone())
+          await applySettingsPatch({});
+        await ensureSlotHorizon();
+        const completed = await getMeta(await db(), "onboarding_completed");
+        if (alive) {
+          setOnboard(completed === "true");
+          setReady(true);
         }
-        if (mounted) setReady(true);
-      })
-      .catch((error) => {
-        console.error(error);
-        if (mounted) setReady(true);
-      });
-
-    const subscription = Notifications.addNotificationResponseReceivedListener((response) => {
-      consumeNotification(response);
-      Notifications.clearLastNotificationResponseAsync().catch(() => undefined);
-    });
-
+      } catch (e) {
+        if (alive) setError(errorMessage(e));
+      }
+    }
+    void start();
     return () => {
-      mounted = false;
-      subscription.remove();
+      alive = false;
     };
-  }, [consumeNotification]);
-
-  const onCheckInSaved = () => {
-    setCheckInPeriod(null);
-    setTab('today');
-    bump();
-  };
-
-  if (!ready) {
-    return (
-      <SafeAreaProvider>
-        <SafeAreaView style={styles.loading}>
-          <StatusBar style="auto" />
-          <ActivityIndicator size="large" />
-          <Text style={styles.loadingText}>در حال آماده‌سازی Time80…</Text>
-        </SafeAreaView>
-      </SafeAreaProvider>
-    );
+  }, [attempt]);
+  useEffect(() => {
+    if (!ready) return;
+    let active = true;
+    async function resume() {
+      try {
+        if ((await getMeta(await db(), "schedule_timezone")) !== timezone())
+          await applySettingsPatch({});
+        await ensureSlotHorizon();
+        await reconcileNotifications("resume");
+      } catch (e) {
+        if (active) setError(errorMessage(e));
+      }
+    }
+    void resume();
+    const sub = AppState.addEventListener("change", (s) => {
+      if (s === "active") void resume();
+    });
+    return () => {
+      active = false;
+      sub.remove();
+    };
+  }, [ready]);
+  const consumed = useRef(new Set<string>());
+  async function consume(response: Notifications.NotificationResponse) {
+    if (!navigation.isReady()) return;
+    const key = `${response.notification.request.identifier}:${response.notification.date}:${response.actionIdentifier}`;
+    if (consumed.current.has(key)) return;
+    consumed.current.add(key);
+    try {
+      if (response.notification.request.content.data?.kind === "time80-test")
+        return;
+      await ensureSlotHorizon();
+      const slot = await resolveNotificationPeriod(response.notification);
+      if (slot)
+        navigation.navigate("CheckIn", {
+          start: slot.period_start,
+          end: slot.period_end,
+          slotId: slot.id,
+          source: "notification",
+        });
+      else navigation.navigate("Backlog");
+      await Notifications.clearLastNotificationResponseAsync();
+    } catch (e) {
+      consumed.current.delete(key);
+      setError(errorMessage(e));
+    }
   }
-
+  useEffect(() => {
+    if (!ready || !onboard) return;
+    const sub = Notifications.addNotificationResponseReceivedListener(
+      (r) => void consume(r),
+    );
+    return () => sub.remove();
+  }, [ready, onboard]);
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <StatusBar style="auto" />
-        {checkInPeriod ? (
-          <CheckInScreen
-            period={checkInPeriod}
-            onCancel={() => setCheckInPeriod(null)}
-            onSaved={onCheckInSaved}
-          />
+      <SafeAreaView
+        style={{ flex: 1, backgroundColor: "#f6f7f9" }}
+        edges={["top", "left", "right"]}
+      >
+        {!ready ? (
+          <View style={[ui.page, { justifyContent: "center" }]}>
+            {error ? (
+              <>
+                <ErrorText error={error} />
+                <Text style={ui.text}>داده‌ها حذف یا بازنشانی نشده‌اند.</Text>
+                <Button
+                  title="تلاش دوباره"
+                  onPress={() => {
+                    setError("");
+                    setAttempt((x) => x + 1);
+                  }}
+                />
+              </>
+            ) : (
+              <>
+                <ActivityIndicator />
+                <Text style={ui.text}>آماده‌سازی Time80…</Text>
+              </>
+            )}
+          </View>
+        ) : !onboard ? (
+          <OnboardingScreen onDone={() => setOnboard(true)} />
         ) : (
           <>
-            <View style={styles.content}>
-              {tab === 'today' ? <TodayScreen refreshKey={refreshKey} onOpenCheckIn={setCheckInPeriod} /> : null}
-              {tab === 'activities' ? <ActivitiesScreen onChanged={bump} /> : null}
-              {tab === 'insights' ? <InsightsScreen refreshKey={refreshKey} /> : null}
-              {tab === 'settings' ? <SettingsScreen onChanged={bump} /> : null}
-            </View>
-            <View style={styles.nav}>
-              {TABS.map((item) => {
-                const active = tab === item.key;
-                return (
-                  <Pressable
-                    key={item.key}
-                    accessibilityRole="button"
-                    accessibilityState={{ selected: active }}
-                    onPress={() => setTab(item.key)}
-                    style={({ pressed }) => [styles.navItem, active && styles.navItemActive, pressed && styles.navPressed]}
-                  >
-                    <Text style={[styles.navIcon, active && styles.navTextActive]}>{item.icon}</Text>
-                    <Text style={[styles.navLabel, active && styles.navTextActive]}>{item.label}</Text>
-                  </Pressable>
-                );
-              })}
-            </View>
+            <ErrorText error={error} />
+            <NavigationContainer
+              ref={navigation}
+              onReady={() => {
+                void Notifications.getLastNotificationResponseAsync()
+                  .then((r) => {
+                    if (r) void consume(r);
+                  })
+                  .catch((e) => setError(errorMessage(e)));
+              }}
+            >
+              <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+                <Stack.Screen
+                  name="Main"
+                  component={MainTabs}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="CheckIn"
+                  component={CheckInScreen}
+                  options={{ title: "ثبت بازه" }}
+                />
+                <Stack.Screen
+                  name="Backlog"
+                  component={BacklogScreen}
+                  options={{ title: "بازه‌های ثبت‌نشده" }}
+                />
+                <Stack.Screen
+                  name="Diagnostics"
+                  component={NotificationDiagnosticsScreen}
+                  options={{ title: "بررسی اعلان‌ها" }}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
           </>
         )}
       </SafeAreaView>
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#F6F7F9' },
-  content: { flex: 1 },
-  loading: { flex: 1, backgroundColor: '#F6F7F9', alignItems: 'center', justifyContent: 'center', gap: 12 },
-  loadingText: { color: '#626A75', fontSize: 14 },
-  nav: {
-    minHeight: 72,
-    backgroundColor: '#FFFFFF',
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#D8DCE2',
-    paddingHorizontal: 8,
-    paddingTop: 7,
-    paddingBottom: 6,
-    flexDirection: 'row-reverse',
-  },
-  navItem: {
-    flex: 1,
-    minHeight: 56,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 2,
-  },
-  navItemActive: { backgroundColor: '#EEF0F3' },
-  navPressed: { opacity: 0.55 },
-  navIcon: { fontSize: 20, color: '#7B828D', fontWeight: '700' },
-  navLabel: { fontSize: 11, color: '#747B85', fontWeight: '700' },
-  navTextActive: { color: '#171A20' },
-});

@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { PropsWithChildren } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 type Props = PropsWithChildren<{
   title: string;
@@ -7,7 +7,12 @@ type Props = PropsWithChildren<{
   scroll?: boolean;
 }>;
 
-export function ScreenShell({ title, subtitle, scroll = true, children }: Props) {
+export function ScreenShell({
+  title,
+  subtitle,
+  scroll = true,
+  children,
+}: Props) {
   const content = (
     <>
       <View style={styles.header}>
@@ -20,7 +25,10 @@ export function ScreenShell({ title, subtitle, scroll = true, children }: Props)
 
   if (!scroll) return <View style={styles.container}>{content}</View>;
   return (
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       {content}
     </ScrollView>
   );
@@ -36,16 +44,16 @@ const styles = StyleSheet.create({
     marginBottom: 18,
   },
   title: {
-    color: '#111317',
+    color: "#111317",
     fontSize: 26,
-    fontWeight: '800',
-    textAlign: 'right',
+    fontWeight: "800",
+    textAlign: "right",
   },
   subtitle: {
     marginTop: 6,
-    color: '#6A707A',
+    color: "#6A707A",
     fontSize: 14,
     lineHeight: 22,
-    textAlign: 'right',
+    textAlign: "right",
   },
 });

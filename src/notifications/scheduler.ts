@@ -1,120 +1,169 @@
-import { Platform } from 'react-native';
-import * as Notifications from 'expo-notifications';
-import {
-  addScheduledNotificationRow,
-  clearScheduledNotificationRows,
-  getScheduledNotificationIds,
-} from '../db/database';
-import { AppSettings, CheckInPeriod } from '../types/models';
-import { getReminderMinuteMarks, minutesToHHMM, scheduledAlarmCount } from '../utils/time';
-
-const MAX_SCHEDULED_ALARMS = 450;
-
-function channelIdFor(settings: AppSettings) {
-  const sound = Boolean(settings.sound_enabled);
-  const vibration = Boolean(settings.vibration_enabled);
-  if (sound && vibration) return 'checkins-sound-vibrate-v1';
-  if (sound) return 'checkins-sound-v1';
-  if (vibration) return 'checkins-vibrate-v1';
-  return 'checkins-silent-v1';
+import * as Notifications from "expo-notifications";
+import { Platform } from "react-native";
+import { db, serialized } from "../db/connection";
+import { getSettings } from "../db/database";
+import { getMeta, setMeta } from "../db/metaRepository";
+import type { Slot, Anchor, AppSettings } from "../types/domain";
+import { notificationPlan } from "./plan";
+import { zoned, validateSettings } from "../utils/slots";
+export async function ensureAndroidChannel(s: AppSettings) {
+  const id = `time80-s${s.sound_enabled}-v${s.vibration_enabled}`;
+  if (Platform.OS === "android")
+    await Notifications.setNotificationChannelAsync(id, {
+      name: "یادآوری ثبت زمان",
+      importance: Notifications.AndroidImportance.DEFAULT,
+      sound: s.sound_enabled ? "default" : null,
+      enableVibrate: !!s.vibration_enabled,
+      vibrationPattern: s.vibration_enabled ? [0, 180] : null,
+    });
+  return id;
 }
-
-async function ensureAndroidChannel(settings: AppSettings) {
-  if (Platform.OS !== 'android') return undefined;
-  const channelId = channelIdFor(settings);
-  await Notifications.setNotificationChannelAsync(channelId, {
-    name: 'یادآوری ثبت زمان',
-    description: 'یادآوری‌های دوره‌ای Time80 برای ثبت فعالیت',
-    importance: Notifications.AndroidImportance.DEFAULT,
-    sound: settings.sound_enabled ? 'default' : null,
-    enableVibrate: Boolean(settings.vibration_enabled),
-    vibrationPattern: settings.vibration_enabled ? [0, 180, 120, 180] : null,
-    showBadge: false,
-  });
-  return channelId;
+export async function ensureNotificationPermission(s: AppSettings) {
+  await ensureAndroidChannel(s);
+  const p = await Notifications.getPermissionsAsync();
+  return (
+    p.granted ||
+    (p.canAskAgain && (await Notifications.requestPermissionsAsync()).granted)
+  );
 }
-
-export async function ensureNotificationPermission(settings: AppSettings) {
-  await ensureAndroidChannel(settings);
-  const current = await Notifications.getPermissionsAsync();
-  if (current.granted) return true;
-  const requested = await Notifications.requestPermissionsAsync();
-  return requested.granted;
-}
-
-export async function cancelTime80Notifications() {
-  const rows = await getScheduledNotificationIds();
-  for (const row of rows) {
-    try {
-      await Notifications.cancelScheduledNotificationAsync(row.expo_notification_id);
-    } catch {
-      // The OS may already have dropped an old schedule; DB cleanup still proceeds.
+export async function reconcileNotifications(reason = "resume") {
+  return serialized(async () => {
+    const conn = await db(),
+      s = await getSettings(conn),
+      permission = await Notifications.getPermissionsAsync(),
+      revision = (await getMeta(conn, "schedule_revision")) ?? "0",
+      anchor = JSON.parse(
+        (await getMeta(conn, "schedule_anchor")) ?? "null",
+      ) as Anchor | null,
+      now = new Date(),
+      current = await conn.getFirstAsync<Slot>(
+        "SELECT * FROM expected_slots WHERE period_start<=? AND period_end>? LIMIT 1",
+        now.toISOString(),
+        now.toISOString(),
+      );
+    await setMeta(conn, "schedule_dirty", "true");
+    validateSettings(s);
+    const plan = notificationPlan(s, anchor, now, current),
+      channelId = await ensureAndroidChannel(s);
+    if (plan.length > 550) throw Error("تعداد اعلان زیاد است");
+    if (s.notification_enabled && !permission.granted) {
+      await setMeta(conn, "schedule_dirty", "true");
+      throw Error("تنظیمات ذخیره شد؛ مجوز اعلان داده نشده است");
     }
-  }
-  await clearScheduledNotificationRows();
-}
-
-export async function rescheduleTime80Notifications(settings: AppSettings) {
-  await cancelTime80Notifications();
-  if (!settings.notification_enabled) return { count: 0 };
-
-  const count = scheduledAlarmCount(settings);
-  if (count > MAX_SCHEDULED_ALARMS) {
-    throw new Error(`این تنظیمات ${count} یادآوری هفتگی می‌سازد. برای پایداری، حداکثر ${MAX_SCHEDULED_ALARMS} یادآوری مجاز است.`);
-  }
-
-  const granted = await ensureNotificationPermission(settings);
-  if (!granted) throw new Error('مجوز نمایش اعلان داده نشده است.');
-
-  const channelId = await ensureAndroidChannel(settings);
-  const minuteMarks = getReminderMinuteMarks(settings);
-  let scheduled = 0;
-
-  for (const weekday of settings.active_days) {
-    for (const totalMinutes of minuteMarks) {
-      const hour = Math.floor(totalMinutes / 60);
-      const minute = totalMinutes % 60;
-      const fireTime = minutesToHHMM(totalMinutes);
-      const id = await Notifications.scheduleNotificationAsync({
+    const scheduled = await Notifications.getAllScheduledNotificationsAsync(),
+      desired = new Set(plan.map((p) => `time80-${revision}-${p.key}`));
+    for (const n of scheduled)
+      if (
+        n.identifier.startsWith("time80-") &&
+        !n.identifier.startsWith("time80-test-") &&
+        !desired.has(n.identifier)
+      )
+        await Notifications.cancelScheduledNotificationAsync(n.identifier);
+    for (const p of plan) {
+      const id = `time80-${revision}-${p.key}`;
+      if (scheduled.some((n) => n.identifier === id)) continue;
+      await Notifications.scheduleNotificationAsync({
+        identifier: id,
         content: {
-          title: 'Time80',
-          body: `در ${settings.interval_minutes} دقیقه گذشته بیشتر مشغول چه کاری بودی؟`,
-          sound: settings.sound_enabled ? 'default' : undefined,
-          data: {
-            kind: 'time80-checkin',
-            fireHour: hour,
-            fireMinute: minute,
-            intervalMinutes: settings.interval_minutes,
-          },
+          title: "Time80",
+          body: "این بازه را بیشتر صرف چه کاری کردی؟",
+          sound: s.sound_enabled ? "default" : undefined,
+          data: { ...p.data, scheduleRevision: revision },
         },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
-          weekday,
-          hour,
-          minute,
-          channelId,
-        },
+        trigger: p.date
+          ? {
+              type: Notifications.SchedulableTriggerInputTypes.DATE,
+              date: new Date(p.date),
+              channelId,
+            }
+          : {
+              type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
+              weekday: p.weekday!,
+              hour: p.hour!,
+              minute: p.minute!,
+              channelId,
+            },
       });
-      await addScheduledNotificationRow(id, weekday, fireTime);
-      scheduled += 1;
     }
-  }
-
-  return { count: scheduled };
+    const actual = await Notifications.getAllScheduledNotificationsAsync();
+    if ([...desired].some((id) => !actual.some((n) => n.identifier === id)))
+      throw Error("زمان‌بندی کامل نشد؛ دوباره تلاش کن");
+    await conn.execAsync("BEGIN");
+    try {
+      await conn.runAsync("DELETE FROM scheduled_notifications");
+      for (const n of actual.filter((n) => desired.has(n.identifier)))
+        await conn.runAsync(
+          "INSERT INTO scheduled_notifications(expo_notification_id,weekday,fire_time) VALUES(?,?,?)",
+          n.identifier,
+          Number(n.content.data?.weekday ?? 0),
+          JSON.stringify(n.trigger),
+        );
+      await setMeta(
+        conn,
+        "notification_schedule_signature",
+        JSON.stringify({ revision, ids: [...desired].sort() }),
+      );
+      await setMeta(conn, "schedule_dirty", "false");
+      await conn.execAsync("COMMIT");
+    } catch (e) {
+      await conn.execAsync("ROLLBACK");
+      throw e;
+    }
+    return { count: desired.size };
+  });
 }
-
-export function checkInPeriodFromNotification(notification: Notifications.Notification): CheckInPeriod | null {
-  const data = notification.request.content.data ?? {};
-  if (data.kind !== 'time80-checkin') return null;
-
-  const hour = Number(data.fireHour);
-  const minute = Number(data.fireMinute);
-  const interval = Number(data.intervalMinutes);
-  if (!Number.isFinite(hour) || !Number.isFinite(minute) || !Number.isFinite(interval)) return null;
-
-  const deliveredAt = new Date(notification.date);
-  const end = new Date(deliveredAt);
-  end.setHours(hour, minute, 0, 0);
-  const start = new Date(end.getTime() - interval * 60_000);
-  return { start, end, source: 'notification' };
+export async function sendTestNotification() {
+  const s = await getSettings();
+  if (!(await ensureNotificationPermission(s)))
+    throw Error("مجوز اعلان لازم است");
+  const channelId = await ensureAndroidChannel(s);
+  return Notifications.scheduleNotificationAsync({
+    identifier: `time80-test-${Date.now()}`,
+    content: {
+      title: "Time80 — تست",
+      body: "اعلان آزمایشی دریافت شد",
+      data: { kind: "time80-test" },
+    },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+      seconds: 10,
+      channelId,
+    },
+  });
+}
+export async function resolveNotificationPeriod(
+  notification: Notifications.Notification,
+) {
+  const d = notification.request.content.data ?? {};
+  if (d.kind !== "time80-checkin") return null;
+  const conn = await db();
+  if (d.periodStart && d.periodEnd) {
+    const slot = await conn.getFirstAsync<Slot>(
+      "SELECT * FROM expected_slots WHERE period_start=? AND period_end=?",
+      String(d.periodStart),
+      String(d.periodEnd),
+    );
+    return slot && +new Date(slot.period_end) <= Date.now() ? slot : null;
+  }
+  const occurrence = Number(d.time80OccurrenceEnd);
+  if (Number.isFinite(occurrence) && occurrence > 0 && occurrence <= Date.now())
+    return conn.getFirstAsync<Slot>(
+      "SELECT * FROM expected_slots WHERE period_end=? AND duration_minutes=?",
+      new Date(occurrence).toISOString(),
+      Number(d.intervalMinutes),
+    );
+  // Older payloads have no absolute occurrence: never guess the day after delayed delivery.
+  return null;
+}
+export async function getNextReminder() {
+  const s = await getSettings();
+  if (
+    !s.notification_enabled ||
+    !(await Notifications.getPermissionsAsync()).granted
+  )
+    return null;
+  return (await db()).getFirstAsync<Slot>(
+    "SELECT * FROM expected_slots WHERE period_end>? ORDER BY period_end LIMIT 1",
+    new Date().toISOString(),
+  );
 }

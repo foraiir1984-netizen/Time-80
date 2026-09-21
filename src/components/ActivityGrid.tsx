@@ -1,61 +1,58 @@
-import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Activity } from '../types/models';
-
-type Props = {
+import React from "react";
+import { FlatList, Pressable, Text, View } from "react-native";
+import type { Activity } from "../types/models";
+import { ui } from "./Ui";
+export function ActivityGrid({
+  activities,
+  onSelect,
+  header,
+  disabled = false,
+}: {
   activities: Activity[];
-  onSelect: (activity: Activity) => void;
-};
-
-export function ActivityGrid({ activities, onSelect }: Props) {
+  onSelect: (a: Activity) => void;
+  header?: React.ReactElement;
+  disabled?: boolean;
+}) {
   return (
-    <View style={styles.grid}>
-      {activities.map((activity) => (
+    <FlatList
+      style={{ flex: 1 }}
+      contentContainerStyle={{ paddingBottom: 35 }}
+      data={activities}
+      keyExtractor={(a) => String(a.id)}
+      numColumns={3}
+      ListHeaderComponent={header}
+      keyboardShouldPersistTaps="handled"
+      renderItem={({ item }) => (
         <Pressable
-          key={activity.id}
+          disabled={disabled}
           accessibilityRole="button"
-          accessibilityLabel={`ثبت ${activity.name}`}
-          style={({ pressed }) => [styles.tile, pressed && styles.pressed]}
-          onPress={() => onSelect(activity)}
+          accessibilityLabel={item.name}
+          onPress={() => onSelect(item)}
+          style={[
+            ui.card,
+            {
+              flex: 1,
+              maxWidth: "32%",
+              margin: 2,
+              minHeight: 96,
+              alignItems: "center",
+              justifyContent: "center",
+            },
+          ]}
         >
-          <Text style={styles.icon}>{activity.icon}</Text>
-          <Text numberOfLines={2} style={styles.label}>{activity.name}</Text>
+          <Text style={{ fontSize: 28 }}>{item.icon}</Text>
+          <Text style={[ui.text, { fontSize: 12, textAlign: "center" }]}>
+            {item.name}
+          </Text>
         </Pressable>
-      ))}
-    </View>
+      )}
+      ListEmptyComponent={
+        !header ? (
+          <Text style={ui.muted}>
+            فعالیتی وجود ندارد؛ از صفحهٔ فعالیت‌ها اضافه کن.
+          </Text>
+        ) : null
+      }
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  grid: {
-    flexDirection: 'row-reverse',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  tile: {
-    width: '30.5%',
-    minHeight: 94,
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: '#E2E5EA',
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
-  },
-  pressed: {
-    opacity: 0.65,
-    transform: [{ scale: 0.98 }],
-  },
-  icon: {
-    fontSize: 30,
-    marginBottom: 7,
-  },
-  label: {
-    fontSize: 13,
-    lineHeight: 19,
-    fontWeight: '600',
-    textAlign: 'center',
-    color: '#16181C',
-  },
-});

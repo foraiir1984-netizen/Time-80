@@ -15,8 +15,8 @@ export type TimeEntry = {
   period_end: string;
   duration_minutes: number;
   recorded_at: string;
-  source: 'notification' | 'manual';
-  status: 'logged' | 'missed' | 'skipped';
+  source: "notification" | "manual";
+  status: "logged" | "missed" | "skipped";
   activity_name?: string;
   activity_icon?: string;
 };
@@ -41,5 +41,5 @@ export type InsightRow = {
 export type CheckInPeriod = {
   start: Date;
   end: Date;
-  source: 'notification' | 'manual';
+  source: "notification" | "manual";
 };

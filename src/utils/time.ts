@@ -1,4 +1,4 @@
-import { AppSettings, TimeEntry } from '../types/models';
+import { AppSettings, TimeEntry } from "../types/models";
 
 export type DaySlot = {
   start: Date;
@@ -23,11 +23,11 @@ export function minutesToHHMM(total: number): string {
   const normalized = ((total % 1440) + 1440) % 1440;
   const h = Math.floor(normalized / 60);
   const m = normalized % 60;
-  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
 export function formatClock(date: Date): string {
-  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+  return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
 }
 
 export function localDayBounds(date: Date): { start: Date; end: Date } {
@@ -53,7 +53,11 @@ export function scheduledAlarmCount(settings: AppSettings): number {
   return getReminderMinuteMarks(settings).length * settings.active_days.length;
 }
 
-export function buildDaySlots(settings: AppSettings, date: Date, entries: TimeEntry[]): DaySlot[] {
+export function buildDaySlots(
+  settings: AppSettings,
+  date: Date,
+  entries: TimeEntry[],
+): DaySlot[] {
   const weekday = expoWeekdayForDate(date);
   if (!settings.active_days.includes(weekday)) return [];
 
@@ -75,7 +79,10 @@ export function buildDaySlots(settings: AppSettings, date: Date, entries: TimeEn
   });
 }
 
-export function mostRecentCompletedPeriod(settings: AppSettings, now = new Date()) {
+export function mostRecentCompletedPeriod(
+  settings: AppSettings,
+  now = new Date(),
+) {
   const weekday = expoWeekdayForDate(now);
   if (!settings.active_days.includes(weekday)) return null;
   const marks = getReminderMinuteMarks(settings);
