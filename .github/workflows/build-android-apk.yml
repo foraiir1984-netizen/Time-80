@@ -35,12 +35,13 @@ jobs:
     env:
       CI: "1"
       EXPO_NO_TELEMETRY: "1"
-      TIME80_KEYSTORE_PATH: ${{ runner.temp }}/time80-release.jks
       TIME80_KEYSTORE_PASSWORD: ${{ secrets.TIME80_KEYSTORE_PASSWORD }}
       TIME80_KEY_ALIAS: ${{ secrets.TIME80_KEY_ALIAS }}
       TIME80_KEY_PASSWORD: ${{ secrets.TIME80_KEY_PASSWORD }}
       TIME80_SIGNER_SHA256: ${{ secrets.TIME80_SIGNER_SHA256 }}
     steps:
+      - name: Set signing key path
+        run: printf 'TIME80_KEYSTORE_PATH=%s/time80-release.jks\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
