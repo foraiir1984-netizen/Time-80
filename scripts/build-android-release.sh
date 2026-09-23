@@ -35,9 +35,9 @@ SDK_ROOT="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-}}"
 SIGNER="$(find "$SDK_ROOT/build-tools" -name apksigner -type f | sort -V | tail -1)"
 test -n "$SIGNER"
 CERT_OUTPUT="$("$SIGNER" verify --print-certs dist/Time80-v0.2.apk)"
-# apksigner can label signers by number or SDK range. Require every
+# apksigner can label signers by number, SDK range, or signature scheme. Require every
 # reported APK signer to have the same pinned identity; exclude source stamps.
-ACTUAL="$(printf '%s\n' "$CERT_OUTPUT" | sed -nE 's/^Signer (#[0-9]+|\(.*\)) certificate SHA-256 digest: (.*)$/\2/p' | tr '[:upper:]' '[:lower:]' | sed 's/[[:space:]:]//g' | sort -u)"
+ACTUAL="$(printf '%s\n' "$CERT_OUTPUT" | sed -nE 's/^(Signer (#[0-9]+|\(.*\))|V[0-9]+(\.[0-9]+)? Signer:) certificate SHA-256 digest: (.*)$/\4/p' | tr '[:upper:]' '[:lower:]' | sed 's/[[:space:]:]//g' | sort -u)"
 if [[ ! "$ACTUAL" =~ ^[0-9a-f]{64}$ ]]; then
   rm dist/Time80-v0.2.apk
   echo 'Could not identify one unique APK signing certificate from apksigner output.' >&2
