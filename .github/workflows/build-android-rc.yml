@@ -1,0 +1,200 @@
+name: Time80 v0.3.0 signed RC (device QA only)
+
+on:
+  push:
+    branches: [feat/time80-v0.3-implementation]
+    paths:
+      - app.json
+      - .github/workflows/build-android-rc.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: time80-signed-rc-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  signed-rc:
+    # Push signing is an explicit RC1 request, not a side effect of ordinary feature pushes.
+    if: github.ref == 'refs/heads/feat/time80-v0.3-implementation' && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[time80-rc1]'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CI: "1"
+      EXPO_NO_TELEMETRY: "1"
+      TZ: UTC
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - name: Verify RC metadata and unchanged schema/signing sources
+        run: |
+          mkdir -p "$RUNNER_TEMP/time80-rc"
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const crypto = require('node:crypto');
+          const { execFileSync } = require('node:child_process');
+          const baseline = 'a8ef2ce5d818d881e7c0bf368e34642e50f93817';
+          const app = require('./app.json').expo;
+          const lock = require('./package-lock.json');
+          assert.equal(app.version, '0.3.0');
+          assert.equal(app.android.versionCode, 3);
+          assert.equal(app.android.package, 'com.personal.time80');
+          assert.equal(require('./package.json').version, '0.3.0');
+          assert.equal(lock.version, '0.3.0');
+          assert.equal(lock.packages[''].version, '0.3.0');
+          const preserved = {};
+          for (const file of ['src/db/schema.ts', 'src/db/schemaFingerprint.json', 'src/db/migrations.ts', 'plugins/withStableSigning.cjs', 'scripts/build-android-release.sh']) {
+            const current = fs.readFileSync(file);
+            assert.ok(current.equals(execFileSync('git', ['show', baseline + ':' + file])), 'Baseline source changed: ' + file);
+            preserved[file] = crypto.createHash('sha256').update(current).digest('hex');
+          }
+          assert.match(fs.readFileSync('src/db/schema.ts', 'utf8'), /export const SCHEMA_VERSION = 3;/);
+          fs.writeFileSync(path.join(process.env.RUNNER_TEMP, 'time80-rc/source-preservation.json'), JSON.stringify({baseline, schemaVersion: 3, applicationId: app.android.package, versionName: app.version, versionCode: app.android.versionCode, unchangedSourceSha256: preserved}, null, 2));
+          NODE
+      - name: Set temporary stable keystore path
+        run: printf 'TIME80_KEYSTORE_PATH=%s/time80-rc-signing.jks\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+      - name: Restore existing stable keystore at runtime only
+        env:
+          KEYSTORE_BASE64: ${{ secrets.TIME80_KEYSTORE_BASE64 }}
+        run: |
+          test -n "$KEYSTORE_BASE64"
+          umask 077
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$TIME80_KEYSTORE_PATH"
+          chmod 600 "$TIME80_KEYSTORE_PATH"
+      - name: Build with existing stable signing and pinned certificate checks
+        id: build
+        env:
+          TIME80_KEYSTORE_PASSWORD: ${{ secrets.TIME80_KEYSTORE_PASSWORD }}
+          TIME80_KEY_ALIAS: ${{ secrets.TIME80_KEY_ALIAS }}
+          TIME80_KEY_PASSWORD: ${{ secrets.TIME80_KEY_PASSWORD }}
+          TIME80_SIGNER_SHA256: ${{ secrets.TIME80_SIGNER_SHA256 }}
+        run: |
+          bash scripts/build-android-release.sh 2>&1 | tee "$RUNNER_TEMP/time80-rc-build.log"
+      - name: Remove temporary keystore, including on failure
+        if: ${{ always() }}
+        run: |
+          if [[ -n "${TIME80_KEYSTORE_PATH:-}" ]]; then
+            rm -f -- "$TIME80_KEYSTORE_PATH"
+            test ! -e "$TIME80_KEYSTORE_PATH"
+          fi
+      - name: Verify native patch and approved icons after build
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: |
+          npm run patch:check
+          npm run icons:check
+      - name: Verify signed RC package, versions, certificate and checksum
+        id: verify
+        if: ${{ success() }}
+        env:
+          TIME80_SIGNER_SHA256: ${{ secrets.TIME80_SIGNER_SHA256 }}
+        run: |
+          out="$RUNNER_TEMP/time80-rc"
+          apk="$out/Time80-v0.3.0-RC.apk"
+          test -f android/app/build/outputs/apk/release/app-release.apk
+          # The preserved legacy script uses an internal v0.2 filename; only the verified RC copy is uploaded.
+          cp dist/Time80-v0.2.apk "$apk"
+          sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-}}"
+          signer="$(find "$sdk_root/build-tools" -name apksigner -type f | sort -V | tail -1)"
+          aapt="$(find "$sdk_root/build-tools" -name aapt2 -type f | sort -V | tail -1)"
+          test -n "$signer"
+          test -n "$aapt"
+          "$signer" verify --verbose --print-certs "$apk" > "$out/apksigner-verification.txt"
+          "$aapt" dump badging "$apk" > "$out/apk-badging.txt"
+          "$aapt" dump xmltree "$apk" --file AndroidManifest.xml > "$out/packaged-manifest.txt"
+          (cd "$out" && sha256sum Time80-v0.3.0-RC.apk > Time80-v0.3.0-RC.apk.sha256 && sha256sum -c Time80-v0.3.0-RC.apk.sha256)
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const crypto = require('node:crypto');
+          const out = path.join(process.env.RUNNER_TEMP, 'time80-rc');
+          const apk = path.join(out, 'Time80-v0.3.0-RC.apk');
+          const badging = fs.readFileSync(path.join(out, 'apk-badging.txt'), 'utf8');
+          const metadata = badging.match(/^package: name='([^']+)' versionCode='([^']+)' versionName='([^']+)'/m);
+          assert.ok(metadata, 'Missing APK package metadata');
+          assert.equal(metadata[1], 'com.personal.time80');
+          assert.equal(metadata[2], '3');
+          assert.equal(metadata[3], '0.3.0');
+          assert.ok(!/^application-debuggable/m.test(badging), 'RC APK must not be debuggable');
+          const normalize = value => value.toLowerCase().replace(/[:\s]/g, '');
+          const certificateOutput = fs.readFileSync(path.join(out, 'apksigner-verification.txt'), 'utf8');
+          const certificates = [...new Set([...certificateOutput.matchAll(/^(?:Signer (?:#[0-9]+|\(.*\))|V[0-9]+(?:\.[0-9]+)? Signer:) certificate SHA-256 digest: (.*)$/gm)].map(m => normalize(m[1])))];
+          assert.equal(certificates.length, 1, 'Expected one unique APK signer');
+          assert.match(certificates[0], /^[0-9a-f]{64}$/);
+          assert.equal(certificates[0], normalize(process.env.TIME80_SIGNER_SHA256), 'APK certificate differs from pinned v0.2 identity');
+          const sha256 = crypto.createHash('sha256').update(fs.readFileSync(apk)).digest('hex');
+          const preservation = JSON.parse(fs.readFileSync(path.join(out, 'source-preservation.json')));
+          const result = {candidate: 'RC1; device QA only; not release-ready', commit: process.env.GITHUB_SHA, applicationId: metadata[1], versionName: metadata[3], versionCode: Number(metadata[2]), debuggable: false, apk: path.basename(apk), apkBytes: fs.statSync(apk).size, apkSha256: sha256, signingCertificateSha256: certificates[0], signingMatchesPinnedV02Identity: true, schemaVersion: preservation.schemaVersion, schemaFingerprintFileSha256: preservation.unchangedSourceSha256['src/db/schemaFingerprint.json'], baselineSourcePreservation: true, temporaryKeystoreRemoved: !fs.existsSync(process.env.TIME80_KEYSTORE_PATH), githubReleaseCreated: false, finalTagCreated: false, branchMerged: false};
+          assert.ok(result.temporaryKeystoreRemoved, 'Temporary keystore was not removed');
+          fs.writeFileSync(path.join(out, 'RC-verification.json'), JSON.stringify(result, null, 2));
+          // These are computed public artifact identities, never private keystore/password values.
+          const display = certificates[0].toUpperCase().match(/.{2}/g).join(':');
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `apk_sha256=${sha256}\nsigner_sha256_display=${display}\nverified=true\n`);
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '## Time80 v0.3.0 RC1 — device QA only\n\n```json\n' + JSON.stringify(result, null, 2) + '\n```\n\nSamsung S23 FE upgrade, data preservation and all device/acceptance gates remain unverified. No GitHub Release, tag or merge is performed by this workflow.\n');
+          NODE
+      - name: "Verified APK SHA-256: ${{ steps.verify.outputs.apk_sha256 }}"
+        if: ${{ success() && steps.verify.outputs.verified == 'true' }}
+        run: echo 'Signed RC checksum recorded in verification evidence.'
+      - name: "Verified public certificate SHA-256: ${{ steps.verify.outputs.signer_sha256_display }}"
+        if: ${{ success() && steps.verify.outputs.verified == 'true' }}
+        run: echo 'APK certificate matches the pinned v0.2 signing identity.'
+      - name: Preserve sanitized build log and failure evidence
+        if: ${{ always() }}
+        env:
+          TIME80_KEYSTORE_PASSWORD: ${{ secrets.TIME80_KEYSTORE_PASSWORD }}
+          TIME80_KEY_ALIAS: ${{ secrets.TIME80_KEY_ALIAS }}
+          TIME80_KEY_PASSWORD: ${{ secrets.TIME80_KEY_PASSWORD }}
+          KEYSTORE_BASE64: ${{ secrets.TIME80_KEYSTORE_BASE64 }}
+          BUILD_RESULT: ${{ steps.build.outcome }}
+          VERIFY_RESULT: ${{ steps.verify.outcome }}
+          VERIFIED: ${{ steps.verify.outputs.verified }}
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const out = path.join(process.env.RUNNER_TEMP, 'time80-rc');
+          fs.mkdirSync(out, {recursive: true});
+          const log = path.join(process.env.RUNNER_TEMP, 'time80-rc-build.log');
+          if (fs.existsSync(log)) {
+            let text = fs.readFileSync(log, 'utf8');
+            const secrets = ['TIME80_KEYSTORE_PASSWORD', 'TIME80_KEY_ALIAS', 'TIME80_KEY_PASSWORD', 'KEYSTORE_BASE64'].map(k => process.env[k]).filter(Boolean).sort((a, b) => b.length - a.length);
+            for (const secret of secrets) text = text.split(secret).join('[REDACTED]');
+            fs.writeFileSync(path.join(out, 'RC-build-sanitized.log'), text);
+            if (text.includes('FAILURE: Build failed')) {
+              const error = text.slice(text.indexOf('FAILURE: Build failed')).split('* Try:')[0];
+              const diagnostics = text.split('\n').filter(s => s.startsWith('e: ') || s.includes('error:'));
+              fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '\n## Exact Gradle failure\n```text\n' + (error + '\n' + diagnostics.join('\n')).slice(0, 16000) + '\n```\n');
+            }
+          }
+          if (process.env.VERIFIED !== 'true') {
+            // Never offer an unverified signed binary for QA.
+            for (const file of ['Time80-v0.3.0-RC.apk', 'Time80-v0.3.0-RC.apk.sha256']) fs.rmSync(path.join(out, file), {force: true});
+          }
+          fs.writeFileSync(path.join(out, 'build-status.json'), JSON.stringify({build: process.env.BUILD_RESULT, verification: process.env.VERIFY_RESULT, signedRcVerified: process.env.VERIFIED === 'true'}, null, 2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: Time80-v0.3.0-RC-device-QA-${{ github.sha }}
+          path: ${{ runner.temp }}/time80-rc/
+          if-no-files-found: error
+          retention-days: 30

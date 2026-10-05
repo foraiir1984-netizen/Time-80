@@ -42,10 +42,10 @@ jobs:
           node <<'NODE'
           const assert = require('node:assert/strict');
           const app = require('./app.json').expo;
-          assert.equal(app.version, '0.2.0');
-          assert.equal(app.android.versionCode, 2);
+          assert.equal(app.version, '0.3.0');
+          assert.equal(app.android.versionCode, 3);
           assert.equal(app.android.package, 'com.personal.time80');
-          assert.equal(require('./package.json').version, '0.2.0');
+          assert.equal(require('./package.json').version, '0.3.0');
           for (const key of ['TIME80_KEYSTORE_PATH', 'TIME80_KEYSTORE_PASSWORD', 'TIME80_KEY_ALIAS', 'TIME80_KEY_PASSWORD', 'TIME80_KEYSTORE_BASE64']) {
             assert.ok(!process.env[key], 'Release credential must not be bound: ' + key);
           }
@@ -109,7 +109,7 @@ jobs:
           assert len(candidates) == 1, f'Expected one full merged app manifest, found {candidates}'
           root = ET.parse(candidates[0]).getroot()
           assert root.get('package') == 'com.personal.time80', 'ApplicationId changed'
-          assert root.get(a + 'versionCode') == '2' and root.get(a + 'versionName') == '0.2.0', 'Review version changed'
+          assert root.get(a + 'versionCode') == '3' and root.get(a + 'versionName') == '0.3.0', 'RC version changed'
           permissions = {p.get(a + 'name') for p in root.findall('uses-permission')}
           assert 'android.permission.USE_EXACT_ALARM' not in permissions, 'USE_EXACT_ALARM migration is forbidden'
           assert not any(p.startswith('android.permission.FOREGROUND_SERVICE') for p in permissions), 'Unexpected foreground service permission'
@@ -134,7 +134,7 @@ jobs:
           evidence = Path(os.environ['RUNNER_TEMP']) / 'time80-debug-verification'
           evidence.mkdir(exist_ok=True)
           shutil.copy2(candidates[0], evidence / 'AndroidManifest-DEBUG.xml')
-          (evidence / 'manifest-verification.json').write_text(json.dumps({'applicationId': root.get('package'), 'versionName': '0.2.0', 'versionCode': 2, 'debuggable': True, 'permissions': sorted(permissions), 'receiverActions': sorted(actions), 'services': services, 'foregroundServiceDeclarations': 'none', 'runtimeBatteryReliability': 'requires device; not proved by manifest'}, indent=2))
+          (evidence / 'manifest-verification.json').write_text(json.dumps({'applicationId': root.get('package'), 'versionName': '0.3.0', 'versionCode': 3, 'debuggable': True, 'permissions': sorted(permissions), 'receiverActions': sorted(actions), 'services': services, 'foregroundServiceDeclarations': 'none', 'runtimeBatteryReliability': 'requires device; not proved by manifest'}, indent=2))
           print('Full merged app DEBUG manifest: all assertions passed')
           PY
       - name: Prove patched native source compiled and was packaged
