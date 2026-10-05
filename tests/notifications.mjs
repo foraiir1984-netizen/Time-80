@@ -3,6 +3,9 @@ export const state = {
   scheduled: new Map(),
   failAfter: Infinity,
   created: 0,
+  os: new Set(),
+  presented: new Map(),
+  dismissed: [],
 };
 export const AndroidImportance = { DEFAULT: 3 };
 export const SchedulableTriggerInputTypes = {
@@ -22,9 +25,16 @@ export async function getAllScheduledNotificationsAsync() {
 }
 export async function cancelScheduledNotificationAsync(id) {
   state.scheduled.delete(id);
+  state.os.delete(id);
 }
 export async function scheduleNotificationAsync(request) {
   if (state.created++ >= state.failAfter) throw Error("Injected OS failure");
   state.scheduled.set(request.identifier, structuredClone(request));
+  state.os.add(request.identifier);
   return request.identifier;
+}
+
+export async function dismissNotificationAsync(identifier) {
+  state.dismissed.push(identifier);
+  state.presented.delete(identifier);
 }

@@ -1,69 +1,311 @@
-import React, { useState, useCallback } from "react";
-import { View, Text, FlatList, Alert } from "react-native";
+import React, { useState, useCallback, useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Modal,
+  Pressable,
+  useWindowDimensions,
+  AccessibilityInfo,
+  findNodeHandle,
+  ActivityIndicator,
+  ScrollView,
+} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import { getActivities, setActivityArchived } from "../db/database";
+import { getActivities } from "../db/database";
+import {
+  archiveActivity,
+  undoActivityArchive,
+  restoreActivity,
+  type ArchiveUndo,
+} from "../services/activityService";
 import type { Activity } from "../types/domain";
 import { ui, Button, ErrorText, errorMessage } from "../components/Ui";
 import { ActivityEditor } from "../components/ActivityEditor";
+import { ActivityIcon, AssetIcon } from "../components/ActivityIcon";
 export function ActivitiesScreen() {
   const [items, setItems] = useState<Activity[]>([]),
     [edit, setEdit] = useState<Activity | null | undefined>(),
-    [error, setError] = useState("");
-  const load = () =>
-    getActivities(true)
-      .then(setItems)
-      .catch((e) => setError(errorMessage(e)));
+    [sheet, setSheet] = useState<Activity | null>(null),
+    [archived, setArchived] = useState(false),
+    [error, setError] = useState(""),
+    [loading, setLoading] = useState(true),
+    [busy, setBusy] = useState(false),
+    [message, setMessage] = useState(""),
+    [undo, setUndo] = useState<ArchiveUndo | null>(null);
+  const dimensions = useWindowDimensions(),
+    columns =
+      dimensions.width - 36 < 300 || dimensions.fontScale >= 1.5 ? 1 : 2;
+  const origins = useRef(new Map<number, any>()),
+    origin = useRef<number | null>(null),
+    addFocus = useRef<any>(null),
+    title = useRef<any>(null),
+    guard = useRef(false);
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      setItems(await getActivities(true));
+      setError("");
+    } catch (e) {
+      setError(errorMessage(e));
+    } finally {
+      setLoading(false);
+    }
+  }, []);
   useFocusEffect(
     useCallback(() => {
-      load();
-    }, []),
+      void load();
+      return () => setUndo(null);
+    }, [load]),
   );
+  useEffect(() => {
+    if (!undo) return;
+    const t = setTimeout(
+      () => setUndo(null),
+      Math.max(0, undo.deadline - performance.now()),
+    );
+    return () => clearTimeout(t);
+  }, [undo]);
+  function close() {
+    setSheet(null);
+    setTimeout(() => {
+      const ref = origins.current.get(origin.current ?? -1) ?? addFocus.current;
+      ref?.focus?.();
+      const node = ref && findNodeHandle(ref);
+      if (node) AccessibilityInfo.setAccessibilityFocus(node);
+    }, 180);
+  }
+  async function change(fn: () => Promise<unknown>, text: string) {
+    if (guard.current) return;
+    guard.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      await fn();
+      setMessage(text);
+      close();
+      await load();
+    } catch (e) {
+      setError(errorMessage(e));
+      await load();
+    } finally {
+      guard.current = false;
+      setBusy(false);
+    }
+  }
   return (
     <View style={ui.page}>
       <Text style={ui.title}>فعالیت‌ها</Text>
       <ErrorText error={error} />
-      <Button title="افزودن فعالیت" onPress={() => setEdit(null)} />
-      <FlatList
-        data={items}
-        keyExtractor={(a) => String(a.id)}
-        renderItem={({ item }) => (
-          <View style={ui.card}>
-            <Text style={ui.text}>
-              {item.icon} {item.name}
-              {item.is_archived ? " · آرشیوشده" : ""}
-            </Text>
-            <View style={ui.row}>
-              <Button title="ویرایش" onPress={() => setEdit(item)} />
+      <View style={ui.row}>
+        <Button
+          focusRef={addFocus}
+          iconKey="plus"
+          title="افزودن فعالیت"
+          onPress={() => setEdit(null)}
+        />
+        <Button
+          title={archived ? "فعال‌ها" : "بایگانی‌شده"}
+          onPress={() => setArchived(!archived)}
+        />
+      </View>
+      {loading ? (
+        <ActivityIndicator />
+      ) : error ? null : (
+        <FlatList
+          key={columns}
+          numColumns={columns}
+          data={items.filter((a) => !!a.is_archived === archived)}
+          keyExtractor={(a) => String(a.id)}
+          columnWrapperStyle={
+            columns === 2
+              ? { flexDirection: "row-reverse", gap: 12 }
+              : undefined
+          }
+          contentContainerStyle={{ paddingBottom: 24 }}
+          renderItem={({ item }) => (
+            <View
+              style={[
+                ui.card,
+                {
+                  flex: 1,
+                  maxWidth: columns === 2 ? "48%" : "100%",
+                  minHeight: 128,
+                  padding: 12,
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row-reverse" }}>
+                <Pressable
+                  ref={(ref) => {
+                    origins.current.set(item.id, ref);
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={`گزینه‌های مدیریت فعالیت ${item.name}`}
+                  onPress={() => {
+                    origin.current = item.id;
+                    setSheet(item);
+                  }}
+                  style={{
+                    minWidth: 48,
+                    minHeight: 48,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AssetIcon iconKey="more" />
+                </Pressable>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={`مدیریت فعالیت ${item.name}${item.is_archived ? "، بایگانی‌شده" : ""}`}
+                  onPress={() => {
+                    origin.current = item.id;
+                    setSheet(item);
+                  }}
+                  style={{
+                    flex: 1,
+                    minHeight: 96,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ActivityIcon icon={item.icon_view} legacy={item.icon} />
+                  <Text
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                    style={[ui.text, { textAlign: "center" }]}
+                  >
+                    {item.name}
+                  </Text>
+                  {!!item.is_archived && (
+                    <Text style={ui.muted}>بایگانی‌شده</Text>
+                  )}
+                </Pressable>
+              </View>
+            </View>
+          )}
+          ListEmptyComponent={
+            <View>
+              <Text style={ui.text}>
+                {archived
+                  ? "فعالیت بایگانی‌شده‌ای ندارید"
+                  : "فعالیتی در فهرست فعال نیست"}
+              </Text>
               <Button
-                title={item.is_archived ? "بازگردانی" : "آرشیو"}
-                onPress={() =>
-                  Alert.alert(
-                    "تغییر فهرست فعالیت‌ها",
-                    "سابقهٔ ثبت‌شده حفظ می‌شود.",
-                    [
-                      { text: "انصراف" },
-                      {
-                        text: "تأیید",
-                        onPress: () =>
-                          setActivityArchived(item.id, !item.is_archived)
-                            .then(load)
-                            .catch((e) => setError(errorMessage(e))),
-                      },
-                    ],
-                  )
-                }
+                title={archived ? "فعال‌ها" : "دیدن بایگانی‌شده‌ها"}
+                onPress={() => setArchived(!archived)}
               />
+              {!archived && (
+                <Button
+                  iconKey="plus"
+                  title="افزودن فعالیت"
+                  onPress={() => setEdit(null)}
+                />
+              )}
+            </View>
+          }
+        />
+      )}
+      {!!error && <Button title="تلاش دوباره" onPress={() => void load()} />}
+      {!!message && (
+        <Text accessibilityLiveRegion="polite" style={ui.text}>
+          {message}
+        </Text>
+      )}
+      {undo && (
+        <Button
+          title="واگرد"
+          disabled={busy}
+          onPress={() =>
+            void change(async () => {
+              await undoActivityArchive(undo);
+              setUndo(null);
+            }, "فعالیت بازگردانی شد")
+          }
+        />
+      )}
+      {sheet && (
+        <Modal
+          transparent
+          visible
+          animationType="fade"
+          onRequestClose={close}
+          onShow={() => {
+            const n = title.current && findNodeHandle(title.current);
+            if (n) AccessibilityInfo.setAccessibilityFocus(n);
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+              backgroundColor: "#0006",
+            }}
+          >
+            <Pressable
+              accessibilityLabel="بستن گزینه‌های فعالیت"
+              style={{ flex: 1 }}
+              onPress={close}
+            />
+            <View
+              accessibilityViewIsModal
+              style={[
+                ui.card,
+                { marginBottom: 0, padding: 0, maxHeight: "85%" },
+              ]}
+            >
+              <ScrollView contentContainerStyle={{ padding: 24 }}>
+                <ActivityIcon icon={sheet.icon_view} legacy={sheet.icon} />
+                <Text ref={title} accessibilityRole="header" style={ui.title}>
+                  {sheet.name}
+                </Text>
+                {sheet.is_archived ? (
+                  <Button
+                    title="بازگردانی"
+                    disabled={busy}
+                    onPress={() =>
+                      void change(async () => {
+                        await restoreActivity(sheet);
+                        setUndo(null);
+                      }, `${sheet.name} بازگردانی شد`)
+                    }
+                  />
+                ) : (
+                  <>
+                    <Button
+                      iconKey="edit"
+                      title="ویرایش فعالیت"
+                      disabled={busy}
+                      onPress={() => {
+                        setEdit(sheet);
+                        close();
+                      }}
+                    />
+                    <Button
+                      iconKey="archive"
+                      title="بایگانی فعالیت"
+                      disabled={busy}
+                      onPress={() =>
+                        void change(async () => {
+                          setUndo(await archiveActivity(sheet));
+                        }, `${sheet.name} بایگانی شد`)
+                      }
+                    />
+                  </>
+                )}
+                <Button title="بستن" disabled={busy} onPress={close} />
+              </ScrollView>
             </View>
           </View>
-        )}
-      />
+        </Modal>
+      )}
       {edit !== undefined && (
         <ActivityEditor
           activity={edit}
           onClose={() => setEdit(undefined)}
           onSaved={() => {
             setEdit(undefined);
-            load();
+            void load();
           }}
         />
       )}

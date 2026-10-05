@@ -1,0 +1,363 @@
+--- a/android/src/main/java/expo/modules/notifications/service/delegates/ExpoSchedulingDelegate.kt
++++ b/android/src/main/java/expo/modules/notifications/service/delegates/ExpoSchedulingDelegate.kt
+@@ -1,5 +1,6 @@
+ package expo.modules.notifications.service.delegates
+ 
++import expo.modules.notifications.time80.Time80Runtime
+ import android.app.AlarmManager
+ import android.app.PendingIntent
+ import android.content.Context
+@@ -19,19 +20,25 @@
+   protected val store = SharedPreferencesNotificationsStore(context)
+   protected val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+ 
+-  override fun setupScheduledNotifications() {
+-    store.allNotificationRequests.forEach {
+-      try {
+-        scheduleNotification(it)
+-      } catch (e: Exception) {
+-        Log.w("expo-notifications", "Notification ${it.identifier} could not have been scheduled: ${e.message}")
+-        e.printStackTrace()
++  override fun setupScheduledNotifications() = Time80Runtime.serialized {
++    val allowed=Time80Runtime.canRecover(context)
++    val replay={
++      store.allNotificationRequests.forEach {
++        if(allowed || !Time80Runtime.owned(it.identifier) || it.content.body?.optInt("payloadVersion",2)!=3) {
++          try { scheduleNotification(it) }
++          catch (e: Exception) {
++            Log.w("expo-notifications", "Notification ${it.identifier} could not have been scheduled: ${e.message}")
++            e.printStackTrace()
++            if(Time80Runtime.owned(it.identifier)) throw e
++          }
++        }
+       }
+     }
++    if(allowed) Time80Runtime.recover(context,replay) else replay()
+   }
+ 
+   override fun getAllScheduledNotifications(): Collection<NotificationRequest> =
+-    store.allNotificationRequests
++    Time80Runtime.serialized { store.allNotificationRequests }
+ 
+   override fun getScheduledNotification(identifier: String): NotificationRequest? = try {
+     store.getNotificationRequest(identifier)
+@@ -44,16 +51,17 @@
+   }
+ 
+   override fun scheduleNotification(request: NotificationRequest) {
++    Time80Runtime.serialized {
+     // If the trigger is empty, handle receive immediately and return.
+     if (request.trigger == null) {
+       NotificationsService.receive(context, Notification(request))
+-      return
++      return@serialized
+     }
+ 
+     if (request.trigger !is SchedulableNotificationTrigger) {
+       if (request.trigger is ChannelAwareTrigger) {
+         NotificationsService.receive(context, Notification(request))
+-        return
++        return@serialized
+       }
+       throw IllegalArgumentException("Notification request \"${request.identifier}\" does not have a schedulable trigger (it's ${request.trigger}). Refusing to schedule.")
+     }
+@@ -77,15 +85,18 @@
+           request.content.body?.put("time80OccurrenceEnd", scheduledTime)
+         }
+         store.saveNotificationRequest(request)
+-        setupAlarm(scheduledTime, NotificationsService.createNotificationTrigger(context, request.identifier))
++        setupAlarm(scheduledTime, NotificationsService.createNotificationTrigger(context, request.identifier, scheduledTime, request.content.body?.optString("time80Generation")))
+       }
++    }
++
+     }
+   }
+ 
+   override fun triggerNotification(identifier: String) {
++    Time80Runtime.serialized {
+     try {
+       val notificationRequest: NotificationRequest = store.getNotificationRequest(identifier)!!
+-      NotificationsService.receive(context, Notification(notificationRequest))
++      NotificationsService.receive(context, Notification(if(notificationRequest.content.body?.optInt("payloadVersion",2)==3) Time80Runtime.snapshot(notificationRequest) else notificationRequest))
+       NotificationsService.schedule(context, notificationRequest)
+     } catch (e: ClassNotFoundException) {
+       Log.e("expo-notifications", "An exception occurred while triggering notification " + identifier + ", removing. " + e.message)
+@@ -100,18 +111,26 @@
+       e.printStackTrace()
+       NotificationsService.removeScheduledNotification(context, identifier)
+     }
++
++    }
+   }
+ 
+   override fun removeScheduledNotifications(identifiers: Collection<String>) {
++    Time80Runtime.serialized {
+     identifiers.forEach {
+       alarmManager.cancel(NotificationsService.createNotificationTrigger(context, it))
+       store.removeNotificationRequest(it)
+     }
++
++    }
+   }
+ 
+   override fun removeAllScheduledNotifications() {
++    Time80Runtime.serialized {
+     store.removeAllNotificationRequests().forEach {
+       alarmManager.cancel(NotificationsService.createNotificationTrigger(context, it))
++    }
++
+     }
+   }
+ 
+--- a/android/src/main/java/expo/modules/notifications/service/NotificationsService.kt
++++ b/android/src/main/java/expo/modules/notifications/service/NotificationsService.kt
+@@ -1,5 +1,6 @@
+ package expo.modules.notifications.service
+ 
++import expo.modules.notifications.time80.Time80Runtime
+ import android.app.PendingIntent
+ import android.content.BroadcastReceiver
+ import android.content.ComponentName
+@@ -34,6 +35,9 @@
+       Intent.ACTION_BOOT_COMPLETED,
+       Intent.ACTION_REBOOT,
+       Intent.ACTION_MY_PACKAGE_REPLACED,
++      "android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED",
++      Intent.ACTION_TIME_CHANGED,
++      Intent.ACTION_TIMEZONE_CHANGED,
+       "android.intent.action.QUICKBOOT_POWERON",
+       "com.htc.intent.action.QUICKBOOT_POWERON"
+     )
+@@ -413,7 +417,7 @@
+      * @param identifier Notification identifier
+      * @return [PendingIntent] triggering [NotificationsService], triggering notification of given ID.
+      */
+-    fun createNotificationTrigger(context: Context, identifier: String): PendingIntent {
++    fun createNotificationTrigger(context: Context, identifier: String, occurrenceEnd: Long = 0, generation: String? = null): PendingIntent {
+       val intent = Intent(
+         NOTIFICATION_EVENT_ACTION,
+         getUriBuilder()
+@@ -425,6 +429,8 @@
+         findDesignatedBroadcastReceiver(context, intent)?.let {
+           intent.component = ComponentName(it.packageName, it.name)
+         }
++        intent.putExtra("time80ExpectedEnd", occurrenceEnd)
++        intent.putExtra("time80ExpectedGeneration", generation)
+         intent.putExtra(EVENT_TYPE_KEY, TRIGGER_TYPE)
+         intent.putExtra(IDENTIFIER_KEY, identifier)
+       }
+@@ -813,9 +819,12 @@
+     )
+ 
+   open fun onNotificationTriggered(context: Context, intent: Intent) =
+-    getSchedulingDelegate(context).triggerNotification(
+-      intent.extras?.getString(IDENTIFIER_KEY)!!
+-    )
++    Time80Runtime.serialized {
++      val id=intent.extras?.getString(IDENTIFIER_KEY)!!
++      val delegate=getSchedulingDelegate(context)
++      val request=delegate.getScheduledNotification(id)
++      if(!Time80Runtime.owned(id) || request?.content?.body?.optInt("payloadVersion",2)!=3 || (Time80Runtime.canRecover(context) && Time80Runtime.triggerMatches(request,intent.getLongExtra("time80ExpectedEnd",0),intent.getStringExtra("time80ExpectedGeneration")))) delegate.triggerNotification(id)
++    }
+ 
+   open fun onRemoveScheduledNotifications(context: Context, intent: Intent) =
+     getSchedulingDelegate(context).removeScheduledNotifications(
+--- a/android/src/main/java/expo/modules/notifications/notifications/scheduling/NotificationScheduler.kt
++++ b/android/src/main/java/expo/modules/notifications/notifications/scheduling/NotificationScheduler.kt
+@@ -1,5 +1,8 @@
+ package expo.modules.notifications.notifications.scheduling
+ 
++import expo.modules.notifications.time80.Time80Runtime
++import expo.modules.core.arguments.MapArguments
++import org.json.JSONObject
+ import android.content.Context
+ import android.os.Bundle
+ import android.os.Handler
+@@ -43,6 +46,21 @@
+   override fun definition() = ModuleDefinition {
+     Name("ExpoNotificationScheduler")
+ 
++    AsyncFunction("time80ReadCapabilities") {channel: String -> Time80Runtime.capabilities(schedulingContext,channel)}
++    AsyncFunction("time80GetSchedulingState") { Time80Runtime.state(schedulingContext) }
++    AsyncFunction("time80InvalidatePlan") { Time80Runtime.invalidate(schedulingContext) }
++    AsyncFunction("time80ApplyPlan") { raw: String ->
++      val plan=JSONObject(raw)
++      val list=plan.getJSONArray("requests")
++      val requests=(0 until list.length()).map { index ->
++        val item=list.getJSONObject(index)
++        val content=ArgumentsNotificationContentBuilder(schedulingContext).setPayload(MapArguments(Time80Runtime.map(item.getJSONObject("content")))).build()
++        createNotificationRequest(item.getString("identifier"),content,triggerFromParams(MapArguments(Time80Runtime.map(item.getJSONObject("trigger")))))
++      }
++      Time80Runtime.apply(schedulingContext,requests,plan.getString("generation"),plan.getBoolean("force"),plan.getString("zone"),plan.getString("validUntil"))
++    }
++
++
+     AsyncFunction("getAllScheduledNotificationsAsync") { promise: Promise ->
+       getAllScheduledNotifications(
+         schedulingContext,
+--- a/android/src/main/java/expo/modules/notifications/notifications/emitting/NotificationsEmitter.kt
++++ b/android/src/main/java/expo/modules/notifications/notifications/emitting/NotificationsEmitter.kt
+@@ -1,5 +1,7 @@
+ package expo.modules.notifications.notifications.emitting
+ 
++import org.json.JSONObject
++import org.json.JSONArray
+ import android.os.Bundle
+ import expo.modules.kotlin.modules.Module
+ import expo.modules.kotlin.modules.ModuleDefinition
+@@ -16,9 +18,29 @@
+ 
+ open class NotificationsEmitter : Module(), NotificationListener {
+   private var lastNotificationResponseBundle: Bundle? = null
++  private val responseLock=Any()
++  private val pending=linkedMapOf<String,Bundle>()
++  private fun responseKey(bundle: Bundle): String {
++    val n=bundle.getBundle("notification")!!
++    val request=n.getBundle("request")!!
++    val content=request.getBundle("content")!!
++    val data=try {JSONObject(content.getString("dataString") ?: "{}")} catch(e:Exception){JSONObject()}
++    val occurrence=when {data.opt("occurrenceId") is String->data.getString("occurrenceId");data.optLong("time80OccurrenceEnd",0)>0->data.getLong("time80OccurrenceEnd").toString();else->n.getDouble("date").toLong().toString()}
++    return JSONArray(listOf(request.getString("identifier"),occurrence,bundle.getString("actionIdentifier"))).toString()
++  }
++  private fun remember(bundle:Bundle)=synchronized(responseLock){lastNotificationResponseBundle=bundle;pending[responseKey(bundle)]=bundle}
++
+ 
+   override fun definition() = ModuleDefinition {
+     Name("ExpoNotificationsEmitter")
++
++
++    Function("time80GetPendingResponses") { synchronized(responseLock){pending.values.toList()} }
++    Function("time80AcknowledgeResponse") {key:String -> synchronized(responseLock){
++      pending.remove(key)
++      if(lastNotificationResponseBundle?.let {responseKey(it)}==key)lastNotificationResponseBundle=null
++      null
++    } }
+ 
+     Events(
+       "onDidReceiveNotification",
+@@ -36,11 +58,11 @@
+     }
+ 
+     Function<Bundle?>("getLastNotificationResponse") {
+-      lastNotificationResponseBundle
++      synchronized(responseLock) { lastNotificationResponseBundle }
+     }
+ 
+     Function("clearLastNotificationResponse") {
+-      lastNotificationResponseBundle = null
++      synchronized(responseLock) { lastNotificationResponseBundle = null }
+       null
+     }
+   }
+@@ -67,16 +89,16 @@
+   override fun onNotificationResponseReceived(response: NotificationResponse): Boolean {
+     val bundle = NotificationSerializer.toBundle(response)
+     DebugLogging.logBundle("NotificationsEmitter.onNotificationResponseReceived", bundle)
+-    lastNotificationResponseBundle = bundle
+-    sendEvent(NEW_RESPONSE_EVENT_NAME, lastNotificationResponseBundle)
++    remember(bundle)
++    sendEvent(NEW_RESPONSE_EVENT_NAME, bundle)
+     return true
+   }
+ 
+   override fun onNotificationResponseIntentReceived(extras: Bundle) {
+     val bundle = NotificationSerializer.toResponseBundleFromExtras(extras)
+     DebugLogging.logBundle("NotificationsEmitter.onNotificationResponseIntentReceived", bundle)
+-    lastNotificationResponseBundle = bundle
+-    sendEvent(NEW_RESPONSE_EVENT_NAME, lastNotificationResponseBundle)
++    remember(bundle)
++    sendEvent(NEW_RESPONSE_EVENT_NAME, bundle)
+   }
+ 
+   /**
+--- a/android/src/main/java/expo/modules/notifications/notifications/NotificationManager.kt
++++ b/android/src/main/java/expo/modules/notifications/notifications/NotificationManager.kt
+@@ -30,6 +30,7 @@
+    *
+    * @param listener Listener to be notified of new messages.
+    */
++  @Synchronized
+   fun addListener(listener: NotificationListener) {
+     if (listeners.contains(listener)) {
+       return
+@@ -52,6 +53,7 @@
+    *
+    * @param listener Listener previously registered with [addListener].
+    */
++  @Synchronized
+   fun removeListener(listener: NotificationListener) {
+     listeners.remove(listener)
+   }
+@@ -78,6 +80,7 @@
+    *
+    * @param response Notification response received
+    */
++  @Synchronized
+   fun onNotificationResponseReceived(response: NotificationResponse) {
+     if (listeners.isEmpty()) {
+       pendingNotificationResponses.add(response)
+@@ -98,6 +101,7 @@
+     }
+   }
+ 
++  @Synchronized
+   fun onNotificationResponseFromExtras(extras: Bundle) {
+     // We're going to be passed in extras from either
+     // a killed state (ExpoNotificationLifecycleListener::onCreate)
+@@ -113,9 +117,7 @@
+       // Otherwise, the app has been launched from a killed state, and our listeners
+       // haven't yet been setup. We'll add this to a list of pending notifications
+       // for them to process once they've been initialized.
+-      if (pendingNotificationResponsesFromExtras.isEmpty()) {
+-        pendingNotificationResponsesFromExtras.add(extras)
+-      }
++      pendingNotificationResponsesFromExtras.add(Bundle(extras))
+     }
+   }
+ }
+--- a/android/src/main/java/expo/modules/notifications/notifications/model/NotificationContent.java
++++ b/android/src/main/java/expo/modules/notifications/notifications/model/NotificationContent.java
+@@ -147,7 +147,7 @@
+   public String getCategoryId() {
+     return mCategoryId;
+   }
+-  
++
+   public boolean isSticky() {
+     return mSticky;
+   }
+@@ -279,6 +279,13 @@
+   public static class Builder {
+     private final NotificationContent content;
+ 
++    // TIME80: immutable parcel copy preserves all fields while changing occurrence text/data.
++    public Builder(NotificationContent source) {
++      Parcel parcel = Parcel.obtain();
++      try { source.writeToParcel(parcel, 0); parcel.setDataPosition(0); content = new NotificationContent(parcel); }
++      finally { parcel.recycle(); }
++    }
++
+     public Builder() {
+       content = new NotificationContent();
+       useDefaultSound();
+@@ -362,7 +369,7 @@
+       content.mCategoryId = categoryId;
+       return this;
+     }
+-    
++
+     public Builder setSticky(boolean sticky) {
+       content.mSticky = sticky;
+       return this;
+--- a/android/src/main/AndroidManifest.xml
++++ b/android/src/main/AndroidManifest.xml
+@@ -24,6 +24,9 @@
+         <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+ 
+         <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
++        <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
++        <action android:name="android.intent.action.TIME_SET" />
++        <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+       </intent-filter>
+     </receiver>
+ 

@@ -1,0 +1,20 @@
+{
+  "archiveSha256": "643c937fb5df217fa8876ee69d876dbfab47aa078c0c0b59eef1a7de7aaefffd",
+  "files": {
+    "duo-more.svg": "8d1950ce7eff3ffdf20af8f58a4360ebdeced9166fcd90f310947fe43b53f004",
+    "duo-check.svg": "0d1e5cf836f5dc69cf2741bbe8c7da20d0a9554289252144c99f9e8813c13a52",
+    "duo-edit.svg": "72d8eca14a6ed5a846ea06ce5ba06173d2ab2f9dab594600051f7797e2fdddec",
+    "duo-plus.svg": "28b49e8222d43d12c0ab693dabd56c8b3171e193f46b92a263cfcf0a904a6753",
+    "duo-work.svg": "af4b7c1b98a1b423430dd6256d9adcb74e64480cbaebc64f7547b609439d55a8",
+    "duo-report.svg": "43e97c09d2c47d49d9a8b5ce376d4164a2891d44e059e89cec157861917519d2",
+    "duo-exercise.svg": "1f5a96d93f62ea114c121468a7163373580a944bf6e078e419d3acb311d9ca2d",
+    "duo-family.svg": "bca8284c466d449207500e53dc2504b7d3d8f71b27df7128734ba7aefe7d8817",
+    "duo-home.svg": "69c0beed5a94bea7f4339a208383e7815f5e077714fc70c684de6af754b0a1fa",
+    "duo-archive.svg": "3eeef4bb686e383146b49ec67e8f6e584c4a040ef5621bbcf5d20c6625831174",
+    "duo-grid.svg": "4d2d5970ec67be0c6b7baf7ccba303b1fbae978d1abef3293ad7042161e8cce2",
+    "duo-rest.svg": "da385273618ed7347cd53c9603348b1a9fa248fb6cdbf711850cd362e2328de5",
+    "duo-study.svg": "259a372a608708b86250824d5ecfee92658a58f2b88e7b30e3eef8b081af7f8a",
+    "duo-settings.svg": "3f908683490e6166934ad3aaedbd8336b27b9daa316ddb594ed2141309e4801f",
+    "duo-commute.svg": "1eeaddfbeebe3245f36236848e889c7f9f96fbbc47c0bd316efd0161932df777"
+  }
+}

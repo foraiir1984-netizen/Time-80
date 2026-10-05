@@ -1,5 +1,13 @@
+import { ActivityIcon } from "../components/ActivityIcon";
 import React, { useState, useCallback, useEffect } from "react";
-import { ScrollView, View, Text, TextInput } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  TextInput,
+  ActivityIndicator,
+  AppState,
+} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { ui, Button, ErrorText, errorMessage } from "../components/Ui";
 import { getReport } from "../services/reportService";
@@ -28,22 +36,49 @@ export function InsightsScreen() {
     [error, setError] = useState(""),
     [a, setA] = useState(""),
     [b, setB] = useState("");
-  const [preferencesReady, setPreferencesReady] = useState(false);
+  const [resultQuery, setResultQuery] = useState("");
+  const [refresh, setRefresh] = useState(0),
+    [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([
-      db().then((tx) => getMeta(tx, "report_calendar")),
-      db().then((tx) => getMeta(tx, "report_week_start")),
-    ])
-      .then(([calendar, week]) => {
-        setQ((v) => ({
-          ...v,
-          calendar: calendar === "gregory" ? "gregory" : "persian",
-          weekStart: Number(week) || 7,
-        }));
-        setPreferencesReady(true);
-      })
-      .catch((e) => setError(errorMessage(e)));
+    const sub = AppState.addEventListener("change", (s) => {
+      if (s === "active") setRefresh((v) => v + 1);
+    });
+    let day = new Date().toDateString();
+    const timer = setInterval(() => {
+      const next = new Date().toDateString();
+      if (next !== day) {
+        day = next;
+        setRefresh((v) => v + 1);
+      }
+    }, 30000);
+    return () => {
+      sub.remove();
+      clearInterval(timer);
+    };
   }, []);
+  const [preferencesReady, setPreferencesReady] = useState(false);
+  const loadPreferences = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const [calendar, week] = await Promise.all([
+        db().then((tx) => getMeta(tx, "report_calendar")),
+        db().then((tx) => getMeta(tx, "report_week_start")),
+      ]);
+      setQ((v) => ({
+        ...v,
+        calendar: calendar === "gregory" ? "gregory" : "persian",
+        weekStart: Number(week) || 7,
+      }));
+      setPreferencesReady(true);
+    } catch (e) {
+      setError(errorMessage(e));
+      setLoading(false);
+    }
+  }, []);
+  useEffect(() => {
+    void loadPreferences();
+  }, [loadPreferences]);
   useEffect(() => {
     if (preferencesReady)
       void transaction(async (tx) => {
@@ -53,19 +88,30 @@ export function InsightsScreen() {
   }, [q.calendar, q.weekStart, preferencesReady]);
   useFocusEffect(
     useCallback(() => {
+      if (!preferencesReady) return;
       let alive = true;
+      setLoading(true);
+      setR(null);
+      setError("");
       getReport(q)
         .then((v) => {
           if (alive) {
             setR(v);
+            setResultQuery(JSON.stringify(q));
+            setLoading(false);
             setError("");
           }
         })
-        .catch((e) => alive && setError(errorMessage(e)));
+        .catch((e) => {
+          if (alive) {
+            setError(errorMessage(e));
+            setLoading(false);
+          }
+        });
       return () => {
         alive = false;
       };
-    }, [q]),
+    }, [q, refresh, preferencesReady]),
   );
   return (
     <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 60 }}>
@@ -81,10 +127,13 @@ export function InsightsScreen() {
       </View>
       <View style={ui.row}>
         <Button
-          title="قبلی"
+          title={q.mode === "day" ? "روز قبل" : "قبلی"}
           onPress={() => setQ({ ...q, offset: q.offset - 1 })}
         />
-        <Button title="دورهٔ جاری" onPress={() => setQ({ ...q, offset: 0 })} />
+        <Button
+          title={q.mode === "day" ? "امروز" : "دورهٔ جاری"}
+          onPress={() => setQ({ ...q, offset: 0 })}
+        />
         <Button
           title="بعدی"
           disabled={q.offset >= 0}
@@ -130,19 +179,55 @@ export function InsightsScreen() {
         </>
       )}
       <ErrorText error={error} />
-      {r && (
+      {loading && (
+        <ActivityIndicator accessibilityLabel="در حال بارگذاری گزارش" />
+      )}
+      {!!error && (
+        <Button
+          title="تلاش دوباره"
+          onPress={() =>
+            preferencesReady ? setRefresh((v) => v + 1) : void loadPreferences()
+          }
+        />
+      )}
+
+      {r && resultQuery === JSON.stringify(q) && (
         <>
           <Text style={ui.muted}>
             {new Date(r.range.start).toLocaleDateString(
               q.calendar === "persian" ? "fa-IR" : "en-GB",
+              {
+                timeZone: r.range.timezone,
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              },
             )}{" "}
             تا{" "}
             {new Date(+new Date(r.range.end) - 1).toLocaleDateString(
               q.calendar === "persian" ? "fa-IR" : "en-GB",
+              {
+                timeZone: r.range.timezone,
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              },
             )}{" "}
             · {r.range.timezone}
             {r.range.partial ? " · دورهٔ ناقص" : ""}
           </Text>
+          {r.activities.length === 0 && (
+            <Text style={ui.text}>
+              برای{" "}
+              {new Date(r.range.start).toLocaleDateString(
+                q.calendar === "persian" ? "fa-IR" : "en-GB",
+                { timeZone: r.range.timezone },
+              )}{" "}
+              بازه‌ای ثبت نشده است.
+            </Text>
+          )}
           <Text style={ui.title}>{toPersianDuration(r.total)}</Text>
           <Text style={ui.text}>
             دورهٔ قبل:{" "}
@@ -169,8 +254,9 @@ export function InsightsScreen() {
           <Text style={ui.title}>فعالیت‌ها و پارتو</Text>
           {r.activities.map((x, i) => (
             <View key={x.id} style={ui.card}>
+              <ActivityIcon icon={x.icon_view} legacy={x.icon} size={24} />
               <Text style={ui.text}>
-                {x.icon} {x.name} · {toPersianDuration(x.minutes)}
+                {x.name} · {toPersianDuration(x.minutes)}
               </Text>
               <Text style={ui.muted}>
                 سهم {r.total ? ((x.minutes / r.total) * 100).toFixed(1) : "—"}٪

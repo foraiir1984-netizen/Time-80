@@ -1,8 +1,22 @@
+import {
+  createResponseCoordinator,
+  resolveNotificationTarget,
+} from "./src/notifications/notificationResponseService";
+import {
+  pendingResponses,
+  acknowledgeResponse,
+  dismissTappedOccurrence,
+} from "./src/notifications/notificationPlatform";
+import { SaveResultScreen } from "./src/screens/SaveResultScreen";
+import { NotificationResolutionScreen } from "./src/screens/NotificationResolutionScreen";
+import { dayScopeFor } from "./src/services/dayScopeService";
+import { AssetIcon } from "./src/components/ActivityIcon";
 import React, { useEffect, useState, useRef } from "react";
 import { ActivityIndicator, AppState, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
   NavigationContainer,
+  StackActions,
   createNavigationContainerRef,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -14,10 +28,7 @@ import { getMeta } from "./src/db/metaRepository";
 import { ensureSlotHorizon } from "./src/services/slotService";
 import { applySettingsPatch } from "./src/services/settingsService";
 import { timezone } from "./src/utils/slots";
-import {
-  reconcileNotifications,
-  resolveNotificationPeriod,
-} from "./src/notifications/scheduler";
+import { reconcileNotifications } from "./src/notifications/scheduler";
 import { TodayScreen } from "./src/screens/TodayScreen";
 import { ActivitiesScreen } from "./src/screens/ActivitiesScreen";
 import { InsightsScreen } from "./src/screens/InsightsScreen";
@@ -51,27 +62,40 @@ function MainTabs() {
       <Tabs.Screen
         name="Today"
         component={TodayScreen}
-        options={{ title: "امروز" }}
+        options={{
+          title: "امروز",
+          tabBarIcon: () => <AssetIcon iconKey="home" />,
+        }}
       />
       <Tabs.Screen
         name="Activities"
         component={ActivitiesScreen}
-        options={{ title: "فعالیت‌ها" }}
+        options={{
+          title: "فعالیت‌ها",
+          tabBarIcon: () => <AssetIcon iconKey="grid" />,
+        }}
       />
       <Tabs.Screen
         name="Insights"
         component={InsightsScreen}
-        options={{ title: "گزارش" }}
+        options={{
+          title: "گزارش",
+          tabBarIcon: () => <AssetIcon iconKey="report" />,
+        }}
       />
       <Tabs.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ title: "تنظیمات" }}
+        options={{
+          title: "تنظیمات",
+          tabBarIcon: () => <AssetIcon iconKey="settings" />,
+        }}
       />
     </Tabs.Navigator>
   );
 }
 export default function App() {
+  const [navReady, setNavReady] = useState(false);
   const [ready, setReady] = useState(false),
     [onboard, setOnboard] = useState(false),
     [error, setError] = useState(""),
@@ -120,38 +144,48 @@ export default function App() {
       sub.remove();
     };
   }, [ready]);
-  const consumed = useRef(new Set<string>());
-  async function consume(response: Notifications.NotificationResponse) {
-    if (!navigation.isReady()) return;
-    const key = `${response.notification.request.identifier}:${response.notification.date}:${response.actionIdentifier}`;
-    if (consumed.current.has(key)) return;
-    consumed.current.add(key);
-    try {
-      if (response.notification.request.content.data?.kind === "time80-test")
-        return;
-      await ensureSlotHorizon();
-      const slot = await resolveNotificationPeriod(response.notification);
-      if (slot)
-        navigation.navigate("CheckIn", {
-          start: slot.period_start,
-          end: slot.period_end,
-          slotId: slot.id,
-          source: "notification",
-        });
-      else navigation.navigate("Backlog");
-      await Notifications.clearLastNotificationResponseAsync();
-    } catch (e) {
-      consumed.current.delete(key);
-      setError(errorMessage(e));
-    }
-  }
+  const coordinator = useRef<ReturnType<
+    typeof createResponseCoordinator
+  > | null>(null);
+  if (!coordinator.current)
+    coordinator.current = createResponseCoordinator({
+      resolve: resolveNotificationTarget,
+      route: async (result) => {
+        if (!navigation.isReady()) throw Error("صفحه هنوز آماده نیست");
+        if (result.kind === "resolved")
+          navigation.dispatch(
+            StackActions.push("CheckIn", {
+              start: result.slot.period_start,
+              end: result.slot.period_end,
+              slotId: result.slot.id,
+              source: "notification",
+              entryState: result.entryState,
+              dayScope: dayScopeFor(result.slot.period_start),
+            }),
+          );
+        else
+          navigation.dispatch(
+            StackActions.push("NotificationResolution", {
+              reason: result.reason,
+            }),
+          );
+      },
+      dismiss: dismissTappedOccurrence,
+      ack: acknowledgeResponse,
+      error: (e) => setError(errorMessage(e)),
+    });
   useEffect(() => {
-    if (!ready || !onboard) return;
-    const sub = Notifications.addNotificationResponseReceivedListener(
-      (r) => void consume(r),
+    const sub = Notifications.addNotificationResponseReceivedListener((r) =>
+      coordinator.current!.enqueue(r),
     );
+    void pendingResponses()
+      .then((rows) => rows.forEach((r) => coordinator.current!.enqueue(r)))
+      .catch((e) => setError(errorMessage(e)));
     return () => sub.remove();
-  }, [ready, onboard]);
+  }, []);
+  useEffect(() => {
+    coordinator.current!.setReady(ready && onboard && navReady);
+  }, [ready, onboard, navReady]);
   return (
     <SafeAreaProvider>
       <SafeAreaView
@@ -163,6 +197,12 @@ export default function App() {
             {error ? (
               <>
                 <ErrorText error={error} />
+                {!!error && (
+                  <Button
+                    title="تلاش دوباره برای بازکردن اعلان"
+                    onPress={() => void coordinator.current!.retry()}
+                  />
+                )}
                 <Text style={ui.text}>داده‌ها حذف یا بازنشانی نشده‌اند.</Text>
                 <Button
                   title="تلاش دوباره"
@@ -184,13 +224,20 @@ export default function App() {
         ) : (
           <>
             <ErrorText error={error} />
+            {!!error && (
+              <Button
+                title="تلاش دوباره برای بازکردن اعلان"
+                onPress={() => void coordinator.current!.retry()}
+              />
+            )}
             <NavigationContainer
               ref={navigation}
               onReady={() => {
-                void Notifications.getLastNotificationResponseAsync()
-                  .then((r) => {
-                    if (r) void consume(r);
-                  })
+                setNavReady(true);
+                void pendingResponses()
+                  .then((rows) =>
+                    rows.forEach((r) => coordinator.current!.enqueue(r)),
+                  )
                   .catch((e) => setError(errorMessage(e)));
               }}
             >
@@ -209,6 +256,16 @@ export default function App() {
                   name="Backlog"
                   component={BacklogScreen}
                   options={{ title: "بازه‌های ثبت‌نشده" }}
+                />
+                <Stack.Screen
+                  name="SaveResult"
+                  component={SaveResultScreen}
+                  options={{ title: "نتیجهٔ ثبت" }}
+                />
+                <Stack.Screen
+                  name="NotificationResolution"
+                  component={NotificationResolutionScreen}
+                  options={{ title: "بازه مشخص نیست" }}
                 />
                 <Stack.Screen
                   name="Diagnostics"

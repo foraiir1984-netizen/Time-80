@@ -1,3 +1,4 @@
+import { ActivityIcon } from "./ActivityIcon";
 import React from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 import type { Activity } from "../types/models";
@@ -7,11 +8,13 @@ export function ActivityGrid({
   onSelect,
   header,
   disabled = false,
+  showEmpty = true,
 }: {
   activities: Activity[];
   onSelect: (a: Activity) => void;
   header?: React.ReactElement;
   disabled?: boolean;
+  showEmpty?: boolean;
 }) {
   return (
     <FlatList
@@ -40,14 +43,14 @@ export function ActivityGrid({
             },
           ]}
         >
-          <Text style={{ fontSize: 28 }}>{item.icon}</Text>
+          <ActivityIcon icon={item.icon_view} legacy={item.icon} />
           <Text style={[ui.text, { fontSize: 12, textAlign: "center" }]}>
             {item.name}
           </Text>
         </Pressable>
       )}
       ListEmptyComponent={
-        !header ? (
+        showEmpty && !activities.length ? (
           <Text style={ui.muted}>
             فعالیتی وجود ندارد؛ از صفحهٔ فعالیت‌ها اضافه کن.
           </Text>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Modal,
   View,
@@ -8,14 +8,16 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import type { Activity } from "../types/domain";
-import { createActivity, updateActivity } from "../db/database";
 import {
-  getActivityDefault,
+  getActivityEditorSnapshot,
   saveActivity,
 } from "../services/classificationService";
 import { ClassificationPicker } from "./ClassificationPicker";
+import { ActivityIcon, AssetIcon } from "./ActivityIcon";
+import { ICON_SET, type IconCommand, type IconKey } from "../icons/iconModel";
 import { ui, Button, ErrorText, errorMessage } from "./Ui";
 const icons =
   "📚 ✏️ 🧠 💻 💼 👨‍👩‍👦 ❤️ 🏃 🏋️ 🚶 🧘 😴 ☕ 🍽️ 🚗 🚌 🎮 🎬 🎵 📱 🌿 🛁 🧹 🛒 ☎️ 🩺 🎓 📝 🧑‍🤝‍🧑 🌙 ☀️ 💡 🎯 💰 📦 🛠️ ✨ 🐕 ⚽ 🎨 🧳 🏠".split(
@@ -25,6 +27,15 @@ const labels =
   "مطالعه کتاب|نوشتن|فکر ذهن|کامپیوتر|کار|خانواده|عشق|دویدن ورزش|باشگاه|پیاده روی|مدیتیشن|خواب|قهوه|غذا|ماشین رفت و آمد|اتوبوس|بازی|فیلم|موسیقی|موبایل|طبیعت|حمام|نظافت|خرید|تلفن|پزشک|درس|یادداشت|دوستان|شب|روز|ایده|هدف|پول|بسته|ابزار|متفرقه|حیوان|فوتبال|نقاشی|سفر|خانه".split(
     "|",
   );
+// Activity concepts explicitly labeled in the supplied Visual Icon Spec. Action/navigation keys stay out of activity choices.
+const activityAssets: [IconKey, string][] = [
+  ["work", "کار"],
+  ["study", "مطالعه"],
+  ["family", "خانواده"],
+  ["rest", "استراحت"],
+  ["exercise", "ورزش"],
+  ["commute", "رفت‌وآمد"],
+];
 export function ActivityEditor({
   activity,
   onClose,
@@ -35,35 +46,74 @@ export function ActivityEditor({
   onSaved: () => void;
 }) {
   const [name, setName] = useState(activity?.name ?? ""),
-    [icon, setIcon] = useState(activity?.icon ?? "✨"),
+    [command, setCommand] = useState<IconCommand>({ kind: "keep" }),
+    [snapshot, setSnapshot] = useState<Awaited<
+      ReturnType<typeof getActivityEditorSnapshot>
+    > | null>(null),
+    [loaded, setLoaded] = useState(!activity),
     [code, setCode] = useState<string | null>(null),
     [revision, setRevision] = useState<number | null>(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [search, setSearch] = useState("");
-  useEffect(() => {
-    if (activity)
-      getActivityDefault(activity.id)
-        .then((d) => {
-          setCode(d?.code ?? null);
-          setRevision(d?.revision ?? null);
-        })
-        .catch((e) => setError(errorMessage(e)));
-  }, [activity]);
-  async function save() {
-    if (busy) return;
-    setBusy(true);
+    [search, setSearch] = useState(""),
+    [picker, setPicker] = useState(false);
+  const guard = useRef(false);
+  async function load() {
+    if (!activity) return;
     try {
-      await saveActivity(activity?.id ?? null, name, icon, code, revision);
+      const s = await getActivityEditorSnapshot(activity.id);
+      setSnapshot(s);
+      setCode(s.category?.code ?? null);
+      setRevision(s.category?.revision ?? null);
+      setLoaded(true);
+      setError("");
+    } catch (e) {
+      setLoaded(false);
+      setError(errorMessage(e));
+    }
+  }
+  useEffect(() => {
+    void load();
+  }, [activity?.id]);
+  async function save() {
+    if (guard.current || !loaded || !name.trim()) return;
+    guard.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      await saveActivity(
+        activity?.id ?? null,
+        name,
+        command,
+        code,
+        revision,
+        snapshot?.icon,
+      );
       onSaved();
     } catch (e) {
       setError(errorMessage(e));
     } finally {
+      guard.current = false;
       setBusy(false);
     }
   }
+  const preview =
+    command.kind === "selectAsset"
+      ? {
+          kind: "asset" as const,
+          key: command.key as IconKey,
+          raw: snapshot?.activity.icon ?? "✨",
+          unresolved: false as const,
+        }
+      : command.kind === "selectLegacy"
+        ? { kind: "legacy" as const, raw: command.raw, unresolved: false }
+        : snapshot?.iconView;
   return (
-    <Modal visible animationType="slide" onRequestClose={onClose}>
+    <Modal
+      visible
+      animationType="slide"
+      onRequestClose={() => !busy && onClose()}
+    >
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -71,7 +121,7 @@ export function ActivityEditor({
         <ScrollView
           contentContainerStyle={{
             padding: 22,
-            paddingTop: 50,
+            paddingTop: 48,
             paddingBottom: 60,
           }}
           keyboardShouldPersistTaps="handled"
@@ -79,61 +129,126 @@ export function ActivityEditor({
           <Text style={ui.title}>
             {activity ? "ویرایش فعالیت" : "فعالیت جدید"}
           </Text>
+          <ErrorText error={error} />
+          {!loaded && (
+            <>
+              <ActivityIndicator />
+              <Button
+                title="تلاش دوباره برای بارگذاری"
+                onPress={() => void load()}
+              />
+            </>
+          )}
+          <Text style={ui.text}>نام فعالیت</Text>
           <TextInput
+            accessibilityLabel="نام فعالیت"
             style={ui.input}
             value={name}
             onChangeText={setName}
-            placeholder="نام فعالیت"
-            maxLength={40}
+            editable={!busy}
           />
-          <Text style={ui.text}>آیکون انتخابی: {icon}</Text>
-          <TextInput
-            style={ui.input}
-            value={search}
-            onChangeText={setSearch}
-            placeholder="آیکون دلخواه را وارد کن یا از پایین انتخاب کن"
-          />
+          {!name.trim() && (
+            <Text style={ui.muted}>نام فعالیت را وارد کنید.</Text>
+          )}
+          <Text style={ui.text}>آیکون</Text>
+          <ActivityIcon icon={preview} legacy={activity?.icon ?? "✨"} />
           <Button
-            title="استفاده از آیکون واردشده"
-            disabled={!search.trim()}
-            onPress={() => setIcon(search.trim())}
+            title="انتخاب آیکون"
+            disabled={!loaded || busy}
+            onPress={() => setPicker(!picker)}
           />
-          <ScrollView
-            style={{ maxHeight: 220 }}
-            nestedScrollEnabled
-            keyboardShouldPersistTaps="handled"
-          >
-            <View style={ui.row}>
-              {icons
-                .filter(
-                  (i, index) =>
-                    !search ||
-                    i.includes(search) ||
-                    labels[index]?.includes(search),
-                )
-                .map((i) => (
+          {picker && (
+            <View>
+              <Button
+                title="نگه‌داشتن آیکون قبلی"
+                onPress={() => setCommand({ kind: "keep" })}
+              />
+              <View style={ui.row}>
+                {activityAssets.map(([key, label]) => (
                   <Pressable
-                    key={i}
-                    accessibilityLabel={`آیکون ${i}`}
-                    onPress={() => setIcon(i)}
+                    key={key}
+                    accessibilityRole="button"
+                    accessibilityLabel={`آیکون ${label}`}
+                    accessibilityState={{
+                      selected:
+                        command.kind === "selectAsset" && command.key === key,
+                    }}
+                    onPress={() =>
+                      setCommand({ kind: "selectAsset", set: ICON_SET, key })
+                    }
                     style={{
-                      padding: 10,
-                      backgroundColor: i === icon ? "#D0E9DF" : "#F4F5F6",
-                      borderRadius: 12,
+                      minWidth: 64,
+                      minHeight: 72,
+                      padding: 6,
+                      borderWidth:
+                        command.kind === "selectAsset" && command.key === key
+                          ? 2
+                          : 0,
+                      borderColor: "#A7462E",
+                      borderRadius: 16,
                     }}
                   >
-                    <Text style={{ fontSize: 28 }}>{i}</Text>
+                    <AssetIcon iconKey={key} size={32} frame />
+                    <Text style={ui.small}>{label}</Text>
                   </Pressable>
                 ))}
+              </View>
+              <Text style={ui.text}>آیکون‌های قبلی / آیکون دلخواه</Text>
+              <TextInput
+                style={ui.input}
+                value={search}
+                onChangeText={setSearch}
+                accessibilityLabel="جست‌وجوی آیکون یا ورود آیکون دلخواه"
+                placeholder="جست‌وجوی آیکون یا ورود آیکون دلخواه"
+              />
+              <Button
+                title="استفاده از آیکون واردشده"
+                disabled={!search.trim()}
+                onPress={() =>
+                  setCommand({ kind: "selectLegacy", raw: search })
+                }
+              />
+              <View style={ui.row}>
+                {icons
+                  .filter(
+                    (i, index) =>
+                      !search ||
+                      i.includes(search) ||
+                      labels[index]?.includes(search),
+                  )
+                  .map((i) => (
+                    <Pressable
+                      key={i}
+                      accessibilityRole="button"
+                      accessibilityLabel={`آیکون ${i}`}
+                      onPress={() =>
+                        setCommand({ kind: "selectLegacy", raw: i })
+                      }
+                      style={{ minWidth: 48, minHeight: 48, padding: 8 }}
+                    >
+                      <Text style={{ fontSize: 28 }}>{i}</Text>
+                    </Pressable>
+                  ))}
+              </View>
             </View>
-          </ScrollView>
+          )}
+          <Text style={ui.muted}>
+            تغییر نام در گزارش‌های قبلی هم نمایش داده می‌شود. برای فعالیتی با
+            معنای متفاوت، فعالیت تازه بسازید.
+          </Text>
+          <Text style={ui.muted}>
+            آیکون جدید در گزارش‌های قبلی این فعالیت هم نمایش داده می‌شود.
+          </Text>
           <Text style={ui.text}>دستهٔ پیش‌فرض برای ثبت‌های بعدی</Text>
-          <ClassificationPicker value={code} onChange={setCode} />
+          {loaded && <ClassificationPicker value={code} onChange={setCode} />}
           <Text style={ui.muted}>
             تغییر پیش‌فرض، دستهٔ ثبت‌های قبلی را عوض نمی‌کند.
           </Text>
-          <ErrorText error={error} />
-          <Button title="ذخیره" disabled={busy} onPress={save} />
+          <Button
+            title={busy ? "در حال ذخیره…" : "ذخیره"}
+            disabled={busy || !loaded || !name.trim()}
+            onPress={() => void save()}
+          />
           <Button title="انصراف" disabled={busy} onPress={onClose} />
         </ScrollView>
       </KeyboardAvoidingView>

@@ -1,3 +1,5 @@
+import { AssetIcon } from "./ActivityIcon";
+import type { IconKey } from "../icons/iconModel";
 import React from "react";
 import { Text, Pressable, StyleSheet, View, TextInput } from "react-native";
 export const ui = StyleSheet.create({
@@ -34,6 +36,9 @@ export const ui = StyleSheet.create({
     textAlign: "right",
   },
   button: {
+    minHeight: 48,
+    minWidth: 48,
+    justifyContent: "center",
     padding: 13,
     borderRadius: 12,
     backgroundColor: "#183C43",
@@ -46,19 +51,34 @@ export function Button({
   title,
   onPress,
   disabled = false,
+  focusRef,
+  iconKey,
 }: {
   title: string;
   onPress: () => void;
   disabled?: boolean;
+  focusRef?: React.Ref<View>;
+  iconKey?: IconKey;
 }) {
   return (
     <Pressable
+      ref={focusRef}
       accessibilityRole="button"
       onPress={onPress}
       disabled={disabled}
       style={[ui.button, disabled && { opacity: 0.4 }]}
     >
-      <Text style={ui.buttonText}>{title}</Text>
+      <View
+        style={{
+          flexDirection: "row-reverse",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
+        }}
+      >
+        {iconKey && <AssetIcon iconKey={iconKey} color="white" />}
+        <Text style={[ui.buttonText, { flexShrink: 1 }]}>{title}</Text>
+      </View>
     </Pressable>
   );
 }

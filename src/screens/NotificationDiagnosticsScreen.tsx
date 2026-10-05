@@ -39,14 +39,45 @@ export function NotificationDiagnosticsScreen() {
       <Text style={ui.text}>
         مجوز: {d?.permission.granted ? "مجاز" : "داده نشده"}
       </Text>
-      <Text style={ui.text}>تعداد زمان‌بندی واقعی: {d?.scheduled ?? "…"}</Text>
+      <Text style={ui.text}>
+        تعداد درخواست‌های cache زمان‌بندی: {d?.scheduled ?? "…"}
+      </Text>
       <Text style={ui.text}>
         نیاز به هماهنگی: {d?.dirty === "true" ? "بله" : "خیر"}
       </Text>
+      {d &&
+        Object.entries(d.capabilities).map(([key, c]) => (
+          <Text key={key} style={ui.text}>
+            {(
+              {
+                displayPermission: "مجوز نمایش",
+                channelEnabled: "کانال اعلان",
+                exactAlarmAllowed: "دسترسی alarm دقیق",
+                batteryOptimizationExempt: "معافیت بهینه‌سازی باتری",
+                backgroundRestricted: "محدودیت پس‌زمینه",
+              } as Record<string, string>
+            )[key] ?? key}
+            :{" "}
+            {c.supported && c.value !== null
+              ? c.value
+                ? "بله"
+                : "خیر"
+              : "نامعلوم"}
+          </Text>
+        ))}
       <Text style={ui.muted}>
-        وضعیت محدودیت باتری و پس‌زمینه: نامعلوم. در تنظیمات Samsung، محدودیت
-        باتری Time80 را بررسی کن. زمان تحویل دقیق تضمین نمی‌شود.
+        وجود درخواست در cache و موفقیت هماهنگ‌سازی، دریافت اعلان را اثبات
+        نمی‌کند. ثبت دستی همیشه در دسترس است.
       </Text>
+      {!!d?.native.recoveryBlocked && (
+        <Text style={ui.error}>
+          {d.native.recoveryBlocked.includes("timezone")
+            ? "منطقهٔ زمانی تغییر کرده است؛ هماهنگ‌سازی دوباره را اجرا کنید."
+            : d.native.recoveryBlocked.includes("horizon")
+              ? "برنامهٔ زمان‌بندی نیاز به به‌روزرسانی دارد؛ هماهنگ‌سازی دوباره را اجرا کنید."
+              : "هماهنگ‌سازی اعلان‌ها کامل نشده است؛ دوباره تلاش کنید."}
+        </Text>
+      )}
       <Button
         title="درخواست مجوز"
         onPress={() =>

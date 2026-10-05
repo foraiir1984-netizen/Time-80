@@ -1,4 +1,5 @@
 export type Activity = {
+  icon_view?: import("../icons/iconModel").IconView;
   id: number;
   name: string;
   icon: string;
@@ -9,6 +10,7 @@ export type Activity = {
 };
 
 export type TimeEntry = {
+  activity_icon_view?: import("../icons/iconModel").IconView;
   id: number;
   activity_id: number;
   period_start: string;

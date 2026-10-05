@@ -1,5 +1,22 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Alert, ActivityIndicator, TextInput } from "react-native";
+import { timezone } from "../utils/slots";
+import { ActivityIcon } from "../components/ActivityIcon";
+import { useFocusEffect } from "@react-navigation/native";
+import { dayScopeFor } from "../services/dayScopeService";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
+import {
+  View,
+  Text,
+  Alert,
+  ActivityIndicator,
+  TextInput,
+  AppState,
+} from "react-native";
 import { ActivityGrid } from "../components/ActivityGrid";
 import { ClassificationPicker } from "../components/ClassificationPicker";
 import { ui, Button, ErrorText, errorMessage } from "../components/Ui";
@@ -18,27 +35,44 @@ export function CheckInScreen({ route, navigation }: any) {
   const { start, end, source, slotId } = route.params,
     [ctx, setCtx] = useState<EntryContext | null>(null),
     [items, setItems] = useState<Activity[]>([]),
-    [top, setTop] = useState<Activity[]>([]),
+    [draft, setDraft] = useState<Activity | null>(null),
+    [zoneChanged, setZoneChanged] = useState(false),
+    [notice, setNotice] = useState(route.params.notice ?? ""),
+    [reopened, setReopened] = useState(false),
     [editing, setEditing] = useState(false),
     [selection, setSelection] = useState<Selection | undefined>(),
     [zone, setZone] = useState(""),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [undo, setUndo] = useState<UndoToken | null>(null);
+  const scope = useMemo(
+    () => route.params.dayScope ?? dayScopeFor(start),
+    [start],
+  );
   const guard = useRef(false);
+  useEffect(() => {
+    const sub = AppState.addEventListener("change", (s) => {
+      if (s === "active") setZoneChanged(timezone() !== scope.timezone);
+    });
+    return () => sub.remove();
+  }, [scope]);
   async function load() {
     const [c, a] = await Promise.all([
       getCheckInContext(start),
-      getRankedActivities(),
+      getRankedActivities(new Date(), scope.timezone),
     ]);
     setCtx(c);
     setItems(a.allActivities);
-    setTop(a.top4);
+
     setSelection(undefined);
   }
-  useEffect(() => {
-    load().catch((e) => setError(errorMessage(e)));
-  }, [start]);
+  useFocusEffect(
+    useCallback(() => {
+      setCtx(null);
+      setReopened(false);
+      if (!guard.current) void load().catch((e) => setError(errorMessage(e)));
+    }, [start]),
+  );
   useEffect(() => {
     if (!undo) return;
     const t = setTimeout(() => setUndo(null), 10000);
@@ -49,6 +83,7 @@ export function CheckInScreen({ route, navigation }: any) {
     guard.current = true;
     setBusy(true);
     setError("");
+    setDraft(a);
     try {
       const r = await commitCheckIn({
         activityId: a.id,
@@ -59,10 +94,21 @@ export function CheckInScreen({ route, navigation }: any) {
         expectedClassificationRevision: ctx.classification?.revision ?? null,
         classificationSelection: selection,
       });
-      setUndo(r.undo);
-      await load();
+      setDraft(null);
       setEditing(false);
-      if (!r.undo) navigation.goBack();
+      if (r.status === "saved") {
+        navigation.replace("SaveResult", {
+          scope,
+          cutoffUtc: new Date().toISOString(),
+          undo: r.undo,
+          period: { start, end, slotId, source: source ?? "manual" },
+        });
+      } else {
+        setNotice("تغییری اعمال نشد");
+        await load().catch((e) =>
+          setError(`تغییری اعمال نشد؛ بارگذاری مجدد: ${errorMessage(e)}`),
+        );
+      }
     } catch (e) {
       setError(errorMessage(e));
     } finally {
@@ -86,13 +132,56 @@ export function CheckInScreen({ route, navigation }: any) {
   const header = (
     <>
       <Text style={ui.title}>
-        {new Date(start).toLocaleDateString("fa-IR")}
+        {new Date(start).toLocaleDateString("fa-IR", {
+          timeZone: scope.timezone,
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
       </Text>
       <Text style={ui.text}>
-        {new Date(start).toLocaleTimeString("fa-IR")} تا{" "}
-        {new Date(end).toLocaleTimeString("fa-IR")}
+        {new Date(start).toLocaleTimeString("fa-IR", {
+          timeZone: scope.timezone,
+          hour: "2-digit",
+          minute: "2-digit",
+        })}{" "}
+        تا{" "}
+        {new Date(end).toLocaleTimeString("fa-IR", {
+          timeZone: scope.timezone,
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
       </Text>
       <ErrorText error={error} />
+      <Text style={ui.muted}>{scope.timezone}</Text>
+      {zoneChanged && (
+        <Text style={ui.muted}>
+          این ثبت و مرور با منطقهٔ زمانی {scope.timezone} ادامه پیدا می‌کند.
+        </Text>
+      )}
+      {!!notice && <Text style={ui.text}>{notice}</Text>}
+      {busy && (
+        <Text accessibilityLiveRegion="polite" style={ui.text}>
+          در حال ثبت…
+        </Text>
+      )}
+      {draft && !!error && (
+        <Button
+          title="تلاش دوباره برای ثبت فعالیت انتخابی"
+          disabled={busy}
+          onPress={() => void save(draft)}
+        />
+      )}
+      {!ctx?.entry && route.params.entryState === "skipped" && !reopened && (
+        <>
+          <Text style={ui.text}>این بازه قبلاً رد شده است.</Text>
+          <Button title="ثبت فعالیت" onPress={() => setReopened(true)} />
+          <Button title="فعلاً نه" onPress={() => navigation.goBack()} />
+        </>
+      )}
+      {ctx?.entry && <Text style={ui.muted}>این بازه قبلاً ثبت شده است.</Text>}
+
       {undo && (
         <Button
           title="بازگردانی تغییر (۱۰ ثانیه)"
@@ -113,9 +202,14 @@ export function CheckInScreen({ route, navigation }: any) {
       )}
       {ctx?.entry && !editing ? (
         <>
+          <ActivityIcon
+            icon={ctx.entry.activity_icon_view}
+            legacy={ctx.entry.activity_icon}
+          />
           <Text style={ui.text}>
             فعالیت:{" "}
-            {items.find((a) => a.id === ctx.entry!.activity_id)?.name ??
+            {ctx.entry.activity_name ??
+              items.find((a) => a.id === ctx.entry!.activity_id)?.name ??
               "فعالیت آرشیوشده"}
           </Text>
           <Text style={ui.muted}>
@@ -174,18 +268,17 @@ export function CheckInScreen({ route, navigation }: any) {
               onPress={() => choose({ id: ctx.entry!.activity_id } as Activity)}
             />
           )}
-          <Text style={ui.muted}>پیشنهادهای ۷ روز اخیر</Text>
-          <View style={ui.row}>
-            {top.map((a) => (
-              <Button
-                key={a.id}
-                title={`${a.icon} ${a.name}`}
-                disabled={busy}
-                onPress={() => choose(a)}
-              />
-            ))}
-          </View>
           <Text style={ui.text}>همهٔ فعالیت‌ها</Text>
+        </>
+      )}
+      {!ctx?.entry && items.length === 0 && (
+        <>
+          <Button
+            title="افزودن یا بازگرداندن فعالیت"
+            onPress={() =>
+              navigation.navigate("Main", { screen: "Activities" })
+            }
+          />
         </>
       )}
       {!ctx?.entry && slotId && (
@@ -220,9 +313,18 @@ export function CheckInScreen({ route, navigation }: any) {
         </>
       ) : (
         <ActivityGrid
-          activities={ctx.entry && !editing ? [] : items}
+          activities={
+            (ctx.entry && !editing) ||
+            (route.params.entryState === "skipped" && !reopened)
+              ? []
+              : items
+          }
           disabled={busy}
+          showEmpty={
+            !ctx.entry && !(route.params.entryState === "skipped" && !reopened)
+          }
           header={header}
+
           onSelect={choose}
         />
       )}

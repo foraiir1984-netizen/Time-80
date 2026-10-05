@@ -13,7 +13,10 @@
     "doctor": "expo-doctor",
     "postinstall": "node scripts/patch-notifications.cjs",
     "typecheck": "tsc --noEmit",
-    "test": "node --import ./tests/register.mjs --import tsx --test tests/*.test.ts"
+    "test": "node --import ./tests/register.mjs --import tsx --test tests/*.test.ts tests/*.test.tsx",
+    "icons:generate": "node scripts/generate-icons.cjs",
+    "icons:check": "node scripts/generate-icons.cjs --check",
+    "patch:check": "node scripts/patch-notifications.cjs"
   },
   "dependencies": {
     "@js-temporal/polyfill": "^0.5.1",
@@ -31,10 +34,22 @@
     "react-native-screens": "~4.26.0"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "2.6.2",
     "@types/node": "^26.6.2",
     "@types/react": "~19.2.2",
+    "@types/react-test-renderer": "19.1.0",
     "prettier": "^3.9.8",
+    "react-test-renderer": "19.2.3",
     "tsx": "^4.23.15",
     "typescript": "~6.0.3"
+  },
+  "expo": {
+    "autolinking": {
+      "android": {
+        "buildFromSource": [
+          "expo-notifications"
+        ]
+      }
+    }
   }
 }

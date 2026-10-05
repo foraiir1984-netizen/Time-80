@@ -1,4 +1,4 @@
-import { db, transaction } from "../db/connection";
+import { db, transaction, readSnapshot } from "../db/connection";
 import { getSettings } from "../db/database";
 import { getMeta, setMeta } from "../db/metaRepository";
 import { timeline } from "../db/slotRepository";
@@ -64,7 +64,9 @@ export async function rebuildFutureSlots(tx: SQL, effectiveAt: string) {
 }
 export async function getDayTimeline(day: Date) {
   const start = zoned(day).startOfDay();
-  return timeline(await db(), iso(start), iso(start.add({ days: 1 })));
+  return readSnapshot((tx) =>
+    timeline(tx, iso(start), iso(start.add({ days: 1 }))),
+  );
 }
 export async function getBacklog(
   before = new Date(),

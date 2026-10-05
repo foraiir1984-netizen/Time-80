@@ -1,3 +1,5 @@
+import { loadIconMetadata } from "../icons/iconRepository";
+import { iconMetaKey, resolveActivityIcon } from "../icons/iconModel";
 import type { SQL, Slot, TimeEntry, SlotView } from "../types/domain";
 export async function timeline(
   tx: SQL,
@@ -14,6 +16,13 @@ export async function timeline(
     start,
     end,
   );
+  const meta = await loadIconMetadata(tx);
+  for (const e of entries)
+    e.activity_icon_view = resolveActivityIcon(
+      e.activity_id,
+      e.activity_icon ?? "",
+      meta.get(iconMetaKey(e.activity_id)) ?? null,
+    );
   const map = new Map<string, SlotView>(
     slots.map((slot) => [slot.period_start, { ...slot, slot, entry: null }]),
   );

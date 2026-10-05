@@ -1,5 +1,7 @@
+import { getMeta as getIconMeta } from "../db/metaRepository";
+import { resolveActivityIcon, iconMetaKey } from "../icons/iconModel";
 import { getMeta } from "../db/metaRepository";
-import { db, transaction } from "../db/connection";
+import { db, transaction, readSnapshot } from "../db/connection";
 import type {
   SQL,
   TimeEntry,
@@ -35,6 +37,21 @@ async function context(tx: SQL, start: string): Promise<EntryContext> {
     "SELECT * FROM time_entries WHERE period_start=?",
     start,
   );
+  if (entry) {
+    const a = await tx.getFirstAsync<{ name: string; icon: string }>(
+      "SELECT name,icon FROM activities WHERE id=?",
+      entry.activity_id,
+    );
+    if (a) {
+      entry.activity_name = a.name;
+      entry.activity_icon = a.icon;
+      entry.activity_icon_view = resolveActivityIcon(
+        entry.activity_id,
+        a.icon,
+        await getIconMeta(tx, iconMetaKey(entry.activity_id)),
+      );
+    }
+  }
   return {
     entry,
     classification: entry
@@ -49,7 +66,7 @@ async function context(tx: SQL, start: string): Promise<EntryContext> {
   };
 }
 export const getCheckInContext = async (start: string) =>
-  context(await db(), start);
+  readSnapshot((tx) => context(tx, start));
 export async function assertNoEntryOverlap(
   tx: SQL,
   start: string,
@@ -97,9 +114,25 @@ export async function commitCheckIn(input: CommitInput) {
     if (snapshot(before.entry) !== snapshot(input.expectedEntry))
       throw Error("ثبت تغییر کرده؛ صفحه را تازه کن");
     const changedActivity = before.entry?.activity_id !== input.activityId;
-    const changesClass = changedActivity || !!input.classificationSelection;
+    const requestsClass = changedActivity || !!input.classificationSelection;
+    let selectedCode = before.classification?.code ?? null;
+    if (input.classificationSelection?.mode === "explicit")
+      selectedCode = input.classificationSelection.code;
+    if (input.classificationSelection?.mode === "inherit")
+      selectedCode =
+        (
+          await tx.getFirstAsync<{ code: string | null }>(
+            "SELECT code FROM activity_classification_defaults WHERE activity_id=? AND scheme_id=?",
+            input.activityId,
+            SCHEME,
+          )
+        )?.code ?? null;
+    const changesClass =
+      changedActivity ||
+      (!!input.classificationSelection &&
+        selectedCode !== (before.classification?.code ?? null));
     if (
-      changesClass &&
+      requestsClass &&
       before.entry &&
       (input.expectedClassificationRevision === undefined ||
         (before.classification?.revision ?? null) !==

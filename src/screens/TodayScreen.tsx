@@ -42,6 +42,7 @@ export function TodayScreen({ navigation }: any) {
       end: i.period_end,
       source: "manual",
       slotId: i.slot?.id,
+      entryState: i.slot?.state,
     });
   const pending = items.find(
     (i) =>

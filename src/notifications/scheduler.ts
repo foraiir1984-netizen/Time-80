@@ -1,3 +1,12 @@
+import * as Crypto from "expo-crypto";
+import { canonical } from "./notificationContracts";
+import {
+  readNotificationCapabilities,
+  readNativeSchedulingState,
+  applyOwnedPlan,
+} from "./notificationPlatform";
+import { resolveNotificationTarget } from "./notificationResponseService";
+import { timezone } from "../utils/slots";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import { db, serialized } from "../db/connection";
@@ -41,6 +50,7 @@ export async function reconcileNotifications(reason = "resume") {
         now.toISOString(),
         now.toISOString(),
       );
+    const wasDirty = await getMeta(conn, "schedule_dirty");
     await setMeta(conn, "schedule_dirty", "true");
     validateSettings(s);
     const plan = notificationPlan(s, anchor, now, current),
@@ -50,42 +60,64 @@ export async function reconcileNotifications(reason = "resume") {
       await setMeta(conn, "schedule_dirty", "true");
       throw Error("تنظیمات ذخیره شد؛ مجوز اعلان داده نشده است");
     }
-    const scheduled = await Notifications.getAllScheduledNotificationsAsync(),
-      desired = new Set(plan.map((p) => `time80-${revision}-${p.key}`));
-    for (const n of scheduled)
-      if (
-        n.identifier.startsWith("time80-") &&
-        !n.identifier.startsWith("time80-test-") &&
-        !desired.has(n.identifier)
-      )
-        await Notifications.cancelScheduledNotificationAsync(n.identifier);
-    for (const p of plan) {
-      const id = `time80-${revision}-${p.key}`;
-      if (scheduled.some((n) => n.identifier === id)) continue;
-      await Notifications.scheduleNotificationAsync({
-        identifier: id,
-        content: {
-          title: "Time80",
-          body: "این بازه را بیشتر صرف چه کاری کردی؟",
-          sound: s.sound_enabled ? "default" : undefined,
-          data: { ...p.data, scheduleRevision: revision },
+    const capabilities = await readNotificationCapabilities(channelId);
+    const zone = timezone();
+    const requests = plan.map((p) => ({
+      identifier: `time80-${revision}-${p.key}`,
+      content: {
+        title: "Time80",
+        body: "این بازه را بیشتر صرف چه کاری کردی؟",
+        sound: s.sound_enabled ? "default" : false,
+        autoDismiss: true,
+        data: {
+          ...p.data,
+          scheduleRevision: revision,
+          scheduleId: `time80-${revision}-${p.key}`,
+          scheduleTimezone: zone,
+          presentationLocale: "fa-IR",
         },
-        trigger: p.date
-          ? {
-              type: Notifications.SchedulableTriggerInputTypes.DATE,
-              date: new Date(p.date),
-              channelId,
-            }
-          : {
-              type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
-              weekday: p.weekday!,
-              hour: p.hour!,
-              minute: p.minute!,
-              channelId,
-            },
-      });
-    }
-    const actual = await Notifications.getAllScheduledNotificationsAsync();
+      },
+      trigger: p.date
+        ? { type: "date", timestamp: +new Date(p.date), channelId }
+        : {
+            type: "weekly",
+            weekday: p.weekday!,
+            hour: p.hour!,
+            minute: p.minute!,
+            channelId,
+          },
+    }));
+    const signature = await Crypto.digestStringAsync(
+      Crypto.CryptoDigestAlgorithm.SHA256,
+      canonical({
+        contract: 3,
+        revision,
+        zone,
+        requests,
+        exact: capabilities.exactAlarmAllowed?.value,
+        display: capabilities.displayPermission?.value,
+        channel: capabilities.channelEnabled?.value,
+      }),
+    );
+    const native = await readNativeSchedulingState();
+    const force =
+      wasDirty === "true" ||
+      reason === "manual" ||
+      reason === "app-upgrade" ||
+      reason === "capability-change" ||
+      native.dirty ||
+      (await getMeta(conn, "notification_native_epoch_applied")) !==
+        String(native.epoch) ||
+      native.generation !== signature;
+    const applied = await applyOwnedPlan(
+      requests,
+      signature,
+      force,
+      zone,
+      (await getMeta(conn, "slot_horizon_end")) ?? now.toISOString(),
+    );
+    const actual = await Notifications.getAllScheduledNotificationsAsync(),
+      desired = new Set(requests.map((r) => r.identifier));
     if ([...desired].some((id) => !actual.some((n) => n.identifier === id)))
       throw Error("زمان‌بندی کامل نشد؛ دوباره تلاش کن");
     await conn.execAsync("BEGIN");
@@ -98,11 +130,13 @@ export async function reconcileNotifications(reason = "resume") {
           Number(n.content.data?.weekday ?? 0),
           JSON.stringify(n.trigger),
         );
+      await setMeta(conn, "notification_schedule_signature", signature);
       await setMeta(
         conn,
-        "notification_schedule_signature",
-        JSON.stringify({ revision, ids: [...desired].sort() }),
+        "notification_native_epoch_applied",
+        String(applied.epoch),
       );
+      await setMeta(conn, "notification_contract_version", "3");
       await setMeta(conn, "schedule_dirty", "false");
       await conn.execAsync("COMMIT");
     } catch (e) {
@@ -122,6 +156,7 @@ export async function sendTestNotification() {
     content: {
       title: "Time80 — تست",
       body: "اعلان آزمایشی دریافت شد",
+      autoDismiss: true,
       data: { kind: "time80-test" },
     },
     trigger: {
@@ -134,26 +169,8 @@ export async function sendTestNotification() {
 export async function resolveNotificationPeriod(
   notification: Notifications.Notification,
 ) {
-  const d = notification.request.content.data ?? {};
-  if (d.kind !== "time80-checkin") return null;
-  const conn = await db();
-  if (d.periodStart && d.periodEnd) {
-    const slot = await conn.getFirstAsync<Slot>(
-      "SELECT * FROM expected_slots WHERE period_start=? AND period_end=?",
-      String(d.periodStart),
-      String(d.periodEnd),
-    );
-    return slot && +new Date(slot.period_end) <= Date.now() ? slot : null;
-  }
-  const occurrence = Number(d.time80OccurrenceEnd);
-  if (Number.isFinite(occurrence) && occurrence > 0 && occurrence <= Date.now())
-    return conn.getFirstAsync<Slot>(
-      "SELECT * FROM expected_slots WHERE period_end=? AND duration_minutes=?",
-      new Date(occurrence).toISOString(),
-      Number(d.intervalMinutes),
-    );
-  // Older payloads have no absolute occurrence: never guess the day after delayed delivery.
-  return null;
+  const result = await resolveNotificationTarget(notification);
+  return result.kind === "resolved" ? result.slot : null;
 }
 export async function getNextReminder() {
   const s = await getSettings();

@@ -1,49 +1,72 @@
-// Narrow Android patch: recurring weekly schedules cannot fire before the transition boundary.
-// Uses the existing Expo scheduler and persists its content across reboot. No new alarm service.
-const fs = require("fs");
-const p =
-  "node_modules/expo-notifications/android/src/main/java/expo/modules/notifications/service/delegates/ExpoSchedulingDelegate.kt";
-let s = fs.readFileSync(p, "utf8");
-if (s.includes("// TIME80_NOT_BEFORE") && !s.includes("// TIME80_OCCURRENCE")) {
-  s = s
-    .replace(
-      "        store.saveNotificationRequest(request)\n        // TIME80_NOT_BEFORE",
-      "        // TIME80_NOT_BEFORE",
-    )
-    .replace(
-      "        setupAlarm(scheduledTime,",
-      `        // TIME80_OCCURRENCE
-        if (request.content.body?.optString("kind") == "time80-checkin") {
-          request.content.body?.put("time80OccurrenceEnd", scheduledTime)
-        }
-        store.saveNotificationRequest(request)
-        setupAlarm(scheduledTime,`,
+const fs = require("fs"),
+  path = require("path"),
+  crypto = require("crypto"),
+  cp = require("child_process");
+const root = path.resolve(__dirname, ".."),
+  dep = path.join(root, "node_modules/expo-notifications");
+const manifest = require("../native/notifications/patch-manifest.json");
+const hash = (data) => crypto.createHash("sha256").update(data).digest("hex");
+function patch() {
+  if (
+    JSON.parse(fs.readFileSync(path.join(dep, "package.json"))).version !==
+    manifest.version
+  )
+    throw Error("Locked notifications version changed; review native patch");
+  if (
+    hash(
+      fs.readFileSync(path.join(root, "native/notifications/Time80Runtime.kt")),
+    ) !== manifest.helperSha256
+  )
+    throw Error("Native helper manifest mismatch");
+  const statuses = manifest.files.map((f) => ({
+    f,
+    h: hash(fs.readFileSync(path.join(dep, f.path))),
+  }));
+  const runtime = path.join(root, "native/notifications/Time80Runtime.kt"),
+    dest = path.join(
+      dep,
+      "android/src/main/java/expo/modules/notifications/time80/Time80Runtime.kt",
     );
-  fs.writeFileSync(p, s);
-}
-if (!s.includes("// TIME80_NOT_BEFORE")) {
-  const needle =
-    "setupAlarm(nextTriggerDate.time, NotificationsService.createNotificationTrigger(context, request.identifier))";
-  if (!s.includes(needle))
-    throw Error("Expo scheduling source changed; review Time80 patch");
-  s = s.replace("        store.saveNotificationRequest(request)\n", "");
-  s = s.replace(
-    needle,
-    `// TIME80_NOT_BEFORE
-        var scheduledTime = nextTriggerDate.time
-        if (request.trigger is expo.modules.notifications.notifications.triggers.WeeklyTrigger) {
-          val minimum = request.content.body?.optLong("time80NotBefore", 0L) ?: 0L
-          val calendar = java.util.Calendar.getInstance()
-          calendar.timeInMillis = scheduledTime
-          while (calendar.timeInMillis < minimum) calendar.add(java.util.Calendar.WEEK_OF_YEAR, 1)
-          scheduledTime = calendar.timeInMillis
-        }
-        // TIME80_OCCURRENCE
-        if (request.content.body?.optString("kind") == "time80-checkin") {
-          request.content.body?.put("time80OccurrenceEnd", scheduledTime)
-        }
-        store.saveNotificationRequest(request)
-        setupAlarm(scheduledTime, NotificationsService.createNotificationTrigger(context, request.identifier))`,
+  if (statuses.every(({ f, h }) => h === f.after)) {
+    if (
+      !fs.existsSync(dest) ||
+      !fs.readFileSync(dest).equals(fs.readFileSync(runtime))
+    )
+      throw Error("Time80 native helper mismatch");
+    return;
+  }
+  if (statuses.some(({ f, h }) => h === f.after))
+    throw Error("Partial native patch; reinstall locked dependencies");
+  // Only the scheduling delegate may be pristine before the preserved v0.2 postinstall guard.
+  for (const { f, h } of statuses)
+    if (h !== f.before && h !== f.pristine)
+      throw Error(`Native source mismatch: ${f.path}`);
+  require("./patch-notifications-v02.cjs");
+  for (const f of manifest.files)
+    if (hash(fs.readFileSync(path.join(dep, f.path))) !== f.before)
+      throw Error(`Native preimage mismatch: ${f.path}`);
+  const file = path.join(
+    root,
+    "native/notifications/expo-notifications-57.0.20.patch",
   );
-  fs.writeFileSync(p, s);
+  cp.execFileSync(
+    "git",
+    ["apply", "--check", "--unsafe-paths", `--directory=${dep}`, file],
+    { cwd: root },
+  );
+  cp.execFileSync(
+    "git",
+    ["apply", "--unsafe-paths", `--directory=${dep}`, file],
+    { cwd: root },
+  );
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  fs.copyFileSync(runtime, dest);
+  for (const f of manifest.files)
+    if (hash(fs.readFileSync(path.join(dep, f.path))) !== f.after)
+      throw Error(`Native output mismatch: ${f.path}`);
 }
+if (require.main === module) {
+  patch();
+  console.log("Verified expo-notifications 57.0.20 Time80 patch");
+}
+module.exports = { patch };

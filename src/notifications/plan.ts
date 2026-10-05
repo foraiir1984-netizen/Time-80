@@ -36,7 +36,7 @@ export function notificationPlan(
         minute: end % 60,
         data: {
           kind: "time80-checkin",
-          payloadVersion: 2,
+          payloadVersion: 3,
           weekday,
           fireHour: Math.floor(end / 60),
           fireMinute: end % 60,
@@ -58,7 +58,7 @@ export function notificationPlan(
         date: slot.period_end,
         data: {
           kind: "time80-checkin",
-          payloadVersion: 2,
+          payloadVersion: 3,
           periodStart: slot.period_start,
           periodEnd: slot.period_end,
         },
@@ -85,7 +85,7 @@ export function notificationPlan(
         date: current.period_end,
         data: {
           kind: "time80-checkin",
-          payloadVersion: 2,
+          payloadVersion: 3,
           periodStart: current.period_start,
           periodEnd: current.period_end,
         },

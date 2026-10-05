@@ -1,0 +1,42 @@
+{
+  "version": "57.0.20",
+  "files": [
+    {
+      "path": "android/src/main/java/expo/modules/notifications/service/delegates/ExpoSchedulingDelegate.kt",
+      "before": "2050341144257c4e2604f223ca60d4809c34dd48bac2b23bf834c52317d70637",
+      "after": "6ceaab4e794773834a048292409dbe54c8e0e9e0ec410004ff6491aa106b473e",
+      "pristine": "639dfa8b30c24fc2d02df0132a04f96191bca3e9947dbf7c2b817e6244645f33"
+    },
+    {
+      "path": "android/src/main/java/expo/modules/notifications/service/NotificationsService.kt",
+      "before": "77b498370167e32d1dc724f61834c31bca3985d041c31fd6cf76118a69691b10",
+      "after": "1a7896f413d829535344b88942d9cfbbfd447f85f3cf770664dd786b042aa37e"
+    },
+    {
+      "path": "android/src/main/java/expo/modules/notifications/notifications/scheduling/NotificationScheduler.kt",
+      "before": "38f2e4233828a499e99e7ed7efb37f5c195b307feac86e08cef82a781f56eae1",
+      "after": "3c0ab964974ea0e633a1377d1b6c9d152bbcdcc67e3764dae65882f03a2febdf"
+    },
+    {
+      "path": "android/src/main/java/expo/modules/notifications/notifications/emitting/NotificationsEmitter.kt",
+      "before": "f53b846e87ec3c3d9d77e559fbd51ef3defa5403e01b6828dd4dc0f527a28839",
+      "after": "999854c2067904f3a0c6b99a0f8a3e8582117d85178d32dbc18b91f5923abbf5"
+    },
+    {
+      "path": "android/src/main/java/expo/modules/notifications/notifications/NotificationManager.kt",
+      "before": "d9b84c5c9fa73ac2ce301aeca35f6dce522b2cbcf0f1dbf8a51b48662964359f",
+      "after": "e180636d144910d31e817aa287f42a4e7dca354d1d2124ee7b63551dee3bc13d"
+    },
+    {
+      "path": "android/src/main/java/expo/modules/notifications/notifications/model/NotificationContent.java",
+      "before": "138b27a6967e7959fe6da0bc23f05cd262b8a1825af92bc1b51eefe35a5873e1",
+      "after": "f867a7f73b10be560047652f705a323ef4e95c2b57b2501bb6e6c2019624c70f"
+    },
+    {
+      "path": "android/src/main/AndroidManifest.xml",
+      "before": "08d7b7174ad2a11749980f2b759244afd66c95a8832b910ecc0067d6cfd98730",
+      "after": "8342151b44e0d45085061955ad933b61a74ccc22957af6b6a5856cf788868e88"
+    }
+  ],
+  "helperSha256": "ba088fe48a89d1963cad7c7380a379504a1af2091a9ba626d0ceb8ff48b85076"
+}

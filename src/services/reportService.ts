@@ -1,3 +1,9 @@
+import { loadIconMetadata } from "../icons/iconRepository";
+import {
+  iconMetaKey,
+  resolveActivityIcon,
+  type IconView,
+} from "../icons/iconModel";
 import { readSnapshot } from "../db/connection";
 import { getMeta } from "../db/metaRepository";
 import type { TimeEntry, Assignment, Slot, SQL } from "../types/domain";
@@ -29,7 +35,13 @@ export function aggregate(
     hi = +new Date(end),
     activity = new Map<
       number,
-      { id: number; name: string; icon: string; minutes: number }
+      {
+        id: number;
+        name: string;
+        icon: string;
+        icon_view?: IconView;
+        minutes: number;
+      }
     >(),
     buckets = new Map<string, number>(),
     daily = new Map<string, number>(),
@@ -62,6 +74,7 @@ export function aggregate(
       id: e.activity_id,
       name: e.activity_name ?? "",
       icon: e.activity_icon ?? "",
+      icon_view: e.activity_icon_view,
       minutes: 0,
     };
     row.minutes += weight;
@@ -150,6 +163,13 @@ async function reportTx(tx: SQL, q: Query, now: Date, zone: string) {
       range.effectiveEnd,
       range.effectiveStart,
     );
+  const meta = await loadIconMetadata(tx);
+  for (const e of entries)
+    e.activity_icon_view = resolveActivityIcon(
+      e.activity_id,
+      e.activity_icon ?? "",
+      meta.get(iconMetaKey(e.activity_id)) ?? null,
+    );
   return {
     range,
     ...aggregate(
@@ -170,8 +190,7 @@ async function reportTx(tx: SQL, q: Query, now: Date, zone: string) {
       ),
   };
 }
-export async function getReport(q: Query, zone = timezone()) {
-  const now = new Date();
+export async function getReport(q: Query, zone = timezone(), now = new Date()) {
   return readSnapshot(async (tx) => {
     const current = await reportTx(tx, q, now, zone),
       previous =

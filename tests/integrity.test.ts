@@ -110,12 +110,12 @@ test("explicit null, no-op, confirmed time context, archive and ranking preserve
     /تغییر/,
   );
   let rank = await getRankedActivities(new Date("2026-02-20T11:00:00Z"));
-  assert.equal(rank.top4[0]!.id, id);
+  assert.equal(rank.allActivities[0]!.id, id);
   await transaction((tx) =>
     tx.runAsync("UPDATE activities SET is_archived=1 WHERE id=?", id),
   );
   rank = await getRankedActivities(new Date("2026-02-20T11:00:00Z"));
-  assert.ok(!rank.top4.some((a) => a.id === id));
+  assert.ok(!rank.allActivities.some((a) => a.id === id));
   assert.equal((await getCheckInContext(start)).entry!.id, c.entry!.id);
 });
 
