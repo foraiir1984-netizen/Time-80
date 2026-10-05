@@ -1,0 +1,236 @@
+name: Time80 DEBUG native verification (NOT RELEASE)
+
+on:
+  push:
+    branches: [feat/time80-v0.3-implementation]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: time80-native-debug-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-debug:
+    if: github.ref == 'refs/heads/feat/time80-v0.3-implementation'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      CI: "1"
+      EXPO_NO_TELEMETRY: "1"
+      TZ: UTC
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - name: Check review-stage configuration and absence of release credentials
+        run: |
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const app = require('./app.json').expo;
+          assert.equal(app.version, '0.2.0');
+          assert.equal(app.android.versionCode, 2);
+          assert.equal(app.android.package, 'com.personal.time80');
+          assert.equal(require('./package.json').version, '0.2.0');
+          for (const key of ['TIME80_KEYSTORE_PATH', 'TIME80_KEYSTORE_PASSWORD', 'TIME80_KEY_ALIAS', 'TIME80_KEY_PASSWORD', 'TIME80_KEYSTORE_BASE64']) {
+            assert.ok(!process.env[key], 'Release credential must not be bound: ' + key);
+          }
+          NODE
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: TZ=UTC npm test
+      # These are the existing version-locked patch and approved icon integrity scripts.
+      - name: Verify native patch
+        run: npm run patch:check
+      - name: Verify approved icons
+        run: npm run icons:check
+      - name: Generate debug Android project
+        id: prebuild
+        run: |
+          npx expo prebuild --platform android --clean
+          chmod +x android/gradlew
+      - name: Prepare existing native test harness
+        id: harness
+        run: node scripts/prepare-native-tests.cjs
+      - name: Native JVM tests (no device)
+        id: jvm
+        working-directory: android
+        run: |
+          ./gradlew :expo-notifications:testDebugUnitTest :app:testDebugUnitTest --no-daemon --stacktrace --console=plain 2>&1 | tee "$RUNNER_TEMP/time80-jvm.log"
+      - name: Verify Time80 JVM tests actually executed
+        id: jvm_check
+        if: ${{ !cancelled() && steps.jvm.outcome == 'success' }}
+        run: |
+          python <<'PY' 2>&1 | tee "$RUNNER_TEMP/time80-jvm-check.log"
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          reports = list(Path('node_modules/expo-notifications/android/build/test-results/testDebugUnitTest').glob('TEST-*.xml'))
+          tests = [t for p in reports for t in ET.parse(p).getroot().iter('testcase') if t.get('classname', '').endswith('Time80RuntimeTest')]
+          assert len(tests) == 3, f'Expected 3 Time80 native JVM tests, found {len(tests)}'
+          assert all(not any(t.find(s) is not None for s in ('failure', 'error', 'skipped')) for t in tests), 'Time80 JVM tests failed or were skipped'
+          print('Time80 native JVM tests: 3 passed, 0 failed, 0 skipped')
+          PY
+      - name: Compile and assemble DEBUG APK (never release)
+        id: compile
+        if: ${{ !cancelled() && steps.prebuild.outcome == 'success' }}
+        working-directory: android
+        run: |
+          ./gradlew :app:assembleDebug --no-daemon --stacktrace --console=plain 2>&1 | tee "$RUNNER_TEMP/time80-compile.log"
+      - name: Produce full merged app DEBUG manifest
+        id: manifest
+        if: ${{ !cancelled() && steps.prebuild.outcome == 'success' }}
+        working-directory: android
+        run: |
+          ./gradlew :app:processDebugMainManifest --no-daemon --stacktrace --console=plain 2>&1 | tee "$RUNNER_TEMP/time80-manifest.log"
+      - name: Verify generated app manifest
+        id: manifest_check
+        if: ${{ !cancelled() && steps.manifest.outcome == 'success' }}
+        run: |
+          python <<'PY' 2>&1 | tee "$RUNNER_TEMP/time80-manifest-check.log"
+          from pathlib import Path
+          import json, os, shutil
+          import xml.etree.ElementTree as ET
+          a = '{http://schemas.android.com/apk/res/android}'
+          candidates = [p for p in Path('android/app/build/intermediates').rglob('AndroidManifest.xml') if p.parent.name == 'processDebugMainManifest' and 'merged_manifest' in str(p)]
+          assert len(candidates) == 1, f'Expected one full merged app manifest, found {candidates}'
+          root = ET.parse(candidates[0]).getroot()
+          assert root.get('package') == 'com.personal.time80', 'ApplicationId changed'
+          assert root.get(a + 'versionCode') == '2' and root.get(a + 'versionName') == '0.2.0', 'Review version changed'
+          permissions = {p.get(a + 'name') for p in root.findall('uses-permission')}
+          assert 'android.permission.USE_EXACT_ALARM' not in permissions, 'USE_EXACT_ALARM migration is forbidden'
+          assert not any(p.startswith('android.permission.FOREGROUND_SERVICE') for p in permissions), 'Unexpected foreground service permission'
+          assert {'android.permission.SCHEDULE_EXACT_ALARM', 'android.permission.POST_NOTIFICATIONS', 'android.permission.RECEIVE_BOOT_COMPLETED'} <= permissions
+          app = root.find('application')
+          assert app is not None and app.get(a + 'debuggable') == 'true', 'Artifact must be DEBUG'
+          services = [dict(s.attrib) for s in app.findall('service')]
+          for s in app.findall('service'):
+              name = s.get(a + 'name', '')
+              assert not s.get(a + 'foregroundServiceType') and 'ForegroundService' not in name and not name.startswith('com.personal.time80.'), f'Unexpected Time80/foreground service: {name}'
+          receiver_name = 'expo.modules.notifications.service.NotificationsService'
+          receivers = [r for r in app.findall('receiver') if r.get(a + 'name') == receiver_name]
+          assert len(receivers) == 1, 'Missing or duplicate notifications receiver'
+          receiver = receivers[0]
+          assert receiver.get(a + 'exported') == 'false' and receiver.get(a + 'enabled') == 'true'
+          actions = {n.get(a + 'name') for n in receiver.findall('intent-filter/action')}
+          expected = {'expo.modules.notifications.NOTIFICATION_EVENT', 'android.intent.action.BOOT_COMPLETED', 'android.intent.action.REBOOT', 'android.intent.action.QUICKBOOT_POWERON', 'com.htc.intent.action.QUICKBOOT_POWERON', 'android.intent.action.MY_PACKAGE_REPLACED', 'android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED', 'android.intent.action.TIME_SET', 'android.intent.action.TIMEZONE_CHANGED'}
+          assert expected <= actions, f'Missing notification filters: {expected - actions}'
+          forwarders = [n for n in app.findall('activity') if n.get(a + 'name') == 'expo.modules.notifications.service.NotificationForwarderActivity']
+          assert len(forwarders) == 1 and forwarders[0].get(a + 'exported') == 'false'
+          assert any(s.get(a + 'name') == 'expo.modules.notifications.service.ExpoFirebaseMessagingService' for s in app.findall('service'))
+          evidence = Path(os.environ['RUNNER_TEMP']) / 'time80-debug-verification'
+          evidence.mkdir(exist_ok=True)
+          shutil.copy2(candidates[0], evidence / 'AndroidManifest-DEBUG.xml')
+          (evidence / 'manifest-verification.json').write_text(json.dumps({'applicationId': root.get('package'), 'versionName': '0.2.0', 'versionCode': 2, 'debuggable': True, 'permissions': sorted(permissions), 'receiverActions': sorted(actions), 'services': services, 'foregroundServiceDeclarations': 'none', 'runtimeBatteryReliability': 'requires device; not proved by manifest'}, indent=2))
+          print('Full merged app DEBUG manifest: all assertions passed')
+          PY
+      - name: Prove patched native source compiled and was packaged
+        id: patch_compile
+        if: ${{ !cancelled() && steps.compile.outcome == 'success' }}
+        run: |
+          npm run patch:check
+          python <<'PY' 2>&1 | tee "$RUNNER_TEMP/time80-patch-proof.log"
+          from pathlib import Path
+          import hashlib, json, os, subprocess, zipfile
+          assert 'expo-notifications' in json.loads(Path('package.json').read_text())['expo']['autolinking']['android']['buildFromSource']
+          build = Path('node_modules/expo-notifications/android/build')
+          classes = [p for p in build.rglob('*.class') if not any('test' in s.lower() for s in p.parts)]
+          checks = {
+              'expo/modules/notifications/time80/Time80Runtime': ['time80-occ-v3:', 'capabilities', 'recover'],
+              'expo/modules/notifications/service/delegates/ExpoSchedulingDelegate': ['Time80Runtime'],
+              'expo/modules/notifications/service/NotificationsService': ['time80ExpectedEnd', 'Time80Runtime'],
+              'expo/modules/notifications/notifications/scheduling/NotificationScheduler': ['time80ReadCapabilities', 'time80ApplyPlan'],
+              'expo/modules/notifications/notifications/emitting/NotificationsEmitter': ['time80GetPendingResponses', 'time80AcknowledgeResponse'],
+              'expo/modules/notifications/notifications/NotificationManager': ['synchronized', 'onNotificationResponseFromExtras'],
+              'expo/modules/notifications/notifications/model/NotificationContent$Builder': ['NotificationContent);', 'android/os/Parcel.obtain'],
+          }
+          apk = Path('android/app/build/outputs/apk/debug/app-debug.apk')
+          assert apk.is_file(), 'Debug APK was not produced'
+          with zipfile.ZipFile(apk) as z:
+              dex = [z.read(n) for n in z.namelist() if n.startswith('classes') and n.endswith('.dex')]
+          proof = {}
+          for name, markers in checks.items():
+              parent, basename = name.rsplit('/', 1)
+              outputs = [p for p in classes if p.parent.as_posix().endswith(parent) and (p.name == basename + '.class' or p.name.startswith(basename + '$'))]
+              assert any(p.name == basename + '.class' for p in outputs), f'Compiled class missing: {name}'
+              bytecode = subprocess.check_output(['javap', '-p', '-c', *map(str, outputs)], text=True)
+              assert all(m in bytecode for m in markers), f'Patched bytecode markers missing: {name}'
+              assert any(('L' + name + ';').encode() in d for d in dex), f'Patched class absent from debug APK: {name}'
+              proof[name] = [{'path': str(p), 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in outputs]
+          evidence = Path(os.environ['RUNNER_TEMP']) / 'time80-debug-verification'
+          evidence.mkdir(exist_ok=True)
+          (evidence / 'compiled-patch-proof.json').write_text(json.dumps(proof, indent=2))
+          print('Version-locked patched Kotlin/Java classes compiled and included in DEBUG APK')
+          PY
+      - name: Collect useful DEBUG artifacts and publish exact results
+        if: ${{ always() }}
+        env:
+          JVM_RESULT: ${{ steps.jvm.outcome }}
+          JVM_CHECK_RESULT: ${{ steps.jvm_check.outcome }}
+          COMPILE_RESULT: ${{ steps.compile.outcome }}
+          MANIFEST_RESULT: ${{ steps.manifest.outcome }}
+          MANIFEST_CHECK_RESULT: ${{ steps.manifest_check.outcome }}
+          PATCH_COMPILE_RESULT: ${{ steps.patch_compile.outcome }}
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          import json, os, shutil
+          import xml.etree.ElementTree as ET
+          temp = Path(os.environ['RUNNER_TEMP'])
+          out = temp / 'time80-debug-verification'
+          out.mkdir(exist_ok=True)
+          apk = Path('android/app/build/outputs/apk/debug/app-debug.apk')
+          if apk.is_file():
+              shutil.copy2(apk, out / 'Time80-DEBUG-NOT-RELEASE.apk')
+          for p in Path('android/app/build/intermediates').rglob('AndroidManifest.xml'):
+              if p.parent.name == 'processDebugMainManifest' and 'merged_manifest' in str(p):
+                  shutil.copy2(p, out / 'AndroidManifest-DEBUG.xml')
+          counts = []
+          for project in [Path('android/app'), Path('node_modules/expo-notifications/android')]:
+              for kind in ['test-results/testDebugUnitTest', 'reports/tests/testDebugUnitTest']:
+                  src = project / 'build' / kind
+                  if src.is_dir():
+                      shutil.copytree(src, out / project.parent.name / project.name / kind, dirs_exist_ok=True)
+              for p in (project / 'build/test-results/testDebugUnitTest').glob('TEST-*.xml'):
+                  r = ET.parse(p).getroot()
+                  counts.append({k: r.get(k, '0') for k in ['name', 'tests', 'failures', 'errors', 'skipped']})
+          results = {k: os.environ.get(k, 'not run') for k in ['JVM_RESULT', 'JVM_CHECK_RESULT', 'COMPILE_RESULT', 'MANIFEST_RESULT', 'MANIFEST_CHECK_RESULT', 'PATCH_COMPILE_RESULT']}
+          results.update(debugApkProduced=apk.is_file(), nativeTests=counts, instrumentation='NOT RUN: no emulator or physical device provisioned', release='NOT RUN: debug tasks only; no release credentials bound')
+          (out / 'verification-results.json').write_text(json.dumps(results, indent=2))
+          summary = ['## Time80 DEBUG native verification — NOT RELEASE', '```json', json.dumps(results, indent=2), '```']
+          for kind in ['jvm', 'compile', 'manifest', 'jvm-check', 'manifest-check', 'patch-proof']:
+              log = temp / f'time80-{kind}.log'
+              if log.is_file():
+                  text = log.read_text(errors='replace')
+                  if 'FAILURE: Build failed' in text:
+                      error = text[text.index('FAILURE: Build failed'):].split('* Try:')[0]
+                      summary += [f'### Exact Gradle failure ({kind})', '```text', error[:16000], '```']
+                      diagnostics = [line for line in text.splitlines() if line.startswith('e: ') or 'error:' in line]
+                      if diagnostics:
+                          summary += ['### Compiler diagnostics', '```text', '\n'.join(diagnostics)[:16000], '```']
+                  elif 'Traceback (most recent call last)' in text:
+                      summary += [f'### Verification failure ({kind})', '```text', text[-16000:], '```']
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('\n'.join(summary) + '\n')
+          print(json.dumps(results, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: Time80-DEBUG-NOT-RELEASE-native-verification-${{ github.sha }}
+          path: ${{ runner.temp }}/time80-debug-verification/
+          if-no-files-found: warn
+          retention-days: 14
