@@ -4,11 +4,9 @@ import {
   Text,
   FlatList,
   Modal,
-  Pressable,
   useWindowDimensions,
   AccessibilityInfo,
   findNodeHandle,
-  ActivityIndicator,
   ScrollView,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
@@ -20,7 +18,15 @@ import {
   type ArchiveUndo,
 } from "../services/activityService";
 import type { Activity } from "../types/domain";
-import { ui, Button, ErrorText, errorMessage } from "../components/Ui";
+import { activityColumns, theme } from "../theme/time80Theme";
+import {
+  ui,
+  Button,
+  ErrorText,
+  errorMessage,
+  InteractivePressable,
+  Loading,
+} from "../components/Ui";
 import { ActivityEditor } from "../components/ActivityEditor";
 import { ActivityIcon, AssetIcon } from "../components/ActivityIcon";
 export function ActivitiesScreen() {
@@ -34,8 +40,7 @@ export function ActivitiesScreen() {
     [message, setMessage] = useState(""),
     [undo, setUndo] = useState<ArchiveUndo | null>(null);
   const dimensions = useWindowDimensions(),
-    columns =
-      dimensions.width - 36 < 300 || dimensions.fontScale >= 1.5 ? 1 : 2;
+    columns = activityColumns(dimensions.width, dimensions.fontScale);
   const origins = useRef(new Map<number, any>()),
     origin = useRef<number | null>(null),
     addFocus = useRef<any>(null),
@@ -105,12 +110,13 @@ export function ActivitiesScreen() {
           onPress={() => setEdit(null)}
         />
         <Button
+          variant="secondary"
           title={archived ? "فعال‌ها" : "بایگانی‌شده"}
           onPress={() => setArchived(!archived)}
         />
       </View>
       {loading ? (
-        <ActivityIndicator />
+        <Loading />
       ) : error ? null : (
         <FlatList
           key={columns}
@@ -136,7 +142,7 @@ export function ActivitiesScreen() {
               ]}
             >
               <View style={{ flexDirection: "row-reverse" }}>
-                <Pressable
+                <InteractivePressable
                   ref={(ref) => {
                     origins.current.set(item.id, ref);
                   }}
@@ -154,20 +160,22 @@ export function ActivitiesScreen() {
                   }}
                 >
                   <AssetIcon iconKey="more" />
-                </Pressable>
-                <Pressable
+                </InteractivePressable>
+                <InteractivePressable
                   accessibilityRole="button"
                   accessibilityLabel={`مدیریت فعالیت ${item.name}${item.is_archived ? "، بایگانی‌شده" : ""}`}
                   onPress={() => {
                     origin.current = item.id;
                     setSheet(item);
                   }}
-                  style={{
+                  style={({ pressed }) => ({
+                    backgroundColor: pressed ? theme.pressed : theme.surface,
+                    borderRadius: 16,
                     flex: 1,
                     minHeight: 96,
                     alignItems: "center",
                     justifyContent: "center",
-                  }}
+                  })}
                 >
                   <ActivityIcon icon={item.icon_view} legacy={item.icon} />
                   <Text
@@ -180,7 +188,7 @@ export function ActivitiesScreen() {
                   {!!item.is_archived && (
                     <Text style={ui.muted}>بایگانی‌شده</Text>
                   )}
-                </Pressable>
+                </InteractivePressable>
               </View>
             </View>
           )}
@@ -192,6 +200,7 @@ export function ActivitiesScreen() {
                   : "فعالیتی در فهرست فعال نیست"}
               </Text>
               <Button
+                variant="secondary"
                 title={archived ? "فعال‌ها" : "دیدن بایگانی‌شده‌ها"}
                 onPress={() => setArchived(!archived)}
               />
@@ -239,10 +248,10 @@ export function ActivitiesScreen() {
             style={{
               flex: 1,
               justifyContent: "flex-end",
-              backgroundColor: "#0006",
+              backgroundColor: theme.scrim,
             }}
           >
-            <Pressable
+            <InteractivePressable
               accessibilityLabel="بستن گزینه‌های فعالیت"
               style={{ flex: 1 }}
               onPress={close}
@@ -283,6 +292,7 @@ export function ActivitiesScreen() {
                     />
                     <Button
                       iconKey="archive"
+                      variant="secondary"
                       title="بایگانی فعالیت"
                       disabled={busy}
                       onPress={() =>
@@ -293,7 +303,12 @@ export function ActivitiesScreen() {
                     />
                   </>
                 )}
-                <Button title="بستن" disabled={busy} onPress={close} />
+                <Button
+                  variant="secondary"
+                  title="بستن"
+                  disabled={busy}
+                  onPress={close}
+                />
               </ScrollView>
             </View>
           </View>

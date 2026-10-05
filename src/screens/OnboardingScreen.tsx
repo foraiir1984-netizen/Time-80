@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { ScrollView, Text } from "react-native";
 import { ui, Button, ErrorText, errorMessage } from "../components/Ui";
 import { getSettings } from "../db/database";
 import { transaction } from "../db/connection";
@@ -31,7 +31,13 @@ export function OnboardingScreen({ onDone }: { onDone: () => void }) {
     }
   }
   return (
-    <View style={[ui.page, { justifyContent: "center" }]}>
+    <ScrollView
+      style={ui.screen}
+      contentContainerStyle={[
+        ui.content,
+        { flexGrow: 1, justifyContent: "center" },
+      ]}
+    >
       <Text style={ui.title}>به Time80 خوش آمدی</Text>
       <Text style={ui.text}>
         با یادآوری‌های کوتاه ثبت کن زمانت صرف چه کاری شده است. داده‌ها روی همین
@@ -56,6 +62,6 @@ export function OnboardingScreen({ onDone }: { onDone: () => void }) {
             .catch((e) => setError(errorMessage(e)))
         }
       />
-    </View>
+    </ScrollView>
   );
 }

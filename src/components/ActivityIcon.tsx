@@ -1,6 +1,7 @@
+import { iconTone, theme } from "../theme/time80Theme";
 import React from "react";
 import { Image, Text, View } from "react-native";
-import { ICON_ASSETS, ICON_COLORS } from "../icons/iconAssets";
+import { ICON_ASSETS } from "../icons/iconAssets";
 import type { IconKey, IconView } from "../icons/iconModel";
 export function AssetIcon({
   iconKey,
@@ -20,7 +21,7 @@ export function AssetIcon({
       style={{
         width: size,
         height: size,
-        tintColor: color ?? ICON_COLORS[iconKey].foreground,
+        tintColor: color ?? iconTone(iconKey).foreground,
       }}
     />
   );
@@ -33,7 +34,7 @@ export function AssetIcon({
         borderRadius: 16,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: ICON_COLORS[iconKey].background,
+        backgroundColor: iconTone(iconKey).background,
       }}
     >
       {image}
@@ -54,8 +55,20 @@ export function ActivityIcon({
   return icon?.kind === "asset" ? (
     <AssetIcon iconKey={icon.key} size={size} frame />
   ) : (
-    <Text accessible={false} style={{ fontSize: size, textAlign: "center" }}>
-      {icon?.raw ?? legacy}
-    </Text>
+    <View
+      accessible={false}
+      style={{
+        width: theme.frame,
+        minHeight: theme.frame,
+        borderRadius: 16,
+        backgroundColor: theme.pressed,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Text accessible={false} style={{ fontSize: size, textAlign: "center" }}>
+        {icon?.raw ?? legacy}
+      </Text>
+    </View>
   );
 }

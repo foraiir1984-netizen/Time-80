@@ -3,12 +3,9 @@ import {
   Modal,
   View,
   Text,
-  TextInput,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
-  ActivityIndicator,
 } from "react-native";
 import type { Activity } from "../types/domain";
 import {
@@ -18,7 +15,16 @@ import {
 import { ClassificationPicker } from "./ClassificationPicker";
 import { ActivityIcon, AssetIcon } from "./ActivityIcon";
 import { ICON_SET, type IconCommand, type IconKey } from "../icons/iconModel";
-import { ui, Button, ErrorText, errorMessage } from "./Ui";
+import { theme } from "../theme/time80Theme";
+import {
+  ui,
+  InteractivePressable,
+  Button,
+  ErrorText,
+  errorMessage,
+  Input,
+  Loading,
+} from "./Ui";
 const icons =
   "📚 ✏️ 🧠 💻 💼 👨‍👩‍👦 ❤️ 🏃 🏋️ 🚶 🧘 😴 ☕ 🍽️ 🚗 🚌 🎮 🎬 🎵 📱 🌿 🛁 🧹 🛒 ☎️ 🩺 🎓 📝 🧑‍🤝‍🧑 🌙 ☀️ 💡 🎯 💰 📦 🛠️ ✨ 🐕 ⚽ 🎨 🧳 🏠".split(
     " ",
@@ -115,12 +121,12 @@ export function ActivityEditor({
       onRequestClose={() => !busy && onClose()}
     >
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={ui.screen}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
           contentContainerStyle={{
-            padding: 22,
+            padding: theme.spacing.page,
             paddingTop: 48,
             paddingBottom: 60,
           }}
@@ -132,7 +138,7 @@ export function ActivityEditor({
           <ErrorText error={error} />
           {!loaded && (
             <>
-              <ActivityIndicator />
+              <Loading />
               <Button
                 title="تلاش دوباره برای بارگذاری"
                 onPress={() => void load()}
@@ -140,7 +146,7 @@ export function ActivityEditor({
             </>
           )}
           <Text style={ui.text}>نام فعالیت</Text>
-          <TextInput
+          <Input
             accessibilityLabel="نام فعالیت"
             style={ui.input}
             value={name}
@@ -165,7 +171,7 @@ export function ActivityEditor({
               />
               <View style={ui.row}>
                 {activityAssets.map(([key, label]) => (
-                  <Pressable
+                  <InteractivePressable
                     key={key}
                     accessibilityRole="button"
                     accessibilityLabel={`آیکون ${label}`}
@@ -184,17 +190,22 @@ export function ActivityEditor({
                         command.kind === "selectAsset" && command.key === key
                           ? 2
                           : 0,
-                      borderColor: "#A7462E",
+                      borderColor: theme.accent,
                       borderRadius: 16,
                     }}
                   >
                     <AssetIcon iconKey={key} size={32} frame />
-                    <Text style={ui.small}>{label}</Text>
-                  </Pressable>
+                    <Text style={ui.small}>
+                      {label}
+                      {command.kind === "selectAsset" && command.key === key
+                        ? " ✓"
+                        : ""}
+                    </Text>
+                  </InteractivePressable>
                 ))}
               </View>
               <Text style={ui.text}>آیکون‌های قبلی / آیکون دلخواه</Text>
-              <TextInput
+              <Input
                 style={ui.input}
                 value={search}
                 onChangeText={setSearch}
@@ -217,7 +228,7 @@ export function ActivityEditor({
                       labels[index]?.includes(search),
                   )
                   .map((i) => (
-                    <Pressable
+                    <InteractivePressable
                       key={i}
                       accessibilityRole="button"
                       accessibilityLabel={`آیکون ${i}`}
@@ -226,8 +237,8 @@ export function ActivityEditor({
                       }
                       style={{ minWidth: 48, minHeight: 48, padding: 8 }}
                     >
-                      <Text style={{ fontSize: 28 }}>{i}</Text>
-                    </Pressable>
+                      <Text allowFontScaling={false} style={{ fontSize: 28 }}>{i}</Text>
+                    </InteractivePressable>
                   ))}
               </View>
             </View>
@@ -249,7 +260,12 @@ export function ActivityEditor({
             disabled={busy || !loaded || !name.trim()}
             onPress={() => void save()}
           />
-          <Button title="انصراف" disabled={busy} onPress={onClose} />
+          <Button
+            variant="secondary"
+            title="انصراف"
+            disabled={busy}
+            onPress={onClose}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </Modal>

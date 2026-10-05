@@ -1,15 +1,7 @@
 import React, { useState } from "react";
-import {
-  Modal,
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  Linking,
-  Pressable,
-} from "react-native";
+import { Modal, View, Text, FlatList, Linking } from "react-native";
 import { nodes, dataset } from "../services/classificationDataset";
-import { ui, Button } from "./Ui";
+import { ui, Button, Input } from "./Ui";
 export function ClassificationPicker({
   value,
   onChange,
@@ -57,8 +49,9 @@ export function ClassificationPicker({
           <Text style={ui.muted}>
             انتخاب دسته اختیاری است. ترجمهٔ فارسی، ترجمهٔ محصول است.
           </Text>
-          <TextInput
+          <Input
             style={ui.input}
+            accessibilityLabel="جست‌وجوی کد یا عنوان دسته"
             placeholder="جست‌وجوی کد یا عنوان"
             value={search}
             onChangeText={setSearch}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, ScrollView, Switch, TextInput, Alert } from "react-native";
+import { View, Text, ScrollView, Switch, Alert } from "react-native";
 import { getSettings } from "../db/database";
 import { applySettingsPatch } from "../services/settingsService";
 import {
@@ -7,7 +7,7 @@ import {
   ensureNotificationPermission,
 } from "../notifications/scheduler";
 import type { AppSettings } from "../types/domain";
-import { ui, Button, ErrorText, errorMessage } from "../components/Ui";
+import { ui, Button, ErrorText, errorMessage, Input } from "../components/Ui";
 export function SettingsScreen({ navigation }: any) {
   const [s, setS] = useState<AppSettings | null>(null),
     [interval, setInterval] = useState(""),
@@ -76,14 +76,15 @@ export function SettingsScreen({ navigation }: any) {
   }
   if (!s)
     return (
-      <View>
+      <View style={ui.page}>
         <ErrorText error={error} />
         <Text style={ui.text}>در حال بارگذاری…</Text>
       </View>
     );
   return (
     <ScrollView
-      contentContainerStyle={{ padding: 18, paddingBottom: 70 }}
+      style={ui.screen}
+      contentContainerStyle={ui.content}
       keyboardShouldPersistTaps="handled"
     >
       <Text style={ui.title}>تنظیمات یادآوری</Text>
@@ -92,14 +93,16 @@ export function SettingsScreen({ navigation }: any) {
       <View style={ui.row}>
         <Text style={ui.text}>یادآوری فعال</Text>
         <Switch
+          accessibilityLabel="یادآوری فعال"
           disabled={busy}
           value={!!s.notification_enabled}
           onValueChange={(v) => save({ notification_enabled: v ? 1 : 0 })}
         />
       </View>
       <Text style={ui.text}>فاصله به دقیقه (۱۵ تا ۲۴۰)</Text>
-      <TextInput
+      <Input
         style={ui.input}
+        accessibilityLabel="فاصلهٔ یادآوری به دقیقه"
         keyboardType="number-pad"
         value={interval}
         onChangeText={setInterval}
@@ -109,8 +112,9 @@ export function SettingsScreen({ navigation }: any) {
         }}
       />
       <Text style={ui.text}>شروع روز HH:MM</Text>
-      <TextInput
+      <Input
         style={ui.input}
+        accessibilityLabel="شروع روز HH:MM"
         value={start}
         onChangeText={setStart}
         onBlur={() => {
@@ -118,8 +122,9 @@ export function SettingsScreen({ navigation }: any) {
         }}
       />
       <Text style={ui.text}>پایان روز HH:MM</Text>
-      <TextInput
+      <Input
         style={ui.input}
+        accessibilityLabel="پایان روز HH:MM"
         value={end}
         onChangeText={setEnd}
         onBlur={() => {
@@ -155,15 +160,17 @@ export function SettingsScreen({ navigation }: any) {
         })}
       </View>
       <View style={ui.row}>
-        <Text>صدا</Text>
+        <Text style={ui.text}>صدا</Text>
         <Switch
           disabled={busy}
+          accessibilityLabel="صدا"
           value={!!s.sound_enabled}
           onValueChange={(v) => save({ sound_enabled: v ? 1 : 0 })}
         />
-        <Text>لرزش</Text>
+        <Text style={ui.text}>لرزش</Text>
         <Switch
           disabled={busy}
+          accessibilityLabel="لرزش"
           value={!!s.vibration_enabled}
           onValueChange={(v) => save({ vibration_enabled: v ? 1 : 0 })}
         />

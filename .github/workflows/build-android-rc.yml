@@ -1,4 +1,4 @@
-name: Time80 v0.3.0 signed RC (device QA only)
+name: Time80 v0.3.0 signed RC2 (device QA only)
 
 on:
   push:
@@ -16,9 +16,33 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  verification-gates:
+    if: github.ref == 'refs/heads/feat/time80-v0.3-implementation' && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[time80-rc2]'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+      - name: Require both ordinary push validation workflows at this exact SHA
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/verify-rc-gates.cjs
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: Time80-RC2-validation-gates-${{ github.sha }}
+          path: ${{ runner.temp }}/RC2-validation-gates.json
+          if-no-files-found: error
+          retention-days: 30
   signed-rc:
-    # Push signing is an explicit RC1 request, not a side effect of ordinary feature pushes.
-    if: github.ref == 'refs/heads/feat/time80-v0.3-implementation' && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[time80-rc1]'))
+    needs: verification-gates
+    # Push signing is an explicit RC2 request, not a side effect of ordinary feature pushes.
+    if: github.ref == 'refs/heads/feat/time80-v0.3-implementation' && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[time80-rc2]'))
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
@@ -56,7 +80,7 @@ jobs:
           const app = require('./app.json').expo;
           const lock = require('./package-lock.json');
           assert.equal(app.version, '0.3.0');
-          assert.equal(app.android.versionCode, 3);
+          assert.equal(app.android.versionCode, 4);
           assert.equal(app.android.package, 'com.personal.time80');
           assert.equal(require('./package.json').version, '0.3.0');
           assert.equal(lock.version, '0.3.0');
@@ -108,7 +132,7 @@ jobs:
           TIME80_SIGNER_SHA256: ${{ secrets.TIME80_SIGNER_SHA256 }}
         run: |
           out="$RUNNER_TEMP/time80-rc"
-          apk="$out/Time80-v0.3.0-RC.apk"
+          apk="$out/Time80-v0.3.0-RC2.apk"
           test -f android/app/build/outputs/apk/release/app-release.apk
           # The preserved legacy script uses an internal v0.2 filename; only the verified RC copy is uploaded.
           cp dist/Time80-v0.2.apk "$apk"
@@ -120,19 +144,19 @@ jobs:
           "$signer" verify --verbose --print-certs "$apk" > "$out/apksigner-verification.txt"
           "$aapt" dump badging "$apk" > "$out/apk-badging.txt"
           "$aapt" dump xmltree "$apk" --file AndroidManifest.xml > "$out/packaged-manifest.txt"
-          (cd "$out" && sha256sum Time80-v0.3.0-RC.apk > Time80-v0.3.0-RC.apk.sha256 && sha256sum -c Time80-v0.3.0-RC.apk.sha256)
+          (cd "$out" && sha256sum Time80-v0.3.0-RC2.apk > Time80-v0.3.0-RC2.apk.sha256 && sha256sum -c Time80-v0.3.0-RC2.apk.sha256)
           node <<'NODE'
           const assert = require('node:assert/strict');
           const fs = require('node:fs');
           const path = require('node:path');
           const crypto = require('node:crypto');
           const out = path.join(process.env.RUNNER_TEMP, 'time80-rc');
-          const apk = path.join(out, 'Time80-v0.3.0-RC.apk');
+          const apk = path.join(out, 'Time80-v0.3.0-RC2.apk');
           const badging = fs.readFileSync(path.join(out, 'apk-badging.txt'), 'utf8');
           const metadata = badging.match(/^package: name='([^']+)' versionCode='([^']+)' versionName='([^']+)'/m);
           assert.ok(metadata, 'Missing APK package metadata');
           assert.equal(metadata[1], 'com.personal.time80');
-          assert.equal(metadata[2], '3');
+          assert.equal(metadata[2], '4');
           assert.equal(metadata[3], '0.3.0');
           assert.ok(!/^application-debuggable/m.test(badging), 'RC APK must not be debuggable');
           const normalize = value => value.toLowerCase().replace(/[:\s]/g, '');
@@ -143,13 +167,13 @@ jobs:
           assert.equal(certificates[0], normalize(process.env.TIME80_SIGNER_SHA256), 'APK certificate differs from pinned v0.2 identity');
           const sha256 = crypto.createHash('sha256').update(fs.readFileSync(apk)).digest('hex');
           const preservation = JSON.parse(fs.readFileSync(path.join(out, 'source-preservation.json')));
-          const result = {candidate: 'RC1; device QA only; not release-ready', commit: process.env.GITHUB_SHA, applicationId: metadata[1], versionName: metadata[3], versionCode: Number(metadata[2]), debuggable: false, apk: path.basename(apk), apkBytes: fs.statSync(apk).size, apkSha256: sha256, signingCertificateSha256: certificates[0], signingMatchesPinnedV02Identity: true, schemaVersion: preservation.schemaVersion, schemaFingerprintFileSha256: preservation.unchangedSourceSha256['src/db/schemaFingerprint.json'], baselineSourcePreservation: true, temporaryKeystoreRemoved: !fs.existsSync(process.env.TIME80_KEYSTORE_PATH), githubReleaseCreated: false, finalTagCreated: false, branchMerged: false};
+          const result = {candidate: 'RC2; device QA only; not release-ready', commit: process.env.GITHUB_SHA, applicationId: metadata[1], versionName: metadata[3], versionCode: Number(metadata[2]), debuggable: false, apk: path.basename(apk), apkBytes: fs.statSync(apk).size, apkSha256: sha256, signingCertificateSha256: certificates[0], signingMatchesPinnedV02Identity: true, schemaVersion: preservation.schemaVersion, schemaFingerprintFileSha256: preservation.unchangedSourceSha256['src/db/schemaFingerprint.json'], baselineSourcePreservation: true, temporaryKeystoreRemoved: !fs.existsSync(process.env.TIME80_KEYSTORE_PATH), githubReleaseCreated: false, finalTagCreated: false, branchMerged: false};
           assert.ok(result.temporaryKeystoreRemoved, 'Temporary keystore was not removed');
           fs.writeFileSync(path.join(out, 'RC-verification.json'), JSON.stringify(result, null, 2));
           // These are computed public artifact identities, never private keystore/password values.
           const display = certificates[0].toUpperCase().match(/.{2}/g).join(':');
           fs.appendFileSync(process.env.GITHUB_OUTPUT, `apk_sha256=${sha256}\nsigner_sha256_display=${display}\nverified=true\n`);
-          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '## Time80 v0.3.0 RC1 — device QA only\n\n```json\n' + JSON.stringify(result, null, 2) + '\n```\n\nSamsung S23 FE upgrade, data preservation and all device/acceptance gates remain unverified. No GitHub Release, tag or merge is performed by this workflow.\n');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '## Time80 v0.3.0 RC2 — device QA only\n\n```json\n' + JSON.stringify(result, null, 2) + '\n```\n\nSamsung S23 FE upgrade, data preservation and all device/acceptance gates remain unverified. No GitHub Release, tag or merge is performed by this workflow.\n');
           NODE
       - name: "Verified APK SHA-256: ${{ steps.verify.outputs.apk_sha256 }}"
         if: ${{ success() && steps.verify.outputs.verified == 'true' }}
@@ -187,14 +211,14 @@ jobs:
           }
           if (process.env.VERIFIED !== 'true') {
             // Never offer an unverified signed binary for QA.
-            for (const file of ['Time80-v0.3.0-RC.apk', 'Time80-v0.3.0-RC.apk.sha256']) fs.rmSync(path.join(out, file), {force: true});
+            for (const file of ['Time80-v0.3.0-RC2.apk', 'Time80-v0.3.0-RC2.apk.sha256']) fs.rmSync(path.join(out, file), {force: true});
           }
           fs.writeFileSync(path.join(out, 'build-status.json'), JSON.stringify({build: process.env.BUILD_RESULT, verification: process.env.VERIFY_RESULT, signedRcVerified: process.env.VERIFIED === 'true'}, null, 2));
           NODE
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
-          name: Time80-v0.3.0-RC-device-QA-${{ github.sha }}
+          name: Time80-v0.3.0-RC2-device-QA-${{ github.sha }}
           path: ${{ runner.temp }}/time80-rc/
           if-no-files-found: error
           retention-days: 30

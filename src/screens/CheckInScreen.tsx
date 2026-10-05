@@ -9,17 +9,17 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import {
-  View,
-  Text,
-  Alert,
-  ActivityIndicator,
-  TextInput,
-  AppState,
-} from "react-native";
+import { View, Text, Alert, AppState } from "react-native";
 import { ActivityGrid } from "../components/ActivityGrid";
 import { ClassificationPicker } from "../components/ClassificationPicker";
-import { ui, Button, ErrorText, errorMessage } from "../components/Ui";
+import {
+  ui,
+  Button,
+  ErrorText,
+  errorMessage,
+  Input,
+  Loading,
+} from "../components/Ui";
 import {
   confirmTimeContext,
   getCheckInContext,
@@ -131,7 +131,10 @@ export function CheckInScreen({ route, navigation }: any) {
     n = nodes.find((n) => n.code === code);
   const header = (
     <>
-      <Text style={ui.title}>
+      <Text accessibilityRole="header" style={ui.title}>
+        چه کار می‌کردی؟
+      </Text>
+      <Text style={ui.muted}>
         {new Date(start).toLocaleDateString("fa-IR", {
           timeZone: scope.timezone,
           weekday: "long",
@@ -218,8 +221,9 @@ export function CheckInScreen({ route, navigation }: any) {
           <Text style={ui.muted}>
             منطقهٔ زمان ثبت: {ctx.context?.timezone_id ?? "نامعلوم"}
           </Text>
-          <TextInput
+          <Input
             style={ui.input}
+            accessibilityLabel="منطقهٔ زمانی تأییدشده"
             placeholder="منطقهٔ تأییدشده، مثال Asia/Tehran"
             value={zone}
             onChangeText={setZone}
@@ -258,6 +262,7 @@ export function CheckInScreen({ route, navigation }: any) {
             onChange={(code) => setSelection({ mode: "explicit", code })}
           />
           <Button
+            variant="secondary"
             title="استفاده از پیش‌فرض فعالیت"
             onPress={() => setSelection({ mode: "inherit" })}
           />
@@ -268,7 +273,12 @@ export function CheckInScreen({ route, navigation }: any) {
               onPress={() => choose({ id: ctx.entry!.activity_id } as Activity)}
             />
           )}
-          <Text style={ui.text}>همهٔ فعالیت‌ها</Text>
+          <Text accessibilityRole="header" style={ui.title}>
+            همهٔ فعالیت‌ها
+          </Text>
+          {!ctx?.entry && (
+            <Text style={ui.muted}>با لمس فعالیت، این بازه ثبت می‌شود.</Text>
+          )}
         </>
       )}
       {!ctx?.entry && items.length === 0 && (
@@ -283,6 +293,7 @@ export function CheckInScreen({ route, navigation }: any) {
       )}
       {!ctx?.entry && slotId && (
         <Button
+          variant="secondary"
           title="رد کردن این بازه"
           onPress={() =>
             Alert.alert("رد کردن بازه؟", "این زمان بدون فعالیت باقی می‌ماند.", [
@@ -305,7 +316,7 @@ export function CheckInScreen({ route, navigation }: any) {
       {!ctx ? (
         <>
           <ErrorText error={error} />
-          <ActivityIndicator />
+          <Loading />
           <Button
             title="تلاش مجدد"
             onPress={() => load().catch((e) => setError(errorMessage(e)))}

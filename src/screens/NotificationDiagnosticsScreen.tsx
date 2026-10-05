@@ -32,7 +32,7 @@ export function NotificationDiagnosticsScreen() {
     }
   }
   return (
-    <ScrollView contentContainerStyle={{ padding: 20 }}>
+    <ScrollView style={ui.screen} contentContainerStyle={ui.content}>
       <Text style={ui.title}>بررسی اعلان‌ها</Text>
       <ErrorText error={error} />
       <Text style={ui.text}>{message}</Text>

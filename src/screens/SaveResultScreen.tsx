@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ActivityIndicator, AppState } from "react-native";
+import { ScrollView, Text, AppState } from "react-native";
 import { getDayRemaining } from "../services/dayScopeService";
 import { undoEntryEdit, type UndoToken } from "../services/checkInService";
 import { timezone } from "../utils/slots";
-import { ui, Button, ErrorText, errorMessage } from "../components/Ui";
+import { ui, Button, ErrorText, errorMessage, Loading } from "../components/Ui";
 export function SaveResultScreen({ route, navigation }: any) {
   const { scope, cutoffUtc, period } = route.params;
   const [count, setCount] = useState<number | null>(null),
@@ -40,7 +40,7 @@ export function SaveResultScreen({ route, navigation }: any) {
     return () => clearTimeout(t);
   }, [undo]);
   return (
-    <View style={ui.page}>
+    <ScrollView style={ui.screen} contentContainerStyle={ui.content}>
       <Text accessibilityLiveRegion="polite" style={ui.title}>
         ثبت شد
       </Text>
@@ -60,7 +60,7 @@ export function SaveResultScreen({ route, navigation }: any) {
         </Text>
       )}
       {loading ? (
-        <ActivityIndicator />
+        <Loading />
       ) : error ? (
         <>
           <Text style={ui.text}>
@@ -118,6 +118,6 @@ export function SaveResultScreen({ route, navigation }: any) {
         title="تمام"
         onPress={() => navigation.navigate("Main", { screen: "Today" })}
       />
-    </View>
+    </ScrollView>
   );
 }

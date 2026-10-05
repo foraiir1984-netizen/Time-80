@@ -10,14 +10,14 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#F6F7F9"
+      "backgroundColor": "#FAF7F0"
     },
     "android": {
       "package": "com.personal.time80",
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#F6F7F9"
+        "backgroundColor": "#FAF7F0"
       },
       "permissions": ["POST_NOTIFICATIONS", "SCHEDULE_EXACT_ALARM", "VIBRATE"]
     },

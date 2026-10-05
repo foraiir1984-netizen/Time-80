@@ -1,3 +1,4 @@
+import { theme } from "../theme/time80Theme";
 import React, { PropsWithChildren } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -26,6 +27,7 @@ export function ScreenShell({
   if (!scroll) return <View style={styles.container}>{content}</View>;
   return (
     <ScrollView
+      style={{ backgroundColor: theme.background }}
       contentContainerStyle={styles.container}
       keyboardShouldPersistTaps="handled"
     >
@@ -36,22 +38,22 @@ export function ScreenShell({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 18,
-    paddingTop: 18,
+    paddingHorizontal: theme.spacing.page,
+    paddingTop: theme.spacing.page,
     paddingBottom: 120,
   },
   header: {
-    marginBottom: 18,
+    marginBottom: 16,
   },
   title: {
-    color: "#111317",
+    color: theme.text,
     fontSize: 26,
     fontWeight: "800",
     textAlign: "right",
   },
   subtitle: {
     marginTop: 6,
-    color: "#6A707A",
+    color: theme.secondary,
     fontSize: 14,
     lineHeight: 22,
     textAlign: "right",

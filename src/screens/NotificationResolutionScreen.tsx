@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { ScrollView, Text } from "react-native";
 import { ui, Button } from "../components/Ui";
 export function NotificationResolutionScreen({ route, navigation }: any) {
   return (
-    <View style={ui.page}>
+    <ScrollView style={ui.screen} contentContainerStyle={ui.content}>
       <Text style={ui.title}>بازه مشخص نیست</Text>
       <Text style={ui.text}>
         اطلاعات این اعلان برای تعیین بازه کافی نیست. ثبت زمانی تغییر نکرده است.
@@ -28,6 +28,6 @@ export function NotificationResolutionScreen({ route, navigation }: any) {
         title="بازگشت به امروز"
         onPress={() => navigation.navigate("Main", { screen: "Today" })}
       />
-    </View>
+    </ScrollView>
   );
 }

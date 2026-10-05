@@ -12,10 +12,11 @@ import { NotificationResolutionScreen } from "./src/screens/NotificationResoluti
 import { dayScopeFor } from "./src/services/dayScopeService";
 import { AssetIcon } from "./src/components/ActivityIcon";
 import React, { useEffect, useState, useRef } from "react";
-import { ActivityIndicator, AppState, Text, View } from "react-native";
+import { AppState, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
   NavigationContainer,
+  DefaultTheme,
   StackActions,
   createNavigationContainerRef,
 } from "@react-navigation/native";
@@ -37,7 +38,18 @@ import { CheckInScreen } from "./src/screens/CheckInScreen";
 import { BacklogScreen } from "./src/screens/BacklogScreen";
 import { NotificationDiagnosticsScreen } from "./src/screens/NotificationDiagnosticsScreen";
 import { OnboardingScreen } from "./src/screens/OnboardingScreen";
-import { Button, ErrorText, ui, errorMessage } from "./src/components/Ui";
+import {
+  theme,
+  navigationColors,
+  tabVisualOptions,
+} from "./src/theme/time80Theme";
+import {
+  Button,
+  Loading,
+  ErrorText,
+  ui,
+  errorMessage,
+} from "./src/components/Ui";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowBanner: true,
@@ -51,20 +63,13 @@ const Stack = createNativeStackNavigator(),
   navigation = createNavigationContainerRef<any>();
 function MainTabs() {
   return (
-    <Tabs.Navigator
-      backBehavior="firstRoute"
-      screenOptions={{
-        headerShown: false,
-        tabBarLabelStyle: { fontSize: 12 },
-        tabBarActiveTintColor: "#21594b",
-      }}
-    >
+    <Tabs.Navigator backBehavior="firstRoute" screenOptions={tabVisualOptions}>
       <Tabs.Screen
         name="Today"
         component={TodayScreen}
         options={{
           title: "امروز",
-          tabBarIcon: () => <AssetIcon iconKey="home" />,
+          tabBarIcon: ({ color }) => <AssetIcon color={color} iconKey="home" />,
         }}
       />
       <Tabs.Screen
@@ -72,7 +77,7 @@ function MainTabs() {
         component={ActivitiesScreen}
         options={{
           title: "فعالیت‌ها",
-          tabBarIcon: () => <AssetIcon iconKey="grid" />,
+          tabBarIcon: ({ color }) => <AssetIcon color={color} iconKey="grid" />,
         }}
       />
       <Tabs.Screen
@@ -80,7 +85,9 @@ function MainTabs() {
         component={InsightsScreen}
         options={{
           title: "گزارش",
-          tabBarIcon: () => <AssetIcon iconKey="report" />,
+          tabBarIcon: ({ color }) => (
+            <AssetIcon color={color} iconKey="report" />
+          ),
         }}
       />
       <Tabs.Screen
@@ -88,7 +95,9 @@ function MainTabs() {
         component={SettingsScreen}
         options={{
           title: "تنظیمات",
-          tabBarIcon: () => <AssetIcon iconKey="settings" />,
+          tabBarIcon: ({ color }) => (
+            <AssetIcon color={color} iconKey="settings" />
+          ),
         }}
       />
     </Tabs.Navigator>
@@ -189,7 +198,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <SafeAreaView
-        style={{ flex: 1, backgroundColor: "#f6f7f9" }}
+        style={{ flex: 1, backgroundColor: theme.background }}
         edges={["top", "left", "right"]}
       >
         {!ready ? (
@@ -214,7 +223,7 @@ export default function App() {
               </>
             ) : (
               <>
-                <ActivityIndicator />
+                <Loading />
                 <Text style={ui.text}>آماده‌سازی Time80…</Text>
               </>
             )}
@@ -232,6 +241,10 @@ export default function App() {
             )}
             <NavigationContainer
               ref={navigation}
+              theme={{
+                ...DefaultTheme,
+                colors: { ...DefaultTheme.colors, ...navigationColors },
+              }}
               onReady={() => {
                 setNavReady(true);
                 void pendingResponses()
@@ -241,7 +254,15 @@ export default function App() {
                   .catch((e) => setError(errorMessage(e)));
               }}
             >
-              <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+              <Stack.Navigator
+                screenOptions={{
+                  headerTitleAlign: "center",
+                  headerStyle: { backgroundColor: theme.surface },
+                  headerTintColor: theme.accent,
+                  headerTitleStyle: { color: theme.text },
+                  contentStyle: { backgroundColor: theme.background },
+                }}
+              >
                 <Stack.Screen
                   name="Main"
                   component={MainTabs}

@@ -1,3 +1,4 @@
+import { TodayOverview } from "../components/TodayOverview";
 import React, { useCallback, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
@@ -10,16 +11,29 @@ export function TodayScreen({ navigation }: any) {
   const [items, setItems] = useState<SlotView[]>([]),
     [day, setDay] = useState(new Date()),
     [error, setError] = useState(""),
-    [next, setNext] = useState("");
+    [next, setNext] = useState(""),
+    [review, setReview] = useState(false),
+    [now, setNow] = useState(new Date());
   useFocusEffect(
     useCallback(() => {
       let alive = true;
       const load = () =>
         ensureSlotHorizon()
-          .then(() => Promise.all([getDayTimeline(day), getNextReminder()]))
+          .then(() =>
+            Promise.all([
+              getDayTimeline(review ? day : new Date()),
+              getNextReminder(),
+            ]),
+          )
           .then(([rows, n]) => {
             if (alive) {
               setItems(rows);
+              const current = new Date();
+              setNow(current);
+              if (!review)
+                setDay((d) =>
+                  d.toDateString() === current.toDateString() ? d : current,
+                );
               setNext(
                 n
                   ? new Date(n.period_end).toLocaleString("fa-IR")
@@ -34,7 +48,7 @@ export function TodayScreen({ navigation }: any) {
         alive = false;
         clearInterval(timer);
       };
-    }, [day]),
+    }, [day, review]),
   );
   const open = (i: SlotView) =>
     navigation.navigate("CheckIn", {
@@ -53,36 +67,67 @@ export function TodayScreen({ navigation }: any) {
   return (
     <View style={ui.page}>
       <FlatList
-        data={items}
+        data={review ? items : []}
         keyExtractor={(i) => i.period_start}
         ListHeaderComponent={
           <>
-            <Text style={ui.title}>
-              {day.toLocaleDateString("fa-IR", {
-                weekday: "long",
-                month: "long",
-                day: "numeric",
-              })}
-            </Text>
-            <Text style={ui.muted}>یادآوری بعدی: {next}</Text>
+            {!review && (
+              <TodayOverview
+                now={now}
+                items={items}
+                next={next}
+                pending={pending}
+                onDue={() => open(pending!)}
+                onReview={() => setReview(true)}
+              />
+            )}
+            {review && (
+              <Button
+                variant="secondary"
+                iconKey="home"
+                title="بازگشت به امروز"
+                onPress={() => {
+                  setDay(new Date());
+                  setReview(false);
+                }}
+              />
+            )}
+            {review && (
+              <Text style={ui.title}>
+                {day.toLocaleDateString("fa-IR", {
+                  weekday: "long",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </Text>
+            )}
+            {review && <Text style={ui.muted}>یادآوری بعدی: {next}</Text>}
             <ErrorText error={error} />
             <View style={ui.row}>
               <Button
+                variant="secondary"
                 title="روز قبل"
                 onPress={() => {
                   const d = new Date(day);
                   d.setDate(d.getDate() - 1);
                   setDay(d);
+                  setReview(true);
                 }}
               />
-              <Button title="امروز" onPress={() => setDay(new Date())} />
               <Button
+                variant="secondary"
+                title="امروز"
+                onPress={() => setDay(new Date())}
+              />
+              <Button
+                variant="secondary"
                 title="روز بعد"
                 disabled={day.toDateString() === new Date().toDateString()}
                 onPress={() => {
                   const d = new Date(day);
                   d.setDate(d.getDate() + 1);
                   setDay(d);
+                  setReview(true);
                 }}
               />
             </View>
@@ -90,13 +135,14 @@ export function TodayScreen({ navigation }: any) {
               ثبت‌شده:{" "}
               {items.filter((i) => i.entry?.status === "logged").length}
             </Text>
-            {pending && (
+            {review && pending && (
               <Button
                 title="تکمیل آخرین بازهٔ ثبت‌نشده"
                 onPress={() => open(pending)}
               />
             )}
             <Button
+              variant="secondary"
               title="بازه‌های ثبت‌نشدهٔ روزهای قبل"
               onPress={() => navigation.navigate("Backlog")}
             />

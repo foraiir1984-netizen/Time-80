@@ -1,15 +1,15 @@
 import { ActivityIcon } from "../components/ActivityIcon";
 import React, { useState, useCallback, useEffect } from "react";
-import {
-  ScrollView,
-  View,
-  Text,
-  TextInput,
-  ActivityIndicator,
-  AppState,
-} from "react-native";
+import { ScrollView, View, Text, AppState } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import { ui, Button, ErrorText, errorMessage } from "../components/Ui";
+import {
+  ui,
+  Button,
+  ErrorText,
+  errorMessage,
+  Input,
+  Loading,
+} from "../components/Ui";
 import { getReport } from "../services/reportService";
 import type { Mode, Query } from "../utils/reportPeriods";
 import { db, transaction } from "../db/connection";
@@ -114,11 +114,13 @@ export function InsightsScreen() {
     }, [q, refresh, preferencesReady]),
   );
   return (
-    <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 60 }}>
+    <ScrollView style={ui.screen} contentContainerStyle={ui.content}>
       <Text style={ui.title}>گزارش زمان</Text>
       <View style={ui.row}>
         {(Object.keys(labels) as Mode[]).map((mode) => (
           <Button
+            variant="secondary"
+            selected={q.mode === mode}
             key={mode}
             title={`${q.mode === mode ? "✓ " : ""}${labels[mode]}`}
             onPress={() => setQ({ ...q, mode, offset: 0 })}
@@ -127,14 +129,17 @@ export function InsightsScreen() {
       </View>
       <View style={ui.row}>
         <Button
+          variant="secondary"
           title={q.mode === "day" ? "روز قبل" : "قبلی"}
           onPress={() => setQ({ ...q, offset: q.offset - 1 })}
         />
         <Button
+          variant="secondary"
           title={q.mode === "day" ? "امروز" : "دورهٔ جاری"}
           onPress={() => setQ({ ...q, offset: 0 })}
         />
         <Button
+          variant="secondary"
           title="بعدی"
           disabled={q.offset >= 0}
           onPress={() => setQ({ ...q, offset: q.offset + 1 })}
@@ -142,6 +147,7 @@ export function InsightsScreen() {
       </View>
       <View style={ui.row}>
         <Button
+          variant="secondary"
           title={q.calendar === "persian" ? "تقویم: شمسی" : "تقویم: میلادی"}
           onPress={() =>
             setQ({
@@ -151,6 +157,7 @@ export function InsightsScreen() {
           }
         />
         <Button
+          variant="secondary"
           title={`شروع هفته: ${["", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"][q.weekStart]}`}
           onPress={() => setQ({ ...q, weekStart: (q.weekStart % 7) + 1 })}
         />
@@ -160,16 +167,18 @@ export function InsightsScreen() {
           <Text style={ui.muted}>
             تاریخ میلادی YYYY-MM-DD؛ روز پایان نیز شامل می‌شود.
           </Text>
-          <TextInput
+          <Input
             style={ui.input}
             value={a}
             onChangeText={setA}
+            accessibilityLabel="تاریخ شروع گزارش"
             placeholder="شروع"
           />
-          <TextInput
+          <Input
             style={ui.input}
             value={b}
             onChangeText={setB}
+            accessibilityLabel="تاریخ پایان گزارش"
             placeholder="پایان"
           />
           <Button
@@ -179,9 +188,7 @@ export function InsightsScreen() {
         </>
       )}
       <ErrorText error={error} />
-      {loading && (
-        <ActivityIndicator accessibilityLabel="در حال بارگذاری گزارش" />
-      )}
+      {loading && <Loading label="در حال بارگذاری گزارش" />}
       {!!error && (
         <Button
           title="تلاش دوباره"
@@ -193,68 +200,72 @@ export function InsightsScreen() {
 
       {r && resultQuery === JSON.stringify(q) && (
         <>
-          <Text style={ui.muted}>
-            {new Date(r.range.start).toLocaleDateString(
-              q.calendar === "persian" ? "fa-IR" : "en-GB",
-              {
-                timeZone: r.range.timezone,
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              },
-            )}{" "}
-            تا{" "}
-            {new Date(+new Date(r.range.end) - 1).toLocaleDateString(
-              q.calendar === "persian" ? "fa-IR" : "en-GB",
-              {
-                timeZone: r.range.timezone,
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              },
-            )}{" "}
-            · {r.range.timezone}
-            {r.range.partial ? " · دورهٔ ناقص" : ""}
-          </Text>
-          {r.activities.length === 0 && (
-            <Text style={ui.text}>
-              برای{" "}
+          <View style={ui.card}>
+            <Text accessibilityRole="header" style={ui.text}>
               {new Date(r.range.start).toLocaleDateString(
                 q.calendar === "persian" ? "fa-IR" : "en-GB",
-                { timeZone: r.range.timezone },
+                {
+                  timeZone: r.range.timezone,
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                },
               )}{" "}
-              بازه‌ای ثبت نشده است.
+              تا{" "}
+              {new Date(+new Date(r.range.end) - 1).toLocaleDateString(
+                q.calendar === "persian" ? "fa-IR" : "en-GB",
+                {
+                  timeZone: r.range.timezone,
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                },
+              )}{" "}
+              · {r.range.timezone}
+              {r.range.partial ? " · دورهٔ ناقص" : ""}
             </Text>
-          )}
-          <Text style={ui.title}>{toPersianDuration(r.total)}</Text>
-          <Text style={ui.text}>
-            دورهٔ قبل:{" "}
-            {r.previousTotal === null
-              ? "—"
-              : toPersianDuration(r.previousTotal)}{" "}
-            · تغییر:{" "}
-            {r.changePercent === null
-              ? "قابل محاسبه نیست"
-              : `${r.changePercent.toFixed(1)}٪`}
-          </Text>
-          <Text style={ui.text}>
-            پوشش ثبت:{" "}
-            {r.historicalCoverageUnknown
-              ? "بخشی از تاریخچه نامعلوم"
-              : r.coverage === null
+            {r.activities.length === 0 && (
+              <Text style={ui.text}>
+                برای{" "}
+                {new Date(r.range.start).toLocaleDateString(
+                  q.calendar === "persian" ? "fa-IR" : "en-GB",
+                  { timeZone: r.range.timezone },
+                )}{" "}
+                بازه‌ای ثبت نشده است.
+              </Text>
+            )}
+            <Text style={ui.title}>{toPersianDuration(r.total)}</Text>
+            <Text style={ui.text}>
+              دورهٔ قبل:{" "}
+              {r.previousTotal === null
+                ? "—"
+                : toPersianDuration(r.previousTotal)}{" "}
+              · تغییر:{" "}
+              {r.changePercent === null
                 ? "قابل محاسبه نیست"
-                : `${(r.coverage * 100).toFixed(0)}٪`}
+                : `${r.changePercent.toFixed(1)}٪`}
+            </Text>
+            <Text style={ui.text}>
+              پوشش ثبت:{" "}
+              {r.historicalCoverageUnknown
+                ? "بخشی از تاریخچه نامعلوم"
+                : r.coverage === null
+                  ? "قابل محاسبه نیست"
+                  : `${(r.coverage * 100).toFixed(0)}٪`}
+            </Text>
+            <Text style={ui.muted}>
+              ثبت‌نشده: {toPersianDuration(r.pendingMinutes)} · رد شده:{" "}
+              {toPersianDuration(r.skippedMinutes)}
+            </Text>
+          </View>
+          <Text accessibilityRole="header" style={ui.title}>
+            فعالیت‌ها و پارتو
           </Text>
-          <Text style={ui.muted}>
-            ثبت‌نشده: {toPersianDuration(r.pendingMinutes)} · رد شده:{" "}
-            {toPersianDuration(r.skippedMinutes)}
-          </Text>
-          <Text style={ui.title}>فعالیت‌ها و پارتو</Text>
           {r.activities.map((x, i) => (
             <View key={x.id} style={ui.card}>
-              <ActivityIcon icon={x.icon_view} legacy={x.icon} size={24} />
+              <ActivityIcon icon={x.icon_view} legacy={x.icon} size={30} />
               <Text style={ui.text}>
                 {x.name} · {toPersianDuration(x.minutes)}
               </Text>
@@ -276,7 +287,7 @@ export function InsightsScreen() {
           ))}
           <Text style={ui.title}>دسته‌های ICATUS 2016</Text>
           {r.buckets.map((x) => (
-            <Text key={x.code} style={ui.text}>
+            <Text key={x.code} style={[ui.text, ui.card]}>
               {x.title_fa ?? x.title_en}: {toPersianDuration(x.minutes)}
             </Text>
           ))}
@@ -291,7 +302,7 @@ export function InsightsScreen() {
           </Text>
           <Text style={ui.title}>روز به روز</Text>
           {r.daily.map(([d, m]) => (
-            <Text key={d} style={ui.text}>
+            <Text key={d} style={[ui.text, ui.card]}>
               {new Date(`${d}T12:00:00`).toLocaleDateString("fa-IR", {
                 weekday: "long",
                 month: "short",
