@@ -7,7 +7,7 @@
 <section id="survey"><h2>تجربه‌ات چطور بود؟</h2><p>سه سؤال اختیاری، بدون جواب درست و غلط.</p><div id="rating"></div><label><input type="checkbox" id="consent"> با ارسال سه امتیاز و تصمیم اولیه‌ام برای پژوهش Time80 موافقم. اطلاعات هویتی یا متن شخصی دریافت نمی‌شود.</label><button id="send">ثبت پاسخ بی‌نام</button><button class="alt" id="skip">پایان بدون ارسال</button><small id="status"></small></section>
 <section id="done"><h2>هر سفر با یک سؤال آغاز می‌شود ✨</h2><p id="finalText"></p><button id="again">شروع دوباره</button></section>
 <small>آزمایش CAM 0.2 · بدون حساب کاربری · فقط با رضایت ثبت می‌شود</small></main>
-<script>
+<script src="config.js"></script><script>
 const conf=window.CAM_CONFIG||{endpoint:''};
 const V={A:'اگر غول چراغ جادو همین حالا ظاهر شود… واقعاً می‌دانی چه آرزویی از او می‌خواهی؟',B:'ممکن است مهم‌ترین آرزوی زندگیت چیزی باشد که هنوز کشفش نکرده‌ای؟',C:'شاید ماجرایی در انتظار تو باشد که هنوز از وجودش خبر نداری…',D:'آرزوها و ارزش‌های زندگی خود را کشف کن.'};
 const v0=new URLSearchParams(location.search).get('v')?.toUpperCase();
@@ -31,4 +31,4 @@ document.body.append(f);f.submit();f.remove();
 document.getElementById('finalText').textContent='صفحه ثبت پاسخ در تب جدید باز شده است. فقط اگر پیام «پاسخ ثبت شد» را دیدی، ارسال موفق بوده است.';show('done')
 };
 document.getElementById('again').onclick=()=>location.reload();
-</script><script src="config.js"></script></html>
+</script></html>
