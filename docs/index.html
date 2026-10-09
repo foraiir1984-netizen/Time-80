@@ -1,0 +1,34 @@
+<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Time80 — ندای ماجراجویی</title>
+<style>*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#20513e,#061812 65%);color:#ecf4e7;font:16px/2 Tahoma,Arial,sans-serif;min-height:100dvh;display:grid;place-items:center;padding:16px}main{max-width:450px;width:100%;min-height:650px;background:#0b261dcc;border:1px solid #51846a44;border-radius:26px;padding:28px;display:flex;flex-direction:column;text-align:center;box-shadow:0 20px 65px #0007}.forest{height:145px;position:relative;background:radial-gradient(circle at 53% 52%,#d4f8ff 0%,#6ab8dc 2%,#2b675050 12%,transparent 40%),linear-gradient(20deg,#092219,#103a2a);border-radius:18px;margin:22px 0;overflow:hidden}.forest:before{content:'🌲      🌲        🌲       🌲';position:absolute;top:0;left:0;right:0;color:#031a11;font-size:65px;white-space:nowrap;opacity:.75}h1{font-size:24px;line-height:1.7}h2{font-size:22px}p{color:#bdcebd}button{font:inherit;cursor:pointer;border:1px solid #be9e5d;background:#e7ce88;color:#162b21;border-radius:14px;padding:13px;margin-top:12px;width:100%;font-weight:bold}button.alt{border-color:#568068;background:transparent;color:#bfd4c4}button:focus-visible,input:focus-visible{outline:3px solid white}section{display:none;flex:1;flex-direction:column;justify-content:center}section.active{display:flex}.scores{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.scores button{min-width:0;padding:6px;background:#244838;color:white;border-color:#527966}.scores button.on{background:#e7ce88;color:#162b21}small{color:#9db5a8}label{display:block;text-align:right;margin:13px 0}input[type=checkbox]{accent-color:#cfad62;width:19px;height:19px}#status{min-height:25px} .top{font:700 25px Georgia;color:#e7ce88} .choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}.choices button{margin:0;background:#204c35;color:#e1ece3;border-color:#79927d} .choices button.on{background:#e7ce88;color:#1a3324}</style>
+<main><div class="top">Time80</div><div class="forest" aria-hidden="true"></div>
+<section id="start" class="active"><small>یک سؤال • یک مسیر ناشناخته</small><h1 id="heading"></h1><p>شاید فقط یک دقیقه طول بکشد. انتخاب با توست.</p><button id="yes">می‌خواهم ببینم ←</button><button class="alt" id="no">فعلاً نه</button></section>
+<section id="discover"><h2>یک سرنخ کوچک</h2><p>اگر فردا کمی بیشتر شبیه زندگی دلخواهت باشد، کدام حس در آن پررنگ‌تر است؟</p><div class="choices" id="choices"></div><button id="next">ادامه اکتشاف</button></section>
+<section id="reflect"><h2>شاید یک نشانه پیدا کردی…</h2><p id="reflection"></p><p>لازم نیست همین حالا برای زندگی‌ات تصمیم بگیری.</p><button id="feedback">نظر من درباره تجربه</button><button class="alt" id="stop">خروج بدون پاسخ‌گویی</button></section>
+<section id="survey"><h2>تجربه‌ات چطور بود؟</h2><p>سه سؤال اختیاری، بدون جواب درست و غلط.</p><div id="rating"></div><label><input type="checkbox" id="consent"> با ارسال سه امتیاز و تصمیم اولیه‌ام برای پژوهش Time80 موافقم. اطلاعات هویتی یا متن شخصی دریافت نمی‌شود.</label><button id="send">ثبت پاسخ بی‌نام</button><button class="alt" id="skip">پایان بدون ارسال</button><small id="status"></small></section>
+<section id="done"><h2>هر سفر با یک سؤال آغاز می‌شود ✨</h2><p id="finalText"></p><button id="again">شروع دوباره</button></section>
+<small>آزمایش CAM 0.2 · بدون حساب کاربری · فقط با رضایت ثبت می‌شود</small></main>
+<script>
+const conf=window.CAM_CONFIG||{endpoint:''};
+const V={A:'اگر غول چراغ جادو همین حالا ظاهر شود… واقعاً می‌دانی چه آرزویی از او می‌خواهی؟',B:'ممکن است مهم‌ترین آرزوی زندگیت چیزی باشد که هنوز کشفش نکرده‌ای؟',C:'شاید ماجرایی در انتظار تو باشد که هنوز از وجودش خبر نداری…',D:'آرزوها و ارزش‌های زندگی خود را کشف کن.'};
+const v0=new URLSearchParams(location.search).get('v')?.toUpperCase();
+const version=V[v0]?v0:'ABCD'[Math.floor(Math.random()*4)];
+document.getElementById('heading').textContent=V[version];let decision='',choice='',ratings={curiosity:'',relevance:'',discovery:''};
+function show(id){document.querySelectorAll('section').forEach(x=>x.classList.toggle('active',x.id===id));scrollTo(0,0);}
+document.getElementById('yes').onclick=()=>{decision='دنبال کرد';show('discover')};
+document.getElementById('no').onclick=()=>{decision='رد کرد';show('survey')};
+for(const ch of ['آرامش','آزادی','ماجراجویی','یادگیری','ارتباط','اثرگذاری']){const b=document.createElement('button');b.textContent=ch;b.onclick=()=>{choice=ch;document.querySelectorAll('#choices button').forEach(el=>el.classList.toggle('on',el===b))};document.getElementById('choices').append(b)}
+document.getElementById('next').onclick=()=>{document.getElementById('reflection').textContent=choice?'«'+choice+'» شاید سرنخی درباره چیزی باشد که برایت مهم است؛ نه نتیجه قطعی درباره تو.':'حتی اگر هنوز انتخابی نداری، همین هم طبیعی است.';show('reflect')};
+document.getElementById('feedback').onclick=()=>show('survey');document.getElementById('stop').onclick=()=>show('done');
+for(const [k,title] of Object.entries({curiosity:'پیام اول چقدر کنجکاوت کرد؟',relevance:'چقدر به زندگی تو مربوط بود؟',discovery:'چقدر حس کردی چیزی کشف کردی؟'})){const div=document.createElement('div');div.innerHTML='<label>'+title+'</label><div class="scores"></div>';for(let n=1;n<=5;n++){const b=document.createElement('button');b.textContent=n;b.onclick=()=>{ratings[k]=n;div.querySelectorAll('button').forEach(el=>el.classList.toggle('on',el===b))};div.querySelector('.scores').append(b)}document.getElementById('rating').append(div)}
+document.getElementById('skip').onclick=()=>{document.getElementById('finalText').textContent='هیچ پاسخی ارسال نشده است.';show('done')};
+document.getElementById('send').onclick=()=>{
+if(!document.getElementById('consent').checked){document.getElementById('status').textContent='برای ارسال باید رضایت بدهی؛ یا بدون ارسال خارج شوی.';return}
+if(!conf.endpoint){document.getElementById('status').textContent='ثبت آنلاین هنوز فعال نشده است. لطفاً به برگزارکننده اطلاع بده.';return}
+const data={experiment:'CAM-0.2',variant:version,decision,curiosity:ratings.curiosity,relevance:ratings.relevance,discovery:ratings.discovery,receipt_id:(crypto.randomUUID?.()||Date.now()+'-anon-'+Math.random().toString(36).slice(2)),honeypot:''};
+const f=document.createElement('form');f.action=conf.endpoint;f.method='POST';f.target='_blank';f.style.display='none';
+for(const [name,value] of Object.entries(data)){const field=document.createElement('input');field.name=name;field.value=value;f.append(field)}
+document.body.append(f);f.submit();f.remove();
+document.getElementById('finalText').textContent='صفحه ثبت پاسخ در تب جدید باز شده است. فقط اگر پیام «پاسخ ثبت شد» را دیدی، ارسال موفق بوده است.';show('done')
+};
+document.getElementById('again').onclick=()=>location.reload();
+</script><script src="config.js"></script></html>
