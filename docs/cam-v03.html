@@ -80,14 +80,13 @@ function revealQuestion(){
  $('joining').hidden=true;
  $('decisionButtons').hidden=false;
  if(!agreed){
-   $('privacy').textContent='این تجربه بدون ثبت اطلاعات است؛ هیچ امتیازی ارسال نمی‌شود.';
-   $('submit').hidden=true;
+   $('privacy').textContent='این تجربه بدون ثبت اطلاعات است.';
  }
 }
 $('agree').onclick=()=>{agreed=true;event('exposed');revealQuestion();};
 $('browse').onclick=()=>{revealQuestion();};
 $('follow').onclick=()=>{decision='دنبال کرد';event('follow');show('discover');};
-$('decline').onclick=()=>{decision='رد کرد';event('decline');event('survey');show('survey');};
+$('decline').onclick=()=>{decision='رد کرد';event('decline');if(agreed){event('survey');show('survey')}else{finishWithoutData()}};
 for(const item of ['آرامش','آزادی','ماجراجویی','یادگیری','ارتباط','اثرگذاری']){
  const b=document.createElement('button');b.textContent=item;b.onclick=()=>{choice=item;event('discovery');document.querySelectorAll('#choices button').forEach(x=>x.classList.toggle('chosen',x===b))};$('choices').append(b);
 }
@@ -95,15 +94,19 @@ $('advance').onclick=()=>{
  $('reflection').textContent=choice?'«'+choice+'» را انتخاب کردی. این انتخاب فقط فرصتی برای فکرکردن به خواسته‌هایت است، نه نتیجه‌ای قطعی درباره تو.':'اگر هیچ گزینه‌ای را انتخاب نکردی، اشکالی ندارد. گاهی برای شناخت خواسته‌هایمان به زمان بیشتری نیاز داریم.';
  event('reflection');show('reflect');
 };
-$('rate').onclick=()=>{event('survey');show('survey')};
-$('leave').onclick=()=>{event('exit');$('doneText').textContent='بدون امتیازدهی تمام شد.';show('done')};
+function finishWithoutData(){
+ $('doneText').textContent='این تجربه بدون ذخیره اطلاعات به پایان رسید. ممنون که همراه شدی.';
+ show('done');
+}
+$('rate').onclick=()=>{if(!agreed){finishWithoutData();return}event('survey');show('survey')};
+$('leave').onclick=()=>{event('exit');$('doneText').textContent='تجربه بدون امتیازدهی به پایان رسید.';show('done')};
 for(const [key,text] of Object.entries({curiosity:'پیام اول چقدر تو را کنجکاو کرد؟',relevance:'این پیام چقدر به آرزوها یا دغدغه‌های خودت نزدیک بود؟',discovery:'چقدر حس کردی می‌توانی چیز تازه‌ای درباره خواسته‌هایت کشف کنی؟'})){
  const div=document.createElement('div'),label=document.createElement('label');label.textContent=text;div.append(label);
  const bar=document.createElement('div');bar.className='scores';
  for(let i=1;i<=5;i++){const b=document.createElement('button');b.textContent=i;b.onclick=()=>{ratings[key]=i;bar.querySelectorAll('button').forEach(x=>x.classList.toggle('chosen',x===b))};bar.append(b)}
  div.append(bar);$('ratings').append(div);
 }
-$('finish').onclick=()=>{event('exit');$('doneText').textContent='امتیازی ارسال نشد.';show('done')};
+$('finish').onclick=()=>{event('exit');$('doneText').textContent='امتیازی ارسال نشد و تجربه به پایان رسید.';show('done')};
 $('submit').onclick=()=>{
  if(!agreed){$('status').textContent='در این تجربه گزینه «بدون ثبت اطلاعات» را انتخاب کردی؛ برای ثبت امتیازها می‌توانی یک تجربه تازه را با رضایت شروع کنی.';return;}
  if(!conf.endpoint){$('status').textContent='سرویس ثبت پاسخ هنوز آماده نیست.';return;}
