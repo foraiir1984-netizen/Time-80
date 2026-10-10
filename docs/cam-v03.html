@@ -76,10 +76,10 @@ function event(stage){
 }
 $('agree').onclick=()=>{agreed=true;event('exposed');show('start');};
 $('browse').onclick=()=>show('start');
-$('follow').onclick=()=>{decision='دنبال کرد';event('follow');event('discovery');show('discover');};
+$('follow').onclick=()=>{decision='دنبال کرد';event('follow');show('discover');};
 $('decline').onclick=()=>{decision='رد کرد';event('decline');event('survey');show('survey');};
 for(const item of ['آرامش','آزادی','ماجراجویی','یادگیری','ارتباط','اثرگذاری']){
- const b=document.createElement('button');b.textContent=item;b.onclick=()=>{choice=item;document.querySelectorAll('#choices button').forEach(x=>x.classList.toggle('chosen',x===b))};$('choices').append(b);
+ const b=document.createElement('button');b.textContent=item;b.onclick=()=>{choice=item;event('discovery');document.querySelectorAll('#choices button').forEach(x=>x.classList.toggle('chosen',x===b))};$('choices').append(b);
 }
 $('advance').onclick=()=>{
  $('reflection').textContent=choice?'«'+choice+'» شاید سرنخی درباره خواسته تو باشد، نه یک نتیجه قطعی.':'نداشتن پاسخ روشن هم کاملاً طبیعی است.';
