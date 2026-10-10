@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Time80 — آزمایش ندای ماجراجویی CAM 0.3</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100dvh;padding:16px;background:radial-gradient(ellipse at top,#225641,#061610 70%);color:#f0f5eb;font:16px/1.95 Tahoma,Arial,sans-serif;display:grid;place-items:center}main{width:100%;max-width:460px;min-height:650px;padding:27px;background:#0b261ce8;border:1px solid #779c7655;border-radius:26px;text-align:center;box-shadow:0 15px 65px #0007;display:flex;flex-direction:column}.brand{color:#e8cb84;font:700 25px Georgia,serif}.forest{height:145px;margin:16px 0;border-radius:17px;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 48%,#d9faff 0%,#a4d0df 2%,#357b77aa 10%,transparent 45%),linear-gradient(160deg,#103b2f,#092118)}.forest::before{content:"🌲     🌲       🌲      🌲";white-space:nowrap;font-size:65px;position:absolute;left:0;right:0;top:4px;opacity:.7}section{display:none;flex:1;flex-direction:column;justify-content:center;align-items:stretch}section.active{display:flex}h1,h2{line-height:1.7;margin:12px 0}h1{font-size:23px}h2{font-size:21px}p{color:#c2d1c4;margin:12px 0}small{color:#adbea9;font-size:12px}button{width:100%;cursor:pointer;border-radius:13px;border:1px solid #d3b979;background:#e4cb8d;color:#192f24;font:700 15px/1.6 Tahoma,Arial,sans-serif;padding:13px;margin-top:12px}button.alt{background:transparent;border-color:#638e75;color:#e3efe1}button:focus-visible{outline:3px solid #fff}.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choices button{margin:0;background:#244b38;color:#f0f5eb;border-color:#648e73}.choices button.chosen{background:#e4cb8d;color:#162b21}.ratings{display:grid;gap:14px}.ratings label{text-align:right}.scores{display:flex;gap:6px}.scores button{margin:0;padding:7px;color:#e7f0e5;background:#2b4a39;border-color:#658875;min-width:0}.scores button.chosen{background:#e4cb8d;color:#152c21}.note{background:#204130;border:1px solid #60877269;border-radius:13px;padding:12px;font-size:13px;text-align:right;line-height:1.8;color:#d6e4d4}.muted{font-size:13px}#status{min-height:24px}
+</style></head>
+<body><main><div class="brand">Time80</div><div class="forest" aria-hidden="true"></div>
+<section id="intro" class="active">
+<h2>پیش از ورود به جنگل…</h2>
+<p>این یک تجربه پژوهشی یک‌دقیقه‌ای است. پس از ورود، تنها یکی از چهار پیام به‌صورت تصادفی نمایش داده می‌شود.</p>
+<div class="note">اگر موافق باشی، نسخه پیام، مراحل طی‌شده، زمان رویدادها، یک شناسه تصادفی موقت و امتیازهای اختیاری‌ات ثبت می‌شود. نام، ایمیل، متن شخصی آرزو یا گزینه انتخابی‌ات ذخیره نمی‌شود. می‌توانی هر زمان صفحه را ببندی. خدمات میزبان ممکن است فراداده معمول اتصال را ثبت کنند.</div>
+<button id="agree">موافقم؛ با ثبت بی‌نام شروع کنیم</button>
+<button class="alt" id="browse">فقط تجربه را ببینم؛ بدون ثبت اطلاعات</button>
+</section>
+<section id="start">
+<small>یک سؤال • یک مسیر ناشناخته</small><h1 id="headline"></h1>
+<p>شاید تنها یک دقیقه طول بکشد. تصمیم با توست.</p>
+<button id="follow">می‌خواهم ببینم ←</button>
+<button class="alt" id="decline">فعلاً نه</button>
+</section>
+<section id="discover">
+<h2>یک سرنخ کوچک</h2>
+<p>اگر فردا کمی بیشتر شبیه زندگی دلخواهت باشد، کدام حس در آن پررنگ‌تر است؟</p>
+<div class="choices" id="choices"></div><button id="advance">ادامه اکتشاف</button>
+</section>
+<section id="reflect">
+<h2>شاید یک نشانه پیدا کردی…</h2>
+<p id="reflection"></p><p>لازم نیست همین حالا درباره آینده تصمیم بگیری.</p>
+<button id="rate">نظر من درباره تجربه</button><button class="alt" id="leave">پایان تجربه، بدون امتیازدهی</button>
+</section>
+<section id="survey">
+<h2>این تجربه برایت چطور بود؟</h2>
+<p>می‌توانی هر یک از سه سؤال را بی‌پاسخ بگذاری.</p><div class="ratings" id="ratings"></div>
+<small id="privacy">امتیازها فقط با رضایت اولیه پژوهش ثبت می‌شوند.</small>
+<button id="submit">ثبت امتیازهای بی‌نام</button><button class="alt" id="finish">پایان بدون ارسال امتیاز</button>
+<small id="status" role="status"></small>
+</section>
+<section id="done"><h2>یک سفر می‌تواند با یک سؤال آغاز شود ✨</h2><p id="doneText"></p><button id="restart">شروع یک تجربه جدید</button></section>
+<small>CAM 0.3 • مطالعه آزمایشی • داوطلبانه</small>
+</main>
+<script src="config.js"></script><script>
+'use strict';
+const conf=window.CAM_CONFIG||{endpoint:''};
+const V={
+ A:'اگر غول چراغ جادو همین حالا ظاهر شود… واقعاً می‌دانی چه آرزویی از او می‌خواهی؟',
+ B:'ممکن است مهم‌ترین آرزوی زندگیت چیزی باشد که هنوز کشفش نکرده‌ای؟',
+ C:'شاید ماجرایی در انتظار تو باشد که هنوز از وجودش خبر نداری…',
+ D:'آرزوها و ارزش‌های زندگی خود را کشف کن.'
+};
+const params=new URLSearchParams(location.search);
+const fixed=params.get('v')?.toUpperCase();
+// Cryptographically generated random index; four variants have equal assignment probability.
+const arr=new Uint32Array(1);
+let randomIndex;try{crypto.getRandomValues(arr);randomIndex=arr[0]%4}catch(e){randomIndex=Math.floor(Math.random()*4)}
+const variant=V[fixed]?fixed:['A','B','C','D'][randomIndex];
+const id=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);
+const sessionId=id();
+let agreed=false,decision='',choice='',ratings={curiosity:'',relevance:'',discovery:''};
+const sent=new Set();
+const $=id=>document.getElementById(id);
+$('headline').textContent=V[variant];
+function show(name){document.querySelectorAll('section').forEach(s=>s.classList.toggle('active',s.id===name));window.scrollTo(0,0);}
+function postData(data){
+ if(!conf.endpoint)return;
+ const body=new URLSearchParams({...data,honeypot:''});
+ // No cookies, no personally written text. Events are best-effort network messages.
+ try{if(navigator.sendBeacon&&navigator.sendBeacon(conf.endpoint,body))return}catch(e){}
+ fetch(conf.endpoint,{method:'POST',mode:'no-cors',credentials:'omit',keepalive:true,body}).catch(()=>{});
+}
+function event(stage){
+ if(!agreed||sent.has(stage))return;
+ sent.add(stage);
+ postData({experiment:'CAM-0.3',kind:'event',variant,session_id:sessionId,stage,receipt_id:id()});
+}
+$('agree').onclick=()=>{agreed=true;event('exposed');show('start');};
+$('browse').onclick=()=>show('start');
+$('follow').onclick=()=>{decision='دنبال کرد';event('follow');event('discovery');show('discover');};
+$('decline').onclick=()=>{decision='رد کرد';event('decline');event('survey');show('survey');};
+for(const item of ['آرامش','آزادی','ماجراجویی','یادگیری','ارتباط','اثرگذاری']){
+ const b=document.createElement('button');b.textContent=item;b.onclick=()=>{choice=item;document.querySelectorAll('#choices button').forEach(x=>x.classList.toggle('chosen',x===b))};$('choices').append(b);
+}
+$('advance').onclick=()=>{
+ $('reflection').textContent=choice?'«'+choice+'» شاید سرنخی درباره خواسته تو باشد، نه یک نتیجه قطعی.':'نداشتن پاسخ روشن هم کاملاً طبیعی است.';
+ event('reflection');show('reflect');
+};
+$('rate').onclick=()=>{event('survey');show('survey')};
+$('leave').onclick=()=>{event('exit');$('doneText').textContent='بدون امتیازدهی تمام شد.';show('done')};
+for(const [key,text] of Object.entries({curiosity:'پیام اول چقدر کنجکاوت کرد؟',relevance:'چقدر به زندگی تو مربوط بود؟',discovery:'چقدر حس کردی چیزی کشف کردی؟'})){
+ const div=document.createElement('div'),label=document.createElement('label');label.textContent=text;div.append(label);
+ const bar=document.createElement('div');bar.className='scores';
+ for(let i=1;i<=5;i++){const b=document.createElement('button');b.textContent=i;b.onclick=()=>{ratings[key]=i;bar.querySelectorAll('button').forEach(x=>x.classList.toggle('chosen',x===b))};bar.append(b)}
+ div.append(bar);$('ratings').append(div);
+}
+$('finish').onclick=()=>{event('exit');$('doneText').textContent='امتیازی ارسال نشد.';show('done')};
+$('submit').onclick=()=>{
+ if(!agreed){$('status').textContent='برای ثبت اطلاعات، باید از ابتدا گزینه رضایت به پژوهش را انتخاب کنی؛ می‌توانی بدون ارسال به پایان بروی.';return;}
+ if(!conf.endpoint){$('status').textContent='سرویس ثبت پاسخ هنوز آماده نیست.';return;}
+ const data={experiment:'CAM-0.3',kind:'response',variant,session_id:sessionId,receipt_id:id(),decision,...ratings,honeypot:''};
+ const form=document.createElement('form');form.method='POST';form.action=conf.endpoint;form.target='_blank';form.hidden=true;
+ for(const [key,value] of Object.entries(data)){const field=document.createElement('input');field.name=key;field.value=value;form.append(field)}
+ document.body.append(form);form.submit();form.remove();
+ $('doneText').textContent='پنجره ثبت باز شد. ارسال فقط وقتی تأیید می‌شود که پیام «پاسخ ثبت شد» را ببینی.';show('done');
+};
+$('restart').onclick=()=>location.href=location.pathname+location.search;
+if(!conf.endpoint){$('status').textContent='این نمونه هنوز به سامانه ثبت متصل نیست.';}
+</script>
+</body></html>
