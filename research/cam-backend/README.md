@@ -1,10 +1,12 @@
-# Time80 CAM data collection 0.2
+# Time80 CAM data collection — v0.2 (legacy)
+
+**Current new pilot v0.3:** [راهنمای انتشار و سنجش ریزش (فارسی)](CAM_0.3_SETUP_FA.md). Do not use the legacy setup instructions below for the new pilot.
 
 Separate research deployment; no Time80 mobile app release changes.
 
 ## Files
 - `docs/index.html`: responsive four-variant A/B/C/D public pilot
-- `docs/config.js`: endpoint address for the survey backend (currently empty)
+- `docs/config.js`: endpoint address for the survey backend (configured in GitHub; public receiver URL)
 - `research/cam-backend/Code.gs`: Google Apps Script receiver; anonymous values only
 
 ## Connect the Google Sheet
