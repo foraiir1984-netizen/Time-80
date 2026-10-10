@@ -15,7 +15,7 @@ function findSession(sheet,id){
 }
 function updateSession(sheet,p,stage){
   let row=findSession(sheet,p.session_id),now=new Date();
-  if(!row){sheet.appendRow([now,'CAM-0.3',p.variant,p.session_id,'',false,false,false,false,now,'exposed',false]);row=sheet.getLastRow();}
+  if(!row){sheet.appendRow([now,p.experiment,p.variant,p.session_id,'',false,false,false,false,now,'exposed',false]);row=sheet.getLastRow();}
   const state=sheet.getRange(row,1,1,12).getValues()[0];
   // Do not change a previously assigned variant if a retry supplies different text.
   if(state[2]!==p.variant)throw Error('variant changed for session');
@@ -43,7 +43,7 @@ function doPost(e){
  let lock;
  try{
    const p=e&&e.parameter||{};
-   if(p.honeypot||!['CAM-0.2','CAM-0.3'].includes(p.experiment))throw Error('invalid experiment');
+   if(p.honeypot||!['CAM-0.2','CAM-0.3','CAM-0.3-test'].includes(p.experiment))throw Error('invalid experiment');
    lock=LockService.getScriptLock();lock.waitLock(15000);
    const book=SpreadsheetApp.getActiveSpreadsheet();
    if(!book)throw Error('not a bound spreadsheet script');
@@ -56,7 +56,7 @@ function doPost(e){
      const idCount=events.getLastRow();
      if(idCount>1&&events.getRange(2,6,idCount-1,1).createTextFinder(p.receipt_id).matchEntireCell(true).findNext())return receipt(true);
      updateSession(sessions,p,p.stage);
-     events.appendRow([new Date(),'CAM-0.3',p.variant,p.session_id,p.stage,p.receipt_id]);
+     events.appendRow([new Date(),p.experiment,p.variant,p.session_id,p.stage,p.receipt_id]);
      return receipt(true);
    }
    if(p.kind==='response'){
@@ -64,9 +64,9 @@ function doPost(e){
      const nums=[rating(p.curiosity),rating(p.relevance),rating(p.discovery)];
      const responses=book.getSheetByName(CAM_TAB),n=responses.getLastRow();
      if(n>1&&responses.getRange(2,8,n-1,1).createTextFinder(p.receipt_id).matchEntireCell(true).findNext())return receipt(true);
-     responses.appendRow([new Date(),'CAM-0.3',p.variant,p.decision,...nums,p.receipt_id,p.session_id]);
+     responses.appendRow([new Date(),p.experiment,p.variant,p.decision,...nums,p.receipt_id,p.session_id]);
      updateSession(sessions,p,'submitted');
-     events.appendRow([new Date(),'CAM-0.3',p.variant,p.session_id,'submitted',p.receipt_id]);
+     events.appendRow([new Date(),p.experiment,p.variant,p.session_id,'submitted',p.receipt_id]);
      return receipt(true);
    }
    throw Error('invalid kind');
