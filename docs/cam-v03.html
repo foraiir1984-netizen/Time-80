@@ -50,6 +50,7 @@ const V={
 };
 const params=new URLSearchParams(location.search);
 const fixed=params.get('v')?.toUpperCase();
+const experiment=params.get('test')==='1'?'CAM-0.3-test':'CAM-0.3';
 // Cryptographically generated random index; four variants have equal assignment probability.
 const arr=new Uint32Array(1);
 let randomIndex;try{crypto.getRandomValues(arr);randomIndex=arr[0]%4}catch(e){randomIndex=Math.floor(Math.random()*4)}
@@ -71,7 +72,7 @@ function postData(data){
 function event(stage){
  if(!agreed||sent.has(stage))return;
  sent.add(stage);
- postData({experiment:'CAM-0.3',kind:'event',variant,session_id:sessionId,stage,receipt_id:id()});
+ postData({experiment,kind:'event',variant,session_id:sessionId,stage,receipt_id:id()});
 }
 $('agree').onclick=()=>{agreed=true;event('exposed');show('start');};
 $('browse').onclick=()=>show('start');
@@ -96,7 +97,7 @@ $('finish').onclick=()=>{event('exit');$('doneText').textContent='امتیازی
 $('submit').onclick=()=>{
  if(!agreed){$('status').textContent='برای ثبت اطلاعات، باید از ابتدا گزینه رضایت به پژوهش را انتخاب کنی؛ می‌توانی بدون ارسال به پایان بروی.';return;}
  if(!conf.endpoint){$('status').textContent='سرویس ثبت پاسخ هنوز آماده نیست.';return;}
- const data={experiment:'CAM-0.3',kind:'response',variant,session_id:sessionId,receipt_id:id(),decision,...ratings,honeypot:''};
+ const data={experiment,kind:'response',variant,session_id:sessionId,receipt_id:id(),decision,...ratings,honeypot:''};
  const form=document.createElement('form');form.method='POST';form.action=conf.endpoint;form.target='_blank';form.hidden=true;
  for(const [key,value] of Object.entries(data)){const field=document.createElement('input');field.name=key;field.value=value;form.append(field)}
  document.body.append(form);form.submit();form.remove();
