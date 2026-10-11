@@ -1,0 +1,161 @@
+{
+  "task": "RC3-FIX-01",
+  "run_id": "RC3-FIX-01-AUTO-20261011-01",
+  "recorded_at": "2026-10-11T13:38:29.075971+03:30",
+  "original_checkout": {
+    "path": "/workspace/Time-80",
+    "branch": "work",
+    "HEAD_start": "5c45240ab1dc967cfbbabcdede73b27bb0f468e8",
+    "HEAD_end": "5c45240ab1dc967cfbbabcdede73b27bb0f468e8",
+    "tree": "clean"
+  },
+  "execution_checkout": {
+    "path": "/workspace/work/rc3-fix01/repo",
+    "branch": "rc3-fix01-x75",
+    "HEAD_start": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+    "HEAD_end": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+    "state": "uncommitted",
+    "baseline_verified_files": 300,
+    "intermediate_history_trees_downloaded": false
+  },
+  "patch": {
+    "patch": "RC3-FIX-01-source-tests.patch",
+    "sha256": "e8355470be59a57ce878dc7ef95aa8fe242542ccfe9a4ad548572dd8ad5071ca",
+    "bytes": 32167,
+    "paths": [
+      "App.tsx",
+      "src/notifications/notificationResponseService.ts",
+      "tests/navigation.mjs",
+      "tests/notificationPlatform.mjs",
+      "tests/notifications.mjs",
+      "tests/react-native.mjs",
+      "tests/register.mjs",
+      "tests/v03Notifications.test.ts",
+      "tests/app-navigation.mjs",
+      "tests/v03ResponseUI.test.tsx"
+    ],
+    "baseline": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+    "state": "uncommitted"
+  },
+  "checks": [
+    {
+      "command": "npm ci --no-audit --no-fund --fetch-retries=0 --fetch-timeout=10000 --proxy=http://proxy:8080 --https-proxy=http://proxy:8080 --cache=/workspace/work/rc3-fix01/npm-cache",
+      "result": "Pass",
+      "exit": 0,
+      "evidence": "505 packages; postinstall Verified expo-notifications57.0.20 Time80 patch; lock/package unchanged"
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "Pass",
+      "exit": 0,
+      "evidence": "tsc --noEmit final run; initial new-test JSDoc typing corrected"
+    },
+    {
+      "command": "npm test",
+      "environment": "TZ unset",
+      "result": "Fail",
+      "exit": 1,
+      "evidence": "initial run58/59; existing visualIntegration TZ restoration sets literal undefined and SQLite parameter2 rejects; no production failure inferred"
+    },
+    {
+      "command": "node --import ./tests/register.mjs --import tsx --test tests/visualIntegration.test.tsx",
+      "cwd": "/workspace/work/rc3-fix01/baseline-check",
+      "commit": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+      "environment": "TZ unset",
+      "result": "Fail",
+      "exit": 1,
+      "evidence": "baseline-visualIntegration.log;6/7 same failure; no source modifications in this worktree"
+    },
+    {
+      "command": "TZ=UTC npm test",
+      "result": "Pass",
+      "exit": 0,
+      "tests": 60,
+      "pass": 60,
+      "fail": 0,
+      "skipped": 0,
+      "evidence": "npm-test.log"
+    },
+    {
+      "command": "node --import ./tests/register.mjs --import tsx --test tests/v03Notifications.test.ts",
+      "result": "Pass",
+      "exit": 0,
+      "tests": 17
+    },
+    {
+      "command": "node --import ./tests/register.mjs --import tsx --test tests/v03ResponseUI.test.tsx",
+      "result": "Pass",
+      "exit": 0,
+      "evidence": "separate run7/7 before8th test; final full suite8/8"
+    },
+    {
+      "command": "git diff --check",
+      "result": "Pass",
+      "exit": 0
+    },
+    {
+      "command": "git apply --check /workspace/work/rc3-fix01/RC3-FIX-01-source-tests.patch",
+      "cwd": "/workspace/work/rc3-fix01/baseline-check",
+      "result": "Pass",
+      "exit": 0
+    },
+    {
+      "command": "real screenshot / Android QA / native runtime / RC3 build / upgrade",
+      "result": "Not run",
+      "evidence": "No adb/emulator/identified RC3 APK; no fake images"
+    }
+  ],
+  "suite_counts": {
+    "v03Notifications": 17,
+    "v03ResponseUI": 8,
+    "v03UI": 5,
+    "visualIntegration": 7,
+    "v03Data": 9,
+    "other": 14
+  },
+  "prior_evidence": {
+    "run_probes.mjs": {
+      "status": "Available",
+      "sha256": "9daeb939913b8bebf2b1c951ef25e67b4f9a2691b5cd800bd63d229a31ccfcad",
+      "rerun_this_task": false
+    },
+    "probe-results.json": {
+      "status": "Available",
+      "sha256": "3e063cfe26b859e831faf10c4ef5fd762af1afd020b343ad8baf12ecf4cbe81d",
+      "rerun_this_task": false
+    },
+    "validation-record.json": {
+      "status": "Available",
+      "sha256": "b4516d943bd009793f8b744e6f48f6062ed2f9364801bcae78ebc7f2530289a5",
+      "rerun_this_task": false
+    }
+  },
+  "limits": "App/handler/coordinator/resolver real modules; native/navigation ports doubled; SQLite fixture only. Not Android delivery/device acceptance. Init failure cannot allow successful drain while not-ready; tested preserving its error on retry and independent reconcile error on success.",
+  "open": [
+    "P03-014",
+    "P03-015",
+    "P03-016-device",
+    "P03-019",
+    "OI-A01-R",
+    "OI-P01",
+    "AC-A11"
+  ],
+  "no_changes": [
+    "scheduler",
+    "schema",
+    "assignment/history",
+    "package/lockfile",
+    "signing/applicationId",
+    "UI redesigns/full registry",
+    "ICATUS UI",
+    "Undo countdown",
+    "TalkBack"
+  ],
+  "temporary_paths": [
+    "/workspace/work/rc3-fix01/blob-batch-*.json",
+    "/workspace/work/rc3-fix01/import_git.py",
+    "/workspace/work/rc3-fix01/export.index",
+    "/workspace/work/rc3-fix01/npm-cache",
+    "/workspace/work/rc3-fix01/baseline-check (test node_modules symlink untracked)"
+  ]
+}

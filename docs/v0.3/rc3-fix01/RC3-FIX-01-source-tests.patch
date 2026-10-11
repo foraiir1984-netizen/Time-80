@@ -1,0 +1,912 @@
+diff --git a/App.tsx b/App.tsx
+index 7e0bbef..a5a10bd 100644
+--- a/App.tsx
++++ b/App.tsx
+@@ -109,6 +109,22 @@ export default function App() {
+     [onboard, setOnboard] = useState(false),
+     [error, setError] = useState(""),
+     [attempt, setAttempt] = useState(0);
++  const [responseError, setResponseError] = useState(""),
++    [retryMessage, setRetryMessage] = useState(""),
++    [responseProcessing, setResponseProcessing] = useState(false);
++  const retryVersion = useRef(0),
++    responseLoadVersion = useRef(0),
++    retryRequested = useRef(false),
++    latestResponseRun = useRef(0),
++    mounted = useRef(true);
++  useEffect(() => {
++    mounted.current = true;
++    return () => {
++      mounted.current = false;
++      retryVersion.current++;
++      responseLoadVersion.current++;
++    };
++  }, []);
+   useEffect(() => {
+     let alive = true;
+     async function start() {
+@@ -178,18 +194,94 @@ export default function App() {
+               reason: result.reason,
+             }),
+           );
++        // Accepted navigation ends feedback belonging to the previous retry view.
++        retryVersion.current++;
++        retryRequested.current = false;
++        setRetryMessage("");
++        setResponseProcessing(false);
+       },
+       dismiss: dismissTappedOccurrence,
+       ack: acknowledgeResponse,
+-      error: (e) => setError(errorMessage(e)),
++      error: (e) => {
++        if (mounted.current) setResponseError(errorMessage(e));
++      },
++      state: (state) => {
++        if (!mounted.current || state.runId < latestResponseRun.current) return;
++        latestResponseRun.current = state.runId;
++        retryVersion.current++;
++        responseLoadVersion.current++;
++        if (state.status === "processing") {
++          setResponseProcessing(true);
++          setRetryMessage("");
++          return;
++        }
++        setResponseProcessing(false);
++        if (state.status === "success") setResponseError("");
++        if (retryRequested.current)
++          setRetryMessage(
++            state.status === "success"
++              ? "پاسخ اعلان پردازش شد."
++              : "پردازش پاسخ اعلان کامل نشد؛ دوباره تلاش کنید.",
++          );
++        retryRequested.current = false;
++      },
+     });
++  function loadPendingResponses() {
++    const version = ++responseLoadVersion.current;
++    void pendingResponses()
++      .then((rows) => {
++        if (mounted.current)
++          rows.forEach((r) => coordinator.current!.enqueue(r));
++      })
++      .catch((e) => {
++        if (mounted.current && version === responseLoadVersion.current)
++          setResponseError(errorMessage(e));
++      });
++  }
++  async function retryResponse() {
++    retryRequested.current = true;
++    const operation = coordinator.current!.retry();
++    const version = ++retryVersion.current;
++    const result = await operation;
++    if (!mounted.current || version !== retryVersion.current) return;
++    // Actual runs report completion through state; immediate results belong to
++    // this touch only, and cannot overwrite a newer run or accepted navigation.
++    if (result.status === "running")
++      setRetryMessage("پردازش پاسخ اعلان در جریان است؛ لطفاً صبر کنید.");
++    else if (result.status === "not-ready") {
++      retryRequested.current = false;
++      setRetryMessage("برنامه هنوز برای بازکردن پاسخ اعلان آماده نیست.");
++    } else if (result.status === "empty") {
++      retryRequested.current = false;
++      setRetryMessage("پاسخ اعلانی برای تلاش دوباره در صف نیست.");
++    }
++  }
++  const responseRetryControls = (
++    <>
++      <ErrorText error={responseError} />
++      {(!!error || !!responseError || !!retryMessage) && (
++        <>
++          <View style={ui.row}>
++            <Button
++              title="تلاش دوباره برای بازکردن اعلان"
++              onPress={() => void retryResponse()}
++            />
++            <Text style={[ui.small, { writingDirection: "ltr" }]}>X75</Text>
++          </View>
++          {!!(responseProcessing || retryMessage) && (
++            <Text style={ui.text} accessibilityLiveRegion="polite">
++              {responseProcessing ? "در حال پردازش پاسخ اعلان…" : retryMessage}
++            </Text>
++          )}
++        </>
++      )}
++    </>
++  );
+   useEffect(() => {
+     const sub = Notifications.addNotificationResponseReceivedListener((r) =>
+       coordinator.current!.enqueue(r),
+     );
+-    void pendingResponses()
+-      .then((rows) => rows.forEach((r) => coordinator.current!.enqueue(r)))
+-      .catch((e) => setError(errorMessage(e)));
++    loadPendingResponses();
+     return () => sub.remove();
+   }, []);
+   useEffect(() => {
+@@ -203,23 +295,20 @@ export default function App() {
+       >
+         {!ready ? (
+           <View style={[ui.page, { justifyContent: "center" }]}>
+-            {error ? (
++            {error || responseError ? (
+               <>
+                 <ErrorText error={error} />
++                {responseRetryControls}
++                <Text style={ui.text}>داده‌ها حذف یا بازنشانی نشده‌اند.</Text>
+                 {!!error && (
+                   <Button
+-                    title="تلاش دوباره برای بازکردن اعلان"
+-                    onPress={() => void coordinator.current!.retry()}
++                    title="تلاش دوباره"
++                    onPress={() => {
++                      setError("");
++                      setAttempt((x) => x + 1);
++                    }}
+                   />
+                 )}
+-                <Text style={ui.text}>داده‌ها حذف یا بازنشانی نشده‌اند.</Text>
+-                <Button
+-                  title="تلاش دوباره"
+-                  onPress={() => {
+-                    setError("");
+-                    setAttempt((x) => x + 1);
+-                  }}
+-                />
+               </>
+             ) : (
+               <>
+@@ -233,12 +322,7 @@ export default function App() {
+         ) : (
+           <>
+             <ErrorText error={error} />
+-            {!!error && (
+-              <Button
+-                title="تلاش دوباره برای بازکردن اعلان"
+-                onPress={() => void coordinator.current!.retry()}
+-              />
+-            )}
++            {responseRetryControls}
+             <NavigationContainer
+               ref={navigation}
+               theme={{
+@@ -247,11 +331,7 @@ export default function App() {
+               }}
+               onReady={() => {
+                 setNavReady(true);
+-                void pendingResponses()
+-                  .then((rows) =>
+-                    rows.forEach((r) => coordinator.current!.enqueue(r)),
+-                  )
+-                  .catch((e) => setError(errorMessage(e)));
++                loadPendingResponses();
+               }}
+             >
+               <Stack.Navigator
+diff --git a/src/notifications/notificationResponseService.ts b/src/notifications/notificationResponseService.ts
+index 60cfb6e..4043366 100644
+--- a/src/notifications/notificationResponseService.ts
++++ b/src/notifications/notificationResponseService.ts
+@@ -45,12 +45,22 @@ export async function resolveNotificationTarget(
+     };
+   });
+ }
++export type ResponseDrainResult = {
++  status: "empty" | "not-ready" | "running" | "success" | "failure";
++  runId: number;
++  processed: number;
++  routed: number;
++  pending: number;
++};
++export type ResponseDrainState =
++  { status: "processing"; runId: number } | ResponseDrainResult;
+ export function createResponseCoordinator(handlers: {
+   resolve: (n: Notification) => Promise<Resolution>;
+   route: (r: Resolution) => Promise<void>;
+   dismiss: (r: NotificationResponse) => Promise<void>;
+   ack: (key: string) => Promise<void>;
+   error: (e: unknown) => void;
++  state?: (state: ResponseDrainState) => void;
+ }) {
+   const pending = new Map<
+       string,
+@@ -58,10 +68,27 @@ export function createResponseCoordinator(handlers: {
+     >(),
+     done = new Set<string>();
+   let ready = false,
+-    running = false;
+-  async function drain() {
+-    if (!ready || running) return;
++    running = false,
++    runId = 0;
++  async function drain(): Promise<ResponseDrainResult> {
++    const idle = (
++      status: ResponseDrainResult["status"],
++    ): ResponseDrainResult => ({
++      status,
++      runId,
++      processed: 0,
++      routed: 0,
++      pending: pending.size,
++    });
++    if (running) return idle("running");
++    if (!ready) return idle("not-ready");
++    if (!pending.size) return idle("empty");
+     running = true;
++    const currentRun = ++runId;
++    let processed = 0,
++      routed = 0,
++      failed = false;
++    handlers.state?.({ status: "processing", runId: currentRun });
+     try {
+       for (const [key, item] of pending) {
+         try {
+@@ -69,10 +96,12 @@ export function createResponseCoordinator(handlers: {
+             if (
+               item.response.notification.request.content.data?.kind !==
+               "time80-test"
+-            )
++            ) {
+               await handlers.route(
+                 await handlers.resolve(item.response.notification),
+               );
++              routed++;
++            }
+             item.routed = true;
+           }
+           if (!item.dismissed) {
+@@ -80,6 +109,7 @@ export function createResponseCoordinator(handlers: {
+               await handlers.dismiss(item.response);
+               item.dismissed = true;
+             } catch (e) {
++              failed = true;
+               handlers.error(e);
+               continue;
+             }
+@@ -87,7 +117,9 @@ export function createResponseCoordinator(handlers: {
+           await handlers.ack(key);
+           done.add(key);
+           pending.delete(key);
++          processed++;
+         } catch (e) {
++          failed = true;
+           handlers.error(e);
+           break;
+         }
+@@ -95,6 +127,15 @@ export function createResponseCoordinator(handlers: {
+     } finally {
+       running = false;
+     }
++    const result: ResponseDrainResult = {
++      status: failed ? "failure" : "success",
++      runId: currentRun,
++      processed,
++      routed,
++      pending: pending.size,
++    };
++    handlers.state?.(result);
++    return result;
+   }
+   return {
+     enqueue(r: NotificationResponse) {
+diff --git a/tests/app-navigation.mjs b/tests/app-navigation.mjs
+new file mode 100644
+index 0000000..ae5c79e
+--- /dev/null
++++ b/tests/app-navigation.mjs
+@@ -0,0 +1,45 @@
++import React, { useEffect } from "react";
++
++// Only navigator/native hosts are doubled. App, its handler, coordinator,
++// resolver and SQLite test database remain the real project modules.
++/** @type {{ready:boolean,autoReady:boolean,onReady:(()=>void)|null,dispatches:any[],dispatch:((action:any)=>void)|null}} */
++export const navigationState = {
++  ready: true,
++  autoReady: true,
++  onReady: null,
++  dispatches: [],
++  dispatch: null,
++};
++export const DefaultTheme = { colors: {} };
++export const StackActions = {
++  push: (name, params) => ({ type: "PUSH", name, params }),
++};
++export const createNavigationContainerRef = () => ({
++  isReady: () => navigationState.ready,
++  dispatch: (action) => {
++    navigationState.dispatch?.(action);
++    navigationState.dispatches.push(action);
++  },
++});
++export const NavigationContainer = React.forwardRef(
++  function NavigationContainer(props, _ref) {
++    useEffect(() => {
++      navigationState.onReady = props.onReady;
++      if (navigationState.autoReady) props.onReady?.();
++      return () => {
++        navigationState.onReady = null;
++      };
++    }, []);
++    return React.createElement("NavigationContainer", {}, props.children);
++  },
++);
++const navigator = () => ({
++  Navigator: (props) => React.createElement("Navigator", {}, props.children),
++  Screen: () => null,
++});
++export const createNativeStackNavigator = navigator;
++export const createBottomTabNavigator = navigator;
++export const SafeAreaProvider = (props) =>
++  React.createElement("SafeAreaProvider", {}, props.children);
++export const SafeAreaView = (props) =>
++  React.createElement("SafeAreaView", {}, props.children);
+diff --git a/tests/navigation.mjs b/tests/navigation.mjs
+index 1f77493..66773cb 100644
+--- a/tests/navigation.mjs
++++ b/tests/navigation.mjs
+@@ -1,2 +1,8 @@
+ import { useEffect } from "react";
+ export const useFocusEffect = (callback) => useEffect(callback, [callback]);
++export {
++  NavigationContainer,
++  DefaultTheme,
++  StackActions,
++  createNavigationContainerRef,
++} from "./app-navigation.mjs";
+diff --git a/tests/notificationPlatform.mjs b/tests/notificationPlatform.mjs
+index 12eb343..750168b 100644
+--- a/tests/notificationPlatform.mjs
++++ b/tests/notificationPlatform.mjs
+@@ -45,8 +45,18 @@ export async function applyOwnedPlan(requests, generation, force) {
+   native.dirty = false;
+   return { ...native };
+ }
++/** @type {{pending:()=>Promise<import('expo-notifications').NotificationResponse[]>,ack:(key:string)=>Promise<void>,dismiss:(response:import('expo-notifications').NotificationResponse)=>Promise<void>}} */
++export const responseIO = {
++  pending: async () => [],
++  ack: async () => {},
++  dismiss: async () => {},
++};
+ export async function pendingResponses() {
+-  return [];
++  return responseIO.pending();
++}
++export async function acknowledgeResponse(key) {
++  return responseIO.ack(key);
++}
++export async function dismissTappedOccurrence(response) {
++  return responseIO.dismiss(response);
+ }
+-export async function acknowledgeResponse() {}
+-export async function dismissTappedOccurrence() {}
+diff --git a/tests/notifications.mjs b/tests/notifications.mjs
+index d2330df..5ddff8c 100644
+--- a/tests/notifications.mjs
++++ b/tests/notifications.mjs
+@@ -13,6 +13,14 @@ export const SchedulableTriggerInputTypes = {
+   WEEKLY: "weekly",
+   TIME_INTERVAL: "timeInterval",
+ };
++const responseListeners = new Set();
++export function setNotificationHandler() {}
++export function addNotificationResponseReceivedListener(fn) {
++  responseListeners.add(fn);
++  return { remove: () => responseListeners.delete(fn) };
++}
++export const emitNotificationResponse = (r) =>
++  responseListeners.forEach((fn) => fn(r));
+ export async function getPermissionsAsync() {
+   return { granted: state.granted, canAskAgain: true };
+ }
+diff --git a/tests/react-native.mjs b/tests/react-native.mjs
+index 69785f6..a77f685 100644
+--- a/tests/react-native.mjs
++++ b/tests/react-native.mjs
+@@ -15,6 +15,7 @@ export const View = primitive("View"),
+   ScrollView = primitive("ScrollView"),
+   KeyboardAvoidingView = primitive("KeyboardAvoidingView"),
+   ActivityIndicator = primitive("ActivityIndicator");
++export const Switch = primitive("Switch");
+ export function Modal(props) {
+   return props.visible
+     ? React.createElement("Modal", props, props.children)
+diff --git a/tests/register.mjs b/tests/register.mjs
+index b182ed2..051efbf 100644
+--- a/tests/register.mjs
++++ b/tests/register.mjs
+@@ -10,6 +10,17 @@ registerHooks({
+     return next(url, context);
+   },
+   resolve(specifier, context, next) {
++    if (
++      [
++        "@react-navigation/native-stack",
++        "@react-navigation/bottom-tabs",
++        "react-native-safe-area-context",
++      ].includes(specifier)
++    )
++      return {
++        url: new URL("./app-navigation.mjs", import.meta.url).href,
++        shortCircuit: true,
++      };
+     if (
+       specifier.endsWith("/notificationPlatform") &&
+       !process.env.TIME80_REAL_PLATFORM_TEST
+diff --git a/tests/v03Notifications.test.ts b/tests/v03Notifications.test.ts
+index ab0ae9b..ce27103 100644
+--- a/tests/v03Notifications.test.ts
++++ b/tests/v03Notifications.test.ts
+@@ -9,6 +9,7 @@ import {
+   createResponseCoordinator,
+   resolveNotificationTarget,
+   type Resolution,
++  type ResponseDrainState,
+ } from "../src/notifications/notificationResponseService";
+ import { initDatabase } from "../src/db/database";
+ import { db } from "../src/db/connection";
+@@ -40,6 +41,183 @@ const response = (id = "A") =>
+       },
+     },
+   }) as any;
++
++test("response retry exposes empty/not-ready/running/completion and keeps repeated touches deduplicated", async () => {
++  const events: ResponseDrainState[] = [],
++    calls: string[] = [];
++  let release!: (r: Resolution) => void;
++  const c = createResponseCoordinator({
++    resolve: () => {
++      calls.push("resolve");
++      return new Promise((r) => {
++        release = r;
++      });
++    },
++    route: async () => {
++      calls.push("route");
++    },
++    dismiss: async () => {
++      calls.push("dismiss");
++    },
++    ack: async () => {
++      calls.push("ack");
++    },
++    error: (e) => {
++      throw e;
++    },
++    state: (s) => events.push(s),
++  });
++  c.setReady(true);
++  assert.deepEqual(await c.retry(), {
++    status: "empty",
++    runId: 0,
++    processed: 0,
++    routed: 0,
++    pending: 0,
++  });
++  c.setReady(false);
++  const a = response("retry-states");
++  a.notification.request.content.data.kind = "time80-checkin";
++  c.enqueue(a);
++  assert.equal((await c.retry()).status, "not-ready");
++  assert.equal(c.size(), 1);
++  c.setReady(true);
++  const repeated = await c.retry();
++  assert.equal(repeated.status, "running");
++  assert.equal(repeated.runId, 1);
++  c.enqueue(a);
++  assert.deepEqual(calls, ["resolve"]);
++  release({ kind: "unresolved", reason: "test" });
++  await flush();
++  assert.deepEqual(calls, ["resolve", "route", "dismiss", "ack"]);
++  assert.deepEqual(events, [
++    { status: "processing", runId: 1 },
++    { status: "success", runId: 1, processed: 1, routed: 1, pending: 0 },
++  ]);
++  c.enqueue(a);
++  await flush();
++  assert.equal(calls.length, 4);
++});
++
++for (const failedStage of ["resolve", "route", "dismiss", "ack"] as const)
++  test(`response retry after ${failedStage} failure preserves completed stages and returns failure/success`, async () => {
++    let fail = true;
++    const calls: string[] = [],
++      errors: unknown[] = [];
++    const stage = async (name: string) => {
++      calls.push(name);
++      if (fail && name === failedStage) throw Error(name);
++    };
++    const c = createResponseCoordinator({
++      resolve: async () => {
++        await stage("resolve");
++        return { kind: "unresolved", reason: "test" };
++      },
++      route: async () => stage("route"),
++      dismiss: async () => stage("dismiss"),
++      ack: async () => stage("ack"),
++      error: (e) => errors.push(e),
++    });
++    const a = response(failedStage);
++    a.notification.request.content.data.kind = "time80-checkin";
++    c.enqueue(a);
++    c.setReady(true);
++    await flush();
++    const failure = await c.retry();
++    assert.equal(failure.status, "failure");
++    assert.equal(failure.pending, 1);
++    assert.equal(failure.processed, 0);
++    assert.equal(errors.length, 2);
++    const before = [...calls];
++    fail = false;
++    const success = await c.retry();
++    assert.equal(success.status, "success");
++    assert.equal(success.processed, 1);
++    assert.equal(success.pending, 0);
++    assert.deepEqual(
++      calls.slice(before.length),
++      failedStage === "ack"
++        ? ["ack"]
++        : failedStage === "dismiss"
++          ? ["dismiss", "ack"]
++          : ["resolve", "route", "dismiss", "ack"],
++    );
++    assert.equal(
++      success.routed,
++      failedStage === "ack" || failedStage === "dismiss" ? 0 : 1,
++    );
++  });
++
++test("failed dismiss does not lose independent response B; subsequent retry only completes A", async () => {
++  const routed: string[] = [],
++    acked: string[] = [];
++  let failA = true;
++  const c = createResponseCoordinator({
++    resolve: async (n) => ({
++      kind: "unresolved",
++      reason: n.request.identifier,
++    }),
++    route: async (r) => {
++      routed.push((r as any).reason);
++    },
++    dismiss: async (r) => {
++      if (failA && r.notification.request.identifier.endsWith("A"))
++        throw Error("dismiss A");
++    },
++    ack: async (key) => {
++      acked.push(key);
++    },
++    error: () => {},
++  });
++  const a = response("independent-A"),
++    b = response("independent-B");
++  a.notification.request.content.data.kind =
++    b.notification.request.content.data.kind = "time80-checkin";
++  c.enqueue(a);
++  c.enqueue(b);
++  c.setReady(true);
++  await flush();
++  assert.equal(routed.length, 2);
++  assert.equal(acked.length, 1);
++  assert.equal(c.size(), 1);
++  failA = false;
++  const result = await c.retry();
++  assert.equal(result.status, "success");
++  assert.equal(result.routed, 0);
++  assert.equal(acked.length, 2);
++  assert.equal(routed.length, 2);
++});
++
++test("diagnostic retry reports success without resolving/routing or writing ledger", async () => {
++  await initDatabase();
++  const tx = await db(),
++    before = await tx.getAllAsync("SELECT * FROM time_entries ORDER BY id");
++  let ack = 0;
++  const c = createResponseCoordinator({
++    resolve: async () => {
++      throw Error("diagnostic must not resolve");
++    },
++    route: async () => {
++      throw Error("diagnostic must not route");
++    },
++    dismiss: async () => {},
++    ack: async () => {
++      ack++;
++    },
++    error: (e) => {
++      throw e;
++    },
++  });
++  c.setReady(true);
++  c.enqueue(response("diagnostic-ledger"));
++  await flush();
++  assert.equal(ack, 1);
++  assert.equal((await c.retry()).status, "empty");
++  assert.deepEqual(
++    await tx.getAllAsync("SELECT * FROM time_entries ORDER BY id"),
++    before,
++  );
++});
+ const flush = () => new Promise<void>((r) => setImmediate(r));
+ test("v3 immutable identity resolves original period independent of click date; v2 absolute and dated compatibility", () => {
+   const d = data();
+diff --git a/tests/v03ResponseUI.test.tsx b/tests/v03ResponseUI.test.tsx
+new file mode 100644
+index 0000000..82c453d
+--- /dev/null
++++ b/tests/v03ResponseUI.test.tsx
+@@ -0,0 +1,276 @@
++import React from "react";
++import { test } from "node:test";
++import assert from "node:assert/strict";
++import { act, create, type ReactTestRenderer } from "react-test-renderer";
++import App from "../App";
++import { Button } from "../src/components/Ui";
++import { initDatabase } from "../src/db/database";
++import { db } from "../src/db/connection";
++import { setMeta } from "../src/db/metaRepository";
++import { readFailures } from "./sqlite.mjs";
++import { state, emitNotificationResponse } from "./notifications.mjs";
++import { responseIO } from "./notificationPlatform.mjs";
++import { navigationState } from "./app-navigation.mjs";
++
++(globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
++const tick = () => new Promise<void>((r) => setImmediate(r));
++const text = (r: ReactTestRenderer) => JSON.stringify(r.toJSON());
++const retry = (r: ReactTestRenderer) =>
++  r.root
++    .findAllByType(Button)
++    .find((b) => b.props.title === "تلاش دوباره برای بازکردن اعلان")!;
++const response = (id: string, diagnostic = true) =>
++  ({
++    actionIdentifier: "default",
++    notification: {
++      date: 1,
++      request: {
++        identifier: `time80-${id}`,
++        content: {
++          data: { kind: diagnostic ? "time80-test" : "time80-checkin" },
++        },
++      },
++    },
++  }) as any;
++function deferred<T = void>() {
++  let resolve!: (value: T) => void, reject!: (error: Error) => void;
++  const promise = new Promise<T>((a, b) => {
++    resolve = a;
++    reject = b;
++  });
++  return { promise, resolve, reject };
++}
++async function setup() {
++  readFailures.match = null;
++  readFailures.remaining = 0;
++  navigationState.ready = true;
++  navigationState.autoReady = true;
++  navigationState.dispatches = [];
++  navigationState.dispatch = null;
++  responseIO.pending = async () => [];
++  responseIO.dismiss = async () => {};
++  responseIO.ack = async () => {};
++  state.granted = false;
++  state.failAfter = Infinity;
++  await initDatabase();
++  await setMeta(await db(), "onboarding_completed", "true");
++  await (await db()).runAsync("UPDATE settings SET notification_enabled=1");
++}
++async function mount() {
++  let r!: ReactTestRenderer;
++  await act(async () => {
++    r = create(<App />);
++    for (let i = 0; i < 10; i++) await tick();
++  });
++  return r;
++}
++async function run(fn: () => unknown) {
++  await act(async () => {
++    fn();
++    for (let i = 0; i < 4; i++) await tick();
++  });
++}
++async function dispose(r: ReactTestRenderer) {
++  await act(async () => r.unmount());
++}
++const permissionError = "تنظیمات ذخیره شد؛ مجوز اعلان داده نشده است";
++
++test("real App X75 handler renders empty feedback and preserves independent reconcile error", async () => {
++  await setup();
++  const r = await mount();
++  assert.ok(text(r).includes(permissionError));
++  assert.ok(text(r).includes("X75"));
++  await run(retry(r).props.onPress);
++  assert.ok(text(r).includes("پاسخ اعلانی برای تلاش دوباره در صف نیست."));
++  assert.ok(text(r).includes(permissionError));
++  assert.equal(navigationState.dispatches.length, 0);
++  await dispose(r);
++});
++
++test("not-ready X75 feedback preserves independent init error and queued response", async () => {
++  await setup();
++  readFailures.match = "SELECT value FROM app_meta WHERE key=?";
++  readFailures.remaining = 1;
++  responseIO.pending = async () => [response("before-ready")];
++  const r = await mount();
++  assert.ok(text(r).includes("Injected read failure"));
++  await run(retry(r).props.onPress);
++  assert.ok(
++    text(r).includes("برنامه هنوز برای بازکردن پاسخ اعلان آماده نیست."),
++  );
++  assert.ok(text(r).includes("Injected read failure"));
++  assert.equal(navigationState.dispatches.length, 0);
++  await dispose(r);
++});
++
++test("real handler reports failure, running/repeated touch and success; clears only response error", async () => {
++  await setup();
++  let fail = true,
++    dismisses = 0,
++    acks = 0;
++  responseIO.dismiss = async () => {
++    dismisses++;
++    if (fail) throw Error("response dismiss failure");
++  };
++  const r = await mount();
++  await run(() => emitNotificationResponse(response("feedback")));
++  assert.ok(text(r).includes("response dismiss failure"));
++  await run(retry(r).props.onPress);
++  assert.ok(text(r).includes("پردازش پاسخ اعلان کامل نشد؛ دوباره تلاش کنید."));
++  fail = false;
++  const hold = deferred();
++  responseIO.ack = async () => {
++    acks++;
++    await hold.promise;
++  };
++  await run(retry(r).props.onPress);
++  assert.ok(text(r).includes("در حال پردازش پاسخ اعلان…"));
++  await run(retry(r).props.onPress);
++  assert.ok(text(r).includes("در حال پردازش پاسخ اعلان…"));
++  assert.equal(acks, 1);
++  assert.equal(dismisses, 3);
++  await run(() => hold.resolve());
++  assert.ok(text(r).includes("پاسخ اعلان پردازش شد."));
++  assert.ok(!text(r).includes("response dismiss failure"));
++  assert.ok(!text(r).includes("در حال پردازش پاسخ اعلان…"));
++  assert.ok(text(r).includes(permissionError));
++  assert.equal(navigationState.dispatches.length, 0);
++  await dispose(r);
++});
++
++test("bootstrap retry remains separate; X75 success preserves subsequent independent reconcile error", async () => {
++  await setup();
++  readFailures.match = "SELECT value FROM app_meta WHERE key=?";
++  readFailures.remaining = 1;
++  let fail = true;
++  responseIO.dismiss = async () => {
++    if (fail) throw Error("response failure");
++  };
++  const r = await mount();
++  await run(() => emitNotificationResponse(response("bootstrap-response")));
++  // Finish bootstrap through its own existing retry; retain a later independent
++  // reconcile error, then complete response processing via X75.
++  const initRetry = r.root
++    .findAllByType(Button)
++    .find((b) => b.props.title === "تلاش دوباره")!;
++  await run(initRetry.props.onPress);
++  assert.ok(text(r).includes(permissionError));
++  fail = false;
++  await run(retry(r).props.onPress);
++  assert.ok(text(r).includes(permissionError));
++  assert.ok(!text(r).includes("response failure"));
++  await dispose(r);
++});
++
++test("accepted navigation removes retry feedback; response taps/retries and dedupe do not write ledger", async () => {
++  await setup();
++  const r = await mount(),
++    tx = await db();
++  const before = await tx.getAllAsync("SELECT * FROM time_entries ORDER BY id");
++  let fail = true;
++  navigationState.dispatch = () => {
++    if (fail) throw Error("navigation failure");
++  };
++  const a = response("unresolved-A", false),
++    b = response("unresolved-B", false);
++  await run(() => {
++    emitNotificationResponse(a);
++    emitNotificationResponse(b);
++  });
++  assert.ok(text(r).includes("navigation failure"));
++  fail = false;
++  await run(retry(r).props.onPress);
++  assert.equal(navigationState.dispatches.length, 2);
++  assert.ok(
++    navigationState.dispatches.every(
++      (a: any) => a.name === "NotificationResolution",
++    ),
++  );
++  assert.ok(!text(r).includes("پاسخ اعلان پردازش شد."));
++  assert.ok(!text(r).includes("در حال پردازش پاسخ اعلان…"));
++  assert.ok(!text(r).includes("navigation failure"));
++  await run(() => {
++    emitNotificationResponse(a);
++    emitNotificationResponse(b);
++  });
++  assert.equal(navigationState.dispatches.length, 2);
++  assert.deepEqual(
++    await tx.getAllAsync("SELECT * FROM time_entries ORDER BY id"),
++    before,
++  );
++  await dispose(r);
++});
++
++test("real App resolved tap targets the original period without ledger writes", async () => {
++  await setup();
++  const r = await mount(),
++    tx = await db();
++  const start = "2026-06-01T10:00:00.000Z",
++    end = "2026-06-01T10:30:00.000Z";
++  await tx.runAsync(
++    "INSERT INTO expected_slots(period_start,period_end,duration_minutes,created_at,updated_at) VALUES(?,?,30,?,?)",
++    start,
++    end,
++    start,
++    start,
++  );
++  const tables = [
++    "time_entries",
++    "entry_classifications",
++    "entry_time_context",
++    "expected_slots",
++  ];
++  const before = await Promise.all(
++    tables.map((t) => tx.getAllAsync(`SELECT * FROM ${t} ORDER BY 1`)),
++  );
++  const a = response("resolved", false);
++  a.notification.request.content.data = {
++    kind: "time80-checkin",
++    payloadVersion: 2,
++    periodStart: start,
++    periodEnd: end,
++  };
++  await run(() => emitNotificationResponse(a));
++  assert.equal(navigationState.dispatches.length, 1);
++  assert.equal(navigationState.dispatches[0].name, "CheckIn");
++  assert.equal(navigationState.dispatches[0].params.start, start);
++  assert.equal(navigationState.dispatches[0].params.end, end);
++  assert.equal(
++    navigationState.dispatches[0].params.dayScope.localDate,
++    "2026-06-01",
++  );
++  assert.deepEqual(
++    await Promise.all(
++      tables.map((t) => tx.getAllAsync(`SELECT * FROM ${t} ORDER BY 1`)),
++    ),
++    before,
++  );
++  await dispose(r);
++});
++
++test("old immediate retry result cannot overwrite a newer automatic run completion", async () => {
++  await setup();
++  const r = await mount();
++  await run(() => {
++    retry(r).props.onPress(); // empty result awaits a microtask
++    emitNotificationResponse(response("newer-run"));
++  });
++  assert.ok(!text(r).includes("پاسخ اعلانی برای تلاش دوباره در صف نیست."));
++  assert.ok(!text(r).includes("در حال پردازش پاسخ اعلان…"));
++  assert.ok(text(r).includes(permissionError));
++  await dispose(r);
++});
++
++test("old pending-response read failure cannot overwrite newer read/processing success", async () => {
++  await setup();
++  const old = deferred<any[]>();
++  let reads = 0;
++  responseIO.pending = () =>
++    ++reads === 1 ? old.promise : Promise.resolve([response("fresh-read")]);
++  const r = await mount();
++  assert.equal(reads, 2);
++  await run(() => old.reject(Error("stale pending response error")));
++  assert.ok(!text(r).includes("stale pending response error"));
++  assert.ok(text(r).includes(permissionError));
++  await dispose(r);
++});

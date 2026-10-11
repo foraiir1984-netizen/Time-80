@@ -1,0 +1,75 @@
+{
+  "commit": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+  "command": "node work/rc3-qa/run_probes.mjs",
+  "method": "Exact extracted TypeScript function bodies with injected IO doubles; native early-return modeled. No React, SQLite, Kotlin or Android execution.",
+  "results": [
+    {
+      "name": "X75: empty ready queue returns undefined with no callbacks",
+      "status": "Pass"
+    },
+    {
+      "name": "X75: non-ready queue retains item and retry has no feedback",
+      "status": "Pass"
+    },
+    {
+      "name": "X75: transient resolve failure then retry routes/dismisses/acks once; no success callback",
+      "status": "Pass"
+    },
+    {
+      "name": "X75: dismiss failure preserves routed item; retry does not route again",
+      "status": "Pass"
+    },
+    {
+      "name": "X75: ack failure retries ack without duplicate route/dismiss",
+      "status": "Pass"
+    },
+    {
+      "name": "X75: repeated tap while running returns silently and does not duplicate work",
+      "status": "Pass"
+    },
+    {
+      "name": "diagnostic response is dismissed/acked without resolve or route",
+      "status": "Pass"
+    },
+    {
+      "name": "P03-015: exact App.resume body leaves previous permission error after success",
+      "status": "Pass"
+    },
+    {
+      "name": "P03-014: denied sets dirty; grant forces all three future requests",
+      "status": "Pass"
+    },
+    {
+      "name": "P03-014: partial modeled adapter failure retains dirty and retry converges",
+      "status": "Pass"
+    },
+    {
+      "name": "P03-014: stale OS model with full cache passes resume verification; manual forces reapply",
+      "status": "Pass"
+    },
+    {
+      "name": "capability signature: exact/channel changes force; battery-only change does not",
+      "status": "Pass"
+    },
+    {
+      "name": "ICATUS: same loaded default is no-op; passing null clears it; stale revision rejects",
+      "status": "Pass"
+    },
+    {
+      "name": "ICATUS: existing entry activity edit with no selection replaces historical class by new default",
+      "status": "Pass"
+    },
+    {
+      "name": "ICATUS: explicit old code still creates new assignment on activity edit",
+      "status": "Pass"
+    },
+    {
+      "name": "ICATUS: unchanged activity preserves existing assignment; missing class is populated",
+      "status": "Pass"
+    },
+    {
+      "name": "ICATUS: new entry without selection inherits hidden default; stale classification rejects before write",
+      "status": "Pass"
+    }
+  ]
+}

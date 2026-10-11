@@ -45,12 +45,22 @@ export async function resolveNotificationTarget(
     };
   });
 }
+export type ResponseDrainResult = {
+  status: "empty" | "not-ready" | "running" | "success" | "failure";
+  runId: number;
+  processed: number;
+  routed: number;
+  pending: number;
+};
+export type ResponseDrainState =
+  { status: "processing"; runId: number } | ResponseDrainResult;
 export function createResponseCoordinator(handlers: {
   resolve: (n: Notification) => Promise<Resolution>;
   route: (r: Resolution) => Promise<void>;
   dismiss: (r: NotificationResponse) => Promise<void>;
   ack: (key: string) => Promise<void>;
   error: (e: unknown) => void;
+  state?: (state: ResponseDrainState) => void;
 }) {
   const pending = new Map<
       string,
@@ -58,10 +68,27 @@ export function createResponseCoordinator(handlers: {
     >(),
     done = new Set<string>();
   let ready = false,
-    running = false;
-  async function drain() {
-    if (!ready || running) return;
+    running = false,
+    runId = 0;
+  async function drain(): Promise<ResponseDrainResult> {
+    const idle = (
+      status: ResponseDrainResult["status"],
+    ): ResponseDrainResult => ({
+      status,
+      runId,
+      processed: 0,
+      routed: 0,
+      pending: pending.size,
+    });
+    if (running) return idle("running");
+    if (!ready) return idle("not-ready");
+    if (!pending.size) return idle("empty");
     running = true;
+    const currentRun = ++runId;
+    let processed = 0,
+      routed = 0,
+      failed = false;
+    handlers.state?.({ status: "processing", runId: currentRun });
     try {
       for (const [key, item] of pending) {
         try {
@@ -69,10 +96,12 @@ export function createResponseCoordinator(handlers: {
             if (
               item.response.notification.request.content.data?.kind !==
               "time80-test"
-            )
+            ) {
               await handlers.route(
                 await handlers.resolve(item.response.notification),
               );
+              routed++;
+            }
             item.routed = true;
           }
           if (!item.dismissed) {
@@ -80,6 +109,7 @@ export function createResponseCoordinator(handlers: {
               await handlers.dismiss(item.response);
               item.dismissed = true;
             } catch (e) {
+              failed = true;
               handlers.error(e);
               continue;
             }
@@ -87,7 +117,9 @@ export function createResponseCoordinator(handlers: {
           await handlers.ack(key);
           done.add(key);
           pending.delete(key);
+          processed++;
         } catch (e) {
+          failed = true;
           handlers.error(e);
           break;
         }
@@ -95,6 +127,15 @@ export function createResponseCoordinator(handlers: {
     } finally {
       running = false;
     }
+    const result: ResponseDrainResult = {
+      status: failed ? "failure" : "success",
+      runId: currentRun,
+      processed,
+      routed,
+      pending: pending.size,
+    };
+    handlers.state?.(result);
+    return result;
   }
   return {
     enqueue(r: NotificationResponse) {

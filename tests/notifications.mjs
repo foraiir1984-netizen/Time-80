@@ -13,6 +13,14 @@ export const SchedulableTriggerInputTypes = {
   WEEKLY: "weekly",
   TIME_INTERVAL: "timeInterval",
 };
+const responseListeners = new Set();
+export function setNotificationHandler() {}
+export function addNotificationResponseReceivedListener(fn) {
+  responseListeners.add(fn);
+  return { remove: () => responseListeners.delete(fn) };
+}
+export const emitNotificationResponse = (r) =>
+  responseListeners.forEach((fn) => fn(r));
 export async function getPermissionsAsync() {
   return { granted: state.granted, canAskAgain: true };
 }

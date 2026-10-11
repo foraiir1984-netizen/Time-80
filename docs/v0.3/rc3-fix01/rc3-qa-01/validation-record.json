@@ -1,0 +1,21 @@
+{
+  "task": "RC3-QA-01",
+  "date": "2026-10-11",
+  "local_commit": "5c45240ab1dc967cfbbabcdede73b27bb0f468e8",
+  "reviewed_commit": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+  "product_working_tree": "clean before and after; git diff and git diff --cached exit 0",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "validations": [
+    {"command": "node work/rc3-qa/run_probes.mjs", "status": "Pass", "count": 17, "evidence": "probe-results.json", "limit": "Exact extracted TS functions with injected IO doubles; native modeled, not executed. Not fixes or Android delivery evidence."},
+    {"command": "Python Git blob SHA1 verification against exact complete RC2 tree", "status": "Pass", "count": 80, "evidence": "source-evidence.json + extra-source-verification.json"},
+    {"command": "npm run typecheck", "status": "Not run", "reason": "No installed dependencies or tsc; reviewed source snapshot partial/not runnable. Shell npm registry network unavailable (curl exit7 proxy port8080). No install/upgrade/prebuild attempted."},
+    {"command": "npm test", "status": "Not run", "reason": "No installed dependencies/tsx; same environment limitation. Local checkout is older than reviewed RC2."},
+    {"command": "node --import ./tests/register.mjs --import tsx --test tests/v03UI.test.tsx tests/visualIntegration.test.tsx tests/v03Data.test.ts tests/v03Notifications.test.ts", "status": "Not run", "reason": "Dependencies absent; not a full RC2 checkout."},
+    {"command": "Native unit/instrumentation and real Android QA", "status": "Not run", "reason": "No adb/emulator/installed dependency native project/identified device APK. No build or prebuild performed."}
+  ],
+  "connectivity_check": {"command": "curl -I --max-time 10 https://registry.npmjs.org/typescript", "exit_code": 7, "evidence": "Failed to connect to proxy port8080; tool GitHub source fetch works separately."},
+  "historical_ci": {"commit": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634", "runs": [37350088664,37350088659,37350088661], "status": "Historical success only; not current suite/RC3 or device QA"},
+  "artifact_limit": "RC2-device-QA-reference artifact11362734310 metadata available/not expired. Connector download returned FileService reference, not local APK bytes. Merged manifest/compiled target/user APK not inspected.",
+  "all_RC3_retest_results": "Not run"
+}

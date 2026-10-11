@@ -9,6 +9,7 @@ import {
   createResponseCoordinator,
   resolveNotificationTarget,
   type Resolution,
+  type ResponseDrainState,
 } from "../src/notifications/notificationResponseService";
 import { initDatabase } from "../src/db/database";
 import { db } from "../src/db/connection";
@@ -40,6 +41,183 @@ const response = (id = "A") =>
       },
     },
   }) as any;
+
+test("response retry exposes empty/not-ready/running/completion and keeps repeated touches deduplicated", async () => {
+  const events: ResponseDrainState[] = [],
+    calls: string[] = [];
+  let release!: (r: Resolution) => void;
+  const c = createResponseCoordinator({
+    resolve: () => {
+      calls.push("resolve");
+      return new Promise((r) => {
+        release = r;
+      });
+    },
+    route: async () => {
+      calls.push("route");
+    },
+    dismiss: async () => {
+      calls.push("dismiss");
+    },
+    ack: async () => {
+      calls.push("ack");
+    },
+    error: (e) => {
+      throw e;
+    },
+    state: (s) => events.push(s),
+  });
+  c.setReady(true);
+  assert.deepEqual(await c.retry(), {
+    status: "empty",
+    runId: 0,
+    processed: 0,
+    routed: 0,
+    pending: 0,
+  });
+  c.setReady(false);
+  const a = response("retry-states");
+  a.notification.request.content.data.kind = "time80-checkin";
+  c.enqueue(a);
+  assert.equal((await c.retry()).status, "not-ready");
+  assert.equal(c.size(), 1);
+  c.setReady(true);
+  const repeated = await c.retry();
+  assert.equal(repeated.status, "running");
+  assert.equal(repeated.runId, 1);
+  c.enqueue(a);
+  assert.deepEqual(calls, ["resolve"]);
+  release({ kind: "unresolved", reason: "test" });
+  await flush();
+  assert.deepEqual(calls, ["resolve", "route", "dismiss", "ack"]);
+  assert.deepEqual(events, [
+    { status: "processing", runId: 1 },
+    { status: "success", runId: 1, processed: 1, routed: 1, pending: 0 },
+  ]);
+  c.enqueue(a);
+  await flush();
+  assert.equal(calls.length, 4);
+});
+
+for (const failedStage of ["resolve", "route", "dismiss", "ack"] as const)
+  test(`response retry after ${failedStage} failure preserves completed stages and returns failure/success`, async () => {
+    let fail = true;
+    const calls: string[] = [],
+      errors: unknown[] = [];
+    const stage = async (name: string) => {
+      calls.push(name);
+      if (fail && name === failedStage) throw Error(name);
+    };
+    const c = createResponseCoordinator({
+      resolve: async () => {
+        await stage("resolve");
+        return { kind: "unresolved", reason: "test" };
+      },
+      route: async () => stage("route"),
+      dismiss: async () => stage("dismiss"),
+      ack: async () => stage("ack"),
+      error: (e) => errors.push(e),
+    });
+    const a = response(failedStage);
+    a.notification.request.content.data.kind = "time80-checkin";
+    c.enqueue(a);
+    c.setReady(true);
+    await flush();
+    const failure = await c.retry();
+    assert.equal(failure.status, "failure");
+    assert.equal(failure.pending, 1);
+    assert.equal(failure.processed, 0);
+    assert.equal(errors.length, 2);
+    const before = [...calls];
+    fail = false;
+    const success = await c.retry();
+    assert.equal(success.status, "success");
+    assert.equal(success.processed, 1);
+    assert.equal(success.pending, 0);
+    assert.deepEqual(
+      calls.slice(before.length),
+      failedStage === "ack"
+        ? ["ack"]
+        : failedStage === "dismiss"
+          ? ["dismiss", "ack"]
+          : ["resolve", "route", "dismiss", "ack"],
+    );
+    assert.equal(
+      success.routed,
+      failedStage === "ack" || failedStage === "dismiss" ? 0 : 1,
+    );
+  });
+
+test("failed dismiss does not lose independent response B; subsequent retry only completes A", async () => {
+  const routed: string[] = [],
+    acked: string[] = [];
+  let failA = true;
+  const c = createResponseCoordinator({
+    resolve: async (n) => ({
+      kind: "unresolved",
+      reason: n.request.identifier,
+    }),
+    route: async (r) => {
+      routed.push((r as any).reason);
+    },
+    dismiss: async (r) => {
+      if (failA && r.notification.request.identifier.endsWith("A"))
+        throw Error("dismiss A");
+    },
+    ack: async (key) => {
+      acked.push(key);
+    },
+    error: () => {},
+  });
+  const a = response("independent-A"),
+    b = response("independent-B");
+  a.notification.request.content.data.kind =
+    b.notification.request.content.data.kind = "time80-checkin";
+  c.enqueue(a);
+  c.enqueue(b);
+  c.setReady(true);
+  await flush();
+  assert.equal(routed.length, 2);
+  assert.equal(acked.length, 1);
+  assert.equal(c.size(), 1);
+  failA = false;
+  const result = await c.retry();
+  assert.equal(result.status, "success");
+  assert.equal(result.routed, 0);
+  assert.equal(acked.length, 2);
+  assert.equal(routed.length, 2);
+});
+
+test("diagnostic retry reports success without resolving/routing or writing ledger", async () => {
+  await initDatabase();
+  const tx = await db(),
+    before = await tx.getAllAsync("SELECT * FROM time_entries ORDER BY id");
+  let ack = 0;
+  const c = createResponseCoordinator({
+    resolve: async () => {
+      throw Error("diagnostic must not resolve");
+    },
+    route: async () => {
+      throw Error("diagnostic must not route");
+    },
+    dismiss: async () => {},
+    ack: async () => {
+      ack++;
+    },
+    error: (e) => {
+      throw e;
+    },
+  });
+  c.setReady(true);
+  c.enqueue(response("diagnostic-ledger"));
+  await flush();
+  assert.equal(ack, 1);
+  assert.equal((await c.retry()).status, "empty");
+  assert.deepEqual(
+    await tx.getAllAsync("SELECT * FROM time_entries ORDER BY id"),
+    before,
+  );
+});
 const flush = () => new Promise<void>((r) => setImmediate(r));
 test("v3 immutable identity resolves original period independent of click date; v2 absolute and dated compatibility", () => {
   const d = data();

@@ -15,6 +15,7 @@ export const View = primitive("View"),
   ScrollView = primitive("ScrollView"),
   KeyboardAvoidingView = primitive("KeyboardAvoidingView"),
   ActivityIndicator = primitive("ActivityIndicator");
+export const Switch = primitive("Switch");
 export function Modal(props) {
   return props.visible
     ? React.createElement("Modal", props, props.children)

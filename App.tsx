@@ -109,6 +109,22 @@ export default function App() {
     [onboard, setOnboard] = useState(false),
     [error, setError] = useState(""),
     [attempt, setAttempt] = useState(0);
+  const [responseError, setResponseError] = useState(""),
+    [retryMessage, setRetryMessage] = useState(""),
+    [responseProcessing, setResponseProcessing] = useState(false);
+  const retryVersion = useRef(0),
+    responseLoadVersion = useRef(0),
+    retryRequested = useRef(false),
+    latestResponseRun = useRef(0),
+    mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+      retryVersion.current++;
+      responseLoadVersion.current++;
+    };
+  }, []);
   useEffect(() => {
     let alive = true;
     async function start() {
@@ -178,18 +194,94 @@ export default function App() {
               reason: result.reason,
             }),
           );
+        // Accepted navigation ends feedback belonging to the previous retry view.
+        retryVersion.current++;
+        retryRequested.current = false;
+        setRetryMessage("");
+        setResponseProcessing(false);
       },
       dismiss: dismissTappedOccurrence,
       ack: acknowledgeResponse,
-      error: (e) => setError(errorMessage(e)),
+      error: (e) => {
+        if (mounted.current) setResponseError(errorMessage(e));
+      },
+      state: (state) => {
+        if (!mounted.current || state.runId < latestResponseRun.current) return;
+        latestResponseRun.current = state.runId;
+        retryVersion.current++;
+        responseLoadVersion.current++;
+        if (state.status === "processing") {
+          setResponseProcessing(true);
+          setRetryMessage("");
+          return;
+        }
+        setResponseProcessing(false);
+        if (state.status === "success") setResponseError("");
+        if (retryRequested.current)
+          setRetryMessage(
+            state.status === "success"
+              ? "پاسخ اعلان پردازش شد."
+              : "پردازش پاسخ اعلان کامل نشد؛ دوباره تلاش کنید.",
+          );
+        retryRequested.current = false;
+      },
     });
+  function loadPendingResponses() {
+    const version = ++responseLoadVersion.current;
+    void pendingResponses()
+      .then((rows) => {
+        if (mounted.current)
+          rows.forEach((r) => coordinator.current!.enqueue(r));
+      })
+      .catch((e) => {
+        if (mounted.current && version === responseLoadVersion.current)
+          setResponseError(errorMessage(e));
+      });
+  }
+  async function retryResponse() {
+    retryRequested.current = true;
+    const operation = coordinator.current!.retry();
+    const version = ++retryVersion.current;
+    const result = await operation;
+    if (!mounted.current || version !== retryVersion.current) return;
+    // Actual runs report completion through state; immediate results belong to
+    // this touch only, and cannot overwrite a newer run or accepted navigation.
+    if (result.status === "running")
+      setRetryMessage("پردازش پاسخ اعلان در جریان است؛ لطفاً صبر کنید.");
+    else if (result.status === "not-ready") {
+      retryRequested.current = false;
+      setRetryMessage("برنامه هنوز برای بازکردن پاسخ اعلان آماده نیست.");
+    } else if (result.status === "empty") {
+      retryRequested.current = false;
+      setRetryMessage("پاسخ اعلانی برای تلاش دوباره در صف نیست.");
+    }
+  }
+  const responseRetryControls = (
+    <>
+      <ErrorText error={responseError} />
+      {(!!error || !!responseError || !!retryMessage) && (
+        <>
+          <View style={ui.row}>
+            <Button
+              title="تلاش دوباره برای بازکردن اعلان"
+              onPress={() => void retryResponse()}
+            />
+            <Text style={[ui.small, { writingDirection: "ltr" }]}>X75</Text>
+          </View>
+          {!!(responseProcessing || retryMessage) && (
+            <Text style={ui.text} accessibilityLiveRegion="polite">
+              {responseProcessing ? "در حال پردازش پاسخ اعلان…" : retryMessage}
+            </Text>
+          )}
+        </>
+      )}
+    </>
+  );
   useEffect(() => {
     const sub = Notifications.addNotificationResponseReceivedListener((r) =>
       coordinator.current!.enqueue(r),
     );
-    void pendingResponses()
-      .then((rows) => rows.forEach((r) => coordinator.current!.enqueue(r)))
-      .catch((e) => setError(errorMessage(e)));
+    loadPendingResponses();
     return () => sub.remove();
   }, []);
   useEffect(() => {
@@ -203,23 +295,20 @@ export default function App() {
       >
         {!ready ? (
           <View style={[ui.page, { justifyContent: "center" }]}>
-            {error ? (
+            {error || responseError ? (
               <>
                 <ErrorText error={error} />
+                {responseRetryControls}
+                <Text style={ui.text}>داده‌ها حذف یا بازنشانی نشده‌اند.</Text>
                 {!!error && (
                   <Button
-                    title="تلاش دوباره برای بازکردن اعلان"
-                    onPress={() => void coordinator.current!.retry()}
+                    title="تلاش دوباره"
+                    onPress={() => {
+                      setError("");
+                      setAttempt((x) => x + 1);
+                    }}
                   />
                 )}
-                <Text style={ui.text}>داده‌ها حذف یا بازنشانی نشده‌اند.</Text>
-                <Button
-                  title="تلاش دوباره"
-                  onPress={() => {
-                    setError("");
-                    setAttempt((x) => x + 1);
-                  }}
-                />
               </>
             ) : (
               <>
@@ -233,12 +322,7 @@ export default function App() {
         ) : (
           <>
             <ErrorText error={error} />
-            {!!error && (
-              <Button
-                title="تلاش دوباره برای بازکردن اعلان"
-                onPress={() => void coordinator.current!.retry()}
-              />
-            )}
+            {responseRetryControls}
             <NavigationContainer
               ref={navigation}
               theme={{
@@ -247,11 +331,7 @@ export default function App() {
               }}
               onReady={() => {
                 setNavReady(true);
-                void pendingResponses()
-                  .then((rows) =>
-                    rows.forEach((r) => coordinator.current!.enqueue(r)),
-                  )
-                  .catch((e) => setError(errorMessage(e)));
+                loadPendingResponses();
               }}
             >
               <Stack.Navigator

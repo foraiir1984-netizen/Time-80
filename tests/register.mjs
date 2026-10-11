@@ -11,6 +11,17 @@ registerHooks({
   },
   resolve(specifier, context, next) {
     if (
+      [
+        "@react-navigation/native-stack",
+        "@react-navigation/bottom-tabs",
+        "react-native-safe-area-context",
+      ].includes(specifier)
+    )
+      return {
+        url: new URL("./app-navigation.mjs", import.meta.url).href,
+        shortCircuit: true,
+      };
+    if (
       specifier.endsWith("/notificationPlatform") &&
       !process.env.TIME80_REAL_PLATFORM_TEST
     )

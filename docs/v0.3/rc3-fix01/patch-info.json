@@ -1,0 +1,19 @@
+{
+  "patch": "RC3-FIX-01-source-tests.patch",
+  "sha256": "e8355470be59a57ce878dc7ef95aa8fe242542ccfe9a4ad548572dd8ad5071ca",
+  "bytes": 32167,
+  "paths": [
+    "App.tsx",
+    "src/notifications/notificationResponseService.ts",
+    "tests/navigation.mjs",
+    "tests/notificationPlatform.mjs",
+    "tests/notifications.mjs",
+    "tests/react-native.mjs",
+    "tests/register.mjs",
+    "tests/v03Notifications.test.ts",
+    "tests/app-navigation.mjs",
+    "tests/v03ResponseUI.test.tsx"
+  ],
+  "baseline": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+  "state": "uncommitted"
+}

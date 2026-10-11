@@ -45,8 +45,18 @@ export async function applyOwnedPlan(requests, generation, force) {
   native.dirty = false;
   return { ...native };
 }
+/** @type {{pending:()=>Promise<import('expo-notifications').NotificationResponse[]>,ack:(key:string)=>Promise<void>,dismiss:(response:import('expo-notifications').NotificationResponse)=>Promise<void>}} */
+export const responseIO = {
+  pending: async () => [],
+  ack: async () => {},
+  dismiss: async () => {},
+};
 export async function pendingResponses() {
-  return [];
+  return responseIO.pending();
 }
-export async function acknowledgeResponse() {}
-export async function dismissTappedOccurrence() {}
+export async function acknowledgeResponse(key) {
+  return responseIO.ack(key);
+}
+export async function dismissTappedOccurrence(response) {
+  return responseIO.dismiss(response);
+}

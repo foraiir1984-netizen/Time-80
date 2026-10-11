@@ -1,0 +1,9 @@
+{
+  "baseline": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+  "branch": "rc3-fix01-x75",
+  "verified_blobs": 300,
+  "verified_tree": "3321191eb5a23f4dd0bab88220d12258dd15b249",
+  "ancestry": "0\t10",
+  "method": "Separate local clone; exact GitHub blobs/trees and 10 ancestor commits imported and hash-verified. All HEAD tracked files present; intermediate historical trees not downloaded.",
+  "clean": true
+}

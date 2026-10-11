@@ -1,0 +1,37 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ approved warm tokens, tab hierarchy, icon tones and responsive boundaries (1.31423ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ buttons/inputs expose focus and disabled state, retain handlers, errors include text (22.423927ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ picker retains full caller ranking and immediate taps with two/one columns, no search or persistent selection (4.098179ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ Style A hosts are 52dp, symbols 32dp, legacy icon strings remain literal (1.584729ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ Today overview is read-only, shows clock/context/reminder/due count and preserves callback target (6.499744ms)
+✖ Today landing/review retain exact CheckIn routing, previous-day access, Backlog and all slot rows (7.662399ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ timeline keeps disabled future and neutral pending/skipped states with accessible exact times (5.726483ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 481.997606
+
+✖ failing tests:
+
+test at tests/visualIntegration.test.tsx:2:9980
+✖ Today landing/review retain exact CheckIn routing, previous-day access, Backlog and all slot rows (7.662399ms)
+  TypeError: Provided value cannot be bound to SQLite parameter 2.
+      at Object.runAsync (/workspace/work/rc3-fix01/baseline-check/tests/sqlite.mjs:35:39)
+      at setMeta (/workspace/work/rc3-fix01/baseline-check/src/db/metaRepository.ts:13:12)
+      at <anonymous> (/workspace/work/rc3-fix01/baseline-check/src/db/migrations.ts:140:60)
+      at async atomic (/workspace/work/rc3-fix01/baseline-check/src/db/connection.ts:37:20)
+      at async <anonymous> (/workspace/work/rc3-fix01/baseline-check/src/db/migrations.ts:79:5) {
+    code: 'ERR_INVALID_ARG_TYPE'
+  }
