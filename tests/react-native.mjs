@@ -46,6 +46,7 @@ export const AppState = {
   },
 };
 export const emitAppState = (s) => listeners.forEach((fn) => fn(s));
+export const appStateListenerCount = () => listeners.size;
 export const AccessibilityInfo = { setAccessibilityFocus: () => {} };
 export const findNodeHandle = () => null;
 export const Linking = { openSettings: async () => {} };

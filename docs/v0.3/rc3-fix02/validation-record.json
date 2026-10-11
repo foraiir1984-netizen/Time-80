@@ -1,0 +1,401 @@
+{
+  "task": "RC3-FIX-02",
+  "recorded_at": "2026-10-11T15:00:39.287338+03:30",
+  "request": "Explicit prompt5; uploaded checkpoint is reference evidence, not authorization for unrelated work.",
+  "baseline_FIX01": "22cfac2895e35845382b4f41edfeb171e544f2c7",
+  "baseline_RC2": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+  "execution_checkout": "/workspace/work/rc3-fix01/repo",
+  "branch": "rc3-fix02-p015-x75",
+  "HEAD_at_validation": "22cfac2895e35845382b4f41edfeb171e544f2c7",
+  "state_at_validation": "uncommitted FIX02 diff; final delivery commit identified by Git and final response",
+  "remote_preflight": {
+    "FIX01": "22cfac2895e35845382b4f41edfeb171e544f2c7",
+    "FIX02": "absent",
+    "RC2": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+    "main": "5c45240ab1dc967cfbbabcdede73b27bb0f468e8"
+  },
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "stage": "initial new tests",
+      "status": "Fail",
+      "exit": 2,
+      "log": "typecheck-initial.log",
+      "limit": "Two new-test typing errors (generic query result and closure counter) corrected without production changes."
+    },
+    {
+      "command": "npm run typecheck",
+      "stage": "final",
+      "status": "Pass",
+      "exit": 0,
+      "log": "typecheck.log"
+    },
+    {
+      "command": "TZ=UTC npm test",
+      "status": "Pass",
+      "exit": 0,
+      "tests": 86,
+      "pass": 86,
+      "fail": 0,
+      "skipped": 0,
+      "log": "npm-test-UTC.log"
+    },
+    {
+      "command": "TZ=UTC node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx",
+      "stage": "initial behavioral check, before type annotations",
+      "status": "Pass",
+      "exit": 0,
+      "tests": 26,
+      "pass": 26,
+      "log": "lifecycle-initial-UTC.log"
+    },
+    {
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/visualIntegration.test.tsx tests/v03UI.test.tsx",
+      "status": "Fail",
+      "exit": 1,
+      "tests": 63,
+      "pass": 62,
+      "fail": 1,
+      "skipped": 0,
+      "log": "related-Asia-Tehran.log",
+      "limit": "Unchanged visualIntegration progress fixture expects 50 but computes 65 in Tehran; reproduced on pristine RC2. All task cases passed in this run."
+    },
+    {
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/visualIntegration.test.tsx",
+      "cwd": "/workspace/work/rc3-fix01/baseline-check",
+      "commit": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+      "status": "Fail",
+      "exit": 1,
+      "tests": 7,
+      "pass": 6,
+      "fail": 1,
+      "log": "baseline-visual-Asia-Tehran.log",
+      "limit": "Same 65 vs 50, line214. Baseline sources untouched; dependencies are an untracked symlink only."
+    },
+    {
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx",
+      "status": "Pass",
+      "exit": 0,
+      "tests": 56,
+      "pass": 56,
+      "fail": 0,
+      "skipped": 0,
+      "log": "related-task-Asia-Tehran.log",
+      "limit": "26 lifecycle +8 FIX01 App +17 notification module +5 UI tests. Explicit related selection, not full-suite Tehran acceptance; broader failed run retained."
+    },
+    {
+      "command": "git diff --check",
+      "status": "Pass",
+      "exit": 0
+    },
+    {
+      "command": "byte comparison to FIX01 of protected-files.json paths",
+      "status": "Pass",
+      "files": 42,
+      "limit": "No product scheduler/platform/coordinator, database/data services, dependencies/config/workflow or historical FIX01 evidence changes."
+    },
+    {
+      "command": "Android warning before/after, diagnostics and X75 screenshots; RTL/font scale1,1.5,2 visual QA",
+      "status": "Not run",
+      "limit": "command -v adb and command -v emulator found none; no android project or identified running device/APK. Renderer configuration tests do not establish native layout or screenshots."
+    },
+    {
+      "command": "npm test (TZ unset)",
+      "status": "Not run",
+      "limit": "Historical FIX01 failure retained; not changed/skipped/closed by UTC pass."
+    }
+  ],
+  "new_behavioral_tests": [
+    {
+      "test": "App denied -> granted -> resume clears only its warning after a real reconcile",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "resume success preserves response error; X75 success owns only its response error",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "bootstrap failure survives not-ready X75; successful bootstrap cannot clear response read failure",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "App older resume failure cannot overwrite a newer resume result",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "App older resume success cannot overwrite a newer resume result",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "App bootstrap unmount stops pending continuation and removes listeners",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "App resume unmount stops pending continuation and removes listeners",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "pending response resolution cannot route after App unmount",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "diagnostics distinguishes loading, unknown and denied without false dirty=false",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "diagnostics independently renders granted display, closed channel and unknown exact",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "X70 return and repeated focus refresh data with one listener and no repair or refresh loop",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "failed refresh never presents previous granted data as newly confirmed",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "diagnostics successful refresh or another action cannot clear unresolved permission error",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "diagnostics successful refresh or another action cannot clear unresolved test error",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "diagnostics successful refresh or another action cannot clear unresolved reconcile error",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "X70 opening failure is visible and cleared only after X70 succeeds",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "new action/read failure removes an old success message without claiming delivery",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "diagnostics older read failure cannot replace a newer snapshot/error",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "diagnostics older read success cannot replace a newer snapshot/error",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "diagnostics older X70 failure cannot overwrite a newer X70 outcome or start another refresh",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "diagnostics older X70 success cannot overwrite a newer X70 outcome or start another refresh",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "blur invalidates an old diagnostics read; refocus gets a new snapshot",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "diagnostics unmount cancels read/action updates and follow-up refreshes",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "RTL X75 is inside one target at font scale 1, with scaling/wrap and one handler",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "RTL X75 is inside one target at font scale 1.5, with scaling/wrap and one handler",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    },
+    {
+      "test": "RTL X75 is inside one target at font scale 2, with scaling/wrap and one handler",
+      "status": "Pass",
+      "commands": [
+        "TZ=UTC npm test",
+        "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx"
+      ],
+      "limit": "Actual App/screen/diagnostics/scheduler/coordinator/resolver with real in-memory SQLite fixture; OS/native/navigation hosts and focus/AppState events are test doubles."
+    }
+  ],
+  "known_issues": [
+    {
+      "id": "TEST-TZ-UNSET",
+      "status": "Fail",
+      "evidence": "../rc3-fix01/baseline-visualIntegration.log",
+      "description": "Existing visualIntegration restores undefined TZ as literal string; baseline SQLite parameter2 fails. Unchanged and not skipped.",
+      "historical": true,
+      "rerun_FIX02": false
+    },
+    {
+      "id": "TEST-PROGRESS-TEHRAN",
+      "status": "Fail",
+      "evidence": "baseline-visual-Asia-Tehran.log",
+      "description": "Fixture uses absolute UTC noon with local-day progress; 50 asserted vs65 computed in Tehran. No product or old-test change.",
+      "reproduced_on_RC2": true
+    }
+  ],
+  "error_ownership": {
+    "App": [
+      "bootstrapError: current startup attempt",
+      "resumeError: latest resume sequence",
+      "responseError: existing FIX01 owner"
+    ],
+    "diagnostics": [
+      "readError: latest focused read",
+      "actionErrors.permission",
+      "actionErrors.settings",
+      "actionErrors.test",
+      "actionErrors.reconcile"
+    ],
+    "message": "Cleared at new action/read start; only latest successful action after fresh read may show feedback; suppressed if any unresolved action error."
+  },
+  "X75": "Visible14sp, allowFontScaling true, own LTR text inside existing single Pressable; coded buttons wrap, full Persian label and single handler; shown while processing. OS layout Not run.",
+  "preserved": [
+    "resolve/route/dismiss/ack ordering and dedupe",
+    "timezone -> optional applySettingsPatch -> ensureSlotHorizon -> reconcileNotifications(resume)",
+    "X69 permission/X70 settings/X71 test/X72 manual reconcile/X75 response drain",
+    "production timezone and user data",
+    "SettingsScreen/OnboardingScreen and historical FIX01 reports/evidence"
+  ],
+  "open": [
+    "P03-015-device",
+    "P03-016-device",
+    "P03-014",
+    "P03-019",
+    "OI-A01-R",
+    "OI-P01",
+    "AC-A11"
+  ],
+  "deferred": [
+    "TalkBack",
+    "four UI designs",
+    "full ID registry/guide",
+    "ICATUS UI hide in next task",
+    "Undo countdown"
+  ],
+  "log_normalization": "Only trailing whitespace stripped in Git copies; original outputs retained in /workspace/work/rc3-fix02. No secrets/credential values logged."
+}

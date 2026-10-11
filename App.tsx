@@ -107,12 +107,14 @@ export default function App() {
   const [navReady, setNavReady] = useState(false);
   const [ready, setReady] = useState(false),
     [onboard, setOnboard] = useState(false),
-    [error, setError] = useState(""),
+    [bootstrapError, setBootstrapError] = useState(""),
+    [resumeError, setResumeError] = useState(""),
     [attempt, setAttempt] = useState(0);
   const [responseError, setResponseError] = useState(""),
     [retryMessage, setRetryMessage] = useState(""),
     [responseProcessing, setResponseProcessing] = useState(false);
-  const retryVersion = useRef(0),
+  const resumeVersion = useRef(0),
+    retryVersion = useRef(0),
     responseLoadVersion = useRef(0),
     retryRequested = useRef(false),
     latestResponseRun = useRef(0),
@@ -123,6 +125,7 @@ export default function App() {
       mounted.current = false;
       retryVersion.current++;
       responseLoadVersion.current++;
+      coordinator.current?.setReady(false);
     };
   }, []);
   useEffect(() => {
@@ -130,16 +133,21 @@ export default function App() {
     async function start() {
       try {
         await initDatabase();
-        if ((await getMeta(await db(), "schedule_timezone")) !== timezone())
-          await applySettingsPatch({});
+        if (!alive) return;
+        const previousTimezone = await getMeta(await db(), "schedule_timezone");
+        if (!alive) return;
+        if (previousTimezone !== timezone()) await applySettingsPatch({});
+        if (!alive) return;
         await ensureSlotHorizon();
+        if (!alive) return;
         const completed = await getMeta(await db(), "onboarding_completed");
         if (alive) {
+          setBootstrapError("");
           setOnboard(completed === "true");
           setReady(true);
         }
       } catch (e) {
-        if (alive) setError(errorMessage(e));
+        if (alive) setBootstrapError(errorMessage(e));
       }
     }
     void start();
@@ -151,13 +159,19 @@ export default function App() {
     if (!ready) return;
     let active = true;
     async function resume() {
+      const version = ++resumeVersion.current;
       try {
-        if ((await getMeta(await db(), "schedule_timezone")) !== timezone())
-          await applySettingsPatch({});
+        const previousTimezone = await getMeta(await db(), "schedule_timezone");
+        if (!active) return;
+        if (previousTimezone !== timezone()) await applySettingsPatch({});
+        if (!active) return;
         await ensureSlotHorizon();
+        if (!active) return;
         await reconcileNotifications("resume");
+        if (active && version === resumeVersion.current) setResumeError("");
       } catch (e) {
-        if (active) setError(errorMessage(e));
+        if (active && version === resumeVersion.current)
+          setResumeError(errorMessage(e));
       }
     }
     void resume();
@@ -166,6 +180,7 @@ export default function App() {
     });
     return () => {
       active = false;
+      resumeVersion.current++;
       sub.remove();
     };
   }, [ready]);
@@ -176,7 +191,8 @@ export default function App() {
     coordinator.current = createResponseCoordinator({
       resolve: resolveNotificationTarget,
       route: async (result) => {
-        if (!navigation.isReady()) throw Error("صفحه هنوز آماده نیست");
+        if (!mounted.current || !navigation.isReady())
+          throw Error("صفحه هنوز آماده نیست");
         if (result.kind === "resolved")
           navigation.dispatch(
             StackActions.push("CheckIn", {
@@ -259,15 +275,17 @@ export default function App() {
   const responseRetryControls = (
     <>
       <ErrorText error={responseError} />
-      {(!!error || !!responseError || !!retryMessage) && (
+      {(!!bootstrapError ||
+        !!resumeError ||
+        !!responseError ||
+        !!retryMessage ||
+        responseProcessing) && (
         <>
-          <View style={ui.row}>
-            <Button
-              title="تلاش دوباره برای بازکردن اعلان"
-              onPress={() => void retryResponse()}
-            />
-            <Text style={[ui.small, { writingDirection: "ltr" }]}>X75</Text>
-          </View>
+          <Button
+            title="تلاش دوباره برای بازکردن اعلان"
+            actionCode="X75"
+            onPress={() => void retryResponse()}
+          />
           {!!(responseProcessing || retryMessage) && (
             <Text style={ui.text} accessibilityLiveRegion="polite">
               {responseProcessing ? "در حال پردازش پاسخ اعلان…" : retryMessage}
@@ -295,16 +313,15 @@ export default function App() {
       >
         {!ready ? (
           <View style={[ui.page, { justifyContent: "center" }]}>
-            {error || responseError ? (
+            {bootstrapError || responseError ? (
               <>
-                <ErrorText error={error} />
+                <ErrorText error={bootstrapError} />
                 {responseRetryControls}
                 <Text style={ui.text}>داده‌ها حذف یا بازنشانی نشده‌اند.</Text>
-                {!!error && (
+                {!!bootstrapError && (
                   <Button
                     title="تلاش دوباره"
                     onPress={() => {
-                      setError("");
                       setAttempt((x) => x + 1);
                     }}
                   />
@@ -321,7 +338,8 @@ export default function App() {
           <OnboardingScreen onDone={() => setOnboard(true)} />
         ) : (
           <>
-            <ErrorText error={error} />
+            <ErrorText error={bootstrapError} />
+            <ErrorText error={resumeError} />
             {responseRetryControls}
             <NavigationContainer
               ref={navigation}

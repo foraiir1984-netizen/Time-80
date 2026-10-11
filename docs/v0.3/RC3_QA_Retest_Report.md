@@ -1,3 +1,26 @@
+# Checkpoint خودکار جاری — RC3-FIX-02
+
+تاریخ: 2026-10-11، Asia/Tehran. کد آزمون‌شده: FIX01 22cfac2895e35845382b4f41edfeb171e544f2c7 + diff FIX02 در همان checkout کامل؛ شاخه rc3-fix02-p015-x75. commit نسخهٔ تحویل از Git این فایل و پاسخ تحویل مشخص می‌شود؛ build/APK/device run ID Not Available.
+
+| اجرا / رفتار | نتیجه | فرمان / شاهد و محدودیت |
+| --- | --- | --- |
+| مالکیت bootstrap/resume/response، denied→granted→resume، پاسخ قدیمی و cleanup | Pass | TZ=UTC npm test و فرمان مرتبط Tehran پایین؛ App/scheduler/SQLite واقعی، IO/native/navigation doubled |
+| focus/X70/active refresh، یک listener و بدون repair، read/action مستقل و freshness | Pass | 26 lifecycle tests در دو timezone؛ diagnostics واقعی، رویداد OS/focus تزریقی |
+| loading/unknown بدون denied/dirty=false کاذب، display/channel/exact جدا | Pass | خواندن متوقف/ناموفق/موفق و supported=false/value=null؛ OS قابلیت fixture |
+| X75 داخل target،14sp/LTR/scaling/wrap، processing و یک handler | Pass | RTL و scale1/1.5/2 در host؛ اندازه‌گیری layout و تصویر گوشی نیست |
+| رگرسیون حالت‌های FIX01 و route/dismiss/ack/dedupe/no-write | Pass | 17 module +8 App FIX01، بدون تغییر coordinator تولیدی |
+| npm run typecheck نهایی | Pass | rc3-fix02/typecheck.log، exit0؛ log اولیه دو خطای نوع تست Fail و اصلاح آن حفظ شده |
+| TZ=UTC npm test | Pass | 86/86،skip0؛ rc3-fix02/npm-test-UTC.log |
+| TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx | Pass | 56/56،skip0؛ related-task-Asia-Tehran.log؛ انتخاب مرتبط، نه suite کامل Tehran |
+| انتخاب بالا + tests/visualIntegration.test.tsx در Tehran | Fail | 62/63؛ progress fixture قدیمی65≠50؛ related-Asia-Tehran.log |
+| TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/visualIntegration.test.tsx روی RC2 دست‌نخورده | Fail | 6/7، همان65≠50؛ baseline-visual-Asia-Tehran.log؛ تست/محصول تغییر نکرد |
+| npm test با TZ unset در این مرحله | Not run | Known Issue قبلی و log تاریخی FIX01 حفظ؛ با UTC بسته نشده |
+| warning قبل/بعد، diagnostics/X75 و RTL/font scales واقعی1/1.5/2 | Not run | adb/emulator/device/build شناخته‌شده در دسترس نیست؛ renderer شاهد گوشی نیست |
+
+نام هر26 تست، فرمان/نتیجه و محدودیت در rc3-fix02/validation-record.json ثبت است. P03-015/P03-016 پذیرش دستگاهی همچنان باز؛ P03-014/P03-019/OI-P01/AC-A11 بسته نشده‌اند. نتایج RC2 منتقل نشده‌اند. بخش FIX01 زیر، سابقهٔ خودکار آن مرحله است؛ ردیف‌های دستگاهی همچنان Not run و نیازمند اجرای واقعی‌اند.
+
+---
+
 # بازآزمایی مستقل RC3 — به‌روزرسانی RC3-FIX-01
 
 تاریخ: 2026-10-11، Asia/Tehran. Source run ID: RC3-FIX-01-AUTO-20261011-01.
@@ -109,3 +132,14 @@
 ## Gateها
 
 OI-A01-R، OI-P01 و AC-A11 باز هستند. reboot/CI/build یا عبارت «سر وقت» آن‌ها را نمی‌بندد. اعداد 48h و آستانه‌های 40/60s در پیشنهاد معماری، بدون تصمیم معتبر جدید مصوب نیستند. نتیجهٔ آزمون‌های RC2 صرفاً سابقه است.
+
+
+## موارد دستگاهی تکمیلی FIX02
+
+| ID | پیش‌شرط / مسیر | انتظار | نتیجه | شاهد |
+| --- | --- | --- | --- | --- |
+| N15-5 | A09، شکست خواندن و اقدام مستقل X69/X70/X71/X72؛ سپس refresh موفق | فقط خطای خواندن رفع، خطای اقدام حل‌نشده باقی؛ retry موفق همان اقدام آن را رفع کند | Not run | APK/device و تصویر واقعی لازم |
+| N15-6 | A09، refresh آهسته، focus/blur و بازگشت OS settings | loading/unknown درست، دادهٔ قدیمی و خطای دیررس جای دادهٔ تازه ننشینند؛ loop/listener تکراری نباشد | Not run | رویدادها و checkedAt/system state ثبت شوند |
+| N16-ID | App/X75 در خطای init و حالت ready/processing، RTL و scale1/1.5/2 | کد داخل target≥48dp، حداقل14sp/LTR، فارسی کامل، wrap بدون بریدن؛ یک لمس یک handler | Not run | screenshot واقعی همه scaleها و هر دو placement |
+
+تصاویر لازم افزوده: warning پیش از grant و پس از resume موفق؛ A09 هنگام loading، شکست refresh، display مجاز با channel بسته و exact نامعلوم؛ X70 بازگشت و خطای بازشدن؛ X75 داخل target در هر سه scale و هنگام processing. عکس ساختگی یا host renderer جای این شواهد قرار نمی‌گیرد.

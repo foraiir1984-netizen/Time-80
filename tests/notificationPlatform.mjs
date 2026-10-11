@@ -14,6 +14,7 @@ export async function readNativeSchedulingState() {
   return { ...native };
 }
 export async function readNotificationCapabilities() {
+  if (diagnosticIO.capabilities) return diagnosticIO.capabilities();
   const c = (value) => ({
     supported: true,
     value,
@@ -27,6 +28,8 @@ export async function readNotificationCapabilities() {
     backgroundRestricted: c(false),
   };
 }
+/** @type {{capabilities:null|(()=>Promise<any>)}} */
+export const diagnosticIO = { capabilities: null };
 export async function applyOwnedPlan(requests, generation, force) {
   if (!force && !native.dirty && native.generation === generation)
     return { ...native };

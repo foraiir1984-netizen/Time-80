@@ -1,51 +1,51 @@
 # IMPLEMENTATION_STATE_RC3
 
-Checkpoint جاری: 2026-10-11، Asia/Tehran — RC3-FIX-01.
+Checkpoint جاری: 2026-10-11، Asia/Tehran — RC3-FIX-02، پرامپت۵.
 
 ## وضعیت جاری
 
-اصلاح محدود X75 پیاده شد و بررسی خودکار انجام شد. این نسخه برای تحویل Git در شاخهٔ rc3-fix01-x75 آماده شده است؛ وضعیت uncommitted در شواهد JSON، snapshot تاریخی زمان آزمون است. شناسهٔ commit از Git این نسخه و نتیجهٔ تأیید ارسال از پاسخ تحویل خوانده شود؛ APK/build/انتشار RC3 ایجاد نشده است. پذیرش دستگاهی P03-016 باز است. فایل وضعیت پیوست کاربر، سابقهٔ قبلی بود؛ نتایج زیر در این مرحله مستقلاً بررسی شدند.
+اصلاح محدود چرخهٔ خطای P03-015 و نمایش X75 تکمیل شد؛ آزمون خودکار نهایی Pass است. پذیرش دستگاهی P03-015/P03-016، دریافت اعلان و تصاویر واقعی هنوز Not run هستند. این مرحله علت قطعی هشدار روی گوشی را اثبات نمی‌کند. registry کامل و چهار طرح اجرا نشده‌اند.
 
-## مبنا و HEAD/diff
+## مبنا و شاخهٔ اجرا
 
-- Original checkout: /workspace/Time-80، work، HEAD شروع/پایان 5c45240ab1dc967cfbbabcdede73b27bb0f468e8، clean.
-- Fresh remote target: feat/time80-v0.3-implementation @8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634؛ ابتدا/انتها کنترل شد؛ ahead10/behind0 از main محلی، merge-base localHEAD.
-- Execution checkout: /workspace/work/rc3-fix01/repo؛ branch rc3-fix01-x75؛ HEAD شروع و snapshot زمان آزمون 8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634؛ تغییرات source/tests در تحویل Git ثبت می‌شوند.
-- Complete current tree3321191eb5a23f4dd0bab88220d12258dd15b249؛ تمام300tracked blob و10commit ancestry hash-verified/imported. Snapshot80فایلی مبنای اجرا نبود. Historical intermediate trees دانلود نشدند؛ همهٔ فایل‌های build/test جاری حاضرند.
-- Source/tests patch: docs/v0.3/rc3-fix01/RC3-FIX-01-source-tests.patch؛ SHA256 e8355470be59a57ce878dc7ef95aa8fe242542ccfe9a4ad548572dd8ad5071ca؛ apply --check روی baseline Pass.
-- package/lockfile، signing، applicationId و native patch سورس تغییر نکردند.
+- checkout کامل همان /workspace/work/rc3-fix01/repo، شامل FIX01؛ 316 tracked file در شروع، working tree clean.
+- HEAD و branch شروع: 22cfac2895e35845382b4f41edfeb171e544f2c7 / rc3-fix01-x75؛ کنترل تازهٔ origin همان SHA؛ نسبت با مبنای دفتر0/0.
+- شاخهٔ اختصاصی FIX02: rc3-fix02-p015-x75، از همین FIX01؛ پیش از اجرا شاخهٔ هم‌نام در origin نبود. SHA نسخهٔ تحویل از commit این سند و پاسخ تحویل خوانده شود؛ snapshot زمان آزمون HEAD بالا + diff FIX02 بود.
+- RC2: 8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634؛ فقط برای بازتولید شکست تست قدیمی استفاده شد، مبنای اجرا به آن برنگشت.
+- checkout اصلی /workspace/Time-80، work، HEAD5c45240ab1dc967cfbbabcdede73b27bb0f468e8، clean و دست‌نخورده است.
+- main و feat/time80-v0.3-implementation تغییر داده نشدند؛ build/Release/merge/workflow تغییر نکرد.
 
-## تغییرات انجام‌شده
+## رفتار و مالکیت خطا
 
-- notificationResponseService: typed empty/not-ready/running/success/failure، شمارنده‌ها و runId؛ callback اختیاری processing/completion؛ enqueue/readiness و ترتیب/dedupe/مرحله‌های موفق حفظ.
-- App: responseError مستقل از error init/reconcile؛ بازخورد فارسی و visible X75، دو placement به یک handler؛ موفقیت فقط خطای پاسخ را پاک می‌کند. version/lifetime guard؛ pending-response read قدیمی نمی‌تواند خطای جدید بنویسد. پس از accepted navigation پیام نمای قبلی پاک می‌شود.
-- X75 همچنان فقط drain صف پاسخ است؛ permission/reconcile/repair/ledger write تازه اضافه نشده.
-- 7 module tests +8 actual App handler/render tests افزوده شد؛ test-only hosts/IO توسعه یافت.
+- App: bootstrapError، resumeError و responseError مستقل. موفقیت bootstrap فقط خطای همان attempt را پاک می‌کند؛ شروع retry خطا را پیش از نتیجهٔ واقعی پاک نمی‌کند. resume با version و cleanup guard فقط نتیجهٔ جدیدترین عملیات زنده را می‌پذیرد؛ موفقیت پس از timezone/ensureSlotHorizon/reconcile("resume") تنها resumeError را پاک می‌کند.
+- FIX01 typed queue states، route/dismiss/ack ترتیب و dedupe و guardها حفظ؛ coordinator تولیدی بدون تغییر. پایان resolver پس از unmount دیگر dispatch نمی‌کند؛ readiness هنگام cleanup خاموش می‌شود.
+- diagnostics: useFocusEffect + AppState active، یک listener در مدت focus، حذف در blur/unmount؛ آخرین خواندن معتبر برنده. refresh فقط خواندن و بدون permission/repair است.
+- readError و actionErrors برای permission/settings/test/reconcile مستقل؛ refresh موفق خطای اقدام را رفع نمی‌کند. پیام قدیمی در شروع خواندن/اقدام پاک می‌شود و خطای حل‌نشده موجب برداشت موفقیت کلی نمی‌شود.
+- loading با «در حال بررسی…»، failed/undetermined با «نامعلوم»، denied و granted پس از خواندن معتبر؛ دادهٔ قبلی با refresh ناموفق معتبر نشان داده نمی‌شود. display/channel/exact مستقل؛ supported=false/value=null نامعلوم؛ cache/reconcile اثبات دریافت نیستند.
+- X69–72 معنا و caller قبلی را دارند؛ خطای openSettings در X70 visible است.
 
-## آزمون‌های این مرحله
+## اصلاح شناسهٔ X75
 
-- npm ci با lock موجود: Pass؛505package، postinstall patch verified؛ initial restricted attempt EPERM با دسترسی شبکهٔ محیط حل شد.
-- npm run typecheck: Pass، exit0.
-- npm test با TZ unset: Fail به علت fixture قدیمی TZ؛ همان شکست روی RC2 دست‌نخورده visualIntegration6/7 بازتولید شد. فایل تست قدیمی تغییر نکرد.
-- TZ=UTC npm test روی diff نهایی: Pass60/60، fail0/skipped0؛ v03Notifications17، v03ResponseUI8، v03UI5، visualIntegration7، v03Data9 و14سایر.
-- git diff --check / patch apply --check: Pass.
-- Screenshot واقعی/Android/native/build/upgrade: Not run. Node render و native/navigation doubles شاهد دستگاه نیستند.
-- RC3_QA_Retest_Report.md مستقل به‌روزرسانی شد؛ تمام نتایج دستی/دستگاهی RC3 Not run؛ خودکارها جدا ثبت شدند. RC2 قبولی منتقل نشده.
-- run_probes.mjs/probe-results.json/validation-record.json مرحلهٔ قبل موجود و در rc3-fix01/rc3-qa-01 حفظ شدند؛ اجرای مجدد در FIX01 انجام نشده.
+X75 اکنون داخل همان target Button، Text با fontSize14، allowFontScaling و جهت مستقل LTR است. نام فارسی کامل، یک handler و target قبلی حداقل48dp حفظ شد. wrap فقط برای Button دارای actionCode اختیاری؛ clipping/fit یا سقف scaling اضافه نشده. processing کد را نگه می‌دارد؛ دکمهٔ عادی بدون کد رفتار قبلی را دارد. renderer پیکربندی RTL و scale1/1.5/2 را آزموده، ولی تصویر/اندازه‌گیری گوشی Not run است. AC-ID کامل بسته نشده.
 
-## موارد باز و تصمیم‌ها
+## آزمون و شاهد
 
-- P03-016: اصلاح source/UI تحت آزمون خودکار؛ پذیرش روی دستگاه و تطبیق APK/control رخداد RC2 باز.
-- P03-014: علت گوشی Unverified؛ scheduler تغییر نکرد، force عمومی resume اجرا نشده.
-- P03-015: اصلاح جامع resume/diagnostics اجرا نشده؛ جداسازی responseError مجوز بسته‌شدن آن نیست.
-- P03-019: APK/merged manifest/compiled target/device capability همان محدودیت قبلی؛ بسته نشده.
-- OI-A01-R/OI-P01/AC-A11 باز؛ پروتکل48h/40/60s همچنان Proposed، نه معیار مصوب.
-- D03-005: M-01/M-02/M-04/M-10 و normalization Approved، اجرا در این task انجام نشد.
-- IDs default visible تصمیم پابرجاست؛ تنها X75 در این اصلاح visible شد؛ registry/guide کامل هنوز اجرا نشده. D08/X99/X100/X101 تعریف قبلی حفظ.
-- ICATUS UI hide پابرجا؛ D03/X32–37/X41/X48/X95 Deferred/Reserved بدون reuse. داده/schema/history/assignment و policy موجود تغییر نکرد؛ پیشنهاد قبلی تغییر assignment مجوز اجرا نداشت.
-- X60–62 onBlur و X68 draft-only، ثبت دستی/گذشته، قرارداد روز/آیکون حفظ. Undo countdown اضافه نشده؛ TalkBack Deferred/Not run.
-- RC2→RC3 و v0.2→target upgrade هر دو Not run و مستقل.
+- npm run typecheck، نهایی: Pass exit0؛ stdout ذخیره در rc3-fix02/typecheck.log. اولین اجرای تست جدید Fail بود؛ دو خطای نوع تست اصلاح شدند و log اولیه حفظ شد.
+- TZ=UTC npm test: Pass86/86، fail0/skip0؛ تمام60 تست FIX01 +26 lifecycle جدید. rc3-fix02/npm-test-UTC.log.
+- انتخاب مرتبط App/diagnostics/coordinator/UI با TZ=Asia/Tehran: Pass56/56، fail0/skip0؛ related-task-Asia-Tehran.log؛ فرمان کامل در گزارش/validation-record.
+- انتخاب گسترده‌تر با visualIntegration در Tehran: Fail62/63؛ fixture قدیمی progress50 با زمان absolute UTC در Tehran65 می‌گیرد. روی RC2 دست‌نخورده مستقل Fail6/7 بازتولید شد؛ logها حفظ، تست/محصول برای آن تغییر نکردند.
+- Known Issue قبلی TZ unset/SQLite parameter2 همچنان باز و شواهد تاریخی FIX01 بدون تغییر؛ اجرای unset در FIX02 Not run. هیچ skip یا تغییر workflow انجام نشده است.
+- diff whitespace و تطبیق بایت42فایل محافظت‌شده با FIX01: Pass؛ package/lock/config، scheduler/platform/coordinator، داده/assignment/history و شواهد FIX01 محفوظ.
+- تصاویر واقعی warning قبل/بعد، diagnostics/X75، layout گوشی RTL/scale1/1.5/2، native/upgrade/build/delivery/TalkBack: Not run؛ adb/emulator/runtime Android موجود نیست. React renderer و native/navigation doubles شاهد گوشی نیستند.
 
-## قدم بعدی و توقف
+## تحویل و سوابق
 
-پیشنهاد کوچک‌ترین task بعدی با دستور جدا: P03-015، lifecycle خطای reconcile و refresh diagnostics، محافظت از پاسخ async جدید؛ بدون scheduler rewrite. برای P03-016، بازآزمایی گوشی با APK/build شناخته‌شده و screenshot واقعی لازم است. پیاده‌سازی این task پایان یافته؛ الحاقیهٔ صریح تحویل، commit و push در شاخهٔ اختصاصی را مجاز کرده است. اصلاح بعدی و انتشار انجام نشده. Library بارگذاری نشده است.
+RC3_FIX_02_Report_FA.md گزارش جاری؛ RC3_QA_Retest_Report.md checkpoint خودکار تازه و device rows مستقل Not run؛ rc3-fix02/ شامل فرمان‌ها، logهای Pass/Fail،26 نتیجهٔ مستقل و checksum است. گزارش RC2، RC3_FIX_01_Report_FA.md و تمام rc3-fix01/ عیناً حفظ شده‌اند؛ متن checkpoint قبلی از Git در 22cfac2895e35845382b4f41edfeb171e544f2c7 قابل بازیابی است. فایل وضعیت جدید دفتر به‌عنوان مرجع بررسی خوانده شد، نه مجوز مراحل دیگر.
+
+## موارد باز و توقف
+
+P03-015 source fix خودکار آزموده شده، پذیرش گوشی و علت warning باز؛ P03-016 device/X75 visual باز؛ P03-014/P03-019 و OI-A01-R/OI-P01/AC-A11 بسته نشده‌اند. scheduler/manifest/SDK/schema/data/assignment/history/signing/applicationId/dependency تغییر نکردند. SettingsScreen/OnboardingScreen وابستگی ضروری نداشتند و تغییر نکردند.
+
+D03-005 و تصمیم چهار طرح محفوظ، اجرا خارج این task است. full ID registry/guide اجرا نشده؛ کدهای رزرو ICATUS reuse نشدند. تصمیم ICATUS UI hide برای task بعدی محفوظ، سیاست/دادهٔ موجود دست‌نخورده؛ Undo countdown اضافه نشد. TalkBack Deferred / Not run.
+
+کوچک‌ترین قدم بعدی با دستور جدا: QA گوشی N15/N16 با build و device معلوم، تصاویر warning قبل/بعد، diagnostics پس از X70/focus و X75 در scale1/1.5/2. این مرحله پس از تحویل Git شاخهٔ اختصاصی و تأیید remote متوقف می‌شود؛ مرحلهٔ بعد، build یا انتشار خودکار آغاز نمی‌شود.

@@ -6,6 +6,13 @@ export const state = {
   os: new Set(),
   presented: new Map(),
   dismissed: [],
+  channels: new Map(),
+};
+/** @type {{permission:null|(()=>Promise<any>),request:null|(()=>Promise<any>),channels:null|(()=>Promise<any[]>)}} */
+export const notificationReads = {
+  permission: null,
+  request: null,
+  channels: null,
 };
 export const AndroidImportance = { DEFAULT: 3 };
 export const SchedulableTriggerInputTypes = {
@@ -22,10 +29,20 @@ export function addNotificationResponseReceivedListener(fn) {
 export const emitNotificationResponse = (r) =>
   responseListeners.forEach((fn) => fn(r));
 export async function getPermissionsAsync() {
-  return { granted: state.granted, canAskAgain: true };
+  if (notificationReads.permission) return notificationReads.permission();
+  return {
+    granted: state.granted,
+    canAskAgain: true,
+    status: state.granted ? "granted" : "denied",
+  };
 }
 export async function requestPermissionsAsync() {
+  if (notificationReads.request) return notificationReads.request();
   return getPermissionsAsync();
+}
+export async function getNotificationChannelsAsync() {
+  if (notificationReads.channels) return notificationReads.channels();
+  return [...state.channels.values()];
 }
 export async function setNotificationChannelAsync() {}
 export async function getAllScheduledNotificationsAsync() {

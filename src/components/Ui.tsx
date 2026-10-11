@@ -132,6 +132,7 @@ export function Button({
   disabled = false,
   focusRef,
   iconKey,
+  actionCode,
   variant = "primary",
   selected = false,
 }: {
@@ -140,6 +141,7 @@ export function Button({
   disabled?: boolean;
   focusRef?: React.Ref<View>;
   iconKey?: IconKey;
+  actionCode?: string;
   variant?: "primary" | "secondary";
   selected?: boolean;
 }) {
@@ -168,10 +170,26 @@ export function Button({
           alignItems: "center",
           justifyContent: "center",
           gap: 8,
+          ...(actionCode ? { flexWrap: "wrap" as const } : {}),
         }}
       >
         {iconKey && <AssetIcon iconKey={iconKey} color={color} />}
         <Text style={[ui.buttonText, { color, flexShrink: 1 }]}>{title}</Text>
+        {actionCode && (
+          <Text
+            allowFontScaling
+            style={{
+              color,
+              fontSize: 14,
+              lineHeight: 24,
+              writingDirection: "ltr",
+              textAlign: "center",
+              flexShrink: 1,
+            }}
+          >
+            {actionCode}
+          </Text>
+        )}
       </View>
     </InteractivePressable>
   );

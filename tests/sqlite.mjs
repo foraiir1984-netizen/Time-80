@@ -1,5 +1,7 @@
 /** @type {{match:string|null,remaining:number}} */
 export const readFailures = { match: null, remaining: 0 };
+/** @type {{before:null|((sql:string,args:any[])=>Promise<void>)}} */
+export const readIO = { before: null };
 function fail(sql) {
   if (
     readFailures.remaining > 0 &&
@@ -39,6 +41,7 @@ export async function openDatabaseAsync(name = "time80.db") {
       };
     },
     getAllAsync: async (sql, ...args) => {
+      await readIO.before?.(sql, args);
       fail(sql);
       return database
         .prepare(sql)
@@ -46,6 +49,7 @@ export async function openDatabaseAsync(name = "time80.db") {
         .map((x) => ({ ...x }));
     },
     getFirstAsync: async (sql, ...args) => {
+      await readIO.before?.(sql, args);
       fail(sql);
       const r = database.prepare(sql).get(...args);
       return r ? { ...r } : null;

@@ -1,0 +1,11 @@
+
+> time80@0.3.0 typecheck
+> tsc --noEmit
+
+tests/v03LifecycleUI.test.tsx(136,23): error TS2339: Property 'value' does not exist on type '{}'.
+tests/v03LifecycleUI.test.tsx(373,11): error TS7022: 'before' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

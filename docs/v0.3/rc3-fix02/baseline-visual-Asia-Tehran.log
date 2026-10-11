@@ -1,0 +1,44 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ approved warm tokens, tab hierarchy, icon tones and responsive boundaries (1.295482ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ buttons/inputs expose focus and disabled state, retain handlers, errors include text (22.756944ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ picker retains full caller ranking and immediate taps with two/one columns, no search or persistent selection (4.318354ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ Style A hosts are 52dp, symbols 32dp, legacy icon strings remain literal (2.334446ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ Today overview is read-only, shows clock/context/reminder/due count and preserves callback target (8.625022ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ Today landing/review retain exact CheckIn routing, previous-day access, Backlog and all slot rows (222.691125ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ timeline keeps disabled future and neutral pending/skipped states with accessible exact times (2.744311ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 475.095251
+
+✖ failing tests:
+
+test at tests/visualIntegration.test.tsx:2:7710
+✖ Today overview is read-only, shows clock/context/reminder/due count and preserves callback target (8.625022ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  65 !== 50
+
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/baseline-check/tests/visualIntegration.test.tsx:214:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 65,
+    expected: 50,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
