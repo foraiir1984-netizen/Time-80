@@ -1,0 +1,21 @@
+✔ available explicit allocations stay pinned; duplicate, retired reuse and invalid kind are rejected (9.49156ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ generated draft guide and CSV use the registry including reservations and disclose missing reference (3.540015ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 1 (22.794505ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 1.5 (7.705023ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 2 (7.372342ms)
+✔ real diagnostics keeps allocated action codes through loading, read failure and success; reservations stay absent (20.767984ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 336.501354

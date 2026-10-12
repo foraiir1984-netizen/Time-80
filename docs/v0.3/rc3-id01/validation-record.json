@@ -1,0 +1,71 @@
+{
+  "task": "RC3-ID-01",
+  "status": "Incomplete: required reference missing",
+  "base_sha": "ffa7bfc1dcb18c747611d585553bed4d4e4d5359",
+  "local_branch": "rc3-id01-ui-identifiers",
+  "tested_snapshot": "base HEAD + uncommitted source/test/guide changes below",
+  "tested_file_sha256": {
+    "App.tsx": "6db47f110d3228db8da3ce3c149bef1b2d8ea547cc5a8c46ef74495cb5c65688",
+    "src/components/Ui.tsx": "be91002c749b4f626c7ef2c125f0757e62a0441037202a8303b43f54ed2c808e",
+    "src/components/uiIdentifiers.ts": "ed29a231a81b91e479a686b426763ddd1431b76160a915ec5d66ba2b1e643597",
+    "src/screens/NotificationDiagnosticsScreen.tsx": "21d98f07c2cd99507c46c5076d0f817d1d5ba17194070281dd81072a1f7f8d47",
+    "scripts/generate-ui-code-guide.ts": "66bdc6dfb5fb7fe8f24033ccfb3133239eb16169e0f4c463de4bf27ddaae1ea3",
+    "tests/v03UIIdentifiers.test.tsx": "5d9d2963da61603ac2f130bc0050e7a6cb007e34bbf2a4c338ce5a9ceb88d65f",
+    "docs/v0.3/RC3_UI_Code_Guide_FA.md": "33355813ad27397fcf5a486f43828b7b3f918df36d81e2ccfc84f3a38f595de3",
+    "docs/v0.3/RC3_UI_Code_Guide_FA.csv": "23085931775233d9184a33ebd63a37fffd2de238e4904efadab26e62d1468af8"
+  },
+  "delivery_commit": null,
+  "push": "Not run: incomplete task awaiting required allocation reference",
+  "registry_reference_complete": false,
+  "source_sites_extracted": 130,
+  "commands": [
+    {
+      "command": "npm run typecheck",
+      "result": "Pass",
+      "exit_code": 0,
+      "log": "typecheck.log"
+    },
+    {
+      "command": "TZ=UTC npm test",
+      "result": "Pass",
+      "exit_code": 0,
+      "tests": 92,
+      "pass": 92,
+      "fail": 0,
+      "skip": 0,
+      "log": "npm-test-UTC.log"
+    },
+    {
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx",
+      "result": "Pass",
+      "exit_code": 0,
+      "tests": 62,
+      "pass": 62,
+      "fail": 0,
+      "skip": 0,
+      "log": "related-Asia-Tehran.log"
+    },
+    {
+      "command": "TZ=UTC npm test (initial new-test iteration)",
+      "result": "Fail",
+      "exit_code": 1,
+      "tests": 92,
+      "pass": 91,
+      "fail": 1,
+      "log": "npm-test-initial-UTC.log",
+      "reason": "New test event injection used dynamic mock import; corrected to existing static import pattern"
+    }
+  ],
+  "not_run": [
+    "Full UI allocation coverage blocked by missing reference",
+    "Native Android layout/screenshots/48dp measurement",
+    "TalkBack",
+    "TZ-unset suite in this task",
+    "Broad Tehran progress fixture in this task"
+  ],
+  "known_issues": [
+    "Historical TZ-unset failure remains open",
+    "Historical Tehran progress fixture mismatch remains open",
+    "P03-015/P03-016 device acceptance remains open"
+  ]
+}

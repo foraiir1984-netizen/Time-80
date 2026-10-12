@@ -1,0 +1,253 @@
+{
+  "run_status": "Not run",
+  "purpose": "Actual Android screenshots and target measurement; no renderer image substitutes",
+  "tested_source_sha": "77ded971005be832233955dbd5df8b52bff99fe4",
+  "registry_version": "RC3-ID-01-Rev02",
+  "font_scales": [
+    1,
+    1.5,
+    2
+  ],
+  "direction": "RTL; ASCII code LTR independently",
+  "data_preconditions": [
+    "Long Persian activity names and mixed-script text",
+    "Active and archived activities; valid/expired Undo",
+    "Fresh/view/edit/skipped/empty/error/loading/busy/disabled",
+    "General and fixed-day backlog",
+    "Denied/granted/unknown; display allowed/channel closed/exact unknown; X70 return/focus"
+  ],
+  "required_actual_metadata": {
+    "delivery_commit": null,
+    "APK_SHA256": null,
+    "applicationId": null,
+    "versionName": null,
+    "versionCode": null,
+    "device_model": null,
+    "Android_version": null,
+    "display_size_dp": null,
+    "font_scale": null,
+    "timezone": null,
+    "capture_datetime": null,
+    "run_id": null
+  },
+  "groups": [
+    {
+      "codes": "A01/A05",
+      "controls": [
+        "X05",
+        "X06",
+        "X07",
+        "X08",
+        "X09",
+        "X10",
+        "X11",
+        "X12",
+        "X13"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "A01-A05-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "A02/D01",
+      "controls": [
+        "X14",
+        "X15",
+        "X16",
+        "X17",
+        "X18",
+        "X19",
+        "X20",
+        "X21",
+        "X22",
+        "X23"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "A02-D01-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "D02",
+      "controls": [
+        "X24",
+        "X25",
+        "X26",
+        "X27",
+        "X28",
+        "X29",
+        "X30",
+        "X31",
+        "X93",
+        "X94"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "D02-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "A03",
+      "controls": [
+        "X77",
+        "X78",
+        "X79",
+        "X80",
+        "X81",
+        "X82",
+        "X83",
+        "X84",
+        "X85",
+        "X86",
+        "X87",
+        "X88",
+        "X89",
+        "X90",
+        "X91",
+        "X92",
+        "X97",
+        "X98"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "A03-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "A04/D04",
+      "controls": [
+        "X59",
+        "X60",
+        "X61",
+        "X62",
+        "X63",
+        "X64",
+        "X65",
+        "X66",
+        "X67",
+        "X68"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "A04-D04-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "A06/D05/D06/D07",
+      "controls": [
+        "X05",
+        "X38",
+        "X39",
+        "X40",
+        "X42",
+        "X43",
+        "X44",
+        "X45",
+        "X46",
+        "X47",
+        "X49",
+        "X50",
+        "X51",
+        "X96",
+        "X102"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "A06-D05-D06-D07-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "A07",
+      "controls": [
+        "X52",
+        "X53",
+        "X54",
+        "X55",
+        "X56"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "A07-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "A08",
+      "controls": [
+        "X05",
+        "X06",
+        "X58"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "A08-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "A09",
+      "controls": [
+        "X05",
+        "X69",
+        "X70",
+        "X71",
+        "X72",
+        "X75"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "A09-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "A10",
+      "controls": [
+        "X05",
+        "X56",
+        "X57"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "A10-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "A11/A12",
+      "controls": [
+        "X71",
+        "X73",
+        "X74",
+        "X75",
+        "X76"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "A11-A12-scale-{1|1.5|2}-{state}-{part}.png"
+    },
+    {
+      "codes": "tabs/header",
+      "controls": [
+        "X01",
+        "X02",
+        "X03",
+        "X04",
+        "X05"
+      ],
+      "screenshot": "Not run",
+      "target_measurement": "Not run",
+      "planned_file_pattern": "tabs-header-scale-{1|1.5|2}-{state}-{part}.png"
+    }
+  ],
+  "reserved_excluded": [
+    "D03",
+    "X32",
+    "X33",
+    "X34",
+    "X35",
+    "X36",
+    "X37",
+    "X41",
+    "X48",
+    "X95",
+    "D08",
+    "X99",
+    "X100",
+    "X101"
+  ],
+  "notes": [
+    "Native Alert callback/cancel/target/font/RTL measured separately",
+    "Tall pages need consecutive captures",
+    "Screenshot alone cannot establish48dp hit targets",
+    "ICATUS source pending hide; reservation is not UI removal",
+    "No build/device asserted; TalkBack Deferred/Not run"
+  ]
+}

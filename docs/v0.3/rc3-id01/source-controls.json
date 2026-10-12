@@ -1,0 +1,1173 @@
+{
+  "baseline": "ffa7bfc1dcb18c747611d585553bed4d4e4d5359",
+  "branch": "rc3-id01-ui-identifiers",
+  "note": "Actual source sites only; this is not the missing agreed allocation table, not complete runtime coverage, and does not allocate unknown codes.",
+  "rows": [
+    {
+      "source": "App.tsx:68",
+      "kind": "Tabs.Screen",
+      "label": "\"Today\"",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "App.tsx:76",
+      "kind": "Tabs.Screen",
+      "label": "\"Activities\"",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "App.tsx:84",
+      "kind": "Tabs.Screen",
+      "label": "\"Insights\"",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "App.tsx:94",
+      "kind": "Tabs.Screen",
+      "label": "\"Settings\"",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "App.tsx:285",
+      "kind": "Button",
+      "label": "\"تلاش دوباره برای بازکردن اعلان\"",
+      "codeReference": "{uiIdentifiers.retryNotificationResponse.code}",
+      "handler": "{() => void retryResponse()}",
+      "onBlur": null,
+      "status": "Implemented (renderer evidence only)"
+    },
+    {
+      "source": "App.tsx:323",
+      "kind": "Button",
+      "label": "\"تلاش دوباره\"",
+      "codeReference": null,
+      "handler": "{() => {\n                      setAttempt((x) => x + 1);\n                    }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "App.tsx:365",
+      "kind": "Stack.Screen",
+      "label": "\"Main\"",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "App.tsx:370",
+      "kind": "Stack.Screen",
+      "label": "\"CheckIn\"",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "App.tsx:375",
+      "kind": "Stack.Screen",
+      "label": "\"Backlog\"",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "App.tsx:380",
+      "kind": "Stack.Screen",
+      "label": "\"SaveResult\"",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "App.tsx:385",
+      "kind": "Stack.Screen",
+      "label": "\"NotificationResolution\"",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "App.tsx:390",
+      "kind": "Stack.Screen",
+      "label": "\"Diagnostics\"",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:103",
+      "kind": "screen/dialog title",
+      "label": "فعالیت‌ها",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:106",
+      "kind": "Button",
+      "label": "\"افزودن فعالیت\"",
+      "codeReference": null,
+      "handler": "{() => setEdit(null)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:112",
+      "kind": "Button",
+      "label": "{archived ? \"فعال‌ها\" : \"بایگانی‌شده\"}",
+      "codeReference": null,
+      "handler": "{() => setArchived(!archived)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:145",
+      "kind": "InteractivePressable",
+      "label": "{`گزینه‌های مدیریت فعالیت ${item.name}`}",
+      "codeReference": null,
+      "handler": "{() => {\n                    origin.current = item.id;\n                    setSheet(item);\n                  }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:164",
+      "kind": "InteractivePressable",
+      "label": "{`مدیریت فعالیت ${item.name}${item.is_archived ? \"، بایگانی‌شده\" : \"\"}`}",
+      "codeReference": null,
+      "handler": "{() => {\n                    origin.current = item.id;\n                    setSheet(item);\n                  }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:202",
+      "kind": "Button",
+      "label": "{archived ? \"فعال‌ها\" : \"دیدن بایگانی‌شده‌ها\"}",
+      "codeReference": null,
+      "handler": "{() => setArchived(!archived)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:208",
+      "kind": "Button",
+      "label": "\"افزودن فعالیت\"",
+      "codeReference": null,
+      "handler": "{() => setEdit(null)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:218",
+      "kind": "Button",
+      "label": "\"تلاش دوباره\"",
+      "codeReference": null,
+      "handler": "{() => void load()}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:225",
+      "kind": "Button",
+      "label": "\"واگرد\"",
+      "codeReference": null,
+      "handler": "{() =>\n            void change(async () => {\n              await undoActivityArchive(undo);\n              setUndo(null);\n            }, \"فعالیت بازگردانی شد\")\n          }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:237",
+      "kind": "Modal",
+      "label": "dynamic/child content",
+      "codeReference": null,
+      "handler": "{close}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:254",
+      "kind": "InteractivePressable",
+      "label": "\"بستن گزینه‌های فعالیت\"",
+      "codeReference": null,
+      "handler": "{close}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:268",
+      "kind": "screen/dialog title",
+      "label": " {sheet.name} ",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:272",
+      "kind": "Button",
+      "label": "\"بازگردانی\"",
+      "codeReference": null,
+      "handler": "{() =>\n                      void change(async () => {\n                        await restoreActivity(sheet);\n                        setUndo(null);\n                      }, `${sheet.name} بازگردانی شد`)\n                    }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:284",
+      "kind": "Button",
+      "label": "\"ویرایش فعالیت\"",
+      "codeReference": null,
+      "handler": "{() => {\n                        setEdit(sheet);\n                        close();\n                      }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:293",
+      "kind": "Button",
+      "label": "\"بایگانی فعالیت\"",
+      "codeReference": null,
+      "handler": "{() =>\n                        void change(async () => {\n                          setUndo(await archiveActivity(sheet));\n                        }, `${sheet.name} بایگانی شد`)\n                      }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/ActivitiesScreen.tsx:306",
+      "kind": "Button",
+      "label": "\"بستن\"",
+      "codeReference": null,
+      "handler": "{close}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/BacklogScreen.tsx:54",
+      "kind": "screen/dialog title",
+      "label": " {scope.localDate} ·  {scope.timezone} ",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/BacklogScreen.tsx:69",
+      "kind": "Button",
+      "label": "\"تلاش دوباره\"",
+      "codeReference": null,
+      "handler": "{() => void load(true)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/BacklogScreen.tsx:94",
+      "kind": "SlotRow",
+      "label": "dynamic/child content",
+      "codeReference": null,
+      "handler": "{() =>\n                navigation.navigate(\"CheckIn\", {\n                  start: item.period_start,\n                  end: item.period_end,\n                  slotId: item.id,\n                  source: \"manual\",\n                  dayScope: scope,\n                })\n              }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:121",
+      "kind": "native Alert",
+      "label": "\"تغییر ثبت؟\"",
+      "actions": "[\n        { text: \"انصراف\", style: \"cancel\" },\n        { text: \"تأیید\", onPress: () => save(a) },\n      ]",
+      "codeReference": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:134",
+      "kind": "screen/dialog title",
+      "label": "چه کار می‌کردی؟\n      ",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:173",
+      "kind": "Button",
+      "label": "\"تلاش دوباره برای ثبت فعالیت انتخابی\"",
+      "codeReference": null,
+      "handler": "{() => void save(draft)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:182",
+      "kind": "Button",
+      "label": "\"ثبت فعالیت\"",
+      "codeReference": null,
+      "handler": "{() => setReopened(true)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:183",
+      "kind": "Button",
+      "label": "\"فعلاً نه\"",
+      "codeReference": null,
+      "handler": "{() => navigation.goBack()}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:189",
+      "kind": "Button",
+      "label": "\"بازگردانی تغییر (۱۰ ثانیه)\"",
+      "codeReference": null,
+      "handler": "{async () => {\n            try {\n              setBusy(true);\n              await undoEntryEdit(undo);\n              setUndo(null);\n              await load();\n            } catch (e) {\n              setError(errorMessage(e));\n            } finally {\n              setBusy(false);\n            }\n          }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:224",
+      "kind": "Input",
+      "label": "\"منطقهٔ زمانی تأییدشده\"",
+      "codeReference": null,
+      "handler": "{setZone}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:231",
+      "kind": "Button",
+      "label": "\"تأیید منطقهٔ این ثبت\"",
+      "codeReference": null,
+      "handler": "{() =>\n              Alert.alert(\n                \"تأیید منطقهٔ زمانی؟\",\n                \"این منطقه برای زمان انجام فعالیت ثبت شود؟\",\n                [\n                  { text: \"انصراف\" },\n                  {\n                    text: \"تأیید\",\n                    onPress: () => {\n                      setBusy(true);\n                      confirmTimeContext(ctx, zone)\n                        .then(load)\n                        .catch((e) => setError(errorMessage(e)))\n                        .finally(() => setBusy(false));\n                    },\n                  },\n                ],\n              )\n            }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:235",
+      "kind": "native Alert",
+      "label": "\"تأیید منطقهٔ زمانی؟\"",
+      "actions": "[\n                  { text: \"انصراف\" },\n                  {\n                    text: \"تأیید\",\n                    onPress: () => {\n                      setBusy(true);\n                      confirmTimeContext(ctx, zone)\n                        .then(load)\n                        .catch((e) => setError(errorMessage(e)))\n                        .finally(() => setBusy(false));\n                    },\n                  },\n                ]",
+      "codeReference": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:254",
+      "kind": "Button",
+      "label": "\"ویرایش\"",
+      "codeReference": null,
+      "handler": "{() => setEditing(true)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:255",
+      "kind": "Button",
+      "label": "\"بازگشت\"",
+      "codeReference": null,
+      "handler": "{() => navigation.goBack()}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:260",
+      "kind": "ClassificationPicker",
+      "label": "dynamic/child content",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:264",
+      "kind": "Button",
+      "label": "\"استفاده از پیش‌فرض فعالیت\"",
+      "codeReference": null,
+      "handler": "{() => setSelection({ mode: \"inherit\" })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:270",
+      "kind": "Button",
+      "label": "\"ذخیرهٔ تغییر دسته\"",
+      "codeReference": null,
+      "handler": "{() => choose({ id: ctx.entry!.activity_id } as Activity)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:276",
+      "kind": "screen/dialog title",
+      "label": "همهٔ فعالیت‌ها\n          ",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:286",
+      "kind": "Button",
+      "label": "\"افزودن یا بازگرداندن فعالیت\"",
+      "codeReference": null,
+      "handler": "{() =>\n              navigation.navigate(\"Main\", { screen: \"Activities\" })\n            }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:295",
+      "kind": "Button",
+      "label": "\"رد کردن این بازه\"",
+      "codeReference": null,
+      "handler": "{() =>\n            Alert.alert(\"رد کردن بازه؟\", \"این زمان بدون فعالیت باقی می‌ماند.\", [\n              { text: \"انصراف\" },\n              {\n                text: \"رد کردن\",\n                onPress: () =>\n                  skipSlot(slotId)\n                    .then(() => navigation.goBack())\n                    .catch((e) => setError(errorMessage(e))),\n              },\n            ])\n          }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:299",
+      "kind": "native Alert",
+      "label": "\"رد کردن بازه؟\"",
+      "actions": "[\n              { text: \"انصراف\" },\n              {\n                text: \"رد کردن\",\n                onPress: () =>\n                  skipSlot(slotId)\n                    .then(() => navigation.goBack())\n                    .catch((e) => setError(errorMessage(e))),\n              },\n            ]",
+      "codeReference": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:320",
+      "kind": "Button",
+      "label": "\"تلاش مجدد\"",
+      "codeReference": null,
+      "handler": "{() => load().catch((e) => setError(errorMessage(e)))}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/CheckInScreen.tsx:326",
+      "kind": "ActivityGrid",
+      "label": "dynamic/child content",
+      "codeReference": null,
+      "handler": "{choose}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:118",
+      "kind": "screen/dialog title",
+      "label": "گزارش زمان",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:121",
+      "kind": "Button",
+      "label": "{`${q.mode === mode ? \"✓ \" : \"\"}${labels[mode]}`}",
+      "codeReference": null,
+      "handler": "{() => setQ({ ...q, mode, offset: 0 })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:131",
+      "kind": "Button",
+      "label": "{q.mode === \"day\" ? \"روز قبل\" : \"قبلی\"}",
+      "codeReference": null,
+      "handler": "{() => setQ({ ...q, offset: q.offset - 1 })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:136",
+      "kind": "Button",
+      "label": "{q.mode === \"day\" ? \"امروز\" : \"دورهٔ جاری\"}",
+      "codeReference": null,
+      "handler": "{() => setQ({ ...q, offset: 0 })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:141",
+      "kind": "Button",
+      "label": "\"بعدی\"",
+      "codeReference": null,
+      "handler": "{() => setQ({ ...q, offset: q.offset + 1 })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:149",
+      "kind": "Button",
+      "label": "{q.calendar === \"persian\" ? \"تقویم: شمسی\" : \"تقویم: میلادی\"}",
+      "codeReference": null,
+      "handler": "{() =>\n            setQ({\n              ...q,\n              calendar: q.calendar === \"persian\" ? \"gregory\" : \"persian\",\n            })\n          }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:159",
+      "kind": "Button",
+      "label": "{`شروع هفته: ${[\"\", \"یکشنبه\", \"دوشنبه\", \"سه‌شنبه\", \"چهارشنبه\", \"پنجشنبه\", \"جمعه\", \"شنبه\"][q.weekStart]}`}",
+      "codeReference": null,
+      "handler": "{() => setQ({ ...q, weekStart: (q.weekStart % 7) + 1 })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:170",
+      "kind": "Input",
+      "label": "\"تاریخ شروع گزارش\"",
+      "codeReference": null,
+      "handler": "{setA}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:177",
+      "kind": "Input",
+      "label": "\"تاریخ پایان گزارش\"",
+      "codeReference": null,
+      "handler": "{setB}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:184",
+      "kind": "Button",
+      "label": "\"نمایش بازه\"",
+      "codeReference": null,
+      "handler": "{() => setQ({ ...q, customStart: a, customEnd: b })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:193",
+      "kind": "Button",
+      "label": "\"تلاش دوباره\"",
+      "codeReference": null,
+      "handler": "{() =>\n            preferencesReady ? setRefresh((v) => v + 1) : void loadPreferences()\n          }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:239",
+      "kind": "screen/dialog title",
+      "label": "{toPersianDuration(r.total)}",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:263",
+      "kind": "screen/dialog title",
+      "label": "فعالیت‌ها و پارتو\n          ",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:288",
+      "kind": "screen/dialog title",
+      "label": "دسته‌های ICATUS 2016",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/InsightsScreen.tsx:303",
+      "kind": "screen/dialog title",
+      "label": "روز به روز",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/NotificationDiagnosticsScreen.tsx:121",
+      "kind": "screen/dialog title",
+      "label": "بررسی اعلان‌ها",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/NotificationDiagnosticsScreen.tsx:179",
+      "kind": "Button",
+      "label": "\"درخواست مجوز\"",
+      "codeReference": "{uiIdentifiers.requestNotificationPermission.code}",
+      "handler": "{() =>\n          action(\n            \"permission\",\n            async () => {\n              const ok = await ensureNotificationPermission(\n                await getSettings(),\n              );\n              if (!ok) throw Error(\"مجوز داده نشد؛ تنظیمات گوشی را بررسی کن\");\n            },\n            \"مجوز برقرار است\",\n          )\n        }",
+      "onBlur": null,
+      "status": "Implemented (renderer evidence only)"
+    },
+    {
+      "source": "src/screens/NotificationDiagnosticsScreen.tsx:195",
+      "kind": "Button",
+      "label": "\"بازکردن تنظیمات گوشی\"",
+      "codeReference": "{uiIdentifiers.openPhoneNotificationSettings.code}",
+      "handler": "{() => action(\"settings\", () => Linking.openSettings(), \"\")}",
+      "onBlur": null,
+      "status": "Implemented (renderer evidence only)"
+    },
+    {
+      "source": "src/screens/NotificationDiagnosticsScreen.tsx:200",
+      "kind": "Button",
+      "label": "\"اعلان آزمایشی در ۱۰ ثانیه\"",
+      "codeReference": "{uiIdentifiers.sendTestNotification.code}",
+      "handler": "{() => action(\"test\", sendTestNotification, \"تست زمان‌بندی شد\")}",
+      "onBlur": null,
+      "status": "Implemented (renderer evidence only)"
+    },
+    {
+      "source": "src/screens/NotificationDiagnosticsScreen.tsx:205",
+      "kind": "Button",
+      "label": "\"هماهنگ‌سازی مجدد\"",
+      "codeReference": "{uiIdentifiers.reconcileNotificationsManually.code}",
+      "handler": "{() =>\n          action(\n            \"reconcile\",\n            () => reconcileNotifications(\"manual\"),\n            \"هماهنگ شد\",\n          )\n        }",
+      "onBlur": null,
+      "status": "Implemented (renderer evidence only)"
+    },
+    {
+      "source": "src/screens/NotificationResolutionScreen.tsx:7",
+      "kind": "screen/dialog title",
+      "label": "بازه مشخص نیست",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/NotificationResolutionScreen.tsx:23",
+      "kind": "Button",
+      "label": "\"انتخاب از بازه‌های سررسیدشده\"",
+      "codeReference": null,
+      "handler": "{() => navigation.replace(\"Backlog\")}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/NotificationResolutionScreen.tsx:27",
+      "kind": "Button",
+      "label": "\"بازگشت به امروز\"",
+      "codeReference": null,
+      "handler": "{() => navigation.navigate(\"Main\", { screen: \"Today\" })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/OnboardingScreen.tsx:41",
+      "kind": "screen/dialog title",
+      "label": "به Time80 خوش آمدی",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/OnboardingScreen.tsx:48",
+      "kind": "Button",
+      "label": "\"فعال‌کردن یادآوری\"",
+      "codeReference": null,
+      "handler": "{enable}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/OnboardingScreen.tsx:49",
+      "kind": "Button",
+      "label": "\"تست اعلان در ۱۰ ثانیه\"",
+      "codeReference": null,
+      "handler": "{() =>\n          sendTestNotification()\n            .then(() => setMessage(\"تست زمان‌بندی شد\"))\n            .catch((e) => setError(errorMessage(e)))\n        }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/OnboardingScreen.tsx:57",
+      "kind": "Button",
+      "label": "\"ورود به برنامه / ادامه بدون اعلان\"",
+      "codeReference": null,
+      "handler": "{() =>\n          transaction((tx) => setMeta(tx, \"onboarding_completed\", \"true\"))\n            .then(onDone)\n            .catch((e) => setError(errorMessage(e)))\n        }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SaveResultScreen.tsx:44",
+      "kind": "screen/dialog title",
+      "label": "ثبت شد\n      ",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SaveResultScreen.tsx:70",
+      "kind": "Button",
+      "label": "\"تلاش دوباره برای شمارش\"",
+      "codeReference": null,
+      "handler": "{() => void read()}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SaveResultScreen.tsx:80",
+      "kind": "Button",
+      "label": "\"مرور بازه‌های باقی‌مانده\"",
+      "codeReference": null,
+      "handler": "{() => navigation.replace(\"Backlog\", { dayScope: scope })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SaveResultScreen.tsx:88",
+      "kind": "Button",
+      "label": "\"بازگردانی تغییر (۱۰ ثانیه)\"",
+      "codeReference": null,
+      "handler": "{async () => {\n            setBusy(true);\n            try {\n              await undoEntryEdit(undo);\n              setUndo(null);\n              navigation.replace(\"CheckIn\", { ...period, dayScope: scope });\n            } catch (e) {\n              setError(errorMessage(e));\n              setUndo(null);\n              navigation.replace(\"CheckIn\", {\n                ...period,\n                dayScope: scope,\n                notice: \"امکان واگرد این تغییر دیگر وجود ندارد\",\n              });\n            } finally {\n              setBusy(false);\n            }\n          }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SaveResultScreen.tsx:111",
+      "kind": "Button",
+      "label": "\"مشاهدهٔ ثبت\"",
+      "codeReference": null,
+      "handler": "{() =>\n          navigation.replace(\"CheckIn\", { ...period, dayScope: scope })\n        }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SaveResultScreen.tsx:117",
+      "kind": "Button",
+      "label": "\"تمام\"",
+      "codeReference": null,
+      "handler": "{() => navigation.navigate(\"Main\", { screen: \"Today\" })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SettingsScreen.tsx:42",
+      "kind": "native Alert",
+      "label": "\"ویرایش ذخیره‌نشده\"",
+      "actions": "[\n          { text: \"ادامهٔ ویرایش\" },\n          {\n            text: \"کنار گذاشتن\",\n            onPress: () => {\n              discard.current = true;\n              navigation.dispatch(e.data.action);\n            },\n          },\n        ]",
+      "codeReference": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SettingsScreen.tsx:90",
+      "kind": "screen/dialog title",
+      "label": "تنظیمات یادآوری",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SettingsScreen.tsx:95",
+      "kind": "Switch",
+      "label": "\"یادآوری فعال\"",
+      "codeReference": null,
+      "handler": "{(v) => save({ notification_enabled: v ? 1 : 0 })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SettingsScreen.tsx:103",
+      "kind": "Input",
+      "label": "\"فاصلهٔ یادآوری به دقیقه\"",
+      "codeReference": null,
+      "handler": "{setInterval}",
+      "onBlur": "{() => {\n          if (interval !== String(s.interval_minutes))\n            save({ interval_minutes: Number(interval) });\n        }}",
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SettingsScreen.tsx:115",
+      "kind": "Input",
+      "label": "\"شروع روز HH:MM\"",
+      "codeReference": null,
+      "handler": "{setStart}",
+      "onBlur": "{() => {\n          if (start !== s.day_start) save({ day_start: start });\n        }}",
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SettingsScreen.tsx:125",
+      "kind": "Input",
+      "label": "\"پایان روز HH:MM\"",
+      "codeReference": null,
+      "handler": "{setEnd}",
+      "onBlur": "{() => {\n          if (end !== s.day_end) save({ day_end: end });\n        }}",
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SettingsScreen.tsx:147",
+      "kind": "Button",
+      "label": "{`${s.active_days.includes(day) ? \"✓ \" : \"\"}${name}`}",
+      "codeReference": null,
+      "handler": "{() =>\n                save({\n                  active_days: s.active_days.includes(day)\n                    ? s.active_days.filter((d) => d !== day)\n                    : [...s.active_days, day],\n                })\n              }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SettingsScreen.tsx:164",
+      "kind": "Switch",
+      "label": "\"صدا\"",
+      "codeReference": null,
+      "handler": "{(v) => save({ sound_enabled: v ? 1 : 0 })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SettingsScreen.tsx:171",
+      "kind": "Switch",
+      "label": "\"لرزش\"",
+      "codeReference": null,
+      "handler": "{(v) => save({ vibration_enabled: v ? 1 : 0 })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/SettingsScreen.tsx:178",
+      "kind": "Button",
+      "label": "\"بررسی اعلان‌ها\"",
+      "codeReference": null,
+      "handler": "{() => navigation.navigate(\"Diagnostics\")}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/TodayScreen.tsx:85",
+      "kind": "Button",
+      "label": "\"بازگشت به امروز\"",
+      "codeReference": null,
+      "handler": "{() => {\n                  setDay(new Date());\n                  setReview(false);\n                }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/TodayScreen.tsx:96",
+      "kind": "screen/dialog title",
+      "label": " {day.toLocaleDateString(\"fa-IR\", {\n                  weekday: \"long\",\n                  month: \"long\",\n                  day: \"numeric\",\n                })} ",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/TodayScreen.tsx:107",
+      "kind": "Button",
+      "label": "\"روز قبل\"",
+      "codeReference": null,
+      "handler": "{() => {\n                  const d = new Date(day);\n                  d.setDate(d.getDate() - 1);\n                  setDay(d);\n                  setReview(true);\n                }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/TodayScreen.tsx:117",
+      "kind": "Button",
+      "label": "\"امروز\"",
+      "codeReference": null,
+      "handler": "{() => setDay(new Date())}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/TodayScreen.tsx:122",
+      "kind": "Button",
+      "label": "\"روز بعد\"",
+      "codeReference": null,
+      "handler": "{() => {\n                  const d = new Date(day);\n                  d.setDate(d.getDate() + 1);\n                  setDay(d);\n                  setReview(true);\n                }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/TodayScreen.tsx:139",
+      "kind": "Button",
+      "label": "\"تکمیل آخرین بازهٔ ثبت‌نشده\"",
+      "codeReference": null,
+      "handler": "{() => open(pending)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/TodayScreen.tsx:144",
+      "kind": "Button",
+      "label": "\"بازه‌های ثبت‌نشدهٔ روزهای قبل\"",
+      "codeReference": null,
+      "handler": "{() => navigation.navigate(\"Backlog\")}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/screens/TodayScreen.tsx:152",
+      "kind": "SlotRow",
+      "label": "dynamic/child content",
+      "codeReference": null,
+      "handler": "{() => open(item)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:118",
+      "kind": "Modal",
+      "label": "dynamic/child content",
+      "codeReference": null,
+      "handler": "{() => !busy && onClose()}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:135",
+      "kind": "screen/dialog title",
+      "label": " {activity ? \"ویرایش فعالیت\" : \"فعالیت جدید\"} ",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:142",
+      "kind": "Button",
+      "label": "\"تلاش دوباره برای بارگذاری\"",
+      "codeReference": null,
+      "handler": "{() => void load()}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:149",
+      "kind": "Input",
+      "label": "\"نام فعالیت\"",
+      "codeReference": null,
+      "handler": "{setName}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:161",
+      "kind": "Button",
+      "label": "\"انتخاب آیکون\"",
+      "codeReference": null,
+      "handler": "{() => setPicker(!picker)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:168",
+      "kind": "Button",
+      "label": "\"نگه‌داشتن آیکون قبلی\"",
+      "codeReference": null,
+      "handler": "{() => setCommand({ kind: \"keep\" })}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:174",
+      "kind": "InteractivePressable",
+      "label": "{`آیکون ${label}`}",
+      "codeReference": null,
+      "handler": "{() =>\n                      setCommand({ kind: \"selectAsset\", set: ICON_SET, key })\n                    }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:208",
+      "kind": "Input",
+      "label": "\"جست‌وجوی آیکون یا ورود آیکون دلخواه\"",
+      "codeReference": null,
+      "handler": "{setSearch}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:215",
+      "kind": "Button",
+      "label": "\"استفاده از آیکون واردشده\"",
+      "codeReference": null,
+      "handler": "{() =>\n                  setCommand({ kind: \"selectLegacy\", raw: search })\n                }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:231",
+      "kind": "InteractivePressable",
+      "label": "{`آیکون ${i}`}",
+      "codeReference": null,
+      "handler": "{() =>\n                        setCommand({ kind: \"selectLegacy\", raw: i })\n                      }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:254",
+      "kind": "ClassificationPicker",
+      "label": "dynamic/child content",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:258",
+      "kind": "Button",
+      "label": "{busy ? \"در حال ذخیره…\" : \"ذخیره\"}",
+      "codeReference": null,
+      "handler": "{() => void save()}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityEditor.tsx:263",
+      "kind": "Button",
+      "label": "\"انصراف\"",
+      "codeReference": null,
+      "handler": "{onClose}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ActivityGrid.tsx:36",
+      "kind": "InteractivePressable",
+      "label": "{item.name}",
+      "codeReference": null,
+      "handler": "{() => onSelect(item)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ClassificationPicker.tsx:30",
+      "kind": "Button",
+      "label": "{\n          n\n            ? `${n.code} · ${n.title_fa ?? n.title_en}`\n            : \"دستهٔ ICATUS: مشخص نشده\"\n        }",
+      "codeReference": null,
+      "handler": "{() => {\n          setParent(null);\n          setSearch(\"\");\n          setOpen(true);\n        }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ClassificationPicker.tsx:42",
+      "kind": "Modal",
+      "label": "dynamic/child content",
+      "codeReference": null,
+      "handler": "{() => setOpen(false)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ClassificationPicker.tsx:48",
+      "kind": "screen/dialog title",
+      "label": "دسته‌بندی ICATUS 2016",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ClassificationPicker.tsx:52",
+      "kind": "Input",
+      "label": "\"جست‌وجوی کد یا عنوان دسته\"",
+      "codeReference": null,
+      "handler": "{setSearch}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ClassificationPicker.tsx:60",
+      "kind": "Button",
+      "label": "\"بستن\"",
+      "codeReference": null,
+      "handler": "{() => setOpen(false)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ClassificationPicker.tsx:61",
+      "kind": "Button",
+      "label": "\"بدون دسته\"",
+      "codeReference": null,
+      "handler": "{() => choose(null)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ClassificationPicker.tsx:63",
+      "kind": "Button",
+      "label": "\"سطح بالاتر\"",
+      "codeReference": null,
+      "handler": "{() =>\n                  setParent(\n                    nodes.find((n) => n.code === parent)?.parent_code ?? null,\n                  )\n                }",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ClassificationPicker.tsx:82",
+      "kind": "Button",
+      "label": "\"انتخاب\"",
+      "codeReference": null,
+      "handler": "{() => choose(item.code)}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ClassificationPicker.tsx:84",
+      "kind": "Button",
+      "label": "\"جزئیات دسته\"",
+      "codeReference": null,
+      "handler": "{() => {\n                        setParent(item.code);\n                        setSearch(\"\");\n                      }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/ClassificationPicker.tsx:92",
+      "kind": "Button",
+      "label": "\"تعریف رسمی\"",
+      "codeReference": null,
+      "handler": "{() => {\n                      Linking.openURL(\n                        `${dataset.source_url}#${item.code}`,\n                      ).catch(() => {});\n                    }}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/SlotRow.tsx:19",
+      "kind": "InteractivePressable",
+      "label": "{`${new Date(item.period_start).toLocaleTimeString(\"fa-IR\", { timeZone: displayTimezone, hour: \"2-digit\", minute: \"2-digit\" })} تا ${new Date(item.period_end).toLocaleTimeString(\"fa-IR\", { timeZone: displayTimezone, hour: \"2-digit\", minute: \"2-digit\" })}، ${item.entry?.status === \"logged\" ? item.entry.activity_name : future ? \"جاری / آینده\" : item.slot?.state === \"skipped\" ? \"رد شده\" : \"ثبت نشده — برای تکمیل لمس کن\"}`}",
+      "codeReference": null,
+      "handler": "{onPress}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/TodayOverview.tsx:47",
+      "kind": "screen/dialog title",
+      "label": "امروز\n      ",
+      "codeReference": null,
+      "handler": null,
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/TodayOverview.tsx:140",
+      "kind": "Button",
+      "label": "\"تکمیل آخرین بازهٔ ثبت‌نشده\"",
+      "codeReference": null,
+      "handler": "{onDue}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    },
+    {
+      "source": "src/components/TodayOverview.tsx:141",
+      "kind": "Button",
+      "label": "\"مرور امروز / خط زمان\"",
+      "codeReference": null,
+      "handler": "{onReview}",
+      "onBlur": null,
+      "status": "Pending reference mapping"
+    }
+  ]
+}

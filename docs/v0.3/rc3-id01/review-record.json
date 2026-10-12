@@ -1,0 +1,13 @@
+{
+  "protected_tracked_files_byte_comparison": "Pass",
+  "unexpected_changed_files": [],
+  "sensitive_pattern_scan": "Pass",
+  "matching_file_names": [],
+  "reviewed_changed_files": 19,
+  "initial_test_counts": [
+    "ℹ tests 92",
+    "ℹ pass 91",
+    "ℹ fail 1"
+  ],
+  "staged_changes": []
+}

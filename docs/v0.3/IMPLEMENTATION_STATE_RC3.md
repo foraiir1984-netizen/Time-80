@@ -1,5 +1,31 @@
 # IMPLEMENTATION_STATE_RC3
 
+Checkpoint جاری: **RC3-ID-01 / تحویل Rev02**، 2026-10-12، Asia/Tehran. محدودهٔ فعال پرامپت۶ و الحاقیه‌های۶-الف/۶-ب در سورس تکمیل شد؛ پذیرش بصری نهایی RC3/AC-ID و گوشی هنوز باز است.
+
+- مبنا FIX02: ffa7bfc1dcb18c747611d585553bed4d4e4d5359؛ شاخه rc3-id01-ui-identifiers، همان checkout کامل شامل FIX01/FIX02 و تمام تغییرات مرحلهٔ ناقص حفظ شد. Rev01 عین ضمیمه در docs و تخصیص X102 از صاحب محصول در الحاقیه۶-ب Rev01 محفوظ؛ شماره‌های قبلی تغییر نکردند.
+- Registry RC3-ID-01-Rev02:۱۲۲ مدخل،۱۰۸ فعال و۱۴رزرو. هر فعال در سورس و رفتار renderer دیده شده،۱۲۹ binding صریح و۱۴۳ ردیف source/reservation در پوشش؛ active Pending=0. screenshot/native layout/target Not run. registry/guide/CSV یک مرجع دارند و IDs وارد schema/user data/payload نشده‌اند.
+- کدهای صفحه/پنجره در حالت‌های موجود، تب‌ها/header back، icon-only، ورودی‌ها/switchها، کارت تکراری و Alert فعال کددارند. X75 داخل target واحد و متصل به registry؛ X102 فقط navigate به Main/Activities، بدون create/restore. onBlur، scope/route، validation/commit/Undo و چرخه اعلان FIX01/FIX02 محفوظ.
+- SHA سورس آزمون‌شده:77ded971005be832233955dbd5df8b52bff99fe4؛ typecheck Pass، UTC109/109 و مرتبط Tehran79/79، fail0/skip0. تغییرات بعد از آن فقط docs/evidence هستند؛ SHA commit تحویل از Git این سند/پاسخ تحویل مشخص است و SHA آزمون با تحویل یکی فرض نمی‌شود. final-Rev02/validation-record.json hash و فرمان‌ها را ثبت کرده است.
+- راهنما: RC3_UI_Code_Guide_FA.md و CSV؛ گزارش نهایی RC3_ID_01_Report_Rev02_FA.md؛ rc3-id01/README_Rev02_FA.md ساختار شواهد و جداسازی root logs تاریخی۹۲/۹۲ و۶۲/۶۲ از نهایی را توضیح می‌دهد. coverage-Rev02 و current-source-uses، renderer UTC/Tehran و برنامهٔ screenshot نسخه‌دار تحویل داده‌اند.
+- D03 و X32…37/X41/X48/X95، همچنین D08/X99…101 رزرو بدون badge/قابلیت تازه. **ICATUS هنوز pending hide در سورس میانی است**؛ رزرو شاهد حذف UI نیست و RC3 نهایی به حذف واقعی در مرحلهٔ جدا نیاز دارد. چهار بازطراحی/دارایی/Logout/date picker/countdown اجرا نشدند؛ Undo غیرقابل‌دسترسی CheckIn فعال نشد.
+- Known Issueهای TZ unset و fixture progress تهران باز و سوابق FIX01/FIX02 دست‌نخورده؛ P03-014/P03-019 بسته نشده. TalkBack Deferred/Not run، P03-015/P03-016 و تحویل اعلان گوشی Not run. scheduler/manifest/SDK/schema/data/default/assignment/history/signing/applicationId/dependency/workflow محفوظ؛ build/APK/Release/merge/force-push انجام نشد.
+
+کوچک‌ترین قدم بعد با بررسی دفتر: اجرای QA گوشی RTL/scale1/1.5/2 و اندازه‌گیری target/Alert/header/tab، سپس دستور جدا برای pending hide و طرح‌های بعد. پس از push و خواندن SHA remote همین task متوقف می‌شود؛ مرحلهٔ بعد آغاز نمی‌شود.
+
+---
+
+## سوابق checkpoint ناقص RC3-ID-01 (نتایج زیر شاهد نهایی نیستند)
+
+Checkpoint جاری RC3-ID-01: **ناقص / منتظر مرجع تخصیص**، 2026-10-11. شاخهٔ محلی `rc3-id01-ui-identifiers` از FIX02 `ffa7bfc1dcb18c747611d585553bed4d4e4d5359`؛ HEAD همان مبنا، تغییرات این checkpoint ثبت‌نشده‌اند. commit/push تحویل هنوز انجام نشده است.
+
+مرجع کامل A01…A12، D01…D07، X01…X98 و AC-ID-01…10 در context و فایل‌های موجود یافت نشد؛ سؤال بازیابی مرجع برای محصول باز است. شماره/معنای غایب ساخته نشد. زیرساخت registry/badge/generator و اتصال X69–72/X75 انجام شد؛ D08/X99–101 رزرو و بدون کنترل تازه، رزروهای ICATUS guard دارند. registry و راهنمای فعلی صریحاً ناقص‌اند؛ باقی پوشش Pending است. شرح و پوشش در RC3_ID_01_Report_FA.md و rc3-id01/؛ راهنما در RC3_UI_Code_Guide_FA.md و CSV.
+
+Typecheck Pass؛ UTC92/92 و مرتبط Tehran62/62، skip0. آزمون جدید اولیه یک Fail از import پورت double داشت و اصلاح شد؛ log محفوظ. تصاویر/اندازه‌گیری runtime Android و TalkBack Not run. Known Issueهای TZ unset/progress تهران و پذیرش گوشی P03-015/P03-016 باز؛ منطق محصول/انتظار تست برای آن‌ها تغییر نکرد. ICATUS در سورس میانی هنوز **pending hide**؛ رزرو بودن شاهد حذف UI نیست و RC3 نهایی به حذف واقعی نیاز دارد.
+
+بخش زیر checkpoint تاریخی FIX02 است؛ گزارش‌ها و شواهد تاریخی FIX01/FIX02 بازنویسی نشده‌اند. قدم بعدی دریافت مرجع کامل و تکمیل همین شاخه است؛ مرحلهٔ بعد آغاز نشده است.
+
+---
+
 Checkpoint جاری: 2026-10-11، Asia/Tehran — RC3-FIX-02، پرامپت۵.
 
 ## وضعیت جاری

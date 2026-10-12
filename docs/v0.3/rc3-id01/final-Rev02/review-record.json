@@ -1,0 +1,13 @@
+{
+  "base_sha": "ffa7bfc1dcb18c747611d585553bed4d4e4d5359",
+  "tested_source_sha": "77ded971005be832233955dbd5df8b52bff99fe4",
+  "protected_base_files_checked": 307,
+  "unexpected_protected_changes": [],
+  "source_snapshot_mismatches": [],
+  "sensitive_pattern_matching_files": [],
+  "prohibited_changed_files": [],
+  "reviewed_new_or_modified_document_paths": 30,
+  "review_scope": "All changed source diff reviewed; docs/evidence synthetic/static, no native user data; source after tested SHA is identical.",
+  "whitespace_check_source_and_documents": "Pass; raw *.log files excluded intentionally to preserve stdout bytes",
+  "raw_log_whitespace": "Retained verbatim: native patch warnings and failing-test report indentation; not source whitespace edits"
+}

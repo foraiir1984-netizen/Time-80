@@ -1,0 +1,49 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ Today keeps A01/A05 in the same route and separates overview return from current timeline date (293.775274ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes (176.396365ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft (59.862093ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply (135.235701ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft (352.315936ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct (35.672084ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo (16.164903ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ failed selected commit retries with X44; A06 context read retry X51 keeps its page code (23.36914ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent (15.464442ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope (13.307858ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ A06 empty activity navigation uses product-assigned X102 and performs no create/restore (14.39983ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership (18.215199ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks (31.300432ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1523.248547

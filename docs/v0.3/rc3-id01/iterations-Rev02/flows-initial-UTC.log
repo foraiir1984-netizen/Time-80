@@ -1,0 +1,138 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ Today keeps A01/A05 in the same route and separates overview return from current timeline date (320.667661ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes (140.04538ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft (70.802964ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply (140.642038ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft (82.375488ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct (27.252015ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo (19.750995ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ failed selected commit retries with X44; A06 context read retry X51 keeps its page code (20.656276ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent (13.433433ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope (8.098009ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ A06 empty activity navigation uses product-assigned X102 and performs no create/restore (5.120371ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership (13.61133ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks (29.266585ms)
+✖ /workspace/work/rc3-fix01/repo/tests/v03IdentifierFlows.test.tsx (1.778996ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 10
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1243.652249
+
+✖ failing tests:
+
+test at tests/v03IdentifierFlows.test.tsx:2:5875
+✖ settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft (82.375488ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  '08:00'
+      at <anonymous> (/workspace/work/rc3-fix01/repo/tests/v03IdentifierFlows.test.tsx:456:14)
+      at async TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03IdentifierFlows.test.tsx:162:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '08:00',
+    expected: '08:00',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03IdentifierFlows.test.tsx:2:5875
+✖ A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct (27.252015ms)
+  Error: no such table: entry_time_contexts
+      at Object.getAllAsync (/workspace/work/rc3-fix01/repo/tests/sqlite.mjs:47:10)
+      at async <anonymous> (/workspace/work/rc3-fix01/repo/tests/v03IdentifierFlows.test.tsx:544:20)
+      at async TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03IdentifierFlows.test.tsx:162:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    code: 'ERR_SQLITE_ERROR',
+    errcode: 1,
+    errstr: 'SQL logic error'
+  }
+
+test at tests/v03IdentifierFlows.test.tsx:2:5875
+✖ backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope (8.098009ms)
+  AssertionError [ERR_ASSERTION]: X06
+      at press (/workspace/work/rc3-fix01/repo/tests/v03IdentifierFlows.test.tsx:126:10)
+      at <anonymous> (/workspace/work/rc3-fix01/repo/tests/v03IdentifierFlows.test.tsx:771:11)
+      at async TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03IdentifierFlows.test.tsx:162:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/v03IdentifierFlows.test.tsx:2:32045
+✖ /workspace/work/rc3-fix01/repo/tests/v03IdentifierFlows.test.tsx (1.778996ms)
+  AssertionError [ERR_ASSERTION]: Every active allocation must be observed in real UI/Alert behavior scenarios
+  + actual - expected
+  
+  + [
+  +   'A10',
+  +   'D04',
+  +   'D05',
+  +   'D06',
+  +   'X40',
+  +   'X42',
+  +   'X50',
+  +   'X53',
+  +   'X54',
+  +   'X57',
+  +   'X67',
+  +   'X68'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03IdentifierFlows.test.tsx:945:10)
+      at TestHook.runInAsyncScope (node:async_hooks:227:14)
+      at TestHook.run (node:internal/test_runner/test:1382:25)
+      at TestHook.run (node:internal/test_runner/test:1726:18)
+      at TestHook.run (node:internal/util:581:20)
+      at Test.runHook (node:internal/test_runner/test:1269:20)
+      at after (node:internal/test_runner/test:1322:20)
+      at Test.run (node:internal/test_runner/test:1408:13) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [
+      'A10', 'D04', 'D05',
+      'D06', 'X40', 'X42',
+      'X50', 'X53', 'X54',
+      'X57', 'X67', 'X68'
+    ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

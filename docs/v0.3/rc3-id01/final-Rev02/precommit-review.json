@@ -1,0 +1,8 @@
+{
+  "unexpected_protected_changes": [],
+  "sensitive_pattern_matching_files": [],
+  "reference_copy_exact": true,
+  "base_sha": "ffa7bfc1dcb18c747611d585553bed4d4e4d5359",
+  "branch": "rc3-id01-ui-identifiers",
+  "head_sha": "ffa7bfc1dcb18c747611d585553bed4d4e4d5359"
+}

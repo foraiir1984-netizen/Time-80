@@ -1,4 +1,52 @@
-# Checkpoint خودکار جاری — RC3-FIX-02
+# Checkpoint جاری — RC3-ID-01 / Rev02
+
+تاریخ2026-10-12، Asia/Tehran؛ شاخه rc3-id01-ui-identifiers. SHA سورس آزمون‌شده77ded971005be832233955dbd5df8b52bff99fe4 از مبنای FIX02ffa7bfc1dcb18c747611d585553bed4d4e4d5359. commit تحویل بعدی فقط docs/evidence دارد؛ SHA آن از Git این سند/پاسخ تحویل خوانده شود. گزارش: RC3_ID_01_Report_Rev02_FA.md؛ build/device/APK Not Available.
+
+| اجرا / رفتار | نتیجه | فرمان / شاهد و حد |
+| --- | --- | --- |
+| npm run typecheck | Pass | final-Rev02/typecheck.log،exit0؛ در SHA سورس بالا |
+| TZ=UTC npm test | Pass |109/109،fail0/skip0؛ final-Rev02/npm-test-UTC.log؛ 86 تست قبلی +23 شناسه |
+| تست شناسه + App/diagnostics/coordinator/UI با TZ=Asia/Tehran | Pass |79/79،fail0/skip0؛ فرمان کامل در گزارش/validation-record؛ related-Asia-Tehran.log |
+| ۱۲۲ تخصیص/تاریخچه،۱۰۸ فعال،۱۴رزرو | Pass سورس/رفتار renderer |۱۲۹ binding،۱۴۳ردیف پوشش، هر۱۰۸ کد فعال مشاهده؛ هیچ رزرو binding یا badge تازه ندارد |
+| guide/CSV/registry و محل واقعی | Pass | generator، history pin و source contract همراه رفتار UI؛ CSV UTF-8/LF |
+| X17 دو ورودی، X39/X40، Alertهای لغو/تأیید، create/edit، autosave onBlur و D04 draft | Pass | actual screens/services/SQLite؛ native/OS/navigation hosts doubled |
+| scope/replace/navigate، Undo معتبر/منقضی و X102 بدون create/restore | Pass | payload واقعی callback و تغییر دادهٔ fixture بررسی شده؛ گوشی نیست |
+| FIX01/FIX02 و X75 داخل target در همه حالت‌های صف | Pass | تست‌های موجود واقعی App/notifications +تست‌های جدید؛ دریافت اعلان اثبات نمی‌شود |
+| RTL/نام بلند/scale1/1.5/2، تک handler، contrast و قیود wrap/بستن | Pass در پیکربندی renderer | حداقل14/scaling/LTR، target config، فضای sheet و اندازه‌گیری label؛ native layout اندازه‌گیری نشده |
+| screenshot واقعی، overlap/target48×48، native Alert و header/tab در سه scale | Not run | adb/emulator/native Android project/device/build معلوم وجود ندارد؛ screenshot-plan-Rev02.json برنامه است |
+| AC-ID نهایی و گوشی P03-015/P03-016 | Not run / باز | وابسته به QA دستگاه و پوشش نهایی RC3؛ شواهد renderer پذیرش گوشی نیست |
+| TalkBack | Deferred / Not run | اجرا نشده |
+| TZ unset و fixture progress Tehran | Not run در این مرحله / Known Issue باز | Fail تاریخی و logهای FIX01/FIX02 محفوظ؛ هیچ skip/تغییر منطق/انتظار تست |
+
+ICATUS هنوز pending hide و برای RC3 نهایی قابل‌قبول نیست؛ رزرو D03/X32…37/X41/X48/X95 حذف UI را اثبات نمی‌کند. D08/X99…101 و چهار طرح بعد Deferred؛ کنترل تازه/logout/countdown/صفحه‌بندی دستی/Undo غیرقابل‌دسترسی اضافه نشد. P03-014/P03-019 بسته نشده‌اند.
+
+نتایج۹۲/۹۲ و۶۲/۶۲ بخش بعد تاریخی مرحلهٔ ناقص‌اند و جای نهایی را نمی‌گیرند. بخش‌های FIX01/FIX02 پایین، عین سابقهٔ پیشین‌اند.
+
+---
+
+# Checkpoint تاریخی — RC3-ID-01 ناقص / منتظر مرجع
+
+2026-10-11؛ شاخهٔ محلی rc3-id01-ui-identifiers، HEAD مبنای FIX02 ffa7bfc1dcb18c747611d585553bed4d4e4d5359 + diff ثبت‌نشده. SHA مبنا commit تحویل نیست؛ commit/push این checkpoint انجام نشده. گزارش مستقل: RC3_ID_01_Report_FA.md.
+
+| اجرا / رفتار | نتیجه | شاهد و محدودیت |
+| --- | --- | --- |
+| npm run typecheck | Pass | rc3-id01/typecheck.log، exit0 |
+| TZ=UTC npm test | Pass | 92/92،skip0؛ rc3-id01/npm-test-UTC.log؛ زیرساخت موجود با doubles native/navigation |
+| تست شناسه تازه + App/diagnostics/coordinator/UI در Tehran | Pass | 62/62،skip0؛ فرمان کامل در گزارش مستقل؛ related-Asia-Tehran.log |
+| تخصیص صریح موجود، برخورد کد، منع رزرو فعال، guide/CSV برابر registry | Pass | 6 تست تازه؛ registry کامل/سابقهٔ غایب هنوز پوشش ندارد |
+| X69–72 در loading/failure/success و X75 در جریان FIX01/FIX02 | Pass | target و label واقعی renderer؛ کدهای رزرو کنترل تازه ایجاد نکردند |
+| code14/LTR/scaling/wrap/contrast در enabled/selected/disabled و یک handler | Pass | پیکربندی scale1/1.5/2 و محاسبهٔ رنگ؛ تصویر/اندازه‌گیری گوشی نیست |
+| اجرای اولیهٔ تست تازه | Fail، سپس اصلاح تست | 91/92؛ import ثابت پورت double جای dynamic import؛ محصول برای آن تغییر نکرد؛ log اولیه محفوظ |
+| تمام A/D/X و محل‌های تکراری | Not run / Pending | جدول مرجع کامل و AC-ID-01…10 غایب؛ تحویل کامل نیست |
+| RTL/نام بلند/scaleهای1/1.5/2 روی گوشی، screenshot و48×48 واقعی | Not run | adb/emulator/native Android project موجود نیست؛ renderer شاهد پذیرش بصری نیست |
+| TZ unset و fixture progress تهران در این مرحله | Not run | Known Issueهای تاریخی زیر محفوظ؛ هیچ skip یا تغییر منطق/انتظار تست |
+| P03-015/P03-016 روی گوشی و TalkBack | Not run / Deferred | پذیرش دستگاهی و دریافت اعلان همچنان باز |
+
+ICATUS در سورس میانی pending hide؛ رزرو registry شاهد حذف UI نیست. باقی پوشش و پذیرش نهایی AC-ID منتظر مرجع و شواهد اجراست. بخش‌های FIX02/FIX01 پایین، سوابق پیشین و بدون تغییرند.
+
+---
+
+# Checkpoint خودکار تاریخی — RC3-FIX-02
 
 تاریخ: 2026-10-11، Asia/Tehran. کد آزمون‌شده: FIX01 22cfac2895e35845382b4f41edfeb171e544f2c7 + diff FIX02 در همان checkout کامل؛ شاخه rc3-fix02-p015-x75. commit نسخهٔ تحویل از Git این فایل و پاسخ تحویل مشخص می‌شود؛ build/APK/device run ID Not Available.
 

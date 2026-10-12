@@ -1,0 +1,182 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ Today keeps A01/A05 in the same route and separates overview return from current timeline date (717.831142ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes (430.803228ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ activity empty filters retain both repeated add/filter locations without inventing navigation (14.072192ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft (150.244422ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply (680.768726ms)
+✔ settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft (820.974968ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct (58.179949ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo (16.108484ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ failed selected commit retries with X44; A06 context read retry X51 keeps its page code (30.805576ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent (30.737884ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope (14.354968ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ A06 empty activity navigation uses product-assigned X102 and performs no create/restore (4.679304ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership (18.735944ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks (64.954877ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ future timeline code and tab label measurement preserve disabled/navigation state at scale 1 (25.588764ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5 (21.822363ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ future timeline code and tab label measurement preserve disabled/navigation state at scale 2 (50.794453ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ App denied -> granted -> resume clears only its warning after a real reconcile (340.331089ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ resume success preserves response error; X75 success owns only its response error (58.672433ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ bootstrap failure survives not-ready X75; successful bootstrap cannot clear response read failure (15.609034ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ App older resume failure cannot overwrite a newer resume result (20.603521ms)
+✔ App older resume success cannot overwrite a newer resume result (19.726732ms)
+✔ App bootstrap unmount stops pending continuation and removes listeners (26.897221ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ App resume unmount stops pending continuation and removes listeners (7.769259ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ pending response resolution cannot route after App unmount (8.135459ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ diagnostics distinguishes loading, unknown and denied without false dirty=false (10.237138ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ diagnostics independently renders granted display, closed channel and unknown exact (5.356732ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ X70 return and repeated focus refresh data with one listener and no repair or refresh loop (15.10172ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ failed refresh never presents previous granted data as newly confirmed (12.589244ms)
+✔ diagnostics successful refresh or another action cannot clear unresolved permission error (40.315933ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ diagnostics successful refresh or another action cannot clear unresolved test error (11.351432ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ diagnostics successful refresh or another action cannot clear unresolved reconcile error (22.903658ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ X70 opening failure is visible and cleared only after X70 succeeds (10.299742ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ new action/read failure removes an old success message without claiming delivery (20.826575ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ diagnostics older read failure cannot replace a newer snapshot/error (7.974056ms)
+✔ diagnostics older read success cannot replace a newer snapshot/error (5.757565ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ diagnostics older X70 failure cannot overwrite a newer X70 outcome or start another refresh (24.126566ms)
+✔ diagnostics older X70 success cannot overwrite a newer X70 outcome or start another refresh (9.343344ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ blur invalidates an old diagnostics read; refocus gets a new snapshot (7.173883ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ diagnostics unmount cancels read/action updates and follow-up refreshes (7.999365ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RTL X75 is inside one target at font scale 1, with scaling/wrap and one handler (27.587688ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RTL X75 is inside one target at font scale 1.5, with scaling/wrap and one handler (59.81388ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RTL X75 is inside one target at font scale 2, with scaling/wrap and one handler (21.038575ms)
+✔ response retry exposes empty/not-ready/running/completion and keeps repeated touches deduplicated (7.303829ms)
+✔ response retry after resolve failure preserves completed stages and returns failure/success (0.787804ms)
+✔ response retry after route failure preserves completed stages and returns failure/success (0.456907ms)
+✔ response retry after dismiss failure preserves completed stages and returns failure/success (0.427183ms)
+✔ response retry after ack failure preserves completed stages and returns failure/success (0.369946ms)
+✔ failed dismiss does not lose independent response B; subsequent retry only completes A (0.53181ms)
+✔ diagnostic retry reports success without resolving/routing or writing ledger (10.485061ms)
+✔ v3 immutable identity resolves original period independent of click date; v2 absolute and dated compatibility (27.251565ms)
+✔ unknown, malformed, conflicting and future payloads return typed unresolved without guessing (3.175022ms)
+✔ read-only resolver handles original ledger period, missing/future/conflicting and skipped targets (1.670151ms)
+✔ cold/listener duplicate and before-ready A/B produce one route each and do not lose the second response (0.992131ms)
+✔ startup/resolve failure remains retryable; accepted navigation is not repeated after cleanup failure (0.560082ms)
+✔ diagnostic response cleans up without resolving or routing (0.563166ms)
+✔ occurrence/action dedupe keys differ for A/B and normalize absolute v2 occurrence (0.382084ms)
+✔ manual stale-cache repair actually calls scheduling even when all identifiers remain; partial failure retries cleanly (329.929912ms)
+✔ capability adapter reports unknown native capabilities and preserves owned-only v2 Expo scheduling outside Android (275.166284ms)
+✔ disabling notifications cancels only owned future schedules and preserves user records and durable icon metadata (5.791406ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ real App X75 handler renders empty feedback and preserves independent reconcile error (382.336248ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ not-ready X75 feedback preserves independent init error and queued response (6.745019ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ real handler reports failure, running/repeated touch and success; clears only response error (30.464032ms)
+✔ bootstrap retry remains separate; X75 success preserves subsequent independent reconcile error (38.794052ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ accepted navigation removes retry feedback; response taps/retries and dedupe do not write ledger (14.147576ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ real App resolved tap targets the original period without ledger writes (18.163652ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ old immediate retry result cannot overwrite a newer automatic run completion (8.883964ms)
+✔ old pending-response read failure cannot overwrite newer read/processing success (7.80362ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ management body/menu open the same activity sheet, archive/Undo preserve history, large text switches to one column (249.472943ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ editor read failure blocks saving and keeps draft; retry loads metadata before rename (12.242071ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ single-touch check-in writes once and navigates only after commit to a fixed-day result; recent section is removed (52.019203ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ post-commit count read failure shows saved outcome and retry only reads without replaying the write (6.827843ms)
+✔ reports retain a read error until preference retry, then expose a dated previous-day empty state (28.303945ms)
+✔ available explicit allocations stay pinned; duplicate, retired reuse and invalid kind are rejected (124.477247ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ complete generated guide and CSV match the registry and include reserved allocations (9.860932ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 1 (58.994528ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 1.5 (7.16495ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 2 (6.757266ms)
+✔ real diagnostics keeps allocated action codes through loading, read failure and success; reservations stay absent (19.341613ms)
+ℹ tests 79
+ℹ suites 0
+ℹ pass 79
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8533.687272
