@@ -51,8 +51,13 @@ export const AccessibilityInfo = { setAccessibilityFocus: () => {} };
 export const findNodeHandle = () => null;
 export const Linking = { openSettings: async () => {} };
 export const I18nManager = { isRTL: true };
+export const alertState = { calls: [], autoConfirm: true };
 export const Alert = {
-  alert: (_title, _body, actions) => {
-    actions?.find((a) => a.text === "تأیید")?.onPress?.();
+  alert: (title, body, actions, options) => {
+    alertState.calls.push({ title, body, actions, options });
+    if (alertState.autoConfirm)
+      actions
+        ?.find((a) => a.text === "تأیید" || a.text?.startsWith("تأیید ["))
+        ?.onPress?.();
   },
 };

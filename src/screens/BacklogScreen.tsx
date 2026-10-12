@@ -1,3 +1,5 @@
+import { uiIdentifiers } from "../components/uiIdentifiers";
+import { IdentifierTitle } from "../components/Ui";
 import { getDayRemaining } from "../services/dayScopeService";
 import { timezone } from "../utils/slots";
 import React, { useState, useCallback, useRef } from "react";
@@ -49,6 +51,10 @@ export function BacklogScreen({ navigation, route }: any) {
   );
   return (
     <View style={ui.page}>
+      <IdentifierTitle
+        title="بازه‌های ثبت‌نشده"
+        code={uiIdentifiers.backlog.code}
+      />
       {scope && (
         <>
           <Text style={ui.title}>
@@ -66,7 +72,11 @@ export function BacklogScreen({ navigation, route }: any) {
       )}
       <ErrorText error={error} />
       {!!error && (
-        <Button title="تلاش دوباره" onPress={() => void load(true)} />
+        <Button
+          title="تلاش دوباره"
+          actionCode={uiIdentifiers.retryBacklogRead.code}
+          onPress={() => void load(true)}
+        />
       )}
 
       <FlatList

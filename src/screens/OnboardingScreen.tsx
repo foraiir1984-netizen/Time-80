@@ -1,3 +1,5 @@
+import { uiIdentifiers } from "../components/uiIdentifiers";
+import { IdentifierTitle } from "../components/Ui";
 import React, { useState } from "react";
 import { ScrollView, Text } from "react-native";
 import { ui, Button, ErrorText, errorMessage } from "../components/Ui";
@@ -38,16 +40,24 @@ export function OnboardingScreen({ onDone }: { onDone: () => void }) {
         { flexGrow: 1, justifyContent: "center" },
       ]}
     >
-      <Text style={ui.title}>به Time80 خوش آمدی</Text>
+      <IdentifierTitle
+        title="به Time80 خوش آمدی"
+        code={uiIdentifiers.onboarding.code}
+      />
       <Text style={ui.text}>
         با یادآوری‌های کوتاه ثبت کن زمانت صرف چه کاری شده است. داده‌ها روی همین
         گوشی ذخیره می‌شوند و دسته‌بندی ICATUS اختیاری است.
       </Text>
       <ErrorText error={error} />
       <Text style={ui.text}>{message}</Text>
-      <Button title="فعال‌کردن یادآوری" onPress={enable} />
+      <Button
+        title="فعال‌کردن یادآوری"
+        actionCode={uiIdentifiers.enableOnboardingReminders.code}
+        onPress={enable}
+      />
       <Button
         title="تست اعلان در ۱۰ ثانیه"
+        actionCode={uiIdentifiers.sendTestNotification.code}
         onPress={() =>
           sendTestNotification()
             .then(() => setMessage("تست زمان‌بندی شد"))
@@ -56,6 +66,7 @@ export function OnboardingScreen({ onDone }: { onDone: () => void }) {
       />
       <Button
         title="ورود به برنامه / ادامه بدون اعلان"
+        actionCode={uiIdentifiers.completeOnboarding.code}
         onPress={() =>
           transaction((tx) => setMeta(tx, "onboarding_completed", "true"))
             .then(onDone)

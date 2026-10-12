@@ -1,3 +1,5 @@
+import { uiIdentifiers } from "../components/uiIdentifiers";
+import { IdentifierTitle, identifierAlert } from "../components/Ui";
 import { timezone } from "../utils/slots";
 import { ActivityIcon } from "../components/ActivityIcon";
 import { useFocusEffect } from "@react-navigation/native";
@@ -9,7 +11,7 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import { View, Text, Alert, AppState } from "react-native";
+import { View, Text, AppState } from "react-native";
 import { ActivityGrid } from "../components/ActivityGrid";
 import { ClassificationPicker } from "../components/ClassificationPicker";
 import {
@@ -118,10 +120,23 @@ export function CheckInScreen({ route, navigation }: any) {
   }
   function choose(a: Activity) {
     if (ctx?.entry) {
-      Alert.alert("تغییر ثبت؟", "فعالیت یا دستهٔ این بازه تغییر کند؟", [
-        { text: "انصراف", style: "cancel" },
-        { text: "تأیید", onPress: () => save(a) },
-      ]);
+      identifierAlert(
+        uiIdentifiers.changeEntryDialog.code,
+        "تغییر ثبت؟",
+        "فعالیت یا دستهٔ این بازه تغییر کند؟",
+        [
+          {
+            text: "انصراف",
+            actionCode: uiIdentifiers.cancelConfirmation.code,
+            style: "cancel",
+          },
+          {
+            text: "تأیید",
+            actionCode: uiIdentifiers.confirmCheckInChange.code,
+            onPress: () => save(a),
+          },
+        ],
+      );
     } else save(a);
   }
   const code =
@@ -131,9 +146,10 @@ export function CheckInScreen({ route, navigation }: any) {
     n = nodes.find((n) => n.code === code);
   const header = (
     <>
-      <Text accessibilityRole="header" style={ui.title}>
-        چه کار می‌کردی؟
-      </Text>
+      <IdentifierTitle
+        title="چه کار می‌کردی؟"
+        code={uiIdentifiers.checkIn.code}
+      />
       <Text style={ui.muted}>
         {new Date(start).toLocaleDateString("fa-IR", {
           timeZone: scope.timezone,
@@ -172,6 +188,7 @@ export function CheckInScreen({ route, navigation }: any) {
       {draft && !!error && (
         <Button
           title="تلاش دوباره برای ثبت فعالیت انتخابی"
+          actionCode={uiIdentifiers.retrySelectedCheckIn.code}
           disabled={busy}
           onPress={() => void save(draft)}
         />
@@ -179,8 +196,16 @@ export function CheckInScreen({ route, navigation }: any) {
       {!ctx?.entry && route.params.entryState === "skipped" && !reopened && (
         <>
           <Text style={ui.text}>این بازه قبلاً رد شده است.</Text>
-          <Button title="ثبت فعالیت" onPress={() => setReopened(true)} />
-          <Button title="فعلاً نه" onPress={() => navigation.goBack()} />
+          <Button
+            title="ثبت فعالیت"
+            actionCode={uiIdentifiers.reopenSkippedSlot.code}
+            onPress={() => setReopened(true)}
+          />
+          <Button
+            title="فعلاً نه"
+            actionCode={uiIdentifiers.navigateBack.code}
+            onPress={() => navigation.goBack()}
+          />
         </>
       )}
       {ctx?.entry && <Text style={ui.muted}>این بازه قبلاً ثبت شده است.</Text>}
@@ -224,21 +249,28 @@ export function CheckInScreen({ route, navigation }: any) {
           <Input
             style={ui.input}
             accessibilityLabel="منطقهٔ زمانی تأییدشده"
+            actionCode={uiIdentifiers.editConfirmedTimezone.code}
             placeholder="منطقهٔ تأییدشده، مثال Asia/Tehran"
             value={zone}
             onChangeText={setZone}
           />
           <Button
             title="تأیید منطقهٔ این ثبت"
+            actionCode={uiIdentifiers.requestTimezoneConfirmation.code}
             disabled={!zone.trim() || busy}
             onPress={() =>
-              Alert.alert(
+              identifierAlert(
+                uiIdentifiers.confirmTimezoneDialog.code,
                 "تأیید منطقهٔ زمانی؟",
                 "این منطقه برای زمان انجام فعالیت ثبت شود؟",
                 [
-                  { text: "انصراف" },
+                  {
+                    text: "انصراف",
+                    actionCode: uiIdentifiers.cancelConfirmation.code,
+                  },
                   {
                     text: "تأیید",
+                    actionCode: uiIdentifiers.confirmEntryTimezone.code,
                     onPress: () => {
                       setBusy(true);
                       confirmTimeContext(ctx, zone)
@@ -251,8 +283,16 @@ export function CheckInScreen({ route, navigation }: any) {
               )
             }
           />
-          <Button title="ویرایش" onPress={() => setEditing(true)} />
-          <Button title="بازگشت" onPress={() => navigation.goBack()} />
+          <Button
+            title="ویرایش"
+            actionCode={uiIdentifiers.editCheckIn.code}
+            onPress={() => setEditing(true)}
+          />
+          <Button
+            title="بازگشت"
+            actionCode={uiIdentifiers.navigateBack.code}
+            onPress={() => navigation.goBack()}
+          />
         </>
       ) : (
         <>
@@ -285,6 +325,7 @@ export function CheckInScreen({ route, navigation }: any) {
         <>
           <Button
             title="افزودن یا بازگرداندن فعالیت"
+            actionCode={uiIdentifiers.openActivitiesFromEmptyCheckIn.code}
             onPress={() =>
               navigation.navigate("Main", { screen: "Activities" })
             }
@@ -295,17 +336,27 @@ export function CheckInScreen({ route, navigation }: any) {
         <Button
           variant="secondary"
           title="رد کردن این بازه"
+          actionCode={uiIdentifiers.requestSkipSlot.code}
           onPress={() =>
-            Alert.alert("رد کردن بازه؟", "این زمان بدون فعالیت باقی می‌ماند.", [
-              { text: "انصراف" },
-              {
-                text: "رد کردن",
-                onPress: () =>
-                  skipSlot(slotId)
-                    .then(() => navigation.goBack())
-                    .catch((e) => setError(errorMessage(e))),
-              },
-            ])
+            identifierAlert(
+              uiIdentifiers.skipSlotDialog.code,
+              "رد کردن بازه؟",
+              "این زمان بدون فعالیت باقی می‌ماند.",
+              [
+                {
+                  text: "انصراف",
+                  actionCode: uiIdentifiers.cancelConfirmation.code,
+                },
+                {
+                  text: "رد کردن",
+                  actionCode: uiIdentifiers.confirmSkipSlot.code,
+                  onPress: () =>
+                    skipSlot(slotId)
+                      .then(() => navigation.goBack())
+                      .catch((e) => setError(errorMessage(e))),
+                },
+              ],
+            )
           }
         />
       )}
@@ -315,10 +366,15 @@ export function CheckInScreen({ route, navigation }: any) {
     <View style={ui.page}>
       {!ctx ? (
         <>
+          <IdentifierTitle
+            title="ثبت و مشاهدهٔ بازه"
+            code={uiIdentifiers.checkIn.code}
+          />
           <ErrorText error={error} />
           <Loading />
           <Button
             title="تلاش مجدد"
+            actionCode={uiIdentifiers.retryCheckInRead.code}
             onPress={() => load().catch((e) => setError(errorMessage(e)))}
           />
         </>
@@ -336,6 +392,11 @@ export function CheckInScreen({ route, navigation }: any) {
           }
           header={header}
 
+          actionCode={
+            ctx.entry
+              ? uiIdentifiers.requestCheckInChange.code
+              : uiIdentifiers.commitNewCheckIn.code
+          }
           onSelect={choose}
         />
       )}

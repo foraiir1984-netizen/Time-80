@@ -1,6 +1,6 @@
 import { AssetIcon } from "./ActivityIcon";
 import type { IconKey } from "../icons/iconModel";
-import React, { useState } from "react";
+import React, { useState, useRef, useImperativeHandle } from "react";
 import {
   Text,
   Pressable,
@@ -8,10 +8,18 @@ import {
   View,
   TextInput,
   ActivityIndicator,
+  Switch,
+  Alert,
   type PressableProps,
   type TextInputProps,
+  type TextProps,
+  type SwitchProps,
+  type AlertButton,
+  type AlertOptions,
 } from "react-native";
 import { theme } from "../theme/time80Theme";
+import type { UiActionCode, UiIdentifierCode } from "./uiIdentifiers";
+import { uiIdentifiers, type UiDialogCode } from "./uiIdentifiers";
 export const ui = StyleSheet.create({
   screen: { flex: 1, backgroundColor: theme.background },
   content: { padding: theme.spacing.page, paddingBottom: theme.spacing.xl },
@@ -92,9 +100,20 @@ export const ui = StyleSheet.create({
   },
 });
 // Preserve native callbacks/refs while supplying visible keyboard focus.
-export const InteractivePressable = React.forwardRef<View, PressableProps>(
+type UiPressableProps = PressableProps & {
+  preserveCodeContrast?: boolean;
+};
+export const InteractivePressable = React.forwardRef<View, UiPressableProps>(
   function InteractivePressable(
-    { style, onFocus, onBlur, disabled, accessibilityState, ...props },
+    {
+      style,
+      onFocus,
+      onBlur,
+      disabled,
+      accessibilityState,
+      preserveCodeContrast = false,
+      ...props
+    },
     ref,
   ) {
     const [focused, setFocused] = useState(false);
@@ -114,18 +133,190 @@ export const InteractivePressable = React.forwardRef<View, PressableProps>(
         }}
         style={(state) => [
           typeof style === "function" ? style(state) : style,
-          state.pressed && !disabled && { opacity: 0.82 },
+          state.pressed &&
+            !disabled &&
+            !preserveCodeContrast && { opacity: 0.82 },
+          state.pressed &&
+            !disabled &&
+            preserveCodeContrast && {
+              outlineColor: theme.text,
+              outlineWidth: 1,
+              outlineOffset: -1,
+            },
           focused && {
             outlineColor: theme.accent,
             outlineWidth: 3,
             outlineOffset: 3,
           },
-          disabled && { opacity: 0.45 },
+          disabled && !preserveCodeContrast && { opacity: 0.45 },
         ]}
       />
     );
   },
 );
+// A non-interactive text node, always visible and independently LTR in RTL UI.
+export function IdentifierBadge({
+  code,
+  color = theme.text,
+}: {
+  code: UiIdentifierCode;
+  color?: string;
+}) {
+  return (
+    <Text
+      allowFontScaling
+      style={{
+        color,
+        fontSize: 14,
+        lineHeight: 24,
+        writingDirection: "ltr",
+        textAlign: "center",
+        flexShrink: 1,
+      }}
+    >
+      {code}
+    </Text>
+  );
+}
+export function IdentifierTitle({
+  title,
+  code,
+  titleRef,
+  textProps,
+}: {
+  title: string;
+  code: UiIdentifierCode;
+  titleRef?: React.Ref<Text>;
+  textProps?: TextProps;
+}) {
+  return (
+    <View style={[ui.row, { marginBottom: 16 }]}>
+      <Text
+        accessibilityRole="header"
+        {...textProps}
+        ref={titleRef}
+        style={[ui.title, { marginBottom: 0, flexShrink: 1 }]}
+      >
+        {title}
+      </Text>
+      <IdentifierBadge code={code} />
+    </View>
+  );
+}
+
+// Native Alert callbacks/cancel styles/options pass through unchanged. Unicode
+// isolates keep ASCII codes LTR; native font/target sizes require device QA.
+export function identifierAlert(
+  code: UiDialogCode,
+  title: string,
+  message: string,
+  buttons: readonly (AlertButton & { actionCode: UiActionCode })[],
+  options?: AlertOptions,
+) {
+  const label = (text: string, id: UiIdentifierCode) =>
+    `${text} [\u2066${id}\u2069]`;
+  Alert.alert(
+    label(title, code),
+    message,
+    buttons.map(({ actionCode, ...button }) => ({
+      ...button,
+      text: label(button.text ?? "", actionCode),
+    })),
+    options,
+  );
+}
+
+export function CodedSwitch({
+  actionCode,
+  accessibilityLabel,
+  onValueChange,
+  disabled,
+  value,
+  ...props
+}: SwitchProps & { actionCode: UiActionCode }) {
+  return (
+    <InteractivePressable
+      accessibilityRole="switch"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ checked: !!value }}
+      disabled={disabled}
+      preserveCodeContrast
+      onPress={() => onValueChange?.(!value)}
+      style={[ui.row, { minWidth: 48, minHeight: 48, padding: 8 }]}
+    >
+      <Text style={[ui.text, { flexShrink: 1 }]}>{accessibilityLabel}</Text>
+      <IdentifierBadge code={actionCode} />
+      <Switch
+        {...props}
+        accessible={false}
+        pointerEvents="none"
+        value={value}
+        disabled={disabled}
+      />
+    </InteractivePressable>
+  );
+}
+
+// The existing stack back action; no fallback destination or extra route.
+export function IdentifierHeader({
+  title,
+  pageCode,
+  canGoBack,
+  onBack,
+}: {
+  title: string;
+  pageCode: UiIdentifierCode;
+  canGoBack: boolean;
+  onBack: () => void;
+}) {
+  return (
+    <View
+      style={[
+        ui.row,
+        { backgroundColor: theme.surface, padding: 8, minHeight: 56 },
+      ]}
+    >
+      {canGoBack && (
+        <Button
+          title="بازگشت"
+          variant="secondary"
+          actionCode={uiIdentifiers.navigateBack.code}
+          onPress={onBack}
+        />
+      )}
+      <View style={{ flex: 1, minWidth: 48 }}>
+        <IdentifierTitle title={title} code={pageCode} />
+      </View>
+    </View>
+  );
+}
+
+export function IdentifierTabLabel({
+  label,
+  code,
+  color,
+  onLayout,
+}: {
+  label: string;
+  code: UiActionCode;
+  color: string;
+  onLayout?: TextProps["onLayout"];
+}) {
+  return (
+    <View
+      onLayout={onLayout}
+      style={{ alignItems: "center", maxWidth: "100%", flexShrink: 0 }}
+    >
+      <Text
+        allowFontScaling
+        style={{ fontSize: 14, lineHeight: 24, color, textAlign: "center" }}
+      >
+        {label}
+      </Text>
+      <IdentifierBadge code={code} color={color} />
+    </View>
+  );
+}
 export function Button({
   title,
   onPress,
@@ -141,7 +332,7 @@ export function Button({
   disabled?: boolean;
   focusRef?: React.Ref<View>;
   iconKey?: IconKey;
-  actionCode?: string;
+  actionCode?: UiActionCode;
   variant?: "primary" | "secondary";
   selected?: boolean;
 }) {
@@ -155,6 +346,7 @@ export function Button({
       accessibilityState={{ selected }}
       onPress={onPress}
       disabled={disabled}
+      preserveCodeContrast={!!actionCode}
       style={[
         ui.button,
         secondary && {
@@ -162,6 +354,12 @@ export function Button({
           borderWidth: 1,
           borderColor: selected ? theme.accent : theme.border,
         },
+        actionCode &&
+          disabled && {
+            borderWidth: 1,
+            borderStyle: "dashed",
+            borderColor: color,
+          },
       ]}
     >
       <View
@@ -175,35 +373,25 @@ export function Button({
       >
         {iconKey && <AssetIcon iconKey={iconKey} color={color} />}
         <Text style={[ui.buttonText, { color, flexShrink: 1 }]}>{title}</Text>
-        {actionCode && (
-          <Text
-            allowFontScaling
-            style={{
-              color,
-              fontSize: 14,
-              lineHeight: 24,
-              writingDirection: "ltr",
-              textAlign: "center",
-              flexShrink: 1,
-            }}
-          >
-            {actionCode}
-          </Text>
-        )}
+        {actionCode && <IdentifierBadge code={actionCode} color={color} />}
       </View>
     </InteractivePressable>
   );
 }
-export const Input = React.forwardRef<TextInput, TextInputProps>(function Input(
-  { style, onFocus, onBlur, ...props },
-  ref,
-) {
+export const Input = React.forwardRef<
+  TextInput,
+  TextInputProps & { actionCode?: UiActionCode }
+>(function Input({ style, onFocus, onBlur, actionCode, ...props }, ref) {
   const [focused, setFocused] = useState(false);
-  return (
+  const native = useRef<TextInput>(null);
+  useImperativeHandle(actionCode ? ref : null, () => native.current!, [
+    !!actionCode,
+  ]);
+  const field = (
     <TextInput
       placeholderTextColor={theme.secondary}
       {...props}
-      ref={ref}
+      ref={actionCode ? native : ref}
       onFocus={(e) => {
         setFocused(true);
         onFocus?.(e);
@@ -223,6 +411,25 @@ export const Input = React.forwardRef<TextInput, TextInputProps>(function Input(
         },
       ]}
     />
+  );
+  return actionCode ? (
+    <InteractivePressable
+      accessible={false}
+      preserveCodeContrast
+      disabled={props.editable === false}
+      onPress={() => native.current?.focus()}
+      style={{ minWidth: 48, minHeight: 48 }}
+    >
+      <View style={ui.row}>
+        <Text style={[ui.text, { flexShrink: 1 }]}>
+          {props.accessibilityLabel}
+        </Text>
+        <IdentifierBadge code={actionCode} />
+      </View>
+      {field}
+    </InteractivePressable>
+  ) : (
+    field
   );
 });
 export function Loading({ label = "در حال بارگذاری" }: { label?: string }) {

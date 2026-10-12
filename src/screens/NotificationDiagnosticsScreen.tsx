@@ -9,6 +9,8 @@ import {
 } from "../notifications/scheduler";
 import { getSettings } from "../db/database";
 import { ui, Button, ErrorText, errorMessage, Loading } from "../components/Ui";
+import { IdentifierTitle } from "../components/Ui";
+import { uiIdentifiers } from "../components/uiIdentifiers";
 
 type Action = "permission" | "settings" | "test" | "reconcile";
 const capabilityLabels = {
@@ -117,7 +119,10 @@ export function NotificationDiagnosticsScreen() {
           : "نامعلوم";
   return (
     <ScrollView style={ui.screen} contentContainerStyle={ui.content}>
-      <Text style={ui.title}>بررسی اعلان‌ها</Text>
+      <IdentifierTitle
+        title="بررسی اعلان‌ها"
+        code={uiIdentifiers.notificationDiagnostics.code}
+      />
       <ErrorText error={readError} />
       {Object.entries(actionErrors).map(([key, error]) => (
         <ErrorText key={key} error={error} />
@@ -177,6 +182,7 @@ export function NotificationDiagnosticsScreen() {
       )}
       <Button
         title="درخواست مجوز"
+        actionCode={uiIdentifiers.requestNotificationPermission.code}
         onPress={() =>
           action(
             "permission",
@@ -192,14 +198,17 @@ export function NotificationDiagnosticsScreen() {
       />
       <Button
         title="بازکردن تنظیمات گوشی"
+        actionCode={uiIdentifiers.openPhoneNotificationSettings.code}
         onPress={() => action("settings", () => Linking.openSettings(), "")}
       />
       <Button
         title="اعلان آزمایشی در ۱۰ ثانیه"
+        actionCode={uiIdentifiers.sendTestNotification.code}
         onPress={() => action("test", sendTestNotification, "تست زمان‌بندی شد")}
       />
       <Button
         title="هماهنگ‌سازی مجدد"
+        actionCode={uiIdentifiers.reconcileNotificationsManually.code}
         onPress={() =>
           action(
             "reconcile",

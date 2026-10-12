@@ -1,3 +1,5 @@
+import { uiIdentifiers } from "../components/uiIdentifiers";
+import { IdentifierTitle, IdentifierBadge } from "../components/Ui";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   View,
@@ -40,7 +42,8 @@ export function ActivitiesScreen() {
     [message, setMessage] = useState(""),
     [undo, setUndo] = useState<ArchiveUndo | null>(null);
   const dimensions = useWindowDimensions(),
-    columns = activityColumns(dimensions.width, dimensions.fontScale);
+    columns = activityColumns(dimensions.width, dimensions.fontScale),
+    closeRegionHeight = Math.max(48, Math.ceil(32 * dimensions.fontScale + 32));
   const origins = useRef(new Map<number, any>()),
     origin = useRef<number | null>(null),
     addFocus = useRef<any>(null),
@@ -100,18 +103,24 @@ export function ActivitiesScreen() {
   }
   return (
     <View style={ui.page}>
-      <Text style={ui.title}>فعالیت‌ها</Text>
+      <IdentifierTitle title="فعالیت‌ها" code={uiIdentifiers.activities.code} />
       <ErrorText error={error} />
       <View style={ui.row}>
         <Button
           focusRef={addFocus}
           iconKey="plus"
           title="افزودن فعالیت"
+          actionCode={uiIdentifiers.createActivity.code}
           onPress={() => setEdit(null)}
         />
         <Button
           variant="secondary"
           title={archived ? "فعال‌ها" : "بایگانی‌شده"}
+          actionCode={
+            archived
+              ? uiIdentifiers.showActiveActivities.code
+              : uiIdentifiers.showArchivedActivities.code
+          }
           onPress={() => setArchived(!archived)}
         />
       </View>
@@ -148,6 +157,7 @@ export function ActivitiesScreen() {
                   }}
                   accessibilityRole="button"
                   accessibilityLabel={`گزینه‌های مدیریت فعالیت ${item.name}`}
+                  preserveCodeContrast
                   onPress={() => {
                     origin.current = item.id;
                     setSheet(item);
@@ -160,10 +170,14 @@ export function ActivitiesScreen() {
                   }}
                 >
                   <AssetIcon iconKey="more" />
+                  <IdentifierBadge
+                    code={uiIdentifiers.openActivityManagement.code}
+                  />
                 </InteractivePressable>
                 <InteractivePressable
                   accessibilityRole="button"
                   accessibilityLabel={`مدیریت فعالیت ${item.name}${item.is_archived ? "، بایگانی‌شده" : ""}`}
+                  preserveCodeContrast
                   onPress={() => {
                     origin.current = item.id;
                     setSheet(item);
@@ -178,13 +192,12 @@ export function ActivitiesScreen() {
                   })}
                 >
                   <ActivityIcon icon={item.icon_view} legacy={item.icon} />
-                  <Text
-                    numberOfLines={2}
-                    ellipsizeMode="tail"
-                    style={[ui.text, { textAlign: "center" }]}
-                  >
+                  <Text style={[ui.text, { textAlign: "center" }]}>
                     {item.name}
                   </Text>
+                  <IdentifierBadge
+                    code={uiIdentifiers.openActivityManagement.code}
+                  />
                   {!!item.is_archived && (
                     <Text style={ui.muted}>بایگانی‌شده</Text>
                   )}
@@ -202,12 +215,18 @@ export function ActivitiesScreen() {
               <Button
                 variant="secondary"
                 title={archived ? "فعال‌ها" : "دیدن بایگانی‌شده‌ها"}
+                actionCode={
+                  archived
+                    ? uiIdentifiers.showActiveActivities.code
+                    : uiIdentifiers.showArchivedActivities.code
+                }
                 onPress={() => setArchived(!archived)}
               />
               {!archived && (
                 <Button
                   iconKey="plus"
                   title="افزودن فعالیت"
+                  actionCode={uiIdentifiers.createActivity.code}
                   onPress={() => setEdit(null)}
                 />
               )}
@@ -215,7 +234,13 @@ export function ActivitiesScreen() {
           }
         />
       )}
-      {!!error && <Button title="تلاش دوباره" onPress={() => void load()} />}
+      {!!error && (
+        <Button
+          title="تلاش دوباره"
+          actionCode={uiIdentifiers.retryActivitiesRead.code}
+          onPress={() => void load()}
+        />
+      )}
       {!!message && (
         <Text accessibilityLiveRegion="polite" style={ui.text}>
           {message}
@@ -224,6 +249,7 @@ export function ActivitiesScreen() {
       {undo && (
         <Button
           title="واگرد"
+          actionCode={uiIdentifiers.undoActivityArchive.code}
           disabled={busy}
           onPress={() =>
             void change(async () => {
@@ -253,24 +279,58 @@ export function ActivitiesScreen() {
           >
             <InteractivePressable
               accessibilityLabel="بستن گزینه‌های فعالیت"
-              style={{ flex: 1 }}
+              preserveCodeContrast
+              style={{
+                flex: 1,
+                minHeight: closeRegionHeight,
+                minWidth: 48,
+                justifyContent: "flex-end",
+                alignItems: "center",
+                padding: 8,
+              }}
               onPress={close}
-            />
+            >
+              <View
+                style={[
+                  ui.row,
+                  {
+                    backgroundColor: theme.surface,
+                    padding: 8,
+                    borderRadius: 16,
+                  },
+                ]}
+              >
+                <Text style={ui.text}>بستن</Text>
+                <IdentifierBadge
+                  code={uiIdentifiers.closeSelectionDialog.code}
+                />
+              </View>
+            </InteractivePressable>
             <View
               accessibilityViewIsModal
               style={[
                 ui.card,
-                { marginBottom: 0, padding: 0, maxHeight: "85%" },
+                {
+                  marginBottom: 0,
+                  padding: 0,
+                  maxHeight: Math.min(
+                    dimensions.height * 0.85,
+                    Math.max(0, dimensions.height - closeRegionHeight),
+                  ),
+                },
               ]}
             >
               <ScrollView contentContainerStyle={{ padding: 24 }}>
                 <ActivityIcon icon={sheet.icon_view} legacy={sheet.icon} />
-                <Text ref={title} accessibilityRole="header" style={ui.title}>
-                  {sheet.name}
-                </Text>
+                <IdentifierTitle
+                  title={sheet.name}
+                  code={uiIdentifiers.activityManagementDialog.code}
+                  titleRef={title}
+                />
                 {sheet.is_archived ? (
                   <Button
                     title="بازگردانی"
+                    actionCode={uiIdentifiers.restoreArchivedActivity.code}
                     disabled={busy}
                     onPress={() =>
                       void change(async () => {
@@ -284,6 +344,7 @@ export function ActivitiesScreen() {
                     <Button
                       iconKey="edit"
                       title="ویرایش فعالیت"
+                      actionCode={uiIdentifiers.editActivity.code}
                       disabled={busy}
                       onPress={() => {
                         setEdit(sheet);
@@ -294,6 +355,7 @@ export function ActivitiesScreen() {
                       iconKey="archive"
                       variant="secondary"
                       title="بایگانی فعالیت"
+                      actionCode={uiIdentifiers.archiveActivity.code}
                       disabled={busy}
                       onPress={() =>
                         void change(async () => {
@@ -306,6 +368,7 @@ export function ActivitiesScreen() {
                 <Button
                   variant="secondary"
                   title="بستن"
+                  actionCode={uiIdentifiers.closeSelectionDialog.code}
                   disabled={busy}
                   onPress={close}
                 />

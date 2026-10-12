@@ -1,10 +1,15 @@
+import { uiIdentifiers } from "../components/uiIdentifiers";
+import { IdentifierTitle } from "../components/Ui";
 import React from "react";
 import { ScrollView, Text } from "react-native";
 import { ui, Button } from "../components/Ui";
 export function NotificationResolutionScreen({ route, navigation }: any) {
   return (
     <ScrollView style={ui.screen} contentContainerStyle={ui.content}>
-      <Text style={ui.title}>بازه مشخص نیست</Text>
+      <IdentifierTitle
+        title="بازه مشخص نیست"
+        code={uiIdentifiers.notificationResolution.code}
+      />
       <Text style={ui.text}>
         اطلاعات این اعلان برای تعیین بازه کافی نیست. ثبت زمانی تغییر نکرده است.
       </Text>
@@ -22,10 +27,12 @@ export function NotificationResolutionScreen({ route, navigation }: any) {
       </Text>
       <Button
         title="انتخاب از بازه‌های سررسیدشده"
+        actionCode={uiIdentifiers.selectDueSlot.code}
         onPress={() => navigation.replace("Backlog")}
       />
       <Button
         title="بازگشت به امروز"
+        actionCode={uiIdentifiers.returnToMainToday.code}
         onPress={() => navigation.navigate("Main", { screen: "Today" })}
       />
     </ScrollView>

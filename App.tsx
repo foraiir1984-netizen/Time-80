@@ -11,9 +11,23 @@ import { SaveResultScreen } from "./src/screens/SaveResultScreen";
 import { NotificationResolutionScreen } from "./src/screens/NotificationResolutionScreen";
 import { dayScopeFor } from "./src/services/dayScopeService";
 import { AssetIcon } from "./src/components/ActivityIcon";
+import {
+  uiIdentifiers,
+  type UiActionCode,
+} from "./src/components/uiIdentifiers";
+import {
+  IdentifierTitle,
+  IdentifierHeader,
+  IdentifierTabLabel,
+} from "./src/components/Ui";
+import { PlatformPressable } from "@react-navigation/elements";
 import React, { useEffect, useState, useRef } from "react";
-import { AppState, Text, View } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { AppState, Text, View, useWindowDimensions } from "react-native";
+import {
+  SafeAreaProvider,
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import {
   NavigationContainer,
   DefaultTheme,
@@ -61,14 +75,73 @@ Notifications.setNotificationHandler({
 const Stack = createNativeStackNavigator(),
   Tabs = createBottomTabNavigator(),
   navigation = createNavigationContainerRef<any>();
-function MainTabs() {
+const stackPageCodes = {
+  Main: uiIdentifiers.today.code,
+  CheckIn: uiIdentifiers.checkIn.code,
+  Backlog: uiIdentifiers.backlog.code,
+  SaveResult: uiIdentifiers.saveResult.code,
+  NotificationResolution: uiIdentifiers.notificationResolution.code,
+  Diagnostics: uiIdentifiers.notificationDiagnostics.code,
+};
+export function MainTabs() {
+  const { fontScale } = useWindowDimensions(),
+    insets = useSafeAreaInsets();
+  const [measurement, setMeasurement] = useState({
+    scale: fontScale,
+    height: 0,
+  });
+  const activeScale = useRef(fontScale);
+  activeScale.current = fontScale;
+  const label =
+    (name: string, code: UiActionCode) =>
+    ({ color }: { color: string }) => (
+      <IdentifierTabLabel
+        label={name}
+        code={code}
+        color={color}
+        onLayout={({ nativeEvent }) => {
+          if (activeScale.current !== fontScale) return;
+          const height = Math.ceil(nativeEvent.layout.height);
+          setMeasurement((old) =>
+            old.scale === fontScale && old.height >= height
+              ? old
+              : { scale: fontScale, height },
+          );
+        }}
+      />
+    );
   return (
-    <Tabs.Navigator backBehavior="firstRoute" screenOptions={tabVisualOptions}>
+    <Tabs.Navigator
+      backBehavior="firstRoute"
+      screenOptions={{
+        ...tabVisualOptions,
+        tabBarAllowFontScaling: true,
+        tabBarLabelPosition: "below-icon",
+        tabBarStyle: {
+          ...tabVisualOptions.tabBarStyle,
+          height:
+            40 +
+            Math.max(
+              72 * fontScale,
+              measurement.scale === fontScale ? measurement.height : 0,
+            ) +
+            insets.bottom,
+        },
+        tabBarButton: (props) => (
+          <PlatformPressable
+            {...props}
+            pressOpacity={1}
+            pressColor={theme.pressed}
+          />
+        ),
+      }}
+    >
       <Tabs.Screen
         name="Today"
         component={TodayScreen}
         options={{
           title: "امروز",
+          tabBarLabel: label("امروز", uiIdentifiers.selectTodayTab.code),
           tabBarIcon: ({ color }) => <AssetIcon color={color} iconKey="home" />,
         }}
       />
@@ -77,6 +150,10 @@ function MainTabs() {
         component={ActivitiesScreen}
         options={{
           title: "فعالیت‌ها",
+          tabBarLabel: label(
+            "فعالیت‌ها",
+            uiIdentifiers.selectActivitiesTab.code,
+          ),
           tabBarIcon: ({ color }) => <AssetIcon color={color} iconKey="grid" />,
         }}
       />
@@ -85,6 +162,7 @@ function MainTabs() {
         component={InsightsScreen}
         options={{
           title: "گزارش",
+          tabBarLabel: label("گزارش", uiIdentifiers.selectInsightsTab.code),
           tabBarIcon: ({ color }) => (
             <AssetIcon color={color} iconKey="report" />
           ),
@@ -95,6 +173,7 @@ function MainTabs() {
         component={SettingsScreen}
         options={{
           title: "تنظیمات",
+          tabBarLabel: label("تنظیمات", uiIdentifiers.selectSettingsTab.code),
           tabBarIcon: ({ color }) => (
             <AssetIcon color={color} iconKey="settings" />
           ),
@@ -283,7 +362,7 @@ export default function App() {
         <>
           <Button
             title="تلاش دوباره برای بازکردن اعلان"
-            actionCode="X75"
+            actionCode={uiIdentifiers.retryNotificationResponse.code}
             onPress={() => void retryResponse()}
           />
           {!!(responseProcessing || retryMessage) && (
@@ -313,6 +392,10 @@ export default function App() {
       >
         {!ready ? (
           <View style={[ui.page, { justifyContent: "center" }]}>
+            <IdentifierTitle
+              title="آماده‌سازی برنامه"
+              code={uiIdentifiers.bootstrap.code}
+            />
             {bootstrapError || responseError ? (
               <>
                 <ErrorText error={bootstrapError} />
@@ -321,6 +404,7 @@ export default function App() {
                 {!!bootstrapError && (
                   <Button
                     title="تلاش دوباره"
+                    actionCode={uiIdentifiers.retryBootstrap.code}
                     onPress={() => {
                       setAttempt((x) => x + 1);
                     }}
@@ -354,6 +438,18 @@ export default function App() {
             >
               <Stack.Navigator
                 screenOptions={{
+                  header: ({ navigation, route, options, back }) => (
+                    <IdentifierHeader
+                      title={options.title ?? route.name}
+                      pageCode={
+                        stackPageCodes[
+                          route.name as keyof typeof stackPageCodes
+                        ]
+                      }
+                      canGoBack={!!back}
+                      onBack={() => navigation.goBack()}
+                    />
+                  ),
                   headerTitleAlign: "center",
                   headerStyle: { backgroundColor: theme.surface },
                   headerTintColor: theme.accent,

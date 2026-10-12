@@ -1,5 +1,11 @@
+import { uiIdentifiers } from "../components/uiIdentifiers";
+import {
+  IdentifierTitle,
+  CodedSwitch,
+  identifierAlert,
+} from "../components/Ui";
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, ScrollView, Switch, Alert } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { getSettings } from "../db/database";
 import { applySettingsPatch } from "../services/settingsService";
 import {
@@ -39,16 +45,25 @@ export function SettingsScreen({ navigation }: any) {
         )
           return;
         e.preventDefault();
-        Alert.alert("ویرایش ذخیره‌نشده", "تغییر ناقص را کنار بگذاریم؟", [
-          { text: "ادامهٔ ویرایش" },
-          {
-            text: "کنار گذاشتن",
-            onPress: () => {
-              discard.current = true;
-              navigation.dispatch(e.data.action);
+        identifierAlert(
+          uiIdentifiers.unsavedSettingsDialog.code,
+          "ویرایش ذخیره‌نشده",
+          "تغییر ناقص را کنار بگذاریم؟",
+          [
+            {
+              text: "ادامهٔ ویرایش",
+              actionCode: uiIdentifiers.continueSettingsDraft.code,
             },
-          },
-        ]);
+            {
+              text: "کنار گذاشتن",
+              actionCode: uiIdentifiers.discardIncompleteSettingsDraft.code,
+              onPress: () => {
+                discard.current = true;
+                navigation.dispatch(e.data.action);
+              },
+            },
+          ],
+        );
       }),
     [navigation, s, interval, start, end],
   );
@@ -77,6 +92,10 @@ export function SettingsScreen({ navigation }: any) {
   if (!s)
     return (
       <View style={ui.page}>
+        <IdentifierTitle
+          title="تنظیمات یادآوری"
+          code={uiIdentifiers.reminderSettings.code}
+        />
         <ErrorText error={error} />
         <Text style={ui.text}>در حال بارگذاری…</Text>
       </View>
@@ -87,13 +106,16 @@ export function SettingsScreen({ navigation }: any) {
       contentContainerStyle={ui.content}
       keyboardShouldPersistTaps="handled"
     >
-      <Text style={ui.title}>تنظیمات یادآوری</Text>
+      <IdentifierTitle
+        title="تنظیمات یادآوری"
+        code={uiIdentifiers.reminderSettings.code}
+      />
       <Text style={ui.muted}>{message}</Text>
       <ErrorText error={error} />
       <View style={ui.row}>
-        <Text style={ui.text}>یادآوری فعال</Text>
-        <Switch
+        <CodedSwitch
           accessibilityLabel="یادآوری فعال"
+          actionCode={uiIdentifiers.toggleReminders.code}
           disabled={busy}
           value={!!s.notification_enabled}
           onValueChange={(v) => save({ notification_enabled: v ? 1 : 0 })}
@@ -103,6 +125,7 @@ export function SettingsScreen({ navigation }: any) {
       <Input
         style={ui.input}
         accessibilityLabel="فاصلهٔ یادآوری به دقیقه"
+        actionCode={uiIdentifiers.editReminderInterval.code}
         keyboardType="number-pad"
         value={interval}
         onChangeText={setInterval}
@@ -115,6 +138,7 @@ export function SettingsScreen({ navigation }: any) {
       <Input
         style={ui.input}
         accessibilityLabel="شروع روز HH:MM"
+        actionCode={uiIdentifiers.editDayStart.code}
         value={start}
         onChangeText={setStart}
         onBlur={() => {
@@ -125,6 +149,7 @@ export function SettingsScreen({ navigation }: any) {
       <Input
         style={ui.input}
         accessibilityLabel="پایان روز HH:MM"
+        actionCode={uiIdentifiers.editDayEnd.code}
         value={end}
         onChangeText={setEnd}
         onBlur={() => {
@@ -148,6 +173,7 @@ export function SettingsScreen({ navigation }: any) {
               key={day}
               disabled={busy}
               title={`${s.active_days.includes(day) ? "✓ " : ""}${name}`}
+              actionCode={uiIdentifiers.toggleActiveDay.code}
               onPress={() =>
                 save({
                   active_days: s.active_days.includes(day)
@@ -160,23 +186,24 @@ export function SettingsScreen({ navigation }: any) {
         })}
       </View>
       <View style={ui.row}>
-        <Text style={ui.text}>صدا</Text>
-        <Switch
+        <CodedSwitch
           disabled={busy}
           accessibilityLabel="صدا"
+          actionCode={uiIdentifiers.toggleSound.code}
           value={!!s.sound_enabled}
           onValueChange={(v) => save({ sound_enabled: v ? 1 : 0 })}
         />
-        <Text style={ui.text}>لرزش</Text>
-        <Switch
+        <CodedSwitch
           disabled={busy}
           accessibilityLabel="لرزش"
+          actionCode={uiIdentifiers.toggleVibration.code}
           value={!!s.vibration_enabled}
           onValueChange={(v) => save({ vibration_enabled: v ? 1 : 0 })}
         />
       </View>
       <Button
         title="بررسی اعلان‌ها"
+        actionCode={uiIdentifiers.openNotificationDiagnostics.code}
         onPress={() => navigation.navigate("Diagnostics")}
       />
       <Text style={ui.muted}>

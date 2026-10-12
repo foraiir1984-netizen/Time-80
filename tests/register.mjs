@@ -10,6 +10,11 @@ registerHooks({
     return next(url, context);
   },
   resolve(specifier, context, next) {
+    if (specifier === "@react-navigation/elements")
+      return {
+        url: new URL("./navigation-elements.mjs", import.meta.url).href,
+        shortCircuit: true,
+      };
     if (
       [
         "@react-navigation/native-stack",

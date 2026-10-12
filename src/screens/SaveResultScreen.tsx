@@ -1,3 +1,5 @@
+import { uiIdentifiers } from "../components/uiIdentifiers";
+import { IdentifierTitle } from "../components/Ui";
 import React, { useState, useEffect } from "react";
 import { ScrollView, Text, AppState } from "react-native";
 import { getDayRemaining } from "../services/dayScopeService";
@@ -41,9 +43,11 @@ export function SaveResultScreen({ route, navigation }: any) {
   }, [undo]);
   return (
     <ScrollView style={ui.screen} contentContainerStyle={ui.content}>
-      <Text accessibilityLiveRegion="polite" style={ui.title}>
-        ثبت شد
-      </Text>
+      <IdentifierTitle
+        title="ثبت شد"
+        code={uiIdentifiers.saveResult.code}
+        textProps={{ accessibilityLiveRegion: "polite" }}
+      />
       <Text style={ui.text}>
         {new Date(scope.dayStartUtc).toLocaleDateString("fa-IR", {
           timeZone: scope.timezone,
@@ -67,7 +71,11 @@ export function SaveResultScreen({ route, navigation }: any) {
             ثبت شد؛ شمارش باقی‌مانده‌ها فعلاً در دسترس نیست.
           </Text>
           <ErrorText error={error} />
-          <Button title="تلاش دوباره برای شمارش" onPress={() => void read()} />
+          <Button
+            title="تلاش دوباره برای شمارش"
+            actionCode={uiIdentifiers.retryRemainingCount.code}
+            onPress={() => void read()}
+          />
         </>
       ) : (
         <>
@@ -79,6 +87,7 @@ export function SaveResultScreen({ route, navigation }: any) {
           {!!count && (
             <Button
               title="مرور بازه‌های باقی‌مانده"
+              actionCode={uiIdentifiers.openSameDayBacklog.code}
               onPress={() => navigation.replace("Backlog", { dayScope: scope })}
             />
           )}
@@ -87,6 +96,7 @@ export function SaveResultScreen({ route, navigation }: any) {
       {undo && (
         <Button
           title="بازگردانی تغییر (۱۰ ثانیه)"
+          actionCode={uiIdentifiers.undoEntryEdit.code}
           disabled={busy}
           onPress={async () => {
             setBusy(true);
@@ -110,12 +120,14 @@ export function SaveResultScreen({ route, navigation }: any) {
       )}
       <Button
         title="مشاهدهٔ ثبت"
+        actionCode={uiIdentifiers.viewSavedEntry.code}
         onPress={() =>
           navigation.replace("CheckIn", { ...period, dayScope: scope })
         }
       />
       <Button
         title="تمام"
+        actionCode={uiIdentifiers.returnToMainToday.code}
         onPress={() => navigation.navigate("Main", { screen: "Today" })}
       />
     </ScrollView>

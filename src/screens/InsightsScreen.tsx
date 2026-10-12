@@ -1,3 +1,5 @@
+import { uiIdentifiers } from "../components/uiIdentifiers";
+import { IdentifierTitle } from "../components/Ui";
 import { ActivityIcon } from "../components/ActivityIcon";
 import React, { useState, useCallback, useEffect } from "react";
 import { ScrollView, View, Text, AppState } from "react-native";
@@ -24,6 +26,16 @@ const labels: Record<Mode, string> = {
   rolling7: "۷ روز اخیر",
   rolling30: "۳۰ روز اخیر",
   custom: "دلخواه",
+};
+const modeCodes = {
+  day: uiIdentifiers.reportDay.code,
+  week: uiIdentifiers.reportCalendarWeek.code,
+  month: uiIdentifiers.reportCalendarMonth.code,
+  usage7: uiIdentifiers.reportUsageWeek.code,
+  usage30: uiIdentifiers.reportUsageMonth.code,
+  rolling7: uiIdentifiers.reportRollingWeek.code,
+  rolling30: uiIdentifiers.reportRollingMonth.code,
+  custom: uiIdentifiers.reportCustomRange.code,
 };
 export function InsightsScreen() {
   const [q, setQ] = useState<Query>({
@@ -115,7 +127,10 @@ export function InsightsScreen() {
   );
   return (
     <ScrollView style={ui.screen} contentContainerStyle={ui.content}>
-      <Text style={ui.title}>گزارش زمان</Text>
+      <IdentifierTitle
+        title="گزارش زمان"
+        code={uiIdentifiers.timeReport.code}
+      />
       <View style={ui.row}>
         {(Object.keys(labels) as Mode[]).map((mode) => (
           <Button
@@ -123,6 +138,7 @@ export function InsightsScreen() {
             selected={q.mode === mode}
             key={mode}
             title={`${q.mode === mode ? "✓ " : ""}${labels[mode]}`}
+            actionCode={modeCodes[mode]}
             onPress={() => setQ({ ...q, mode, offset: 0 })}
           />
         ))}
@@ -131,16 +147,19 @@ export function InsightsScreen() {
         <Button
           variant="secondary"
           title={q.mode === "day" ? "روز قبل" : "قبلی"}
+          actionCode={uiIdentifiers.previousReportPeriod.code}
           onPress={() => setQ({ ...q, offset: q.offset - 1 })}
         />
         <Button
           variant="secondary"
           title={q.mode === "day" ? "امروز" : "دورهٔ جاری"}
+          actionCode={uiIdentifiers.currentReportPeriod.code}
           onPress={() => setQ({ ...q, offset: 0 })}
         />
         <Button
           variant="secondary"
           title="بعدی"
+          actionCode={uiIdentifiers.nextReportPeriod.code}
           disabled={q.offset >= 0}
           onPress={() => setQ({ ...q, offset: q.offset + 1 })}
         />
@@ -149,6 +168,7 @@ export function InsightsScreen() {
         <Button
           variant="secondary"
           title={q.calendar === "persian" ? "تقویم: شمسی" : "تقویم: میلادی"}
+          actionCode={uiIdentifiers.toggleReportCalendar.code}
           onPress={() =>
             setQ({
               ...q,
@@ -159,6 +179,7 @@ export function InsightsScreen() {
         <Button
           variant="secondary"
           title={`شروع هفته: ${["", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"][q.weekStart]}`}
+          actionCode={uiIdentifiers.changeReportWeekStart.code}
           onPress={() => setQ({ ...q, weekStart: (q.weekStart % 7) + 1 })}
         />
       </View>
@@ -172,6 +193,7 @@ export function InsightsScreen() {
             value={a}
             onChangeText={setA}
             accessibilityLabel="تاریخ شروع گزارش"
+            actionCode={uiIdentifiers.editCustomReportStart.code}
             placeholder="شروع"
           />
           <Input
@@ -179,10 +201,12 @@ export function InsightsScreen() {
             value={b}
             onChangeText={setB}
             accessibilityLabel="تاریخ پایان گزارش"
+            actionCode={uiIdentifiers.editCustomReportEnd.code}
             placeholder="پایان"
           />
           <Button
             title="نمایش بازه"
+            actionCode={uiIdentifiers.applyCustomReportDates.code}
             onPress={() => setQ({ ...q, customStart: a, customEnd: b })}
           />
         </>
@@ -192,6 +216,11 @@ export function InsightsScreen() {
       {!!error && (
         <Button
           title="تلاش دوباره"
+          actionCode={
+            preferencesReady
+              ? uiIdentifiers.retryReportRead.code
+              : uiIdentifiers.retryReportPreferences.code
+          }
           onPress={() =>
             preferencesReady ? setRefresh((v) => v + 1) : void loadPreferences()
           }

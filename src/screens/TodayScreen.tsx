@@ -1,3 +1,5 @@
+import { uiIdentifiers } from "../components/uiIdentifiers";
+import { IdentifierTitle } from "../components/Ui";
 import { TodayOverview } from "../components/TodayOverview";
 import React, { useCallback, useState } from "react";
 import { FlatList, Text, View } from "react-native";
@@ -86,10 +88,17 @@ export function TodayScreen({ navigation }: any) {
                 variant="secondary"
                 iconKey="home"
                 title="بازگشت به امروز"
+                actionCode={uiIdentifiers.returnToTodayOverview.code}
                 onPress={() => {
                   setDay(new Date());
                   setReview(false);
                 }}
+              />
+            )}
+            {review && (
+              <IdentifierTitle
+                title="مرور روز / خط زمان"
+                code={uiIdentifiers.dayTimeline.code}
               />
             )}
             {review && (
@@ -107,6 +116,7 @@ export function TodayScreen({ navigation }: any) {
               <Button
                 variant="secondary"
                 title="روز قبل"
+                actionCode={uiIdentifiers.previousTimelineDay.code}
                 onPress={() => {
                   const d = new Date(day);
                   d.setDate(d.getDate() - 1);
@@ -117,11 +127,13 @@ export function TodayScreen({ navigation }: any) {
               <Button
                 variant="secondary"
                 title="امروز"
+                actionCode={uiIdentifiers.currentTimelineDay.code}
                 onPress={() => setDay(new Date())}
               />
               <Button
                 variant="secondary"
                 title="روز بعد"
+                actionCode={uiIdentifiers.nextTimelineDay.code}
                 disabled={day.toDateString() === new Date().toDateString()}
                 onPress={() => {
                   const d = new Date(day);
@@ -138,12 +150,14 @@ export function TodayScreen({ navigation }: any) {
             {review && pending && (
               <Button
                 title="تکمیل آخرین بازهٔ ثبت‌نشده"
+                actionCode={uiIdentifiers.completePendingSlot.code}
                 onPress={() => open(pending)}
               />
             )}
             <Button
               variant="secondary"
               title="بازه‌های ثبت‌نشدهٔ روزهای قبل"
+              actionCode={uiIdentifiers.openGeneralBacklog.code}
               onPress={() => navigation.navigate("Backlog")}
             />
           </>

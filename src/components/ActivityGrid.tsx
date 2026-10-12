@@ -3,19 +3,22 @@ import React from "react";
 import { FlatList, Text, useWindowDimensions } from "react-native";
 import type { Activity } from "../types/models";
 import { activityColumns, theme } from "../theme/time80Theme";
-import { ui, InteractivePressable } from "./Ui";
+import { ui, InteractivePressable, IdentifierBadge } from "./Ui";
+import { uiIdentifiers, type UiActionCode } from "./uiIdentifiers";
 export function ActivityGrid({
   activities,
   onSelect,
   header,
   disabled = false,
   showEmpty = true,
+  actionCode = uiIdentifiers.commitNewCheckIn.code,
 }: {
   activities: Activity[];
   onSelect: (a: Activity) => void;
   header?: React.ReactElement;
   disabled?: boolean;
   showEmpty?: boolean;
+  actionCode?: UiActionCode;
 }) {
   const { width, fontScale } = useWindowDimensions();
   const columns = activityColumns(width, fontScale);
@@ -35,6 +38,7 @@ export function ActivityGrid({
       renderItem={({ item }) => (
         <InteractivePressable
           disabled={disabled}
+          preserveCodeContrast
           accessibilityRole="button"
           accessibilityLabel={item.name}
           onPress={() => onSelect(item)}
@@ -45,6 +49,7 @@ export function ActivityGrid({
               flex: 1,
               maxWidth: columns === 2 ? "48%" : "100%",
               minHeight: 128,
+              minWidth: 48,
               alignItems: "center",
               justifyContent: "center",
             },
@@ -54,6 +59,7 @@ export function ActivityGrid({
           <Text style={[ui.text, { textAlign: "center", marginTop: 8 }]}>
             {item.name}
           </Text>
+          <IdentifierBadge code={actionCode} />
         </InteractivePressable>
       )}
       ListEmptyComponent={

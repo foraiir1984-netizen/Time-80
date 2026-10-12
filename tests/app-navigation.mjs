@@ -43,3 +43,9 @@ export const SafeAreaProvider = (props) =>
   React.createElement("SafeAreaProvider", {}, props.children);
 export const SafeAreaView = (props) =>
   React.createElement("SafeAreaView", {}, props.children);
+export const useSafeAreaInsets = () => ({
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+});

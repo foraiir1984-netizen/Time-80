@@ -1,3 +1,5 @@
+import { uiIdentifiers } from "./uiIdentifiers";
+import { IdentifierTitle } from "./Ui";
 import React from "react";
 import { Text, View } from "react-native";
 import type { SlotView } from "../types/domain";
@@ -44,9 +46,7 @@ export function TodayOverview({
   const progress = Math.round(dayPresentationProgress(now) * 100);
   return (
     <>
-      <Text accessibilityRole="header" style={ui.title}>
-        امروز
-      </Text>
+      <IdentifierTitle title="امروز" code={uiIdentifiers.today.code} />
       <Text style={ui.muted}>
         {now.toLocaleDateString("fa-IR", {
           weekday: "long",
@@ -137,11 +137,18 @@ export function TodayOverview({
       <Text style={ui.text}>
         بازه‌های سررسیدشدهٔ ثبت‌نشده: {dueCount.toLocaleString("fa-IR")}
       </Text>
-      {pending && <Button title="تکمیل آخرین بازهٔ ثبت‌نشده" onPress={onDue} />}
+      {pending && (
+        <Button
+          title="تکمیل آخرین بازهٔ ثبت‌نشده"
+          actionCode={uiIdentifiers.completePendingSlot.code}
+          onPress={onDue}
+        />
+      )}
       <Button
         variant="secondary"
         iconKey="report"
         title="مرور امروز / خط زمان"
+        actionCode={uiIdentifiers.openTodayTimeline.code}
         onPress={onReview}
       />
     </>

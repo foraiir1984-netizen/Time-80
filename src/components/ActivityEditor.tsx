@@ -1,3 +1,5 @@
+import { uiIdentifiers } from "./uiIdentifiers";
+import { IdentifierTitle, IdentifierBadge } from "./Ui";
 import React, { useState, useEffect, useRef } from "react";
 import {
   Modal,
@@ -132,15 +134,17 @@ export function ActivityEditor({
           }}
           keyboardShouldPersistTaps="handled"
         >
-          <Text style={ui.title}>
-            {activity ? "ویرایش فعالیت" : "فعالیت جدید"}
-          </Text>
+          <IdentifierTitle
+            title={activity ? "ویرایش فعالیت" : "فعالیت جدید"}
+            code={uiIdentifiers.activityEditorDialog.code}
+          />
           <ErrorText error={error} />
           {!loaded && (
             <>
               <Loading />
               <Button
                 title="تلاش دوباره برای بارگذاری"
+                actionCode={uiIdentifiers.retryActivityEditorRead.code}
                 onPress={() => void load()}
               />
             </>
@@ -148,6 +152,7 @@ export function ActivityEditor({
           <Text style={ui.text}>نام فعالیت</Text>
           <Input
             accessibilityLabel="نام فعالیت"
+            actionCode={uiIdentifiers.editActivityName.code}
             style={ui.input}
             value={name}
             onChangeText={setName}
@@ -160,6 +165,7 @@ export function ActivityEditor({
           <ActivityIcon icon={preview} legacy={activity?.icon ?? "✨"} />
           <Button
             title="انتخاب آیکون"
+            actionCode={uiIdentifiers.toggleIconPicker.code}
             disabled={!loaded || busy}
             onPress={() => setPicker(!picker)}
           />
@@ -167,6 +173,7 @@ export function ActivityEditor({
             <View>
               <Button
                 title="نگه‌داشتن آیکون قبلی"
+                actionCode={uiIdentifiers.keepExistingIcon.code}
                 onPress={() => setCommand({ kind: "keep" })}
               />
               <View style={ui.row}>
@@ -175,6 +182,7 @@ export function ActivityEditor({
                     key={key}
                     accessibilityRole="button"
                     accessibilityLabel={`آیکون ${label}`}
+                    preserveCodeContrast
                     accessibilityState={{
                       selected:
                         command.kind === "selectAsset" && command.key === key,
@@ -195,6 +203,9 @@ export function ActivityEditor({
                     }}
                   >
                     <AssetIcon iconKey={key} size={32} frame />
+                    <IdentifierBadge
+                      code={uiIdentifiers.selectAssetIcon.code}
+                    />
                     <Text style={ui.small}>
                       {label}
                       {command.kind === "selectAsset" && command.key === key
@@ -210,10 +221,12 @@ export function ActivityEditor({
                 value={search}
                 onChangeText={setSearch}
                 accessibilityLabel="جست‌وجوی آیکون یا ورود آیکون دلخواه"
+                actionCode={uiIdentifiers.editIconSearch.code}
                 placeholder="جست‌وجوی آیکون یا ورود آیکون دلخواه"
               />
               <Button
                 title="استفاده از آیکون واردشده"
+                actionCode={uiIdentifiers.selectLegacyIcon.code}
                 disabled={!search.trim()}
                 onPress={() =>
                   setCommand({ kind: "selectLegacy", raw: search })
@@ -232,12 +245,18 @@ export function ActivityEditor({
                       key={i}
                       accessibilityRole="button"
                       accessibilityLabel={`آیکون ${i}`}
+                      preserveCodeContrast
                       onPress={() =>
                         setCommand({ kind: "selectLegacy", raw: i })
                       }
                       style={{ minWidth: 48, minHeight: 48, padding: 8 }}
                     >
-                      <Text allowFontScaling={false} style={{ fontSize: 28 }}>{i}</Text>
+                      <Text allowFontScaling={false} style={{ fontSize: 28 }}>
+                        {i}
+                      </Text>
+                      <IdentifierBadge
+                        code={uiIdentifiers.selectLegacyIcon.code}
+                      />
                     </InteractivePressable>
                   ))}
               </View>
@@ -257,12 +276,18 @@ export function ActivityEditor({
           </Text>
           <Button
             title={busy ? "در حال ذخیره…" : "ذخیره"}
+            actionCode={
+              activity
+                ? uiIdentifiers.saveActivityEdit.code
+                : uiIdentifiers.saveNewActivity.code
+            }
             disabled={busy || !loaded || !name.trim()}
             onPress={() => void save()}
           />
           <Button
             variant="secondary"
             title="انصراف"
+            actionCode={uiIdentifiers.cancelActivityEditor.code}
             disabled={busy}
             onPress={onClose}
           />
