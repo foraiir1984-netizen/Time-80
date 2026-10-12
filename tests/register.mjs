@@ -1,7 +1,7 @@
 import { registerHooks } from "node:module";
 registerHooks({
   load(url, context, next) {
-    if (url.endsWith(".png"))
+    if (url.endsWith(".png") || url.endsWith(".ttf"))
       return {
         format: "commonjs",
         source: "module.exports=1;",
@@ -10,6 +10,16 @@ registerHooks({
     return next(url, context);
   },
   resolve(specifier, context, next) {
+    if (specifier === "expo-font")
+      return {
+        url: new URL("./fonts.mjs", import.meta.url).href,
+        shortCircuit: true,
+      };
+    if (specifier === "react-native-svg")
+      return {
+        url: new URL("./svg.mjs", import.meta.url).href,
+        shortCircuit: true,
+      };
     if (specifier === "@react-navigation/elements")
       return {
         url: new URL("./navigation-elements.mjs", import.meta.url).href,

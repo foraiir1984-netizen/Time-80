@@ -10,6 +10,9 @@ import {
   ActivityIndicator,
   Switch,
   Alert,
+  type StyleProp,
+  type TextStyle,
+  type ViewStyle,
   type PressableProps,
   type TextInputProps,
   type TextProps,
@@ -158,21 +161,24 @@ export const InteractivePressable = React.forwardRef<View, UiPressableProps>(
 export function IdentifierBadge({
   code,
   color = theme.text,
+  textStyle,
 }: {
   code: UiIdentifierCode;
   color?: string;
+  textStyle?: StyleProp<TextStyle>;
 }) {
+  const badgeStyle: TextStyle = {
+    color,
+    fontSize: 14,
+    lineHeight: 24,
+    writingDirection: "ltr",
+    textAlign: "center",
+    flexShrink: 1,
+  };
   return (
     <Text
       allowFontScaling
-      style={{
-        color,
-        fontSize: 14,
-        lineHeight: 24,
-        writingDirection: "ltr",
-        textAlign: "center",
-        flexShrink: 1,
-      }}
+      style={textStyle ? [badgeStyle, textStyle] : badgeStyle}
     >
       {code}
     </Text>
@@ -183,11 +189,13 @@ export function IdentifierTitle({
   code,
   titleRef,
   textProps,
+  codeTextStyle,
 }: {
   title: string;
   code: UiIdentifierCode;
   titleRef?: React.Ref<Text>;
   textProps?: TextProps;
+  codeTextStyle?: StyleProp<TextStyle>;
 }) {
   return (
     <View style={[ui.row, { marginBottom: 16 }]}>
@@ -195,11 +203,11 @@ export function IdentifierTitle({
         accessibilityRole="header"
         {...textProps}
         ref={titleRef}
-        style={[ui.title, { marginBottom: 0, flexShrink: 1 }]}
+        style={[ui.title, { marginBottom: 0, flexShrink: 1 }, textProps?.style]}
       >
         {title}
       </Text>
-      <IdentifierBadge code={code} />
+      <IdentifierBadge code={code} textStyle={codeTextStyle} />
     </View>
   );
 }
@@ -326,6 +334,12 @@ export function Button({
   actionCode,
   variant = "primary",
   selected = false,
+  style,
+  textStyle,
+  codeTextStyle,
+  contentStyle,
+  color: contentColor,
+  icon,
 }: {
   title: string;
   onPress: () => void;
@@ -335,9 +349,22 @@ export function Button({
   actionCode?: UiActionCode;
   variant?: "primary" | "secondary";
   selected?: boolean;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  codeTextStyle?: StyleProp<TextStyle>;
+  contentStyle?: StyleProp<ViewStyle>;
+  color?: string;
+  icon?: React.ReactNode;
 }) {
   const secondary = variant === "secondary";
-  const color = secondary ? theme.accent : theme.onAccent;
+  const color = contentColor ?? (secondary ? theme.accent : theme.onAccent);
+  const contentBase = {
+    flexDirection: "row-reverse" as const,
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
+    gap: 8,
+    ...(actionCode ? { flexWrap: "wrap" as const } : {}),
+  };
   return (
     <InteractivePressable
       ref={focusRef}
@@ -360,28 +387,40 @@ export function Button({
             borderStyle: "dashed",
             borderColor: color,
           },
+        style,
       ]}
     >
-      <View
-        style={{
-          flexDirection: "row-reverse",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 8,
-          ...(actionCode ? { flexWrap: "wrap" as const } : {}),
-        }}
-      >
+      <View style={contentStyle ? [contentBase, contentStyle] : contentBase}>
+        {icon}
         {iconKey && <AssetIcon iconKey={iconKey} color={color} />}
-        <Text style={[ui.buttonText, { color, flexShrink: 1 }]}>{title}</Text>
-        {actionCode && <IdentifierBadge code={actionCode} color={color} />}
+        <Text
+          allowFontScaling
+          style={[ui.buttonText, { color, flexShrink: 1 }, textStyle]}
+        >
+          {title}
+        </Text>
+        {actionCode && (
+          <IdentifierBadge
+            code={actionCode}
+            color={color}
+            textStyle={codeTextStyle}
+          />
+        )}
       </View>
     </InteractivePressable>
   );
 }
 export const Input = React.forwardRef<
   TextInput,
-  TextInputProps & { actionCode?: UiActionCode }
->(function Input({ style, onFocus, onBlur, actionCode, ...props }, ref) {
+  TextInputProps & {
+    actionCode?: UiActionCode;
+    labelStyle?: StyleProp<TextStyle>;
+    codeTextStyle?: StyleProp<TextStyle>;
+  }
+>(function Input(
+  { style, onFocus, onBlur, actionCode, labelStyle, codeTextStyle, ...props },
+  ref,
+) {
   const [focused, setFocused] = useState(false);
   const native = useRef<TextInput>(null);
   useImperativeHandle(actionCode ? ref : null, () => native.current!, [
@@ -421,10 +460,10 @@ export const Input = React.forwardRef<
       style={{ minWidth: 48, minHeight: 48 }}
     >
       <View style={ui.row}>
-        <Text style={[ui.text, { flexShrink: 1 }]}>
+        <Text allowFontScaling style={[ui.text, { flexShrink: 1 }, labelStyle]}>
           {props.accessibilityLabel}
         </Text>
-        <IdentifierBadge code={actionCode} />
+        <IdentifierBadge code={actionCode} textStyle={codeTextStyle} />
       </View>
       {field}
     </InteractivePressable>
@@ -435,12 +474,18 @@ export const Input = React.forwardRef<
 export function Loading({ label = "در حال بارگذاری" }: { label?: string }) {
   return <ActivityIndicator color={theme.accent} accessibilityLabel={label} />;
 }
-export function ErrorText({ error }: { error: string }) {
+export function ErrorText({
+  error,
+  textStyle,
+}: {
+  error: string;
+  textStyle?: StyleProp<TextStyle>;
+}) {
   return error ? (
     <Text
       accessibilityRole="alert"
       accessibilityLiveRegion="polite"
-      style={ui.error}
+      style={textStyle ? [ui.error, textStyle] : ui.error}
     >
       خطا: {error}
     </Text>

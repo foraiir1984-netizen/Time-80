@@ -411,6 +411,7 @@ test("reports show activity time but no buckets/coverage/unmapped categories, in
   // Existing report preference persistence: two writes on mount, unchanged from baseline.
   assert.equal(await writes(), beforeMount + 2);
   const beforeWrites = await writes();
+  await run(() => btn(r, "X99").props.onPress());
   await run(() => btn(r, "X84").props.onPress());
   await run(() => {
     input(r, "X97").props.onChangeText("2026-01-01");
@@ -486,6 +487,6 @@ test("UI error mapping keeps validation visible, hides internal details and pres
   for (const code of ["D08", "X99", "X100", "X101"])
     assert.equal(
       Object.values(uiIdentifiers).find((e) => e.code === code)!.status,
-      "reserved",
+      "active",
     );
 });

@@ -150,12 +150,22 @@ const field = (r: ReactTestRenderer, code: string) =>
     .findAllByType(Input)
     .find((b) => b.props.actionCode === code)!
     .findByType("TextInput" as any);
-const target = (r: ReactTestRenderer, code: string, index = 0) =>
-  r.root
+const target = (r: ReactTestRenderer, code: string, index = 0) => {
+  const candidates = r.root
     .findAllByType("Pressable" as any)
     .filter((p) =>
       p.findAllByType(IdentifierBadge).some((b) => b.props.code === code),
-    )[index]!;
+    );
+  const inModal = candidates.filter((node) => {
+    let p = node.parent;
+    while (p) {
+      if (p.type === ("Modal" as any)) return true;
+      p = p.parent;
+    }
+    return false;
+  });
+  return (inModal.length ? inModal : candidates)[index]!;
+};
 async function press(r: ReactTestRenderer, code: string, index = 0) {
   const p = target(r, code, index);
   assert.ok(p, code);
@@ -458,6 +468,8 @@ uiTest(
     assert.ok(text(r).includes("A03"));
     assert.ok(codedButton(r, "X92"));
     await press(r, "X92");
+    await press(r, "X100");
+    await press(r, "X99");
     for (const code of ["X77", "X78", "X79", "X80", "X81", "X82", "X83", "X84"])
       assert.ok(codedButton(r, code));
     await press(r, "X80");
@@ -492,6 +504,7 @@ uiTest(
     await press(r, "X90");
     assert.ok(reads > 0);
     readIO.before = null;
+    await press(r, "X18");
     readFailures.match = "time_entries";
     readFailures.remaining = 1;
     await run(() => emitAppState("active"));

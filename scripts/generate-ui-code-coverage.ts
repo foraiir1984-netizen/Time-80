@@ -17,7 +17,7 @@ const evidence = JSON.parse(readFileSync(evidencePath, "utf8")) as {
   codes: Record<string, string[]>;
   renderedSites?: Record<string, string[]>;
 };
-const out = resolve(process.argv[3] ?? "docs/v0.3/rc3-icatus-hide01");
+const out = resolve(process.argv[3] ?? "docs/v0.3/rc3-ui-report01");
 mkdirSync(out, { recursive: true });
 validateUiIdentifierRegistry(uiIdentifiers);
 const uses = collectUiIdentifierUses();
@@ -116,13 +116,13 @@ const active = Object.values(uiIdentifiers).filter(
 writeFileSync(
   resolve(out, "RC3_UI_Coverage_Rev01_FA.md"),
   [
-    "# پوشش RC3-ICATUS-HIDE-01 — Rev01",
+    "# پوشش RC3-UI-REPORT-01 — Rev01",
     "",
     `Registry: ${uiIdentifierRegistryVersion}؛ ۱۲۲ مدخل (${active} فعال، ${reserved} رزرو)، ${uses.length} اتصال صریح در سورس.`,
     "",
     "Implemented به معنای اتصال سورس همراه شاهد رفتار renderer است؛ پذیرش بصری گوشی و اندازه‌گیری target نیست. این جدول هر اتصال صریح را جدا نشان می‌دهد. کدهای منتقل‌شده با props مشترک (Button/Input/ActivityGrid/SlotRow/header/tab) و تکرار داده با تست‌های UI و current-source-uses.json پیگیری می‌شوند. نمونه‌های مشاهده‌شده در rendered-code-evidence-UTC.json و rendered-code-evidence-Tehran.json هستند.",
     "",
-    "تمام activeها شاهد renderer دارند؛ هیچ رزرو binding فعال ندارد. رابط قابل‌دسترسی ICATUS حذف شده و کدهای آن رزرو باقی‌اند؛ شاهد رفتار پنهان‌سازی در گزارش مرحله ثبت است. AC-ID نهایی وابسته به اجرای گوشی/پوشش مراحل بعد است؛ M-01/M-04 هنوز اجرا نشده‌اند؛ فقط TalkBack Deferred / Not run است.",
+    "تمام activeها شاهد renderer دارند؛ هیچ رزرو binding فعال ندارد. رابط قابل‌دسترسی ICATUS حذف شده و کدهای آن رزرو باقی‌اند؛ شاهد رفتار پنهان‌سازی در گزارش مرحله ثبت است. AC-ID نهایی وابسته به اجرای گوشی/پوشش مراحل بعد است؛ M-01/M-04 و D08/X99/X100/X101 در سورس فعال‌اند؛ فقط TalkBack Deferred / Not run است.",
     "",
     "| کد | نام | وضعیت | محل واقعی | شاهد | حد |",
     "| --- | --- | --- | --- | --- | --- |",

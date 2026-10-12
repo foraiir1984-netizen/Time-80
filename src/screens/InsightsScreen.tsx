@@ -1,43 +1,31 @@
 import { uiIdentifiers } from "../components/uiIdentifiers";
 import { IdentifierTitle } from "../components/Ui";
-import { ActivityIcon } from "../components/ActivityIcon";
+import {
+  ReportRangeControls,
+  reportWeekdayNames,
+} from "../components/ReportRangeControls";
+import { ReportActivitySummary } from "../components/ReportActivitySummary";
+import { ReportButton } from "../components/ReportButton";
+import {
+  reportTypography,
+  reportFontSources,
+  reportTheme,
+} from "../theme/reportTheme";
+import { useFonts } from "expo-font";
+import { theme } from "../theme/time80Theme";
 import React, { useState, useCallback, useEffect } from "react";
 import { ScrollView, View, Text, AppState } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  ui,
-  Button,
-  ErrorText,
-  errorMessage,
-  Input,
-  Loading,
-} from "../components/Ui";
+import { ui, ErrorText, errorMessage, Loading } from "../components/Ui";
 import { getReport } from "../services/reportService";
-import type { Mode, Query } from "../utils/reportPeriods";
+import type { Query } from "../utils/reportPeriods";
 import { db, transaction } from "../db/connection";
 import { getMeta, setMeta } from "../db/metaRepository";
 import { toPersianDuration } from "../utils/time";
-const labels: Record<Mode, string> = {
-  day: "روز",
-  week: "هفتهٔ تقویمی",
-  month: "ماه تقویمی",
-  usage7: "هفتهٔ استفاده",
-  usage30: "دورهٔ ۳۰روزه",
-  rolling7: "۷ روز اخیر",
-  rolling30: "۳۰ روز اخیر",
-  custom: "دلخواه",
-};
-const modeCodes = {
-  day: uiIdentifiers.reportDay.code,
-  week: uiIdentifiers.reportCalendarWeek.code,
-  month: uiIdentifiers.reportCalendarMonth.code,
-  usage7: uiIdentifiers.reportUsageWeek.code,
-  usage30: uiIdentifiers.reportUsageMonth.code,
-  rolling7: uiIdentifiers.reportRollingWeek.code,
-  rolling30: uiIdentifiers.reportRollingMonth.code,
-  custom: uiIdentifiers.reportCustomRange.code,
-};
 export function InsightsScreen() {
+  const [fontsReady, fontError] = useFonts(reportFontSources);
+  const typography = reportTypography(fontsReady);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [q, setQ] = useState<Query>({
       mode: "day",
       offset: 0,
@@ -126,95 +114,46 @@ export function InsightsScreen() {
     }, [q, refresh, preferencesReady]),
   );
   return (
-    <ScrollView style={ui.screen} contentContainerStyle={ui.content}>
+    <ScrollView
+      style={ui.screen}
+      contentContainerStyle={{
+        padding: reportTheme.pagePadding,
+        paddingBottom: 32,
+      }}
+    >
       <IdentifierTitle
         title="گزارش زمان"
         code={uiIdentifiers.timeReport.code}
+        textProps={{ style: typography.pageTitle }}
+        codeTextStyle={typography.code}
       />
-      <View style={ui.row}>
-        {(Object.keys(labels) as Mode[]).map((mode) => (
-          <Button
-            variant="secondary"
-            selected={q.mode === mode}
-            key={mode}
-            title={`${q.mode === mode ? "✓ " : ""}${labels[mode]}`}
-            actionCode={modeCodes[mode]}
-            onPress={() => setQ({ ...q, mode, offset: 0 })}
-          />
-        ))}
-      </View>
-      <View style={ui.row}>
-        <Button
-          variant="secondary"
-          title={q.mode === "day" ? "روز قبل" : "قبلی"}
-          actionCode={uiIdentifiers.previousReportPeriod.code}
-          onPress={() => setQ({ ...q, offset: q.offset - 1 })}
+      <ReportRangeControls
+        q={q}
+        onQueryChange={setQ}
+        moreOpen={moreOpen}
+        onOpenMore={() => setMoreOpen(true)}
+        onCloseMore={() => setMoreOpen(false)}
+        a={a}
+        b={b}
+        setA={setA}
+        setB={setB}
+        error={error}
+        typography={typography}
+      />
+      {fontError && (
+        <ErrorText
+          error="فونت گزارش بارگذاری نشد؛ نمایش با فونت گوشی ادامه دارد."
+          textStyle={{ ...typography.body, color: theme.danger }}
         />
-        <Button
-          variant="secondary"
-          title={q.mode === "day" ? "امروز" : "دورهٔ جاری"}
-          actionCode={uiIdentifiers.currentReportPeriod.code}
-          onPress={() => setQ({ ...q, offset: 0 })}
-        />
-        <Button
-          variant="secondary"
-          title="بعدی"
-          actionCode={uiIdentifiers.nextReportPeriod.code}
-          disabled={q.offset >= 0}
-          onPress={() => setQ({ ...q, offset: q.offset + 1 })}
-        />
-      </View>
-      <View style={ui.row}>
-        <Button
-          variant="secondary"
-          title={q.calendar === "persian" ? "تقویم: شمسی" : "تقویم: میلادی"}
-          actionCode={uiIdentifiers.toggleReportCalendar.code}
-          onPress={() =>
-            setQ({
-              ...q,
-              calendar: q.calendar === "persian" ? "gregory" : "persian",
-            })
-          }
-        />
-        <Button
-          variant="secondary"
-          title={`شروع هفته: ${["", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"][q.weekStart]}`}
-          actionCode={uiIdentifiers.changeReportWeekStart.code}
-          onPress={() => setQ({ ...q, weekStart: (q.weekStart % 7) + 1 })}
-        />
-      </View>
-      {q.mode === "custom" && (
-        <>
-          <Text style={ui.muted}>
-            تاریخ میلادی YYYY-MM-DD؛ روز پایان نیز شامل می‌شود.
-          </Text>
-          <Input
-            style={ui.input}
-            value={a}
-            onChangeText={setA}
-            accessibilityLabel="تاریخ شروع گزارش"
-            actionCode={uiIdentifiers.editCustomReportStart.code}
-            placeholder="شروع"
-          />
-          <Input
-            style={ui.input}
-            value={b}
-            onChangeText={setB}
-            accessibilityLabel="تاریخ پایان گزارش"
-            actionCode={uiIdentifiers.editCustomReportEnd.code}
-            placeholder="پایان"
-          />
-          <Button
-            title="نمایش بازه"
-            actionCode={uiIdentifiers.applyCustomReportDates.code}
-            onPress={() => setQ({ ...q, customStart: a, customEnd: b })}
-          />
-        </>
       )}
-      <ErrorText error={error} />
+      <ErrorText
+        error={error}
+        textStyle={{ ...typography.body, color: theme.danger }}
+      />
       {loading && <Loading label="در حال بارگذاری گزارش" />}
       {!!error && (
-        <Button
+        <ReportButton
+          typography={typography}
           title="تلاش دوباره"
           actionCode={
             preferencesReady
@@ -229,8 +168,20 @@ export function InsightsScreen() {
 
       {r && resultQuery === JSON.stringify(q) && (
         <>
-          <View style={ui.card}>
-            <Text accessibilityRole="header" style={ui.text}>
+          <View
+            style={[
+              ui.card,
+              { borderRadius: 24, padding: 20, marginBottom: 24 },
+            ]}
+          >
+            <Text
+              allowFontScaling
+              accessibilityRole="header"
+              style={[
+                typography.cardTitle,
+                { writingDirection: q.calendar === "persian" ? "rtl" : "ltr" },
+              ]}
+            >
               {new Date(r.range.start).toLocaleDateString(
                 q.calendar === "persian" ? "fa-IR" : "en-GB",
                 {
@@ -252,11 +203,39 @@ export function InsightsScreen() {
                   day: "numeric",
                 },
               )}{" "}
-              · {r.range.timezone}
-              {r.range.partial ? " · دورهٔ ناقص" : ""}
+            </Text>
+            <View
+              style={{
+                ...ui.row,
+                marginVertical: 12,
+                justifyContent: "space-between",
+              }}
+            >
+              <Text
+                allowFontScaling
+                style={[typography.caption, { writingDirection: "ltr" }]}
+              >
+                {r.range.timezone}
+              </Text>
+              {r.range.partial && (
+                <Text allowFontScaling style={typography.caption}>
+                  دورهٔ ناقص
+                </Text>
+              )}
+              <ReportButton
+                typography={typography}
+                glyph="edit"
+                title="تغییر بازه"
+                actionCode={uiIdentifiers.openMoreReports.code}
+                onPress={() => setMoreOpen(true)}
+              />
+            </View>
+            <Text allowFontScaling style={typography.caption}>
+              {q.calendar === "persian" ? "تقویم شمسی" : "تقویم میلادی"} · شروع
+              هفته: {reportWeekdayNames[q.weekStart]}
             </Text>
             {r.activities.length === 0 && (
-              <Text style={ui.text}>
+              <Text style={typography.body}>
                 برای{" "}
                 {new Date(r.range.start).toLocaleDateString(
                   q.calendar === "persian" ? "fa-IR" : "en-GB",
@@ -265,8 +244,16 @@ export function InsightsScreen() {
                 بازه‌ای ثبت نشده است.
               </Text>
             )}
-            <Text style={ui.title}>{toPersianDuration(r.total)}</Text>
-            <Text style={ui.text}>
+            <Text
+              allowFontScaling
+              style={[
+                typography.metric,
+                { textAlign: "center", marginVertical: 24 },
+              ]}
+            >
+              {toPersianDuration(r.total)}
+            </Text>
+            <Text style={typography.body}>
               دورهٔ قبل:{" "}
               {r.previousTotal === null
                 ? "—"
@@ -274,49 +261,32 @@ export function InsightsScreen() {
               · تغییر:{" "}
               {r.changePercent === null
                 ? "قابل محاسبه نیست"
-                : `${r.changePercent.toFixed(1)}٪`}
+                : `${new Intl.NumberFormat("fa-IR", { maximumFractionDigits: 1 }).format(r.changePercent)}٪`}
             </Text>
-            <Text style={ui.text}>
+            <Text style={typography.body}>
               پوشش ثبت:{" "}
               {r.historicalCoverageUnknown
                 ? "بخشی از تاریخچه نامعلوم"
                 : r.coverage === null
                   ? "قابل محاسبه نیست"
-                  : `${(r.coverage * 100).toFixed(0)}٪`}
+                  : `${new Intl.NumberFormat("fa-IR", { maximumFractionDigits: 0 }).format(r.coverage * 100)}٪`}
             </Text>
-            <Text style={ui.muted}>
+            <Text style={typography.secondary}>
               ثبت‌نشده: {toPersianDuration(r.pendingMinutes)} · رد شده:{" "}
               {toPersianDuration(r.skippedMinutes)}
             </Text>
           </View>
-          <Text accessibilityRole="header" style={ui.title}>
-            فعالیت‌ها و پارتو
-          </Text>
-          {r.activities.map((x, i) => (
-            <View key={x.id} style={ui.card}>
-              <ActivityIcon icon={x.icon_view} legacy={x.icon} size={30} />
-              <Text style={ui.text}>
-                {x.name} · {toPersianDuration(x.minutes)}
-              </Text>
-              <Text style={ui.muted}>
-                سهم {r.total ? ((x.minutes / r.total) * 100).toFixed(1) : "—"}٪
-                · تجمعی{" "}
-                {r.total
-                  ? (
-                      (r.activities
-                        .slice(0, i + 1)
-                        .reduce((v, a) => v + a.minutes, 0) /
-                        r.total) *
-                      100
-                    ).toFixed(1)
-                  : "—"}
-                ٪
-              </Text>
-            </View>
-          ))}
-          <Text style={ui.title}>روز به روز</Text>
+          <ReportActivitySummary
+            activities={r.activities}
+            total={r.total}
+            typography={typography}
+          />
+          <Text style={typography.sectionTitle}>روز به روز</Text>
           {r.daily.map(([d, m]) => (
-            <Text key={d} style={[ui.text, ui.card]}>
+            <Text
+              key={d}
+              style={[typography.body, ui.card, { borderRadius: 16 }]}
+            >
               {new Date(`${d}T12:00:00`).toLocaleDateString("fa-IR", {
                 weekday: "long",
                 month: "short",
@@ -326,11 +296,11 @@ export function InsightsScreen() {
             </Text>
           ))}
           {!!r.qualityFlags.length && (
-            <Text style={ui.error}>
+            <Text style={[ui.error, typography.body, { color: theme.danger }]}>
               داده‌های نیازمند بررسی: {r.qualityFlags.length}
             </Text>
           )}
-          <Text style={ui.muted}>
+          <Text style={typography.secondary}>
             گزارش سهم زمان است و امتیاز بهره‌وری محسوب نمی‌شود.
           </Text>
         </>

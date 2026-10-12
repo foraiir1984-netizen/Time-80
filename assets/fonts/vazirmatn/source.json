@@ -1,0 +1,37 @@
+{
+  "font": "Vazirmatn",
+  "upstream_tag": "v33.003",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "file": "Vazirmatn-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/rastikerdar/vazirmatn/v33.003/fonts/ttf/Vazirmatn-Regular.ttf",
+      "sha256": "b69fd4c680b8f3f225feabcc655a2c585d97627b8f5f5c0f9985e894069f3a56",
+      "bytes": 122752
+    },
+    {
+      "file": "Vazirmatn-Medium.ttf",
+      "url": "https://raw.githubusercontent.com/rastikerdar/vazirmatn/v33.003/fonts/ttf/Vazirmatn-Medium.ttf",
+      "sha256": "b986623e4ddef10755e04be39f8ea7bcb1dc08bfe8dd0aa6af395736f256ad4a",
+      "bytes": 122656
+    },
+    {
+      "file": "Vazirmatn-SemiBold.ttf",
+      "url": "https://raw.githubusercontent.com/rastikerdar/vazirmatn/v33.003/fonts/ttf/Vazirmatn-SemiBold.ttf",
+      "sha256": "3f239d8364c14ee32c46b6839fa197c28958358b82a9673d2c6acc8506d78bc5",
+      "bytes": 122920
+    },
+    {
+      "file": "Vazirmatn-Bold.ttf",
+      "url": "https://raw.githubusercontent.com/rastikerdar/vazirmatn/v33.003/fonts/ttf/Vazirmatn-Bold.ttf",
+      "sha256": "f635fdbea28f265de395ba83b4b1570dcf2f58d13c65469e61903b1c2d2ae723",
+      "bytes": 123036
+    },
+    {
+      "file": "OFL.txt",
+      "url": "https://raw.githubusercontent.com/rastikerdar/vazirmatn/v33.003/OFL.txt",
+      "sha256": "17e355067c8284f47743a1ee3b1ef7ff684ff0601eda357f9353b10b3016ab31",
+      "bytes": 4391
+    }
+  ]
+}

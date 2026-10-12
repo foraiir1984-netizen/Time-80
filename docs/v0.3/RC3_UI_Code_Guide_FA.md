@@ -1,7 +1,7 @@
 # راهنمای کدهای رابط Time80
 
-نسخهٔ registry: RC3-ID-01-Rev03
-مرجع: RC3_UI_Identifiers_Reference_Rev01.md + الحاقیهٔ ۶-ب / RC3_UI_Identifiers_Addendum_6B_Rev01.md. اتصال این خروجی به commit تحویل و snapshot آزمون در گزارش RC3_ICATUS_HIDE_01_Report_Rev01_FA.md ثبت است.
+نسخهٔ registry: RC3-ID-01-Rev04
+مرجع: RC3_UI_Identifiers_Reference_Rev01.md + الحاقیهٔ ۶-ب / RC3_UI_Identifiers_Addendum_6B_Rev01.md. اتصال این خروجی به commit تحویل و snapshot آزمون در گزارش RC3_UI_REPORT_01_Report_Rev01_FA.md ثبت است.
 
 این خروجی از src/components/uiIdentifiers.ts تولید می‌شود. شماره‌ها از ترتیب این جدول تولید نمی‌شوند. «فعال» وضعیت تخصیص است؛ پذیرش نمایش در هر محل، به جدول پوشش و شاهد اجرای همان محل وابسته است.
 
@@ -11,7 +11,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | A01 | today | امروز | نمای اصلی امروز، ساعت و مسیرهای ثبت/مرور | screen | فعال | src/components/TodayOverview.tsx:49 (IdentifierTitle.code) |
 | A02 | activities | فعالیت‌ها | گرید مدیریت؛ فعال/بایگانی فیلتر همین صفحه است | screen | فعال | src/screens/ActivitiesScreen.tsx:106 (IdentifierTitle.code) |
-| A03 | timeReport | گزارش زمان | هشت حالت بازه؛ M-01 و M-04 بخش‌های همین صفحه‌اند | screen | فعال | src/screens/InsightsScreen.tsx:132 (IdentifierTitle.code) |
+| A03 | timeReport | گزارش زمان | هشت حالت بازه؛ M-01 و M-04 بخش‌های همین صفحه‌اند | screen | فعال | src/screens/InsightsScreen.tsx:126 (IdentifierTitle.code) |
 | A04 | reminderSettings | تنظیمات یادآوری | ویرایش تنظیمات موجود و ورود به بررسی اعلان | screen | فعال | src/screens/SettingsScreen.tsx:97 (IdentifierTitle.code)؛ src/screens/SettingsScreen.tsx:111 (IdentifierTitle.code) |
 | A05 | dayTimeline | مرور روز / خط زمان | نمای review=true در همان کامپوننت؛ route مستقل ندارد | screen | فعال | src/screens/TodayScreen.tsx:101 (IdentifierTitle.code) |
 | A06 | checkIn | ثبت و مشاهدهٔ بازه | ثبت تازه، مشاهده، ویرایش و بازه ردشده؛ کد ثابت | screen | فعال | App.tsx:80 (stackPageCodes.CheckIn)؛ src/screens/CheckInScreen.tsx:141 (IdentifierTitle.code)؛ src/screens/CheckInScreen.tsx:342 (IdentifierTitle.code) |
@@ -28,12 +28,12 @@
 | D05 | changeEntryDialog | تأیید تغییر ثبت | تأیید تغییر فعالیت ثبت موجود؛ سیاست دادهٔ سرویس محفوظ است | dialog | فعال | src/screens/CheckInScreen.tsx:119 (identifierAlert.title) |
 | D06 | confirmTimezoneDialog | تأیید منطقهٔ زمانی | تأیید context زمانی ثبت | dialog | فعال | src/screens/CheckInScreen.tsx:250 (identifierAlert.title) |
 | D07 | skipSlotDialog | تأیید ردکردن بازه | ردکردن بازه یا انصراف | dialog | فعال | src/screens/CheckInScreen.tsx:313 (identifierAlert.title) |
-| D08 | moreReportsDialog | Bottom Sheet بیشتر گزارش | حالت‌های موجود منتقل‌شده، تقویم، شروع هفته و ورودی custom؛ بازشدن خودش query را تغییر نمی‌دهد | dialog | رزرو | — |
+| D08 | moreReportsDialog | Bottom Sheet بیشتر گزارش | حالت‌های موجود منتقل‌شده، تقویم، شروع هفته و ورودی custom؛ بازشدن خودش query را تغییر نمی‌دهد | dialog | فعال | src/components/ReportRangeControls.tsx:207 (IdentifierTitle.code) |
 | X01 | selectTodayTab | تب امروز | انتخاب تب Today | action | فعال | App.tsx:144 (Tabs.Screen.options) |
 | X02 | selectActivitiesTab | تب فعالیت‌ها | انتخاب تب Activities | action | فعال | App.tsx:155 (Tabs.Screen.options) |
 | X03 | selectInsightsTab | تب گزارش | انتخاب تب Insights | action | فعال | App.tsx:165 (Tabs.Screen.options) |
 | X04 | selectSettingsTab | تب تنظیمات | انتخاب تب Settings | action | فعال | App.tsx:176 (Tabs.Screen.options) |
-| X05 | navigateBack | بازگشت به صفحهٔ قبلی | بازگشت پشته؛ مقصد وابسته به مسیر ورود | action | فعال | src/screens/CheckInScreen.tsx:196 (Button.actionCode)؛ src/screens/CheckInScreen.tsx:280 (Button.actionCode)؛ src/components/Ui.tsx:283 (Button.actionCode) |
+| X05 | navigateBack | بازگشت به صفحهٔ قبلی | بازگشت پشته؛ مقصد وابسته به مسیر ورود | action | فعال | src/screens/CheckInScreen.tsx:196 (Button.actionCode)؛ src/screens/CheckInScreen.tsx:280 (Button.actionCode)؛ src/components/Ui.tsx:291 (Button.actionCode) |
 | X06 | openSelectedSlot | بازکردن بازهٔ انتخاب‌شده | navigate("CheckIn") با زمان/context همان بازه؛ آینده غیرفعال | action | فعال | src/components/SlotRow.tsx:77 (IdentifierBadge.code) |
 | X07 | completePendingSlot | تکمیل آخرین بازهٔ ثبت‌نشده | بازکردن pending انتخاب‌شده در A06؛ items.find نخستین واجد شرط را انتخاب می‌کند؛ نام و منطق فعلی حفظ شوند | action | فعال | src/screens/TodayScreen.tsx:153 (Button.actionCode)؛ src/components/TodayOverview.tsx:143 (Button.actionCode) |
 | X08 | openTodayTimeline | مرور امروز / خط زمان | setReview(true)؛ A05 | action | فعال | src/components/TodayOverview.tsx:151 (Button.actionCode) |
@@ -46,7 +46,7 @@
 | X15 | showArchivedActivities | دیدن بایگانی‌شده‌ها | تغییر فیلتر به بایگانی | action | فعال | src/screens/ActivitiesScreen.tsx:122 (Button.actionCode)؛ src/screens/ActivitiesScreen.tsx:221 (Button.actionCode) |
 | X16 | showActiveActivities | دیدن فعال‌ها | تغییر فیلتر به فعال | action | فعال | src/screens/ActivitiesScreen.tsx:121 (Button.actionCode)؛ src/screens/ActivitiesScreen.tsx:220 (Button.actionCode) |
 | X17 | openActivityManagement | گزینه‌های مدیریت فعالیت | بدنه کارت و سه‌نقطه هر دو D01 همان فعالیت را باز می‌کنند | action | فعال | src/screens/ActivitiesScreen.tsx:174 (IdentifierBadge.code)؛ src/screens/ActivitiesScreen.tsx:199 (IdentifierBadge.code) |
-| X18 | closeSelectionDialog | بستن پنجره بدون انتخاب تازه | بستن D01 یا D03، بدون commit/انتخاب تازه؛ با تعویق D03 در D01 فعال می‌ماند | action | فعال | src/screens/ActivitiesScreen.tsx:305 (IdentifierBadge.code)؛ src/screens/ActivitiesScreen.tsx:371 (Button.actionCode) |
+| X18 | closeSelectionDialog | بستن پنجره بدون انتخاب تازه | بستن D01 یا D08 بدون commit/انتخاب تازه؛ انتخاب قبلاً اعمال‌شده rollback نمی‌شود؛ D03 رزرو است | action | فعال | src/screens/ActivitiesScreen.tsx:305 (IdentifierBadge.code)؛ src/screens/ActivitiesScreen.tsx:371 (Button.actionCode)؛ src/components/ReportRangeControls.tsx:186 (IdentifierBadge.code)؛ src/components/ReportRangeControls.tsx:214 (ReportButton.actionCode) |
 | X19 | editActivity | ویرایش فعالیت | بستن D01 و بازکردن D02 برای فعالیت موجود | action | فعال | src/screens/ActivitiesScreen.tsx:347 (Button.actionCode) |
 | X20 | archiveActivity | بایگانی فعالیت | archiveActivity، بستن پنجره، تازه‌سازی | action | فعال | src/screens/ActivitiesScreen.tsx:358 (Button.actionCode) |
 | X21 | restoreArchivedActivity | بازگردانی فعالیت بایگانی‌شده | restoreActivity؛ بازگردانی پایدار | action | فعال | src/screens/ActivitiesScreen.tsx:333 (Button.actionCode) |
@@ -105,33 +105,33 @@
 | X74 | completeOnboarding | ورود / ادامه بدون اعلان | onboarding_completed و ورود برنامه | action | فعال | src/screens/OnboardingScreen.tsx:69 (Button.actionCode) |
 | X75 | retryNotificationResponse | تلاش دوباره برای بازکردن اعلان | coordinator.retry()؛ صف پاسخ اعلان؛ بازخورد و guardهای FIX01/FIX02 محفوظ؛ بدون repair/permission تازه | action | فعال | App.tsx:365 (Button.actionCode) |
 | X76 | retryBootstrap | تلاش دوباره برای آماده‌سازی | افزایش attempt و اجرای دوباره راه‌اندازی؛ چرخه خطای اصلاح‌شده FIX02 حفظ شود | action | فعال | App.tsx:407 (Button.actionCode) |
-| X77 | reportDay | گزارش روز | mode="day", offset=0 | action | فعال | src/screens/InsightsScreen.tsx:31 (modeCodes.day) |
-| X78 | reportCalendarWeek | هفتهٔ تقویمی | mode="week", offset=0؛ تقویم/شروع هفته | action | فعال | src/screens/InsightsScreen.tsx:32 (modeCodes.week) |
-| X79 | reportCalendarMonth | ماه تقویمی | mode="month", offset=0 | action | فعال | src/screens/InsightsScreen.tsx:33 (modeCodes.month) |
-| X80 | reportUsageWeek | هفتهٔ استفاده | mode="usage7", offset=0؛ مبنا نخستین استفاده | action | فعال | src/screens/InsightsScreen.tsx:34 (modeCodes.usage7) |
-| X81 | reportUsageMonth | دورهٔ ۳۰روزهٔ استفاده | mode="usage30", offset=0 | action | فعال | src/screens/InsightsScreen.tsx:35 (modeCodes.usage30) |
-| X82 | reportRollingWeek | ۷ روز اخیر | mode="rolling7", offset=0 | action | فعال | src/screens/InsightsScreen.tsx:36 (modeCodes.rolling7) |
-| X83 | reportRollingMonth | ۳۰ روز اخیر | mode="rolling30", offset=0 | action | فعال | src/screens/InsightsScreen.tsx:37 (modeCodes.rolling30) |
-| X84 | reportCustomRange | بازهٔ دلخواه | mode="custom", offset=0؛ ورودی‌های موجود | action | فعال | src/screens/InsightsScreen.tsx:38 (modeCodes.custom) |
-| X85 | previousReportPeriod | روز / دورهٔ قبل | کاهش نسبی offset در mode جاری | action | فعال | src/screens/InsightsScreen.tsx:150 (Button.actionCode) |
-| X86 | currentReportPeriod | امروز / دورهٔ جاری | offset=0؛ mode تغییر نمی‌کند | action | فعال | src/screens/InsightsScreen.tsx:156 (Button.actionCode) |
-| X87 | nextReportPeriod | دورهٔ بعد | افزایش offset؛ شرط disabled موجود | action | فعال | src/screens/InsightsScreen.tsx:162 (Button.actionCode) |
-| X88 | toggleReportCalendar | تغییر تقویم گزارش | شمسی/میلادی و ذخیره ترجیح موجود | action | فعال | src/screens/InsightsScreen.tsx:171 (Button.actionCode) |
-| X89 | changeReportWeekStart | تغییر شروع هفته | چرخش روز شروع هفته و ذخیره ترجیح | action | فعال | src/screens/InsightsScreen.tsx:182 (Button.actionCode) |
-| X90 | applyCustomReportDates | نمایش بازهٔ دلخواه | دو تاریخ draft به query و خواندن گزارش | action | فعال | src/screens/InsightsScreen.tsx:209 (Button.actionCode) |
-| X91 | retryReportRead | تلاش دوباره برای دادهٔ گزارش | افزایش refresh و خواندن گزارش | action | فعال | src/screens/InsightsScreen.tsx:221 (Button.actionCode) |
-| X92 | retryReportPreferences | تلاش دوباره برای ترجیحات گزارش | loadPreferences | action | فعال | src/screens/InsightsScreen.tsx:222 (Button.actionCode) |
+| X77 | reportDay | گزارش روز | mode="day", offset=0 | action | فعال | src/components/ReportRangeControls.tsx:35 (modeCodes.day)؛ src/components/ReportRangeControls.tsx:106 (ReportButton.actionCode) |
+| X78 | reportCalendarWeek | هفتهٔ تقویمی | mode="week", offset=0؛ تقویم/شروع هفته | action | فعال | src/components/ReportRangeControls.tsx:36 (modeCodes.week) |
+| X79 | reportCalendarMonth | ماه تقویمی | mode="month", offset=0 | action | فعال | src/components/ReportRangeControls.tsx:37 (modeCodes.month) |
+| X80 | reportUsageWeek | هفتهٔ استفاده | mode="usage7", offset=0؛ مبنا نخستین استفاده | action | فعال | src/components/ReportRangeControls.tsx:38 (modeCodes.usage7) |
+| X81 | reportUsageMonth | دورهٔ ۳۰روزهٔ استفاده | mode="usage30", offset=0 | action | فعال | src/components/ReportRangeControls.tsx:39 (modeCodes.usage30) |
+| X82 | reportRollingWeek | ۷ روز اخیر | mode="rolling7", offset=0 | action | فعال | src/components/ReportRangeControls.tsx:40 (modeCodes.rolling7)؛ src/components/ReportRangeControls.tsx:124 (ReportButton.actionCode) |
+| X83 | reportRollingMonth | ۳۰ روز اخیر | mode="rolling30", offset=0 | action | فعال | src/components/ReportRangeControls.tsx:41 (modeCodes.rolling30)؛ src/components/ReportRangeControls.tsx:133 (ReportButton.actionCode) |
+| X84 | reportCustomRange | بازهٔ دلخواه | mode="custom", offset=0؛ ورودی‌های موجود | action | فعال | src/components/ReportRangeControls.tsx:42 (modeCodes.custom) |
+| X85 | previousReportPeriod | روز / دورهٔ قبل | کاهش نسبی offset در mode جاری | action | فعال | src/components/ReportRangeControls.tsx:234 (ReportButton.actionCode) |
+| X86 | currentReportPeriod | امروز / دورهٔ جاری | offset=0؛ mode تغییر نمی‌کند | action | فعال | src/components/ReportRangeControls.tsx:242 (ReportButton.actionCode) |
+| X87 | nextReportPeriod | دورهٔ بعد | افزایش offset؛ شرط disabled موجود | action | فعال | src/components/ReportRangeControls.tsx:248 (ReportButton.actionCode) |
+| X88 | toggleReportCalendar | تغییر تقویم گزارش | شمسی/میلادی و ذخیره ترجیح موجود | action | فعال | src/components/ReportRangeControls.tsx:263 (ReportButton.actionCode) |
+| X89 | changeReportWeekStart | تغییر شروع هفته | چرخش روز شروع هفته و ذخیره ترجیح | action | فعال | src/components/ReportRangeControls.tsx:275 (ReportButton.actionCode) |
+| X90 | applyCustomReportDates | نمایش بازهٔ دلخواه | دو تاریخ draft به query و خواندن گزارش | action | فعال | src/components/ReportRangeControls.tsx:325 (ReportButton.actionCode) |
+| X91 | retryReportRead | تلاش دوباره برای دادهٔ گزارش | افزایش refresh و خواندن گزارش | action | فعال | src/screens/InsightsScreen.tsx:160 (ReportButton.actionCode) |
+| X92 | retryReportPreferences | تلاش دوباره برای ترجیحات گزارش | loadPreferences | action | فعال | src/screens/InsightsScreen.tsx:161 (ReportButton.actionCode) |
 | X93 | editActivityName | نام فعالیت | draft نام | action | فعال | src/components/ActivityEditor.tsx:155 (Input.actionCode) |
 | X94 | editIconSearch | جست‌وجو / ورود آیکون | تغییر جست‌وجو/متن آیکون؛ انتخاب با X27 | action | فعال | src/components/ActivityEditor.tsx:224 (Input.actionCode) |
 | X95 | searchClassification | جست‌وجوی دسته | فیلتر دسته‌ها؛ Deferred/Reserved | action | رزرو | — |
 | X96 | editConfirmedTimezone | منطقهٔ زمانی تأییدشده | draft منطقه؛ commit با X50 | action | فعال | src/screens/CheckInScreen.tsx:239 (Input.actionCode) |
-| X97 | editCustomReportStart | تاریخ شروع گزارش دلخواه | draft شروع | action | فعال | src/screens/InsightsScreen.tsx:196 (Input.actionCode) |
-| X98 | editCustomReportEnd | تاریخ پایان گزارش دلخواه | draft پایان | action | فعال | src/screens/InsightsScreen.tsx:204 (Input.actionCode) |
-| X99 | openMoreReports | بازکردن بیشتر گزارش | فقط بازکردن D08؛ بدون query/write/navigation تازه | action | رزرو | — |
-| X100 | showPreviousCalendarDay | روز قبل مطلق | mode=day, offset=-1؛ متفاوت از حرکت نسبی X85 | action | رزرو | — |
-| X101 | expandAllResultActivities | مشاهده همه | گسترش inline همه r.activities همان query/result؛ بدون صفحه یا محاسبه تازه | action | رزرو | — |
+| X97 | editCustomReportStart | تاریخ شروع گزارش دلخواه | draft شروع | action | فعال | src/components/ReportRangeControls.tsx:298 (Input.actionCode) |
+| X98 | editCustomReportEnd | تاریخ پایان گزارش دلخواه | draft پایان | action | فعال | src/components/ReportRangeControls.tsx:314 (Input.actionCode) |
+| X99 | openMoreReports | بازکردن بیشتر گزارش | فقط بازکردن D08؛ بدون query/write/navigation تازه | action | فعال | src/screens/InsightsScreen.tsx:229 (ReportButton.actionCode)؛ src/components/ReportRangeControls.tsx:142 (ReportButton.actionCode) |
+| X100 | showPreviousCalendarDay | روز قبل مطلق | mode=day, offset=-1؛ متفاوت از حرکت نسبی X85 | action | فعال | src/components/ReportRangeControls.tsx:115 (ReportButton.actionCode) |
+| X101 | expandAllResultActivities | مشاهده همه | گسترش inline همه r.activities همان query/result؛ بدون صفحه یا محاسبه تازه | action | فعال | src/components/ReportActivitySummary.tsx:123 (ReportButton.actionCode) |
 | X102 | openActivitiesFromEmptyCheckIn | افزودن یا بازگرداندن فعالیت | navigate("Main", {screen:"Activities"})؛ خودش فعالیت ایجاد یا restore نمی‌کند، بلکه کاربر را به صفحهٔ فعالیت‌ها می‌برد. | action | فعال | src/screens/CheckInScreen.tsx:299 (Button.actionCode) |
 
 کدهای رزرو badge فعال ندارند؛ وجود آن‌ها قابلیت تازه‌ای ایجاد نمی‌کند. کد بازنشسته دوباره تخصیص داده نمی‌شود و با نام/اثر قبلی در registry باقی می‌ماند. مرجع این نسخه کد بازنشسته‌ای اعلام نکرده است. تاریخچهٔ تخصیص Rev01 و الحاقیه در rc3-id01/allocations-Rev01.json و allocations-Rev02.json حفظ می‌شود؛ generator راهنما این تاریخچه را بازنویسی نمی‌کند.
 
-رابط قابل‌دسترسی ICATUS در RC3-ICATUS-HIDE-01 حذف شده است؛ داده‌ها و سیاست سرویس حفظ شده‌اند. D03/X32…X37/X41/X48/X95 رزرو و بدون محل استفادهٔ فعال‌اند. D08/X99…X101 همچنان رزرو طراحی بعدی‌اند. شواهد پنهان‌سازی و پوشش جاری در گزارش مرحله و rc3-icatus-hide01 ثبت‌اند؛ پذیرش گوشی جدا و باز است.
+رابط قابل‌دسترسی ICATUS در RC3-ICATUS-HIDE-01 حذف شده است؛ داده‌ها و سیاست سرویس حفظ شده‌اند. D03/X32…X37/X41/X48/X95 رزرو و بدون محل استفادهٔ فعال‌اند. D08/X99/X100/X101 در M-01/M-04 فعال و در UI پیاده شده‌اند. شواهد پنهان‌سازی و پوشش جاری در گزارش پنهان‌سازی و rc3-icatus-hide01 محفوظ‌اند؛ پوشش جاری در rc3-ui-report01 ثبت است؛ پذیرش گوشی جدا و باز است.

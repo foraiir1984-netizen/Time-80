@@ -26,7 +26,7 @@ export function generateUiCodeGuide() {
     "# راهنمای کدهای رابط Time80",
     "",
     `نسخهٔ registry: ${uiIdentifierRegistryVersion}`,
-    "مرجع: RC3_UI_Identifiers_Reference_Rev01.md + الحاقیهٔ ۶-ب / RC3_UI_Identifiers_Addendum_6B_Rev01.md. اتصال این خروجی به commit تحویل و snapshot آزمون در گزارش RC3_ICATUS_HIDE_01_Report_Rev01_FA.md ثبت است.",
+    "مرجع: RC3_UI_Identifiers_Reference_Rev01.md + الحاقیهٔ ۶-ب / RC3_UI_Identifiers_Addendum_6B_Rev01.md. اتصال این خروجی به commit تحویل و snapshot آزمون در گزارش RC3_UI_REPORT_01_Report_Rev01_FA.md ثبت است.",
     "",
     ...(!uiIdentifierReferenceComplete
       ? [
@@ -47,7 +47,7 @@ export function generateUiCodeGuide() {
     "",
     "کدهای رزرو badge فعال ندارند؛ وجود آن‌ها قابلیت تازه‌ای ایجاد نمی‌کند. کد بازنشسته دوباره تخصیص داده نمی‌شود و با نام/اثر قبلی در registry باقی می‌ماند. مرجع این نسخه کد بازنشسته‌ای اعلام نکرده است. تاریخچهٔ تخصیص Rev01 و الحاقیه در rc3-id01/allocations-Rev01.json و allocations-Rev02.json حفظ می‌شود؛ generator راهنما این تاریخچه را بازنویسی نمی‌کند.",
     "",
-    "رابط قابل‌دسترسی ICATUS در RC3-ICATUS-HIDE-01 حذف شده است؛ داده‌ها و سیاست سرویس حفظ شده‌اند. D03/X32…X37/X41/X48/X95 رزرو و بدون محل استفادهٔ فعال‌اند. D08/X99…X101 همچنان رزرو طراحی بعدی‌اند. شواهد پنهان‌سازی و پوشش جاری در گزارش مرحله و rc3-icatus-hide01 ثبت‌اند؛ پذیرش گوشی جدا و باز است.",
+    "رابط قابل‌دسترسی ICATUS در RC3-ICATUS-HIDE-01 حذف شده است؛ داده‌ها و سیاست سرویس حفظ شده‌اند. D03/X32…X37/X41/X48/X95 رزرو و بدون محل استفادهٔ فعال‌اند. D08/X99/X100/X101 در M-01/M-04 فعال و در UI پیاده شده‌اند. شواهد پنهان‌سازی و پوشش جاری در گزارش پنهان‌سازی و rc3-icatus-hide01 محفوظ‌اند؛ پوشش جاری در rc3-ui-report01 ثبت است؛ پذیرش گوشی جدا و باز است.",
     "",
   ].join("\n");
   const csv =

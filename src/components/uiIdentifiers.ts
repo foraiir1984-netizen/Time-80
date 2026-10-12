@@ -1,6 +1,6 @@
 // UI-only allocations, explicitly copied from RC3-ID-REF-01 Rev01.
 // Codes never enter user data, schema or notification payloads.
-export const uiIdentifierRegistryVersion = "RC3-ID-01-Rev03";
+export const uiIdentifierRegistryVersion = "RC3-ID-01-Rev04";
 export const uiIdentifierReferenceComplete = true;
 export const uiClassificationVisibility = "hidden" as const;
 export const reservedClassificationUiCodes: readonly string[] = [
@@ -17,9 +17,6 @@ export const reservedClassificationUiCodes: readonly string[] = [
 ];
 export const reservedUiCodesInThisStage = [
   "D03",
-  "D08",
-  "X100",
-  "X101",
   "X32",
   "X33",
   "X34",
@@ -29,7 +26,6 @@ export const reservedUiCodesInThisStage = [
   "X41",
   "X48",
   "X95",
-  "X99",
 ] as const;
 export type UiIdentifier = {
   code: `A${number}` | `D${number}` | `X${number}`;
@@ -73,7 +69,7 @@ export const uiIdentifiers = {
     effectFa: "هشت حالت بازه؛ M-01 و M-04 بخش‌های همین صفحه‌اند",
     kind: "screen",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:132 (IdentifierTitle.code)"],
+    sites: ["src/screens/InsightsScreen.tsx:126 (IdentifierTitle.code)"],
   },
   reminderSettings: {
     code: "A04",
@@ -264,7 +260,7 @@ export const uiIdentifiers = {
     sites: [
       "src/screens/CheckInScreen.tsx:196 (Button.actionCode)",
       "src/screens/CheckInScreen.tsx:280 (Button.actionCode)",
-      "src/components/Ui.tsx:283 (Button.actionCode)",
+      "src/components/Ui.tsx:291 (Button.actionCode)",
     ],
   },
   openSelectedSlot: {
@@ -383,12 +379,14 @@ export const uiIdentifiers = {
     code: "X18",
     nameFa: "بستن پنجره بدون انتخاب تازه",
     effectFa:
-      "بستن D01 یا D03، بدون commit/انتخاب تازه؛ با تعویق D03 در D01 فعال می‌ماند",
+      "بستن D01 یا D08 بدون commit/انتخاب تازه؛ انتخاب قبلاً اعمال‌شده rollback نمی‌شود؛ D03 رزرو است",
     kind: "action",
     status: "active",
     sites: [
       "src/screens/ActivitiesScreen.tsx:305 (IdentifierBadge.code)",
       "src/screens/ActivitiesScreen.tsx:371 (Button.actionCode)",
+      "src/components/ReportRangeControls.tsx:186 (IdentifierBadge.code)",
+      "src/components/ReportRangeControls.tsx:214 (ReportButton.actionCode)",
     ],
   },
   editActivity: {
@@ -889,7 +887,10 @@ export const uiIdentifiers = {
     effectFa: 'mode="day", offset=0',
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:31 (modeCodes.day)"],
+    sites: [
+      "src/components/ReportRangeControls.tsx:35 (modeCodes.day)",
+      "src/components/ReportRangeControls.tsx:106 (ReportButton.actionCode)",
+    ],
   },
   reportCalendarWeek: {
     code: "X78",
@@ -897,7 +898,7 @@ export const uiIdentifiers = {
     effectFa: 'mode="week", offset=0؛ تقویم/شروع هفته',
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:32 (modeCodes.week)"],
+    sites: ["src/components/ReportRangeControls.tsx:36 (modeCodes.week)"],
   },
   reportCalendarMonth: {
     code: "X79",
@@ -905,7 +906,7 @@ export const uiIdentifiers = {
     effectFa: 'mode="month", offset=0',
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:33 (modeCodes.month)"],
+    sites: ["src/components/ReportRangeControls.tsx:37 (modeCodes.month)"],
   },
   reportUsageWeek: {
     code: "X80",
@@ -913,7 +914,7 @@ export const uiIdentifiers = {
     effectFa: 'mode="usage7", offset=0؛ مبنا نخستین استفاده',
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:34 (modeCodes.usage7)"],
+    sites: ["src/components/ReportRangeControls.tsx:38 (modeCodes.usage7)"],
   },
   reportUsageMonth: {
     code: "X81",
@@ -921,7 +922,7 @@ export const uiIdentifiers = {
     effectFa: 'mode="usage30", offset=0',
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:35 (modeCodes.usage30)"],
+    sites: ["src/components/ReportRangeControls.tsx:39 (modeCodes.usage30)"],
   },
   reportRollingWeek: {
     code: "X82",
@@ -929,7 +930,10 @@ export const uiIdentifiers = {
     effectFa: 'mode="rolling7", offset=0',
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:36 (modeCodes.rolling7)"],
+    sites: [
+      "src/components/ReportRangeControls.tsx:40 (modeCodes.rolling7)",
+      "src/components/ReportRangeControls.tsx:124 (ReportButton.actionCode)",
+    ],
   },
   reportRollingMonth: {
     code: "X83",
@@ -937,7 +941,10 @@ export const uiIdentifiers = {
     effectFa: 'mode="rolling30", offset=0',
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:37 (modeCodes.rolling30)"],
+    sites: [
+      "src/components/ReportRangeControls.tsx:41 (modeCodes.rolling30)",
+      "src/components/ReportRangeControls.tsx:133 (ReportButton.actionCode)",
+    ],
   },
   reportCustomRange: {
     code: "X84",
@@ -945,7 +952,7 @@ export const uiIdentifiers = {
     effectFa: 'mode="custom", offset=0؛ ورودی‌های موجود',
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:38 (modeCodes.custom)"],
+    sites: ["src/components/ReportRangeControls.tsx:42 (modeCodes.custom)"],
   },
   previousReportPeriod: {
     code: "X85",
@@ -953,7 +960,9 @@ export const uiIdentifiers = {
     effectFa: "کاهش نسبی offset در mode جاری",
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:150 (Button.actionCode)"],
+    sites: [
+      "src/components/ReportRangeControls.tsx:234 (ReportButton.actionCode)",
+    ],
   },
   currentReportPeriod: {
     code: "X86",
@@ -961,7 +970,9 @@ export const uiIdentifiers = {
     effectFa: "offset=0؛ mode تغییر نمی‌کند",
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:156 (Button.actionCode)"],
+    sites: [
+      "src/components/ReportRangeControls.tsx:242 (ReportButton.actionCode)",
+    ],
   },
   nextReportPeriod: {
     code: "X87",
@@ -969,7 +980,9 @@ export const uiIdentifiers = {
     effectFa: "افزایش offset؛ شرط disabled موجود",
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:162 (Button.actionCode)"],
+    sites: [
+      "src/components/ReportRangeControls.tsx:248 (ReportButton.actionCode)",
+    ],
   },
   toggleReportCalendar: {
     code: "X88",
@@ -977,7 +990,9 @@ export const uiIdentifiers = {
     effectFa: "شمسی/میلادی و ذخیره ترجیح موجود",
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:171 (Button.actionCode)"],
+    sites: [
+      "src/components/ReportRangeControls.tsx:263 (ReportButton.actionCode)",
+    ],
   },
   changeReportWeekStart: {
     code: "X89",
@@ -985,7 +1000,9 @@ export const uiIdentifiers = {
     effectFa: "چرخش روز شروع هفته و ذخیره ترجیح",
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:182 (Button.actionCode)"],
+    sites: [
+      "src/components/ReportRangeControls.tsx:275 (ReportButton.actionCode)",
+    ],
   },
   applyCustomReportDates: {
     code: "X90",
@@ -993,7 +1010,9 @@ export const uiIdentifiers = {
     effectFa: "دو تاریخ draft به query و خواندن گزارش",
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:209 (Button.actionCode)"],
+    sites: [
+      "src/components/ReportRangeControls.tsx:325 (ReportButton.actionCode)",
+    ],
   },
   retryReportRead: {
     code: "X91",
@@ -1001,7 +1020,7 @@ export const uiIdentifiers = {
     effectFa: "افزایش refresh و خواندن گزارش",
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:221 (Button.actionCode)"],
+    sites: ["src/screens/InsightsScreen.tsx:160 (ReportButton.actionCode)"],
   },
   retryReportPreferences: {
     code: "X92",
@@ -1009,7 +1028,7 @@ export const uiIdentifiers = {
     effectFa: "loadPreferences",
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:222 (Button.actionCode)"],
+    sites: ["src/screens/InsightsScreen.tsx:161 (ReportButton.actionCode)"],
   },
   editActivityName: {
     code: "X93",
@@ -1049,7 +1068,7 @@ export const uiIdentifiers = {
     effectFa: "draft شروع",
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:196 (Input.actionCode)"],
+    sites: ["src/components/ReportRangeControls.tsx:298 (Input.actionCode)"],
   },
   editCustomReportEnd: {
     code: "X98",
@@ -1057,7 +1076,7 @@ export const uiIdentifiers = {
     effectFa: "draft پایان",
     kind: "action",
     status: "active",
-    sites: ["src/screens/InsightsScreen.tsx:204 (Input.actionCode)"],
+    sites: ["src/components/ReportRangeControls.tsx:314 (Input.actionCode)"],
   },
   moreReportsDialog: {
     code: "D08",
@@ -1065,24 +1084,31 @@ export const uiIdentifiers = {
     effectFa:
       "حالت‌های موجود منتقل‌شده، تقویم، شروع هفته و ورودی custom؛ بازشدن خودش query را تغییر نمی‌دهد",
     kind: "dialog",
-    status: "reserved",
-    sites: [],
+    status: "active",
+    sites: [
+      "src/components/ReportRangeControls.tsx:207 (IdentifierTitle.code)",
+    ],
   },
   openMoreReports: {
     code: "X99",
     nameFa: "بازکردن بیشتر گزارش",
     effectFa: "فقط بازکردن D08؛ بدون query/write/navigation تازه",
     kind: "action",
-    status: "reserved",
-    sites: [],
+    status: "active",
+    sites: [
+      "src/screens/InsightsScreen.tsx:229 (ReportButton.actionCode)",
+      "src/components/ReportRangeControls.tsx:142 (ReportButton.actionCode)",
+    ],
   },
   showPreviousCalendarDay: {
     code: "X100",
     nameFa: "روز قبل مطلق",
     effectFa: "mode=day, offset=-1؛ متفاوت از حرکت نسبی X85",
     kind: "action",
-    status: "reserved",
-    sites: [],
+    status: "active",
+    sites: [
+      "src/components/ReportRangeControls.tsx:115 (ReportButton.actionCode)",
+    ],
   },
   expandAllResultActivities: {
     code: "X101",
@@ -1090,8 +1116,10 @@ export const uiIdentifiers = {
     effectFa:
       "گسترش inline همه r.activities همان query/result؛ بدون صفحه یا محاسبه تازه",
     kind: "action",
-    status: "reserved",
-    sites: [],
+    status: "active",
+    sites: [
+      "src/components/ReportActivitySummary.tsx:123 (ReportButton.actionCode)",
+    ],
   },
 } as const satisfies Record<string, UiIdentifier>;
 
