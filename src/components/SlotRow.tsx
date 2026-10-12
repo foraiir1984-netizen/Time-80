@@ -60,7 +60,12 @@ export function SlotRow({
           size={30}
         />
       )}
-      <Text style={[ui.text, { flex: 1, alignSelf: "stretch" }]}>
+      <Text
+        style={[
+          ui.text,
+          { ...(fontScale < 1.5 ? { flex: 1 } : {}), alignSelf: "stretch" },
+        ]}
+      >
         {item.entry?.status === "logged"
           ? item.entry.activity_name
           : future

@@ -261,7 +261,7 @@ export const uiIdentifiers = {
     effectFa: 'navigate("CheckIn") با زمان/context همان بازه؛ آینده غیرفعال',
     kind: "action",
     status: "active",
-    sites: ["src/components/SlotRow.tsx:72 (IdentifierBadge.code)"],
+    sites: ["src/components/SlotRow.tsx:77 (IdentifierBadge.code)"],
   },
   completePendingSlot: {
     code: "X07",

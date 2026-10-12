@@ -24,7 +24,7 @@
 "RC3-ID-01-Rev02","true","X03","selectInsightsTab","تب گزارش","انتخاب تب Insights","action","active","App.tsx:165 (Tabs.Screen.options)"
 "RC3-ID-01-Rev02","true","X04","selectSettingsTab","تب تنظیمات","انتخاب تب Settings","action","active","App.tsx:176 (Tabs.Screen.options)"
 "RC3-ID-01-Rev02","true","X05","navigateBack","بازگشت به صفحهٔ قبلی","بازگشت پشته؛ مقصد وابسته به مسیر ورود","action","active","src/screens/CheckInScreen.tsx:206 (Button.actionCode); src/screens/CheckInScreen.tsx:293 (Button.actionCode); src/components/Ui.tsx:283 (Button.actionCode)"
-"RC3-ID-01-Rev02","true","X06","openSelectedSlot","بازکردن بازهٔ انتخاب‌شده","navigate(""CheckIn"") با زمان/context همان بازه؛ آینده غیرفعال","action","active","src/components/SlotRow.tsx:72 (IdentifierBadge.code)"
+"RC3-ID-01-Rev02","true","X06","openSelectedSlot","بازکردن بازهٔ انتخاب‌شده","navigate(""CheckIn"") با زمان/context همان بازه؛ آینده غیرفعال","action","active","src/components/SlotRow.tsx:77 (IdentifierBadge.code)"
 "RC3-ID-01-Rev02","true","X07","completePendingSlot","تکمیل آخرین بازهٔ ثبت‌نشده","بازکردن pending انتخاب‌شده در A06؛ items.find نخستین واجد شرط را انتخاب می‌کند؛ نام و منطق فعلی حفظ شوند","action","active","src/screens/TodayScreen.tsx:153 (Button.actionCode); src/components/TodayOverview.tsx:143 (Button.actionCode)"
 "RC3-ID-01-Rev02","true","X08","openTodayTimeline","مرور امروز / خط زمان","setReview(true)؛ A05","action","active","src/components/TodayOverview.tsx:151 (Button.actionCode)"
 "RC3-ID-01-Rev02","true","X09","returnToTodayOverview","بازگشت به نمای اصلی امروز","تاریخ امروز و review=false؛ A01","action","active","src/screens/TodayScreen.tsx:91 (Button.actionCode)"

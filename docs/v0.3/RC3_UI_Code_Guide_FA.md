@@ -34,7 +34,7 @@
 | X03 | selectInsightsTab | تب گزارش | انتخاب تب Insights | action | فعال | App.tsx:165 (Tabs.Screen.options) |
 | X04 | selectSettingsTab | تب تنظیمات | انتخاب تب Settings | action | فعال | App.tsx:176 (Tabs.Screen.options) |
 | X05 | navigateBack | بازگشت به صفحهٔ قبلی | بازگشت پشته؛ مقصد وابسته به مسیر ورود | action | فعال | src/screens/CheckInScreen.tsx:206 (Button.actionCode)؛ src/screens/CheckInScreen.tsx:293 (Button.actionCode)؛ src/components/Ui.tsx:283 (Button.actionCode) |
-| X06 | openSelectedSlot | بازکردن بازهٔ انتخاب‌شده | navigate("CheckIn") با زمان/context همان بازه؛ آینده غیرفعال | action | فعال | src/components/SlotRow.tsx:72 (IdentifierBadge.code) |
+| X06 | openSelectedSlot | بازکردن بازهٔ انتخاب‌شده | navigate("CheckIn") با زمان/context همان بازه؛ آینده غیرفعال | action | فعال | src/components/SlotRow.tsx:77 (IdentifierBadge.code) |
 | X07 | completePendingSlot | تکمیل آخرین بازهٔ ثبت‌نشده | بازکردن pending انتخاب‌شده در A06؛ items.find نخستین واجد شرط را انتخاب می‌کند؛ نام و منطق فعلی حفظ شوند | action | فعال | src/screens/TodayScreen.tsx:153 (Button.actionCode)؛ src/components/TodayOverview.tsx:143 (Button.actionCode) |
 | X08 | openTodayTimeline | مرور امروز / خط زمان | setReview(true)؛ A05 | action | فعال | src/components/TodayOverview.tsx:151 (Button.actionCode) |
 | X09 | returnToTodayOverview | بازگشت به نمای اصلی امروز | تاریخ امروز و review=false؛ A01 | action | فعال | src/screens/TodayScreen.tsx:91 (Button.actionCode) |
