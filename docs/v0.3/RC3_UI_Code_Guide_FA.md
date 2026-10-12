@@ -1,7 +1,7 @@
 # راهنمای کدهای رابط Time80
 
-نسخهٔ registry: RC3-ID-01-Rev02
-مرجع: RC3_UI_Identifiers_Reference_Rev01.md + الحاقیهٔ ۶-ب / RC3_UI_Identifiers_Addendum_6B_Rev01.md. اتصال این خروجی به commit تحویل و snapshot آزمون در گزارش RC3_ID_01_Report_Rev02_FA.md ثبت است.
+نسخهٔ registry: RC3-ID-01-Rev03
+مرجع: RC3_UI_Identifiers_Reference_Rev01.md + الحاقیهٔ ۶-ب / RC3_UI_Identifiers_Addendum_6B_Rev01.md. اتصال این خروجی به commit تحویل و snapshot آزمون در گزارش RC3_ICATUS_HIDE_01_Report_Rev01_FA.md ثبت است.
 
 این خروجی از src/components/uiIdentifiers.ts تولید می‌شود. شماره‌ها از ترتیب این جدول تولید نمی‌شوند. «فعال» وضعیت تخصیص است؛ پذیرش نمایش در هر محل، به جدول پوشش و شاهد اجرای همان محل وابسته است.
 
@@ -14,7 +14,7 @@
 | A03 | timeReport | گزارش زمان | هشت حالت بازه؛ M-01 و M-04 بخش‌های همین صفحه‌اند | screen | فعال | src/screens/InsightsScreen.tsx:132 (IdentifierTitle.code) |
 | A04 | reminderSettings | تنظیمات یادآوری | ویرایش تنظیمات موجود و ورود به بررسی اعلان | screen | فعال | src/screens/SettingsScreen.tsx:97 (IdentifierTitle.code)؛ src/screens/SettingsScreen.tsx:111 (IdentifierTitle.code) |
 | A05 | dayTimeline | مرور روز / خط زمان | نمای review=true در همان کامپوننت؛ route مستقل ندارد | screen | فعال | src/screens/TodayScreen.tsx:101 (IdentifierTitle.code) |
-| A06 | checkIn | ثبت و مشاهدهٔ بازه | ثبت تازه، مشاهده، ویرایش و بازه ردشده؛ کد ثابت | screen | فعال | App.tsx:80 (stackPageCodes.CheckIn)؛ src/screens/CheckInScreen.tsx:151 (IdentifierTitle.code)؛ src/screens/CheckInScreen.tsx:371 (IdentifierTitle.code) |
+| A06 | checkIn | ثبت و مشاهدهٔ بازه | ثبت تازه، مشاهده، ویرایش و بازه ردشده؛ کد ثابت | screen | فعال | App.tsx:80 (stackPageCodes.CheckIn)؛ src/screens/CheckInScreen.tsx:141 (IdentifierTitle.code)؛ src/screens/CheckInScreen.tsx:342 (IdentifierTitle.code) |
 | A07 | saveResult | نتیجهٔ ثبت | نتیجه، شمارش همان روز، Undo و مشاهده ثبت | screen | فعال | App.tsx:82 (stackPageCodes.SaveResult)؛ src/screens/SaveResultScreen.tsx:48 (IdentifierTitle.code) |
 | A08 | backlog | بازه‌های ثبت‌نشده | فهرست عمومی یا محدود به dayScope | screen | فعال | App.tsx:81 (stackPageCodes.Backlog)؛ src/screens/BacklogScreen.tsx:56 (IdentifierTitle.code) |
 | A09 | notificationDiagnostics | بررسی اعلان‌ها | مجوزها، capabilityها، تست و هماهنگ‌سازی | screen | فعال | App.tsx:84 (stackPageCodes.Diagnostics)؛ src/screens/NotificationDiagnosticsScreen.tsx:124 (IdentifierTitle.code) |
@@ -23,17 +23,17 @@
 | A12 | bootstrap | آماده‌سازی برنامه | راه‌اندازی و خطای اولیه؛ تلاش مجدد | screen | فعال | App.tsx:397 (IdentifierTitle.code) |
 | D01 | activityManagementDialog | گزینه‌های مدیریت فعالیت | Bottom Sheet واقعی با Modal؛ ویرایش، بایگانی یا بازگردانی | dialog | فعال | src/screens/ActivitiesScreen.tsx:327 (IdentifierTitle.code) |
 | D02 | activityEditorDialog | فرم فعالیت جدید / ویرایش فعالیت | فرم مشترک با دو حالت؛ ایجاد/به‌روزرسانی کدهای جدا | dialog | فعال | src/components/ActivityEditor.tsx:139 (IdentifierTitle.code) |
-| D03 | classificationDialog | انتخاب دستهٔ ICATUS | انتخاب اختیاری، جست‌وجو و سلسله‌مراتب؛ callerها D02 و A06؛ Deferred/Reserved و pending hide | dialog | رزرو | src/components/ClassificationPicker.tsx |
+| D03 | classificationDialog | انتخاب دستهٔ ICATUS | انتخاب اختیاری، جست‌وجو و سلسله‌مراتب؛ رابط حذف شده؛ Deferred/Reserved | dialog | رزرو | — |
 | D04 | unsavedSettingsDialog | ویرایش ذخیره‌نشده | ادامه ویرایش یا کنارگذاشتن تغییر ناقص هنگام beforeRemove | dialog | فعال | src/screens/SettingsScreen.tsx:49 (identifierAlert.title) |
-| D05 | changeEntryDialog | تأیید تغییر ثبت | تأیید تغییر فعالیت یا دسته ثبت موجود در RC2؛ تغییر سیاست داده مجاز نیست | dialog | فعال | src/screens/CheckInScreen.tsx:124 (identifierAlert.title) |
-| D06 | confirmTimezoneDialog | تأیید منطقهٔ زمانی | تأیید context زمانی ثبت | dialog | فعال | src/screens/CheckInScreen.tsx:263 (identifierAlert.title) |
-| D07 | skipSlotDialog | تأیید ردکردن بازه | ردکردن بازه یا انصراف | dialog | فعال | src/screens/CheckInScreen.tsx:342 (identifierAlert.title) |
+| D05 | changeEntryDialog | تأیید تغییر ثبت | تأیید تغییر فعالیت ثبت موجود؛ سیاست دادهٔ سرویس محفوظ است | dialog | فعال | src/screens/CheckInScreen.tsx:119 (identifierAlert.title) |
+| D06 | confirmTimezoneDialog | تأیید منطقهٔ زمانی | تأیید context زمانی ثبت | dialog | فعال | src/screens/CheckInScreen.tsx:250 (identifierAlert.title) |
+| D07 | skipSlotDialog | تأیید ردکردن بازه | ردکردن بازه یا انصراف | dialog | فعال | src/screens/CheckInScreen.tsx:313 (identifierAlert.title) |
 | D08 | moreReportsDialog | Bottom Sheet بیشتر گزارش | حالت‌های موجود منتقل‌شده، تقویم، شروع هفته و ورودی custom؛ بازشدن خودش query را تغییر نمی‌دهد | dialog | رزرو | — |
 | X01 | selectTodayTab | تب امروز | انتخاب تب Today | action | فعال | App.tsx:144 (Tabs.Screen.options) |
 | X02 | selectActivitiesTab | تب فعالیت‌ها | انتخاب تب Activities | action | فعال | App.tsx:155 (Tabs.Screen.options) |
 | X03 | selectInsightsTab | تب گزارش | انتخاب تب Insights | action | فعال | App.tsx:165 (Tabs.Screen.options) |
 | X04 | selectSettingsTab | تب تنظیمات | انتخاب تب Settings | action | فعال | App.tsx:176 (Tabs.Screen.options) |
-| X05 | navigateBack | بازگشت به صفحهٔ قبلی | بازگشت پشته؛ مقصد وابسته به مسیر ورود | action | فعال | src/screens/CheckInScreen.tsx:206 (Button.actionCode)؛ src/screens/CheckInScreen.tsx:293 (Button.actionCode)؛ src/components/Ui.tsx:283 (Button.actionCode) |
+| X05 | navigateBack | بازگشت به صفحهٔ قبلی | بازگشت پشته؛ مقصد وابسته به مسیر ورود | action | فعال | src/screens/CheckInScreen.tsx:196 (Button.actionCode)؛ src/screens/CheckInScreen.tsx:280 (Button.actionCode)؛ src/components/Ui.tsx:283 (Button.actionCode) |
 | X06 | openSelectedSlot | بازکردن بازهٔ انتخاب‌شده | navigate("CheckIn") با زمان/context همان بازه؛ آینده غیرفعال | action | فعال | src/components/SlotRow.tsx:77 (IdentifierBadge.code) |
 | X07 | completePendingSlot | تکمیل آخرین بازهٔ ثبت‌نشده | بازکردن pending انتخاب‌شده در A06؛ items.find نخستین واجد شرط را انتخاب می‌کند؛ نام و منطق فعلی حفظ شوند | action | فعال | src/screens/TodayScreen.tsx:153 (Button.actionCode)؛ src/components/TodayOverview.tsx:143 (Button.actionCode) |
 | X08 | openTodayTimeline | مرور امروز / خط زمان | setReview(true)؛ A05 | action | فعال | src/components/TodayOverview.tsx:151 (Button.actionCode) |
@@ -56,30 +56,30 @@
 | X25 | keepExistingIcon | نگه‌داشتن آیکون قبلی | draft به فرمان keep | action | فعال | src/components/ActivityEditor.tsx:176 (Button.actionCode) |
 | X26 | selectAssetIcon | انتخاب آیکون منتخب | draft به selectAsset؛ هنوز ذخیره نمی‌کند | action | فعال | src/components/ActivityEditor.tsx:207 (IdentifierBadge.code) |
 | X27 | selectLegacyIcon | انتخاب آیکون قدیمی یا واردشده | draft به selectLegacy(raw) | action | فعال | src/components/ActivityEditor.tsx:229 (Button.actionCode)؛ src/components/ActivityEditor.tsx:258 (IdentifierBadge.code) |
-| X28 | cancelActivityEditor | انصراف از فرم فعالیت | بستن D02 و کنارگذاشتن draft؛ محدودیت busy محفوظ | action | فعال | src/components/ActivityEditor.tsx:290 (Button.actionCode) |
-| X29 | saveNewActivity | ذخیرهٔ فعالیت جدید | saveActivity(null,…)؛ ایجاد سپس بستن | action | فعال | src/components/ActivityEditor.tsx:282 (Button.actionCode) |
-| X30 | saveActivityEdit | ذخیرهٔ ویرایش فعالیت | saveActivity(id,…) با snapshot؛ به‌روزرسانی سپس بستن | action | فعال | src/components/ActivityEditor.tsx:281 (Button.actionCode) |
+| X28 | cancelActivityEditor | انصراف از فرم فعالیت | بستن D02 و کنارگذاشتن draft؛ محدودیت busy محفوظ | action | فعال | src/components/ActivityEditor.tsx:285 (Button.actionCode) |
+| X29 | saveNewActivity | ذخیرهٔ فعالیت جدید | saveActivity(null,…)؛ ایجاد سپس بستن | action | فعال | src/components/ActivityEditor.tsx:277 (Button.actionCode) |
+| X30 | saveActivityEdit | ذخیرهٔ ویرایش فعالیت | saveActivity(id,…) با snapshot؛ به‌روزرسانی سپس بستن | action | فعال | src/components/ActivityEditor.tsx:276 (Button.actionCode) |
 | X31 | retryActivityEditorRead | تلاش دوباره برای بارگذاری فرم | خواندن snapshot فعالیت و metadata آیکون | action | فعال | src/components/ActivityEditor.tsx:147 (Button.actionCode) |
-| X32 | openClassificationPicker | بازکردن انتخاب دسته | بازکردن D03 و بازنشانی جست‌وجو/سطح؛ Deferred/Reserved | action | رزرو | src/components/ClassificationPicker.tsx |
-| X33 | selectClassification | انتخاب دسته | onChange(code) و بستن D03؛ draft فراخواننده؛ Deferred/Reserved | action | رزرو | src/components/ClassificationPicker.tsx |
-| X34 | clearClassification | بدون دسته | onChange(null) و بستن D03؛ Deferred/Reserved | action | رزرو | src/components/ClassificationPicker.tsx |
-| X35 | classificationParent | سطح بالاتر دسته | والد در همان پنجره؛ Deferred/Reserved | action | رزرو | src/components/ClassificationPicker.tsx |
-| X36 | classificationChildren | جزئیات دسته | فرزندان و پاک‌کردن جست‌وجو؛ Deferred/Reserved | action | رزرو | src/components/ClassificationPicker.tsx |
-| X37 | openClassificationDefinition | تعریف رسمی دسته | URL منبع رسمی با کد دسته؛ Deferred/Reserved | action | رزرو | src/components/ClassificationPicker.tsx |
-| X38 | cancelConfirmation | انصراف از تأیید | بستن D05/D06/D07 بدون تأیید عملیات | action | فعال | src/screens/CheckInScreen.tsx:130 (identifierAlert.actionCode)؛ src/screens/CheckInScreen.tsx:269 (identifierAlert.actionCode)؛ src/screens/CheckInScreen.tsx:348 (identifierAlert.actionCode) |
-| X39 | commitNewCheckIn | ثبت یک‌لمسی فعالیت | commitCheckIn؛ پس از موفقیت replace با A07 | action | فعال | src/screens/CheckInScreen.tsx:398 (ActivityGrid.actionCode)؛ src/components/ActivityGrid.tsx:14 (shared component default) |
-| X40 | requestCheckInChange | انتخاب فعالیت جایگزین | بازکردن D05؛ هنوز write ندارد | action | فعال | src/screens/CheckInScreen.tsx:397 (ActivityGrid.actionCode) |
-| X41 | saveClassificationChange | ذخیرهٔ تغییر دسته | درخواست تغییر دسته همان فعالیت؛ D05؛ Deferred/Reserved | action | رزرو | src/screens/CheckInScreen.tsx |
-| X42 | confirmCheckInChange | تأیید تغییر ثبت | save(a) و commit؛ تغییر موفق به A07 | action | فعال | src/screens/CheckInScreen.tsx:135 (identifierAlert.actionCode) |
-| X43 | editCheckIn | ویرایش ثبت | حالت ویرایش در A06 | action | فعال | src/screens/CheckInScreen.tsx:288 (Button.actionCode) |
-| X44 | retrySelectedCheckIn | تلاش دوباره برای ثبت انتخابی | commit مجدد انتخاب ناموفق؛ guard موجود محفوظ | action | فعال | src/screens/CheckInScreen.tsx:191 (Button.actionCode) |
-| X45 | reopenSkippedSlot | ثبت فعالیت برای بازهٔ ردشده | setReopened(true)؛ انتخاب فعالیت بدون write | action | فعال | src/screens/CheckInScreen.tsx:201 (Button.actionCode) |
-| X46 | requestSkipSlot | درخواست ردکردن بازه | بازکردن D07 | action | فعال | src/screens/CheckInScreen.tsx:339 (Button.actionCode) |
-| X47 | confirmSkipSlot | تأیید ردکردن بازه | skipSlot(slotId) سپس بازگشت | action | فعال | src/screens/CheckInScreen.tsx:352 (identifierAlert.actionCode) |
-| X48 | inheritActivityClassification | استفاده از پیش‌فرض فعالیت | draft طبقه‌بندی mode="inherit"؛ Deferred/Reserved | action | رزرو | src/screens/CheckInScreen.tsx |
-| X49 | requestTimezoneConfirmation | درخواست تأیید منطقهٔ ثبت | بازکردن D06 | action | فعال | src/screens/CheckInScreen.tsx:259 (Button.actionCode) |
-| X50 | confirmEntryTimezone | تأیید منطقهٔ زمانی ثبت | confirmTimeContext(ctx,zone) و بارگذاری مجدد | action | فعال | src/screens/CheckInScreen.tsx:273 (identifierAlert.actionCode) |
-| X51 | retryCheckInRead | تلاش مجدد برای بارگذاری ثبت | خواندن context و فعالیت‌ها؛ بدون commit | action | فعال | src/screens/CheckInScreen.tsx:377 (Button.actionCode) |
+| X32 | openClassificationPicker | بازکردن انتخاب دسته | بازکردن D03 و بازنشانی جست‌وجو/سطح؛ Deferred/Reserved | action | رزرو | — |
+| X33 | selectClassification | انتخاب دسته | onChange(code) و بستن D03؛ draft فراخواننده؛ Deferred/Reserved | action | رزرو | — |
+| X34 | clearClassification | بدون دسته | onChange(null) و بستن D03؛ Deferred/Reserved | action | رزرو | — |
+| X35 | classificationParent | سطح بالاتر دسته | والد در همان پنجره؛ Deferred/Reserved | action | رزرو | — |
+| X36 | classificationChildren | جزئیات دسته | فرزندان و پاک‌کردن جست‌وجو؛ Deferred/Reserved | action | رزرو | — |
+| X37 | openClassificationDefinition | تعریف رسمی دسته | URL منبع رسمی با کد دسته؛ Deferred/Reserved | action | رزرو | — |
+| X38 | cancelConfirmation | انصراف از تأیید | بستن D05/D06/D07 بدون تأیید عملیات | action | فعال | src/screens/CheckInScreen.tsx:125 (identifierAlert.actionCode)؛ src/screens/CheckInScreen.tsx:256 (identifierAlert.actionCode)؛ src/screens/CheckInScreen.tsx:319 (identifierAlert.actionCode) |
+| X39 | commitNewCheckIn | ثبت یک‌لمسی فعالیت | commitCheckIn؛ پس از موفقیت replace با A07 | action | فعال | src/screens/CheckInScreen.tsx:369 (ActivityGrid.actionCode)؛ src/components/ActivityGrid.tsx:14 (shared component default) |
+| X40 | requestCheckInChange | انتخاب فعالیت جایگزین | بازکردن D05؛ هنوز write ندارد | action | فعال | src/screens/CheckInScreen.tsx:368 (ActivityGrid.actionCode) |
+| X41 | saveClassificationChange | ذخیرهٔ تغییر دسته | درخواست تغییر دسته همان فعالیت؛ D05؛ Deferred/Reserved | action | رزرو | — |
+| X42 | confirmCheckInChange | تأیید تغییر ثبت | save(a) و commit؛ تغییر موفق به A07 | action | فعال | src/screens/CheckInScreen.tsx:130 (identifierAlert.actionCode) |
+| X43 | editCheckIn | ویرایش ثبت | حالت ویرایش در A06 | action | فعال | src/screens/CheckInScreen.tsx:275 (Button.actionCode) |
+| X44 | retrySelectedCheckIn | تلاش دوباره برای ثبت انتخابی | commit مجدد انتخاب ناموفق؛ guard موجود محفوظ | action | فعال | src/screens/CheckInScreen.tsx:181 (Button.actionCode) |
+| X45 | reopenSkippedSlot | ثبت فعالیت برای بازهٔ ردشده | setReopened(true)؛ انتخاب فعالیت بدون write | action | فعال | src/screens/CheckInScreen.tsx:191 (Button.actionCode) |
+| X46 | requestSkipSlot | درخواست ردکردن بازه | بازکردن D07 | action | فعال | src/screens/CheckInScreen.tsx:310 (Button.actionCode) |
+| X47 | confirmSkipSlot | تأیید ردکردن بازه | skipSlot(slotId) سپس بازگشت | action | فعال | src/screens/CheckInScreen.tsx:323 (identifierAlert.actionCode) |
+| X48 | inheritActivityClassification | استفاده از پیش‌فرض فعالیت | draft طبقه‌بندی mode="inherit"؛ Deferred/Reserved | action | رزرو | — |
+| X49 | requestTimezoneConfirmation | درخواست تأیید منطقهٔ ثبت | بازکردن D06 | action | فعال | src/screens/CheckInScreen.tsx:246 (Button.actionCode) |
+| X50 | confirmEntryTimezone | تأیید منطقهٔ زمانی ثبت | confirmTimeContext(ctx,zone) و بارگذاری مجدد | action | فعال | src/screens/CheckInScreen.tsx:260 (identifierAlert.actionCode) |
+| X51 | retryCheckInRead | تلاش مجدد برای بارگذاری ثبت | خواندن context و فعالیت‌ها؛ بدون commit | action | فعال | src/screens/CheckInScreen.tsx:348 (Button.actionCode) |
 | X52 | retryRemainingCount | تلاش دوباره برای شمارش | فقط getDayRemaining؛ ثبت دوباره اجرا نمی‌شود | action | فعال | src/screens/SaveResultScreen.tsx:76 (Button.actionCode) |
 | X53 | openSameDayBacklog | مرور باقی‌مانده‌های همان روز | replace("Backlog",{dayScope:scope})؛ A08 | action | فعال | src/screens/SaveResultScreen.tsx:90 (Button.actionCode) |
 | X54 | undoEntryEdit | بازگردانی تغییر ثبت | undoEntryEdit سپس replace("CheckIn") با همان بازه/scope؛ شکست موجود محفوظ | action | فعال | src/screens/SaveResultScreen.tsx:99 (Button.actionCode) |
@@ -123,15 +123,15 @@
 | X92 | retryReportPreferences | تلاش دوباره برای ترجیحات گزارش | loadPreferences | action | فعال | src/screens/InsightsScreen.tsx:222 (Button.actionCode) |
 | X93 | editActivityName | نام فعالیت | draft نام | action | فعال | src/components/ActivityEditor.tsx:155 (Input.actionCode) |
 | X94 | editIconSearch | جست‌وجو / ورود آیکون | تغییر جست‌وجو/متن آیکون؛ انتخاب با X27 | action | فعال | src/components/ActivityEditor.tsx:224 (Input.actionCode) |
-| X95 | searchClassification | جست‌وجوی دسته | فیلتر دسته‌ها؛ Deferred/Reserved | action | رزرو | src/components/ClassificationPicker.tsx |
-| X96 | editConfirmedTimezone | منطقهٔ زمانی تأییدشده | draft منطقه؛ commit با X50 | action | فعال | src/screens/CheckInScreen.tsx:252 (Input.actionCode) |
+| X95 | searchClassification | جست‌وجوی دسته | فیلتر دسته‌ها؛ Deferred/Reserved | action | رزرو | — |
+| X96 | editConfirmedTimezone | منطقهٔ زمانی تأییدشده | draft منطقه؛ commit با X50 | action | فعال | src/screens/CheckInScreen.tsx:239 (Input.actionCode) |
 | X97 | editCustomReportStart | تاریخ شروع گزارش دلخواه | draft شروع | action | فعال | src/screens/InsightsScreen.tsx:196 (Input.actionCode) |
 | X98 | editCustomReportEnd | تاریخ پایان گزارش دلخواه | draft پایان | action | فعال | src/screens/InsightsScreen.tsx:204 (Input.actionCode) |
 | X99 | openMoreReports | بازکردن بیشتر گزارش | فقط بازکردن D08؛ بدون query/write/navigation تازه | action | رزرو | — |
 | X100 | showPreviousCalendarDay | روز قبل مطلق | mode=day, offset=-1؛ متفاوت از حرکت نسبی X85 | action | رزرو | — |
 | X101 | expandAllResultActivities | مشاهده همه | گسترش inline همه r.activities همان query/result؛ بدون صفحه یا محاسبه تازه | action | رزرو | — |
-| X102 | openActivitiesFromEmptyCheckIn | افزودن یا بازگرداندن فعالیت | navigate("Main", {screen:"Activities"})؛ خودش فعالیت ایجاد یا restore نمی‌کند، بلکه کاربر را به صفحهٔ فعالیت‌ها می‌برد. | action | فعال | src/screens/CheckInScreen.tsx:328 (Button.actionCode) |
+| X102 | openActivitiesFromEmptyCheckIn | افزودن یا بازگرداندن فعالیت | navigate("Main", {screen:"Activities"})؛ خودش فعالیت ایجاد یا restore نمی‌کند، بلکه کاربر را به صفحهٔ فعالیت‌ها می‌برد. | action | فعال | src/screens/CheckInScreen.tsx:299 (Button.actionCode) |
 
 کدهای رزرو badge فعال ندارند؛ وجود آن‌ها قابلیت تازه‌ای ایجاد نمی‌کند. کد بازنشسته دوباره تخصیص داده نمی‌شود و با نام/اثر قبلی در registry باقی می‌ماند. مرجع این نسخه کد بازنشسته‌ای اعلام نکرده است. تاریخچهٔ تخصیص Rev01 و الحاقیه در rc3-id01/allocations-Rev01.json و allocations-Rev02.json حفظ می‌شود؛ generator راهنما این تاریخچه را بازنویسی نمی‌کند.
 
-ICATUS در سورس میانی هنوز pending hide است. وضعیت رزرو/Deferred در registry شاهد حذف واقعی رابط نیست؛ پنهان‌سازی خارج از این task است و برای RC3 نهایی لازم است.
+رابط قابل‌دسترسی ICATUS در RC3-ICATUS-HIDE-01 حذف شده است؛ داده‌ها و سیاست سرویس حفظ شده‌اند. D03/X32…X37/X41/X48/X95 رزرو و بدون محل استفادهٔ فعال‌اند. D08/X99…X101 همچنان رزرو طراحی بعدی‌اند. شواهد پنهان‌سازی و پوشش جاری در گزارش مرحله و rc3-icatus-hide01 ثبت‌اند؛ پذیرش گوشی جدا و باز است.

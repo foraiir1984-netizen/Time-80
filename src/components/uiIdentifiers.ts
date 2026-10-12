@@ -1,7 +1,20 @@
 // UI-only allocations, explicitly copied from RC3-ID-REF-01 Rev01.
 // Codes never enter user data, schema or notification payloads.
-export const uiIdentifierRegistryVersion = "RC3-ID-01-Rev02";
+export const uiIdentifierRegistryVersion = "RC3-ID-01-Rev03";
 export const uiIdentifierReferenceComplete = true;
+export const uiClassificationVisibility = "hidden" as const;
+export const reservedClassificationUiCodes: readonly string[] = [
+  "D03",
+  "X32",
+  "X33",
+  "X34",
+  "X35",
+  "X36",
+  "X37",
+  "X41",
+  "X48",
+  "X95",
+];
 export const reservedUiCodesInThisStage = [
   "D03",
   "D08",
@@ -27,7 +40,7 @@ export type UiIdentifier = {
   sites: readonly string[];
 };
 // Stable semantic keys and explicit allocations; array/menu/file order is irrelevant.
-// Reserved ICATUS sites describe existing unlabelled UI (pending hide).
+// Classification UI was removed in RC3-ICATUS-HIDE-01; allocations remain reserved.
 export const uiIdentifiers = {
   openActivitiesFromEmptyCheckIn: {
     code: "X102",
@@ -36,7 +49,7 @@ export const uiIdentifiers = {
       'navigate("Main", {screen:"Activities"})؛ خودش فعالیت ایجاد یا restore نمی‌کند، بلکه کاربر را به صفحهٔ فعالیت‌ها می‌برد.',
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:328 (Button.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:299 (Button.actionCode)"],
   },
   today: {
     code: "A01",
@@ -89,8 +102,8 @@ export const uiIdentifiers = {
     status: "active",
     sites: [
       "App.tsx:80 (stackPageCodes.CheckIn)",
-      "src/screens/CheckInScreen.tsx:151 (IdentifierTitle.code)",
-      "src/screens/CheckInScreen.tsx:371 (IdentifierTitle.code)",
+      "src/screens/CheckInScreen.tsx:141 (IdentifierTitle.code)",
+      "src/screens/CheckInScreen.tsx:342 (IdentifierTitle.code)",
     ],
   },
   saveResult: {
@@ -173,10 +186,10 @@ export const uiIdentifiers = {
     code: "D03",
     nameFa: "انتخاب دستهٔ ICATUS",
     effectFa:
-      "انتخاب اختیاری، جست‌وجو و سلسله‌مراتب؛ callerها D02 و A06؛ Deferred/Reserved و pending hide",
+      "انتخاب اختیاری، جست‌وجو و سلسله‌مراتب؛ رابط حذف شده؛ Deferred/Reserved",
     kind: "dialog",
     status: "reserved",
-    sites: ["src/components/ClassificationPicker.tsx"],
+    sites: [],
   },
   unsavedSettingsDialog: {
     code: "D04",
@@ -189,11 +202,10 @@ export const uiIdentifiers = {
   changeEntryDialog: {
     code: "D05",
     nameFa: "تأیید تغییر ثبت",
-    effectFa:
-      "تأیید تغییر فعالیت یا دسته ثبت موجود در RC2؛ تغییر سیاست داده مجاز نیست",
+    effectFa: "تأیید تغییر فعالیت ثبت موجود؛ سیاست دادهٔ سرویس محفوظ است",
     kind: "dialog",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:124 (identifierAlert.title)"],
+    sites: ["src/screens/CheckInScreen.tsx:119 (identifierAlert.title)"],
   },
   confirmTimezoneDialog: {
     code: "D06",
@@ -201,7 +213,7 @@ export const uiIdentifiers = {
     effectFa: "تأیید context زمانی ثبت",
     kind: "dialog",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:263 (identifierAlert.title)"],
+    sites: ["src/screens/CheckInScreen.tsx:250 (identifierAlert.title)"],
   },
   skipSlotDialog: {
     code: "D07",
@@ -209,7 +221,7 @@ export const uiIdentifiers = {
     effectFa: "ردکردن بازه یا انصراف",
     kind: "dialog",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:342 (identifierAlert.title)"],
+    sites: ["src/screens/CheckInScreen.tsx:313 (identifierAlert.title)"],
   },
   selectTodayTab: {
     code: "X01",
@@ -250,8 +262,8 @@ export const uiIdentifiers = {
     kind: "action",
     status: "active",
     sites: [
-      "src/screens/CheckInScreen.tsx:206 (Button.actionCode)",
-      "src/screens/CheckInScreen.tsx:293 (Button.actionCode)",
+      "src/screens/CheckInScreen.tsx:196 (Button.actionCode)",
+      "src/screens/CheckInScreen.tsx:280 (Button.actionCode)",
       "src/components/Ui.tsx:283 (Button.actionCode)",
     ],
   },
@@ -460,7 +472,7 @@ export const uiIdentifiers = {
     effectFa: "بستن D02 و کنارگذاشتن draft؛ محدودیت busy محفوظ",
     kind: "action",
     status: "active",
-    sites: ["src/components/ActivityEditor.tsx:290 (Button.actionCode)"],
+    sites: ["src/components/ActivityEditor.tsx:285 (Button.actionCode)"],
   },
   saveNewActivity: {
     code: "X29",
@@ -468,7 +480,7 @@ export const uiIdentifiers = {
     effectFa: "saveActivity(null,…)؛ ایجاد سپس بستن",
     kind: "action",
     status: "active",
-    sites: ["src/components/ActivityEditor.tsx:282 (Button.actionCode)"],
+    sites: ["src/components/ActivityEditor.tsx:277 (Button.actionCode)"],
   },
   saveActivityEdit: {
     code: "X30",
@@ -476,7 +488,7 @@ export const uiIdentifiers = {
     effectFa: "saveActivity(id,…) با snapshot؛ به‌روزرسانی سپس بستن",
     kind: "action",
     status: "active",
-    sites: ["src/components/ActivityEditor.tsx:281 (Button.actionCode)"],
+    sites: ["src/components/ActivityEditor.tsx:276 (Button.actionCode)"],
   },
   retryActivityEditorRead: {
     code: "X31",
@@ -492,7 +504,7 @@ export const uiIdentifiers = {
     effectFa: "بازکردن D03 و بازنشانی جست‌وجو/سطح؛ Deferred/Reserved",
     kind: "action",
     status: "reserved",
-    sites: ["src/components/ClassificationPicker.tsx"],
+    sites: [],
   },
   selectClassification: {
     code: "X33",
@@ -500,7 +512,7 @@ export const uiIdentifiers = {
     effectFa: "onChange(code) و بستن D03؛ draft فراخواننده؛ Deferred/Reserved",
     kind: "action",
     status: "reserved",
-    sites: ["src/components/ClassificationPicker.tsx"],
+    sites: [],
   },
   clearClassification: {
     code: "X34",
@@ -508,7 +520,7 @@ export const uiIdentifiers = {
     effectFa: "onChange(null) و بستن D03؛ Deferred/Reserved",
     kind: "action",
     status: "reserved",
-    sites: ["src/components/ClassificationPicker.tsx"],
+    sites: [],
   },
   classificationParent: {
     code: "X35",
@@ -516,7 +528,7 @@ export const uiIdentifiers = {
     effectFa: "والد در همان پنجره؛ Deferred/Reserved",
     kind: "action",
     status: "reserved",
-    sites: ["src/components/ClassificationPicker.tsx"],
+    sites: [],
   },
   classificationChildren: {
     code: "X36",
@@ -524,7 +536,7 @@ export const uiIdentifiers = {
     effectFa: "فرزندان و پاک‌کردن جست‌وجو؛ Deferred/Reserved",
     kind: "action",
     status: "reserved",
-    sites: ["src/components/ClassificationPicker.tsx"],
+    sites: [],
   },
   openClassificationDefinition: {
     code: "X37",
@@ -532,7 +544,7 @@ export const uiIdentifiers = {
     effectFa: "URL منبع رسمی با کد دسته؛ Deferred/Reserved",
     kind: "action",
     status: "reserved",
-    sites: ["src/components/ClassificationPicker.tsx"],
+    sites: [],
   },
   cancelConfirmation: {
     code: "X38",
@@ -541,9 +553,9 @@ export const uiIdentifiers = {
     kind: "action",
     status: "active",
     sites: [
-      "src/screens/CheckInScreen.tsx:130 (identifierAlert.actionCode)",
-      "src/screens/CheckInScreen.tsx:269 (identifierAlert.actionCode)",
-      "src/screens/CheckInScreen.tsx:348 (identifierAlert.actionCode)",
+      "src/screens/CheckInScreen.tsx:125 (identifierAlert.actionCode)",
+      "src/screens/CheckInScreen.tsx:256 (identifierAlert.actionCode)",
+      "src/screens/CheckInScreen.tsx:319 (identifierAlert.actionCode)",
     ],
   },
   commitNewCheckIn: {
@@ -553,7 +565,7 @@ export const uiIdentifiers = {
     kind: "action",
     status: "active",
     sites: [
-      "src/screens/CheckInScreen.tsx:398 (ActivityGrid.actionCode)",
+      "src/screens/CheckInScreen.tsx:369 (ActivityGrid.actionCode)",
       "src/components/ActivityGrid.tsx:14 (shared component default)",
     ],
   },
@@ -563,7 +575,7 @@ export const uiIdentifiers = {
     effectFa: "بازکردن D05؛ هنوز write ندارد",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:397 (ActivityGrid.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:368 (ActivityGrid.actionCode)"],
   },
   saveClassificationChange: {
     code: "X41",
@@ -571,7 +583,7 @@ export const uiIdentifiers = {
     effectFa: "درخواست تغییر دسته همان فعالیت؛ D05؛ Deferred/Reserved",
     kind: "action",
     status: "reserved",
-    sites: ["src/screens/CheckInScreen.tsx"],
+    sites: [],
   },
   confirmCheckInChange: {
     code: "X42",
@@ -579,7 +591,7 @@ export const uiIdentifiers = {
     effectFa: "save(a) و commit؛ تغییر موفق به A07",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:135 (identifierAlert.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:130 (identifierAlert.actionCode)"],
   },
   editCheckIn: {
     code: "X43",
@@ -587,7 +599,7 @@ export const uiIdentifiers = {
     effectFa: "حالت ویرایش در A06",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:288 (Button.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:275 (Button.actionCode)"],
   },
   retrySelectedCheckIn: {
     code: "X44",
@@ -595,7 +607,7 @@ export const uiIdentifiers = {
     effectFa: "commit مجدد انتخاب ناموفق؛ guard موجود محفوظ",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:191 (Button.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:181 (Button.actionCode)"],
   },
   reopenSkippedSlot: {
     code: "X45",
@@ -603,7 +615,7 @@ export const uiIdentifiers = {
     effectFa: "setReopened(true)؛ انتخاب فعالیت بدون write",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:201 (Button.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:191 (Button.actionCode)"],
   },
   requestSkipSlot: {
     code: "X46",
@@ -611,7 +623,7 @@ export const uiIdentifiers = {
     effectFa: "بازکردن D07",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:339 (Button.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:310 (Button.actionCode)"],
   },
   confirmSkipSlot: {
     code: "X47",
@@ -619,7 +631,7 @@ export const uiIdentifiers = {
     effectFa: "skipSlot(slotId) سپس بازگشت",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:352 (identifierAlert.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:323 (identifierAlert.actionCode)"],
   },
   inheritActivityClassification: {
     code: "X48",
@@ -627,7 +639,7 @@ export const uiIdentifiers = {
     effectFa: 'draft طبقه‌بندی mode="inherit"؛ Deferred/Reserved',
     kind: "action",
     status: "reserved",
-    sites: ["src/screens/CheckInScreen.tsx"],
+    sites: [],
   },
   requestTimezoneConfirmation: {
     code: "X49",
@@ -635,7 +647,7 @@ export const uiIdentifiers = {
     effectFa: "بازکردن D06",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:259 (Button.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:246 (Button.actionCode)"],
   },
   confirmEntryTimezone: {
     code: "X50",
@@ -643,7 +655,7 @@ export const uiIdentifiers = {
     effectFa: "confirmTimeContext(ctx,zone) و بارگذاری مجدد",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:273 (identifierAlert.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:260 (identifierAlert.actionCode)"],
   },
   retryCheckInRead: {
     code: "X51",
@@ -651,7 +663,7 @@ export const uiIdentifiers = {
     effectFa: "خواندن context و فعالیت‌ها؛ بدون commit",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:377 (Button.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:348 (Button.actionCode)"],
   },
   retryRemainingCount: {
     code: "X52",
@@ -1021,7 +1033,7 @@ export const uiIdentifiers = {
     effectFa: "فیلتر دسته‌ها؛ Deferred/Reserved",
     kind: "action",
     status: "reserved",
-    sites: ["src/components/ClassificationPicker.tsx"],
+    sites: [],
   },
   editConfirmedTimezone: {
     code: "X96",
@@ -1029,7 +1041,7 @@ export const uiIdentifiers = {
     effectFa: "draft منطقه؛ commit با X50",
     kind: "action",
     status: "active",
-    sites: ["src/screens/CheckInScreen.tsx:252 (Input.actionCode)"],
+    sites: ["src/screens/CheckInScreen.tsx:239 (Input.actionCode)"],
   },
   editCustomReportStart: {
     code: "X97",

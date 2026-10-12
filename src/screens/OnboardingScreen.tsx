@@ -46,7 +46,7 @@ export function OnboardingScreen({ onDone }: { onDone: () => void }) {
       />
       <Text style={ui.text}>
         با یادآوری‌های کوتاه ثبت کن زمانت صرف چه کاری شده است. داده‌ها روی همین
-        گوشی ذخیره می‌شوند و دسته‌بندی ICATUS اختیاری است.
+        گوشی ذخیره می‌شوند.
       </Text>
       <ErrorText error={error} />
       <Text style={ui.text}>{message}</Text>

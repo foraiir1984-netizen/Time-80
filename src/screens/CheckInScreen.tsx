@@ -13,7 +13,6 @@ import React, {
 } from "react";
 import { View, Text, AppState } from "react-native";
 import { ActivityGrid } from "../components/ActivityGrid";
-import { ClassificationPicker } from "../components/ClassificationPicker";
 import {
   ui,
   Button,
@@ -31,8 +30,7 @@ import {
 } from "../services/checkInService";
 import { getRankedActivities } from "../services/activityService";
 import { skipSlot } from "../services/slotService";
-import type { Activity, EntryContext, Selection } from "../types/domain";
-import { nodes } from "../services/classificationDataset";
+import type { Activity, EntryContext } from "../types/domain";
 export function CheckInScreen({ route, navigation }: any) {
   const { start, end, source, slotId } = route.params,
     [ctx, setCtx] = useState<EntryContext | null>(null),
@@ -42,7 +40,6 @@ export function CheckInScreen({ route, navigation }: any) {
     [notice, setNotice] = useState(route.params.notice ?? ""),
     [reopened, setReopened] = useState(false),
     [editing, setEditing] = useState(false),
-    [selection, setSelection] = useState<Selection | undefined>(),
     [zone, setZone] = useState(""),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
@@ -65,8 +62,6 @@ export function CheckInScreen({ route, navigation }: any) {
     ]);
     setCtx(c);
     setItems(a.allActivities);
-
-    setSelection(undefined);
   }
   useFocusEffect(
     useCallback(() => {
@@ -94,7 +89,7 @@ export function CheckInScreen({ route, navigation }: any) {
         source: source ?? "manual",
         expectedEntry: ctx.entry,
         expectedClassificationRevision: ctx.classification?.revision ?? null,
-        classificationSelection: selection,
+        // No manual selection: preserve the service's existing inherit/change policy.
       });
       setDraft(null);
       setEditing(false);
@@ -123,7 +118,7 @@ export function CheckInScreen({ route, navigation }: any) {
       identifierAlert(
         uiIdentifiers.changeEntryDialog.code,
         "تغییر ثبت؟",
-        "فعالیت یا دستهٔ این بازه تغییر کند؟",
+        "فعالیت این بازه تغییر کند؟",
         [
           {
             text: "انصراف",
@@ -139,11 +134,6 @@ export function CheckInScreen({ route, navigation }: any) {
       );
     } else save(a);
   }
-  const code =
-      selection?.mode === "explicit"
-        ? selection.code
-        : (ctx?.classification?.code ?? null),
-    n = nodes.find((n) => n.code === code);
   const header = (
     <>
       <IdentifierTitle
@@ -241,9 +231,6 @@ export function CheckInScreen({ route, navigation }: any) {
               "فعالیت آرشیوشده"}
           </Text>
           <Text style={ui.muted}>
-            دسته: {n?.title_fa ?? n?.title_en ?? "مشخص نشده"}
-          </Text>
-          <Text style={ui.muted}>
             منطقهٔ زمان ثبت: {ctx.context?.timezone_id ?? "نامعلوم"}
           </Text>
           <Input
@@ -297,22 +284,6 @@ export function CheckInScreen({ route, navigation }: any) {
       ) : (
         <>
           <Text style={ui.text}>این زمان را بیشتر صرف چه کاری کردی؟</Text>
-          <ClassificationPicker
-            value={code}
-            onChange={(code) => setSelection({ mode: "explicit", code })}
-          />
-          <Button
-            variant="secondary"
-            title="استفاده از پیش‌فرض فعالیت"
-            onPress={() => setSelection({ mode: "inherit" })}
-          />
-          {ctx?.entry && (
-            <Button
-              title="ذخیرهٔ تغییر دسته"
-              disabled={busy}
-              onPress={() => choose({ id: ctx.entry!.activity_id } as Activity)}
-            />
-          )}
           <Text accessibilityRole="header" style={ui.title}>
             همهٔ فعالیت‌ها
           </Text>

@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { collectUiIdentifierUses } from "./inspect-ui-identifiers";
 import {
   uiIdentifiers,
+  reservedClassificationUiCodes,
   uiIdentifierRegistryVersion,
   validateUiIdentifierRegistry,
 } from "../src/components/uiIdentifiers";
@@ -16,7 +17,7 @@ const evidence = JSON.parse(readFileSync(evidencePath, "utf8")) as {
   codes: Record<string, string[]>;
   renderedSites?: Record<string, string[]>;
 };
-const out = resolve(process.argv[3] ?? "docs/v0.3/rc3-id01");
+const out = resolve(process.argv[3] ?? "docs/v0.3/rc3-icatus-hide01");
 mkdirSync(out, { recursive: true });
 validateUiIdentifierRegistry(uiIdentifiers);
 const uses = collectUiIdentifierUses();
@@ -58,16 +59,18 @@ for (const [key, e] of Object.entries(uiIdentifiers).sort(([, a], [, b]) =>
       nameFa: e.nameFa,
       effectFa: e.effectFa,
       status: "Reserved",
-      source: e.sites.join("; ") || "Future design; no existing source binding",
+      source: reservedClassificationUiCodes.includes(e.code)
+        ? "Classification UI removed; no accessible source site"
+        : "Future design; no existing source binding",
       witness: "No active badge/control binding",
-      limitation: e.sites.length
-        ? "ICATUS existing UI pending hide; reservation does not prove UI removal."
+      limitation: reservedClassificationUiCodes.includes(e.code)
+        ? "UI removal verified by behavior tests; allocation/data policy retained. Native phone acceptance Not run."
         : "Deferred M-01/M-04; capability not implemented.",
     });
 }
 const csvCell = (s: string) => `"${s.replaceAll('"', '""')}"`;
 writeFileSync(
-  resolve(out, "coverage-Rev02.csv"),
+  resolve(out, "coverage-Rev01.csv"),
   [
     [
       "registry_version",
@@ -111,15 +114,15 @@ const active = Object.values(uiIdentifiers).filter(
     (e) => e.status === "reserved",
   ).length;
 writeFileSync(
-  resolve(out, "RC3_UI_Coverage_Rev02_FA.md"),
+  resolve(out, "RC3_UI_Coverage_Rev01_FA.md"),
   [
-    "# پوشش RC3-ID-01 — Rev02",
+    "# پوشش RC3-ICATUS-HIDE-01 — Rev01",
     "",
     `Registry: ${uiIdentifierRegistryVersion}؛ ۱۲۲ مدخل (${active} فعال، ${reserved} رزرو)، ${uses.length} اتصال صریح در سورس.`,
     "",
     "Implemented به معنای اتصال سورس همراه شاهد رفتار renderer است؛ پذیرش بصری گوشی و اندازه‌گیری target نیست. این جدول هر اتصال صریح را جدا نشان می‌دهد. کدهای منتقل‌شده با props مشترک (Button/Input/ActivityGrid/SlotRow/header/tab) و تکرار داده با تست‌های UI و current-source-uses.json پیگیری می‌شوند. نمونه‌های مشاهده‌شده در rendered-code-evidence-UTC.json و rendered-code-evidence-Tehran.json هستند.",
     "",
-    "تمام activeها شاهد renderer دارند؛ هیچ رزرو binding فعال ندارد. ICATUS در سورس میانی pending hide است و برای RC3 نهایی به حذف واقعی UI نیاز دارد. AC-ID نهایی وابسته به اجرای گوشی/پوشش مراحل بعد است؛ M-01/M-04 و TalkBack همچنان Deferred / Not run.",
+    "تمام activeها شاهد renderer دارند؛ هیچ رزرو binding فعال ندارد. رابط قابل‌دسترسی ICATUS حذف شده و کدهای آن رزرو باقی‌اند؛ شاهد رفتار پنهان‌سازی در گزارش مرحله ثبت است. AC-ID نهایی وابسته به اجرای گوشی/پوشش مراحل بعد است؛ M-01/M-04 هنوز اجرا نشده‌اند؛ فقط TalkBack Deferred / Not run است.",
     "",
     "| کد | نام | وضعیت | محل واقعی | شاهد | حد |",
     "| --- | --- | --- | --- | --- | --- |",

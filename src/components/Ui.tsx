@@ -446,5 +446,17 @@ export function ErrorText({ error }: { error: string }) {
     </Text>
   ) : null;
 }
-export const errorMessage = (e: unknown) =>
-  e instanceof Error ? e.message : String(e);
+// Presentation only: validation/rollback still happens in the unchanged services.
+export function errorMessage(e: unknown) {
+  const message = e instanceof Error ? e.message : String(e);
+  if (message === "پیش‌فرض تغییر کرده؛ دوباره باز کن")
+    return "اطلاعات فعالیت تغییر کرده؛ فرم را ببندید و دوباره باز کنید.";
+  if (
+    message === "دسته تغییر کرده؛ دوباره باز کن" ||
+    message === "اطلاعات دسته تغییر کرده؛ صفحه را تازه کن"
+  )
+    return "اطلاعات ثبت تغییر کرده؛ صفحه را دوباره باز کنید.";
+  if (/ICATUS|classificat(?:ion|ions)|دسته|طبقه‌بندی/i.test(message))
+    return "اطلاعات داخلی برنامه قابل بررسی نیست؛ دوباره تلاش کنید و اگر خطا ادامه داشت، آن را گزارش کنید.";
+  return message;
+}

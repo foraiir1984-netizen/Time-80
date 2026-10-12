@@ -314,21 +314,6 @@ export function InsightsScreen() {
               </Text>
             </View>
           ))}
-          <Text style={ui.title}>دسته‌های ICATUS 2016</Text>
-          {r.buckets.map((x) => (
-            <Text key={x.code} style={[ui.text, ui.card]}>
-              {x.title_fa ?? x.title_en}: {toPersianDuration(x.minutes)}
-            </Text>
-          ))}
-          <Text style={ui.text}>
-            بدون دسته: {toPersianDuration(r.unmappedMinutes)}
-          </Text>
-          <Text style={ui.muted}>
-            پوشش طبقه‌بندی:{" "}
-            {r.classificationCoverage === null
-              ? "قابل محاسبه نیست"
-              : `${(r.classificationCoverage * 100).toFixed(0)}٪`}
-          </Text>
           <Text style={ui.title}>روز به روز</Text>
           {r.daily.map(([d, m]) => (
             <Text key={d} style={[ui.text, ui.card]}>

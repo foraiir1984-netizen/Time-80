@@ -14,7 +14,6 @@ import {
   getActivityEditorSnapshot,
   saveActivity,
 } from "../services/classificationService";
-import { ClassificationPicker } from "./ClassificationPicker";
 import { ActivityIcon, AssetIcon } from "./ActivityIcon";
 import { ICON_SET, type IconCommand, type IconKey } from "../icons/iconModel";
 import { theme } from "../theme/time80Theme";
@@ -59,6 +58,7 @@ export function ActivityEditor({
       ReturnType<typeof getActivityEditorSnapshot>
     > | null>(null),
     [loaded, setLoaded] = useState(!activity),
+    // Read-only snapshot fields preserve the existing default and revision guard.
     [code, setCode] = useState<string | null>(null),
     [revision, setRevision] = useState<number | null>(null),
     [error, setError] = useState(""),
@@ -268,11 +268,6 @@ export function ActivityEditor({
           </Text>
           <Text style={ui.muted}>
             آیکون جدید در گزارش‌های قبلی این فعالیت هم نمایش داده می‌شود.
-          </Text>
-          <Text style={ui.text}>دستهٔ پیش‌فرض برای ثبت‌های بعدی</Text>
-          {loaded && <ClassificationPicker value={code} onChange={setCode} />}
-          <Text style={ui.muted}>
-            تغییر پیش‌فرض، دستهٔ ثبت‌های قبلی را عوض نمی‌کند.
           </Text>
           <Button
             title={busy ? "در حال ذخیره…" : "ذخیره"}
