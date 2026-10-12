@@ -1,0 +1,42 @@
+✔ baseline, immutable snapshots, conflicts, undo and non-destructive startup (17.227943ms)
+✖ interval transition preserves current slot and anchors subsequent slots (250.710724ms)
+✔ report proportional clipping, unmapped time, empty coverage and calendar periods (7.534202ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 453.80204
+
+✖ failing tests:
+
+test at tests/core.test.ts:2:4865
+✖ interval transition preserves current slot and anchors subsequent slots (250.710724ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      [
+  -     '10:00',
+        '10:30',
+  -   ],
+  -   [
+  -     '10:30',
+        '11:30'
+      ],
+      [
+        '11:30',
+        '12:30'
+  
+      at TestContext.<anonymous> (/workspace/work/rc3-icatus-hide01/baseline-policy/tests/core.test.ts:130:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ [ '10:30', '11:30' ], [ '11:30', '12:30' ] ],
+    expected: [ [ '10:00', '10:30' ], [ '10:30', '11:30' ], [ '11:30', '12:30' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

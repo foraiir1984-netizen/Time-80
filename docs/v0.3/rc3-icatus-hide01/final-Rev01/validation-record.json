@@ -1,0 +1,164 @@
+{
+  "task": "RC3-ICATUS-HIDE-01",
+  "revision": "Rev01",
+  "recorded_utc": "2026-10-12T18:58:07.611188+00:00",
+  "baseline_delivery_sha": "50a54992a2b28690b73755a7848319b533c12e69",
+  "baseline_tested_sha": "77ded971005be832233955dbd5df8b52bff99fe4",
+  "tested_source_sha": "3ecbd2910f65733b69ac62d6cd32d941062c94e9",
+  "delivery_sha": "Read the commit containing this evidence; documentation-only follow-up, reported in final response.",
+  "branch": "rc3-icatus-hide01-ui",
+  "start": {
+    "head": "50a54992a2b28690b73755a7848319b533c12e69",
+    "branch": "rc3-id01-ui-identifiers",
+    "tree": "clean",
+    "ancestry_to_delivery": {
+      "ahead": 0,
+      "behind": 0
+    },
+    "remote_delivery_sha": "50a54992a2b28690b73755a7848319b533c12e69",
+    "dedicated_remote_branch_existed": false
+  },
+  "registry": {
+    "version": "RC3-ID-01-Rev03",
+    "entries": 122,
+    "active": 108,
+    "reserved": 14,
+    "explicit_source_bindings": 129,
+    "coverage_rows": 143,
+    "pending_active": 0,
+    "allocations_changed": false,
+    "classification_ui": "removed",
+    "classification_codes_still_reserved": [
+      "D03",
+      "X32",
+      "X33",
+      "X34",
+      "X35",
+      "X36",
+      "X37",
+      "X41",
+      "X48",
+      "X95"
+    ]
+  },
+  "runs": [
+    {
+      "id": "typecheck",
+      "status": "Pass",
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "source_sha": "3ecbd2910f65733b69ac62d6cd32d941062c94e9",
+      "log": "typecheck.log"
+    },
+    {
+      "id": "UTC-full",
+      "status": "Pass",
+      "command": "TZ=UTC TIME80_UI_EVIDENCE_DIR=<evidence-output> npm test",
+      "timezone": "UTC",
+      "exit_code": 0,
+      "source_sha": "3ecbd2910f65733b69ac62d6cd32d941062c94e9",
+      "log": "npm-test-UTC.log",
+      "tests": 118,
+      "pass": 118,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "id": "Tehran-related",
+      "status": "Pass",
+      "command": "TZ=Asia/Tehran TIME80_UI_EVIDENCE_DIR=<evidence-output> node --import ./tests/register.mjs --import tsx --test tests/v03ClassificationPolicy.test.ts tests/v03IcatusHideUI.test.tsx tests/v03Data.test.ts tests/v03IdentifierFlows.test.tsx tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx",
+      "timezone": "Asia/Tehran",
+      "exit_code": 0,
+      "source_sha": "3ecbd2910f65733b69ac62d6cd32d941062c94e9",
+      "log": "related-Asia-Tehran.log",
+      "tests": 97,
+      "pass": 97,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "id": "baseline-policy-UTC",
+      "status": "Pass",
+      "command": "TZ=UTC node --import ./tests/register.mjs --import tsx --test tests/v03ClassificationPolicy.test.ts tests/core.test.ts tests/v03Data.test.ts",
+      "timezone": "UTC",
+      "exit_code": 0,
+      "source_sha": "50a54992a2b28690b73755a7848319b533c12e69",
+      "log": "baseline-policy-UTC.log",
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "skipped": 0,
+      "fixture_overlay": "Only new baseline-compatible test copied into git archive; product source is exact baseline",
+      "overlay_sha256": "2fe0c7b85b5a720a6b9cbf64aa08d110964cbc4e2da301ccc4e3b8d16e666415"
+    },
+    {
+      "id": "baseline-core-Tehran",
+      "status": "Fail",
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/core.test.ts",
+      "timezone": "Asia/Tehran",
+      "exit_code": 1,
+      "source_sha": "50a54992a2b28690b73755a7848319b533c12e69",
+      "log": "baseline-core-Asia-Tehran.log",
+      "tests": 3,
+      "pass": 2,
+      "fail": 1,
+      "skipped": 0,
+      "known_issue": "interval transition fixture assumes UTC slot; baseline also fails in Tehran"
+    },
+    {
+      "id": "current-core-Tehran",
+      "status": "Fail",
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/core.test.ts",
+      "timezone": "Asia/Tehran",
+      "exit_code": 1,
+      "source_sha": "3ecbd2910f65733b69ac62d6cd32d941062c94e9",
+      "log": "current-core-Asia-Tehran.log",
+      "tests": 3,
+      "pass": 2,
+      "fail": 1,
+      "skipped": 0,
+      "known_issue": "Same baseline interval transition failure; test/product unchanged"
+    }
+  ],
+  "evidence_limit": "Native host/navigation/OS doubles, actual React modules and production data services via real SQLite. Renderer is not phone acceptance.",
+  "android": {
+    "status": "Not run",
+    "adb_available": false,
+    "emulator_available": false,
+    "native_android_project": false,
+    "screenshots": [],
+    "rtl_font_scales": [
+      1,
+      1.5,
+      2
+    ],
+    "target_measurement": "Not run"
+  },
+  "open": [
+    "P03-015/P03-016 phone acceptance remains mandatory",
+    "P03-014/P03-019 open",
+    "TZ unset/undefined SQLite fixture historical issue",
+    "Tehran Today progress fixture 65 vs 50 historical issue",
+    "Tehran interval transition fixture baseline-confirmed",
+    "TalkBack Deferred / Not run",
+    "Four M designs/assets not implemented",
+    "No Undo countdown authorized"
+  ],
+  "unchanged_protected_file_count": 91,
+  "existing_report_write_policy": "Report mount persists exactly report_calendar/report_week_start (two writes); identical on baseline/current; refocus/resume and classification state add no writes.",
+  "initial_runs": {
+    "new_tests_UTC": "Fail 5/8: new fixture used Alert.message instead of body, wrong SQL gate, custom date before first_used_at. Fixed fixture only; log retained.",
+    "new_tests_round2_UTC": "Pass 8/8 before baseline read-policy case was added.",
+    "broad_Tehran": "Fail 99/100: included old core interval fixture; same failure on baseline. No skip or product/test expectation change."
+  },
+  "ancestry_confirmed": [
+    "22cfac2895e35845382b4f41edfeb171e544f2c7",
+    "ffa7bfc1dcb18c747611d585553bed4d4e4d5359",
+    "77ded971005be832233955dbd5df8b52bff99fe4",
+    "50a54992a2b28690b73755a7848319b533c12e69"
+  ],
+  "prepush_remote_check": {
+    "origin_id01_sha": "50a54992a2b28690b73755a7848319b533c12e69",
+    "dedicated_branch_exists": false
+  }
+}

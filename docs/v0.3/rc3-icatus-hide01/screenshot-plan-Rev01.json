@@ -1,0 +1,39 @@
+{
+  "status": "Not run",
+  "reason": "No Android runtime/device/build in this environment",
+  "tested_source_sha": "3ecbd2910f65733b69ac62d6cd32d941062c94e9",
+  "rtl": true,
+  "font_scales": [
+    1,
+    1.5,
+    2
+  ],
+  "cases": [
+    "A02/D02 new/empty/loading/error",
+    "A02/D02 edit historical default: rename/icon and stale revision",
+    "A06 fresh/loading/error/empty and X102",
+    "A06 view/edit/same activity/change activity and D05 confirm/cancel",
+    "A06 skipped/reopen",
+    "A07 undo returns activity/assignment while classification stays hidden",
+    "A03 populated/empty/error/custom and activity time",
+    "A11 onboarding without classification promise"
+  ],
+  "assertions": [
+    "No category labels/codes/picker/search/hierarchy/official link",
+    "Persian name/time and active identifiers remain visible",
+    "Measure native target/wrap/no overlap at each scale",
+    "Record actual Android Alert/keyboard/scroll behavior"
+  ],
+  "metadata_required": [
+    "exact build commit and registry version",
+    "APK checksum/applicationId/versionName/versionCode",
+    "device/model/Android/viewport/font scale",
+    "date/timezone and fixture prerequisites",
+    "expected/observed and screenshot paths"
+  ],
+  "talkback": "Deferred / Not run",
+  "notification_phone_acceptance": [
+    "P03-015 open required",
+    "P03-016 open required"
+  ]
+}

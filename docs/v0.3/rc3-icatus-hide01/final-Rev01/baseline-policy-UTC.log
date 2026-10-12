@@ -1,0 +1,25 @@
+✔ baseline, immutable snapshots, conflicts, undo and non-destructive startup (20.280745ms)
+✔ interval transition preserves current slot and anchors subsequent slots (677.641209ms)
+✔ report proportional clipping, unmapped time, empty coverage and calendar periods (11.273882ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ unchanged classification policy: historical default, same activity, changed activity, Undo, revision and duplicate guards (31.369018ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ baseline UI read policy: editor/CheckIn entry and refocus write nothing; report persists only existing two preferences (177.867581ms)
+✔ icon resolver preserves free-form legacy and unknown/malformed/binding-mismatched metadata without interpretation (5.986763ms)
+✔ asset create/select, unknown keep, stale icon/default and transactional failures preserve schema 3 and raw legacy (18.493769ms)
+✔ archive Undo is bounded, rejects newer edits, and retains metadata/history; last active can be archived (3.160653ms)
+✔ full-list ranking uses valid seven-calendar-day counts, stable ties and zero histories; ignores recording date/future/invalid (10.862374ms)
+✔ DayScope uses calendar midnights including DST and start-day attribution (9.861128ms)
+✔ same-day COUNT exceeds page size, excludes logged/skipped/future, and counts crossing midnight only after completion (18.024663ms)
+✔ explicit selection of existing effective classification is semantic no-op with unchanged history/context (5.631689ms)
+✔ previous-day report uses target local date, current labels/icons and unchanged ICATUS totals (5.826741ms)
+✔ full SQLite backup and reopen preserve durable icon namespace, unknown orphan metadata and all v0.2 logical records (12.524993ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2553.182407

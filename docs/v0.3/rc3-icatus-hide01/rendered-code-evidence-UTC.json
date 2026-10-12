@@ -1,0 +1,1022 @@
+{
+  "kind": "renderer behavior, not phone/layout evidence",
+  "codes": {
+    "A01": [
+      "Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "A02": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "A03": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "A04": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "A05": [
+      "Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "A06": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "A06 empty activity navigation uses product-assigned X102 and performs no create/restore",
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A07": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent",
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A08": [
+      "backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope",
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A09": [
+      "diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership",
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A10": [
+      "backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope",
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A11": [
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A12": [
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "D01": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "D02": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "D04": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "D05": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "D06": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "D07": [
+      "skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo"
+    ],
+    "X01": [
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X02": [
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X03": [
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X04": [
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X05": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X06": [
+      "Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X07": [
+      "Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X08": [
+      "Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X09": [
+      "Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X10": [
+      "Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X102": [
+      "A06 empty activity navigation uses product-assigned X102 and performs no create/restore"
+    ],
+    "X11": [
+      "Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X12": [
+      "Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X13": [
+      "Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X14": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X15": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X16": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "activity empty filters retain both repeated add/filter locations without inventing navigation"
+    ],
+    "X17": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X18": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X19": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X20": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X21": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes"
+    ],
+    "X22": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes"
+    ],
+    "X23": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes"
+    ],
+    "X24": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X25": [
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X26": [
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X27": [
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X28": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X29": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X30": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X31": [
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X38": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo"
+    ],
+    "X39": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X40": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "X42": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "X43": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X44": [
+      "failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X45": [
+      "skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo"
+    ],
+    "X46": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X47": [
+      "skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo"
+    ],
+    "X49": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X50": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "X51": [
+      "failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X52": [
+      "result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent"
+    ],
+    "X53": [
+      "result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent"
+    ],
+    "X54": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "X55": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent"
+    ],
+    "X56": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent",
+      "backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope"
+    ],
+    "X57": [
+      "backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope"
+    ],
+    "X58": [
+      "backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope"
+    ],
+    "X59": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X60": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X61": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X62": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X63": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X64": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X65": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X66": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X67": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X68": [
+      "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X69": [
+      "diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership"
+    ],
+    "X70": [
+      "diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership"
+    ],
+    "X71": [
+      "diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership",
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X72": [
+      "diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership"
+    ],
+    "X73": [
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X74": [
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X75": [
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X76": [
+      "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X77": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X78": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X79": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X80": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X81": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X82": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X83": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X84": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X85": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X86": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X87": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X88": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X89": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X90": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X91": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X92": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X93": [
+      "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X94": [
+      "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X96": [
+      "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X97": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X98": [
+      "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ]
+  },
+  "renderedSites": {
+    "A01": [
+      "TodayOverview / امروز / Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "A02": [
+      "ActivitiesScreen / فعالیت‌ها / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "ActivitiesScreen / فعالیت‌ها / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "ActivitiesScreen / فعالیت‌ها / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "ActivitiesScreen / فعالیت‌ها / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "ActivitiesScreen / فعالیت‌ها / future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "A03": [
+      "InsightsScreen / گزارش زمان / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "A04": [
+      "SettingsScreen / تنظیمات یادآوری / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "A05": [
+      "FlatList / مرور روز / خط زمان / Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "A06": [
+      "FlatList / ثبت و مشاهدهٔ بازه / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / ثبت و مشاهدهٔ بازه / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / ثبت و مشاهدهٔ بازه / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "CheckInScreen / ثبت و مشاهدهٔ بازه / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / ثبت و مشاهدهٔ بازه / A06 empty activity navigation uses product-assigned X102 and performs no create/restore",
+      "IdentifierHeader / ثبت و مشاهدهٔ بازه / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A07": [
+      "SaveResultScreen / نتیجهٔ ثبت / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "SaveResultScreen / نتیجهٔ ثبت / result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent",
+      "IdentifierHeader / نتیجهٔ ثبت / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A08": [
+      "BacklogScreen / بازه‌های ثبت‌نشده / backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope",
+      "IdentifierHeader / بازه‌های ثبت‌نشده / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A09": [
+      "NotificationDiagnosticsScreen / بررسی اعلان‌ها / diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership",
+      "IdentifierHeader / بررسی اعلان‌ها / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A10": [
+      "NotificationResolutionScreen / بازهٔ اعلان مشخص نیست / backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope",
+      "IdentifierHeader / بازهٔ اعلان مشخص نیست / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A11": [
+      "OnboardingScreen / شروع کار / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "A12": [
+      "SafeAreaView / آماده‌سازی برنامه / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "D01": [
+      "Modal / گزینه‌های مدیریت فعالیت / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / گزینه‌های مدیریت فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "Modal / گزینه‌های مدیریت فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "Modal / گزینه‌های مدیریت فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "D02": [
+      "Modal / فرم فعالیت جدید / ویرایش فعالیت / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / فرم فعالیت جدید / ویرایش فعالیت / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "D04": [
+      "native Alert / ویرایش ذخیره‌نشده [⁦D04⁩] / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "D05": [
+      "native Alert / تغییر ثبت؟ [⁦D05⁩] / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "D06": [
+      "native Alert / تأیید منطقهٔ زمانی؟ [⁦D06⁩] / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "D07": [
+      "native Alert / رد کردن بازه؟ [⁦D07⁩] / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo"
+    ],
+    "X01": [
+      "IdentifierTabLabel / تب امروز / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X02": [
+      "IdentifierTabLabel / تب فعالیت‌ها / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X03": [
+      "IdentifierTabLabel / تب گزارش / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X04": [
+      "IdentifierTabLabel / تب تنظیمات / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks",
+      "IdentifierTabLabel / تب تنظیمات / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "IdentifierTabLabel / تب تنظیمات / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "IdentifierTabLabel / تب تنظیمات / future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X05": [
+      "FlatList / بازگشت / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / فعلاً نه / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / بازگشت / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "IdentifierHeader / بازگشت / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X06": [
+      "SlotRow / ۲۲:۳۰ تا ۲۳:۰۰، جاری / آینده / Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "SlotRow / ۲۲:۰۰ تا ۲۲:۳۰، جاری / آینده / Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "SlotRow / ۲۱:۳۰ تا ۲۲:۰۰، جاری / آینده / Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "SlotRow / ۲۱:۰۰ تا ۲۱:۳۰، جاری / آینده / Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "SlotRow / ۲۰:۳۰ تا ۲۱:۰۰، جاری / آینده / Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "SlotRow / ۲۰:۰۰ تا ۲۰:۳۰، جاری / آینده / Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "SlotRow / ۱۹:۳۰ تا ۲۰:۰۰، جاری / آینده / Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "SlotRow / ۱۹:۰۰ تا ۱۹:۳۰، جاری / آینده / Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "SlotRow / ۰۰:۰۰ تا ۰۰:۳۰، ثبت نشده — برای تکمیل لمس کن / Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "SlotRow / ۰۰:۰۰ تا ۰۰:۳۰، ثبت نشده — برای تکمیل لمس کن / backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope",
+      "SlotRow / ۱۳:۰۰ تا ۱۳:۳۰، ثبت نشده — برای تکمیل لمس کن / backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope",
+      "SlotRow / ۱۹:۵۵ تا ۲۰:۲۵، جاری / آینده / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "SlotRow / ۱۹:۵۵ تا ۲۰:۲۵، جاری / آینده / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "SlotRow / ۱۹:۵۵ تا ۲۰:۲۵، جاری / آینده / future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X07": [
+      "TodayOverview / تکمیل آخرین بازهٔ ثبت‌نشده / Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "FlatList / تکمیل آخرین بازهٔ ثبت‌نشده / Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X08": [
+      "TodayOverview / مرور امروز / خط زمان / Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X09": [
+      "FlatList / بازگشت به امروز / Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X10": [
+      "FlatList / روز قبل / Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X102": [
+      "FlatList / افزودن یا بازگرداندن فعالیت / A06 empty activity navigation uses product-assigned X102 and performs no create/restore"
+    ],
+    "X11": [
+      "FlatList / امروز / Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X12": [
+      "FlatList / روز بعد / Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X13": [
+      "FlatList / بازه‌های ثبت‌نشدهٔ روزهای قبل / Today keeps A01/A05 in the same route and separates overview return from current timeline date"
+    ],
+    "X14": [
+      "ActivitiesScreen / افزودن فعالیت / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "ActivitiesScreen / افزودن فعالیت / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / افزودن فعالیت / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "ActivitiesScreen / افزودن فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "ActivitiesScreen / افزودن فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "ActivitiesScreen / افزودن فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X15": [
+      "ActivitiesScreen / بایگانی‌شده / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "ActivitiesScreen / بایگانی‌شده / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / دیدن بایگانی‌شده‌ها / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "ActivitiesScreen / بایگانی‌شده / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "ActivitiesScreen / بایگانی‌شده / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "ActivitiesScreen / بایگانی‌شده / future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X16": [
+      "ActivitiesScreen / فعال‌ها / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / فعال‌ها / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "ActivitiesScreen / فعال‌ها / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / فعال‌ها / activity empty filters retain both repeated add/filter locations without inventing navigation"
+    ],
+    "X17": [
+      "FlatList / گزینه‌های مدیریت فعالیت مطالعه / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / مدیریت فعالیت مطالعه / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / گزینه‌های مدیریت فعالیت کار / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / مدیریت فعالیت کار / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / گزینه‌های مدیریت فعالیت خانواده / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / مدیریت فعالیت خانواده / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / گزینه‌های مدیریت فعالیت ورزش / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / مدیریت فعالیت ورزش / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / گزینه‌های مدیریت فعالیت موبایل / شبکه اجتماعی / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / مدیریت فعالیت موبایل / شبکه اجتماعی / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / گزینه‌های مدیریت فعالیت سرگرمی / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / مدیریت فعالیت سرگرمی / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / گزینه‌های مدیریت فعالیت رفت‌وآمد / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / مدیریت فعالیت رفت‌وآمد / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / گزینه‌های مدیریت فعالیت استراحت / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / مدیریت فعالیت استراحت / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / گزینه‌های مدیریت فعالیت شناسه مدیریت با نام بلند / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / مدیریت فعالیت شناسه مدیریت با نام بلند / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / مدیریت فعالیت شناسه مدیریت با نام بلند، بایگانی‌شده / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "FlatList / گزینه‌های مدیریت فعالیت مطالعه / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / مدیریت فعالیت مطالعه / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / گزینه‌های مدیریت فعالیت کار / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / مدیریت فعالیت کار / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / گزینه‌های مدیریت فعالیت خانواده / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / مدیریت فعالیت خانواده / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / گزینه‌های مدیریت فعالیت ورزش / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / مدیریت فعالیت ورزش / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / گزینه‌های مدیریت فعالیت موبایل / شبکه اجتماعی / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / مدیریت فعالیت موبایل / شبکه اجتماعی / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / گزینه‌های مدیریت فعالیت سرگرمی / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / مدیریت فعالیت سرگرمی / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / گزینه‌های مدیریت فعالیت رفت‌وآمد / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / مدیریت فعالیت رفت‌وآمد / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / گزینه‌های مدیریت فعالیت استراحت / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / مدیریت فعالیت استراحت / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / گزینه‌های مدیریت فعالیت شناسه مدیریت با نام بلند / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / مدیریت فعالیت شناسه مدیریت با نام بلند / activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "FlatList / گزینه‌های مدیریت فعالیت مطالعه / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت مطالعه / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت کار / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت کار / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت خانواده / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت خانواده / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت ورزش / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت ورزش / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت موبایل / شبکه اجتماعی / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت موبایل / شبکه اجتماعی / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت سرگرمی / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت سرگرمی / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت رفت‌وآمد / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت رفت‌وآمد / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت استراحت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت استراحت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت شناسه مدیریت با نام بلند / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت شناسه مدیریت با نام بلند / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت نام تازه شناسه / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت نام تازه شناسه / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت ثبت شناسه اول / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت ثبت شناسه اول / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت ثبت شناسه دوم / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / مدیریت فعالیت ثبت شناسه دوم / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "FlatList / گزینه‌های مدیریت فعالیت مطالعه / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت مطالعه / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت کار / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت کار / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت خانواده / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت خانواده / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت ورزش / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت ورزش / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت موبایل / شبکه اجتماعی / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت موبایل / شبکه اجتماعی / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت سرگرمی / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت سرگرمی / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت رفت‌وآمد / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت رفت‌وآمد / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت استراحت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت استراحت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت شناسه مدیریت با نام بلند / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت شناسه مدیریت با نام بلند / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت نام تازه شناسه / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت نام تازه شناسه / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت ثبت شناسه اول / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت ثبت شناسه اول / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت ثبت شناسه دوم / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / مدیریت فعالیت ثبت شناسه دوم / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "FlatList / گزینه‌های مدیریت فعالیت مطالعه / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت مطالعه / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت کار / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت کار / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت خانواده / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت خانواده / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت ورزش / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت ورزش / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت موبایل / شبکه اجتماعی / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت موبایل / شبکه اجتماعی / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت سرگرمی / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت سرگرمی / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت رفت‌وآمد / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت رفت‌وآمد / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت استراحت / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت استراحت / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت شناسه مدیریت با نام بلند / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت شناسه مدیریت با نام بلند / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت نام تازه شناسه / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت نام تازه شناسه / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت ثبت شناسه اول / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت ثبت شناسه اول / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / گزینه‌های مدیریت فعالیت ثبت شناسه دوم / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "FlatList / مدیریت فعالیت ثبت شناسه دوم / future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X18": [
+      "Modal / بستن گزینه‌های فعالیت / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / بستن / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / بستن گزینه‌های فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "Modal / بستن / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "Modal / بستن گزینه‌های فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "Modal / بستن / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "Modal / بستن گزینه‌های فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "Modal / بستن / future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X19": [
+      "Modal / ویرایش فعالیت / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / ویرایش فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "Modal / ویرایش فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "Modal / ویرایش فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X20": [
+      "Modal / بایگانی فعالیت / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / بایگانی فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "Modal / بایگانی فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "Modal / بایگانی فعالیت / future timeline code and tab label measurement preserve disabled/navigation state at scale 2"
+    ],
+    "X21": [
+      "Modal / بازگردانی / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes"
+    ],
+    "X22": [
+      "ActivitiesScreen / واگرد / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes"
+    ],
+    "X23": [
+      "ActivitiesScreen / تلاش دوباره / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes"
+    ],
+    "X24": [
+      "Modal / انتخاب آیکون / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / انتخاب آیکون / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X25": [
+      "Modal / نگه‌داشتن آیکون قبلی / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X26": [
+      "Modal / آیکون کار / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون مطالعه / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون خانواده / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون استراحت / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون ورزش / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون رفت‌وآمد / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X27": [
+      "Modal / استفاده از آیکون واردشده / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 📚 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون ✏️ / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🧠 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 💻 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 💼 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 👨‍👩‍👦 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون ❤️ / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🏃 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🏋️ / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🚶 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🧘 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 😴 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون ☕ / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🍽️ / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🚗 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🚌 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🎮 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🎬 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🎵 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 📱 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🌿 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🛁 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🧹 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🛒 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون ☎️ / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🩺 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🎓 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 📝 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🧑‍🤝‍🧑 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🌙 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون ☀️ / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 💡 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🎯 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 💰 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 📦 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🛠️ / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون ✨ / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🐕 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون ⚽ / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🎨 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🧳 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / آیکون 🏠 / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X28": [
+      "Modal / انصراف / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / انصراف / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X29": [
+      "Modal / ذخیره / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / ذخیره / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "Modal / در حال ذخیره… / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X30": [
+      "Modal / ذخیره / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / ذخیره / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X31": [
+      "Modal / تلاش دوباره برای بارگذاری / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X38": [
+      "native Alert / انصراف [⁦X38⁩] / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "native Alert / انصراف [⁦X38⁩] / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo"
+    ],
+    "X39": [
+      "FlatList / مطالعه / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / کار / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / خانواده / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / ورزش / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / موبایل / شبکه اجتماعی / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / سرگرمی / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / رفت‌وآمد / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / استراحت / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / شناسه مدیریت با نام بلند / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / نام تازه شناسه / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / ثبت شناسه اول / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / ثبت شناسه دوم / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / ثبت شناسه اول / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / مطالعه / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / کار / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / خانواده / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / ورزش / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / موبایل / شبکه اجتماعی / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / سرگرمی / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / رفت‌وآمد / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / استراحت / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / شناسه مدیریت با نام بلند / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / نام تازه شناسه / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / ثبت شناسه دوم / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / ثبت شناسه اول / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / مطالعه / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / کار / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / خانواده / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / ورزش / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / موبایل / شبکه اجتماعی / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / سرگرمی / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / رفت‌وآمد / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / استراحت / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / شناسه مدیریت با نام بلند / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / نام تازه شناسه / failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "FlatList / ثبت شناسه دوم / failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X40": [
+      "FlatList / ثبت شناسه اول / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / مطالعه / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / کار / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / خانواده / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / ورزش / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / موبایل / شبکه اجتماعی / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / سرگرمی / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / رفت‌وآمد / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / استراحت / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / شناسه مدیریت با نام بلند / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / نام تازه شناسه / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / ثبت شناسه دوم / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "X42": [
+      "native Alert / تأیید [⁦X42⁩] / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "X43": [
+      "FlatList / ویرایش / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / ویرایش / failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X44": [
+      "FlatList / تلاش دوباره برای ثبت فعالیت انتخابی / failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X45": [
+      "FlatList / ثبت فعالیت / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo"
+    ],
+    "X46": [
+      "FlatList / رد کردن این بازه / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / رد کردن این بازه / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "FlatList / رد کردن این بازه / failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X47": [
+      "native Alert / رد کردن [⁦X47⁩] / skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo"
+    ],
+    "X49": [
+      "FlatList / تأیید منطقهٔ این ثبت / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / تأیید منطقهٔ این ثبت / failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X50": [
+      "native Alert / تأیید [⁦X50⁩] / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "X51": [
+      "CheckInScreen / تلاش مجدد / failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X52": [
+      "SaveResultScreen / تلاش دوباره برای شمارش / result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent"
+    ],
+    "X53": [
+      "SaveResultScreen / مرور بازه‌های باقی‌مانده / result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent"
+    ],
+    "X54": [
+      "SaveResultScreen / بازگردانی تغییر (۱۰ ثانیه) / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct"
+    ],
+    "X55": [
+      "SaveResultScreen / مشاهدهٔ ثبت / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "SaveResultScreen / مشاهدهٔ ثبت / result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent"
+    ],
+    "X56": [
+      "SaveResultScreen / تمام / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "SaveResultScreen / تمام / result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent",
+      "NotificationResolutionScreen / بازگشت به امروز / backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope"
+    ],
+    "X57": [
+      "NotificationResolutionScreen / انتخاب از بازه‌های سررسیدشده / backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope"
+    ],
+    "X58": [
+      "BacklogScreen / تلاش دوباره / backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope"
+    ],
+    "X59": [
+      "SettingsScreen / یادآوری فعال / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X60": [
+      "SettingsScreen / ویرایش و ذخیرهٔ فاصله / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X61": [
+      "SettingsScreen / ویرایش و ذخیرهٔ شروع روز / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X62": [
+      "SettingsScreen / ویرایش و ذخیرهٔ پایان روز / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X63": [
+      "SettingsScreen / ✓ شنبه / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft",
+      "SettingsScreen / ✓ یکشنبه / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft",
+      "SettingsScreen / ✓ دوشنبه / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft",
+      "SettingsScreen / ✓ سه‌شنبه / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft",
+      "SettingsScreen / ✓ چهارشنبه / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft",
+      "SettingsScreen / ✓ پنجشنبه / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft",
+      "SettingsScreen / ✓ جمعه / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft",
+      "SettingsScreen / شنبه / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X64": [
+      "SettingsScreen / صدا / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X65": [
+      "SettingsScreen / لرزش / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X66": [
+      "SettingsScreen / بررسی اعلان‌ها / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X67": [
+      "native Alert / ادامهٔ ویرایش [⁦X67⁩] / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X68": [
+      "native Alert / کنار گذاشتن [⁦X68⁩] / settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft"
+    ],
+    "X69": [
+      "NotificationDiagnosticsScreen / درخواست مجوز / diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership"
+    ],
+    "X70": [
+      "NotificationDiagnosticsScreen / بازکردن تنظیمات گوشی / diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership"
+    ],
+    "X71": [
+      "NotificationDiagnosticsScreen / اعلان آزمایشی در ۱۰ ثانیه / diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership",
+      "OnboardingScreen / تست اعلان در ۱۰ ثانیه / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X72": [
+      "NotificationDiagnosticsScreen / هماهنگ‌سازی مجدد / diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership"
+    ],
+    "X73": [
+      "OnboardingScreen / فعال‌کردن یادآوری / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X74": [
+      "OnboardingScreen / ورود به برنامه / ادامه بدون اعلان / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X75": [
+      "SafeAreaView / تلاش دوباره برای بازکردن اعلان / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X76": [
+      "SafeAreaView / تلاش دوباره / A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks"
+    ],
+    "X77": [
+      "InsightsScreen / ✓ روز / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / روز / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X78": [
+      "InsightsScreen / هفتهٔ تقویمی / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / ✓ هفتهٔ تقویمی / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X79": [
+      "InsightsScreen / ماه تقویمی / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / ✓ ماه تقویمی / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X80": [
+      "InsightsScreen / هفتهٔ استفاده / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / ✓ هفتهٔ استفاده / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X81": [
+      "InsightsScreen / دورهٔ ۳۰روزه / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / ✓ دورهٔ ۳۰روزه / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X82": [
+      "InsightsScreen / ۷ روز اخیر / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / ✓ ۷ روز اخیر / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X83": [
+      "InsightsScreen / ۳۰ روز اخیر / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / ✓ ۳۰ روز اخیر / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X84": [
+      "InsightsScreen / دلخواه / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / ✓ دلخواه / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X85": [
+      "InsightsScreen / روز قبل / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / قبلی / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X86": [
+      "InsightsScreen / امروز / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / دورهٔ جاری / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X87": [
+      "InsightsScreen / بعدی / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X88": [
+      "InsightsScreen / تقویم: شمسی / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / تقویم: میلادی / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X89": [
+      "InsightsScreen / شروع هفته: شنبه / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "InsightsScreen / شروع هفته: یکشنبه / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X90": [
+      "InsightsScreen / نمایش بازه / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X91": [
+      "InsightsScreen / تلاش دوباره / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X92": [
+      "InsightsScreen / تلاش دوباره / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X93": [
+      "Modal / نام فعالیت / both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "Modal / نام فعالیت / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X94": [
+      "Modal / جست‌وجو / ورود آیکون / D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft"
+    ],
+    "X96": [
+      "FlatList / منطقهٔ زمانی تأییدشده / A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "FlatList / منطقهٔ زمانی تأییدشده / failed selected commit retries with X44; A06 context read retry X51 keeps its page code"
+    ],
+    "X97": [
+      "InsightsScreen / تاریخ شروع گزارش دلخواه / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ],
+    "X98": [
+      "InsightsScreen / تاریخ پایان گزارش دلخواه / report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply"
+    ]
+  },
+  "missing": []
+}

@@ -1,3 +1,31 @@
+# RC3 QA Retest — RC3-ICATUS-HIDE-01 — Rev01
+
+2026-10-12، Asia/Tehran؛ مبنا50a54992a2b28690b73755a7848319b533c12e69، سورس آزمون‌شده3ecbd2910f65733b69ac62d6cd32d941062c94e9، شاخه rc3-icatus-hide01-ui. SHA commit تحویل بعدی از Git/پاسخ نهایی خوانده شود؛ فقط docs/evidence با سورس آزمون تفاوت دارند. گزارش مستقل RC3_ICATUS_HIDE_01_Report_Rev01_FA.md و final-Rev01/validation-record.json فرمان/حد شاهد را ثبت می‌کنند.
+
+| مورد | وضعیت | شاهد و محدودیت |
+| --- | --- | --- |
+| npm run typecheck | Pass | final-Rev01/typecheck.log،exit0 |
+| TZ=UTC npm test | Pass |118/118،fail0/skip0؛۹ تست جدید +۱۰۹ قبلی بدون حذف/skip/تغییر انتظار؛ npm-test-UTC.log |
+| انتخاب مرتبط با TZ=Asia/Tehran | Pass |97/97،fail0/skip0؛ policy/hide/data/identifier/lifecycle/response/notification/UI؛ فرمان کامل در گزارش/validation-record، related-Asia-Tehran.log |
+| همان fixture policy در archive مبنا +core/v03Data، UTC | Pass |14/14؛ baseline-policy-UTC.log؛ archive محصول عین SHA مبنا با فقط تست جدید؛ service policy واقعی/SQLite |
+| core interval fixture در Tehran، مبنا و نهایی | Fail / Known Issue مبنا | هر دو2/3، slot10:00…10:30 غایب؛ baseline-core/current-core-Asia-Tehran.log؛ بدون تغییر منطق یا انتظار تست |
+| ایجاد/مشاهده/ویرایش/empty/loading/error بدون ICATUS UI/route | Pass در سورس/renderer | واقعی ActivityEditor/CheckIn/Insights/Onboarding، کنترل‌ها و متن/Alert؛ فایل picker و callerها حذف؛ native phone نیست |
+| دستهٔ قبلی در ویرایش نام/آیکون و حفظ revision/snapshot | Pass | سه scale فرم، fixture category قبلی byte-equal، stale save رد و rollback |
+| ثبت تازه/همان فعالیت/تغییر/Undo و duplicate/validation | Pass | مقایسهٔ قرارداد مبنا؛ تغییر فعالیت پیش‌فرض جدید را می‌گیرد و Undo تاریخی را برمی‌گرداند؛ no-manual-selection policy تغییر نکرد |
+| ورود/refocus بدون write تازهٔ طبقه‌بندی | Pass | فرم/A06 بدون write؛ report mount همان دو ترجیح قبلی و refocus/resume بدون اضافه، روی مبنا و نهایی برابر |
+| شناسه/guide/CSV/coverage و FIX01/FIX02 | Pass |۱۲۲ تخصیص،۱۰۸ active،۱۴reserved،۱۲۹ binding؛ source و renderer واقعی؛ X18/X38/X102/X75 محفوظ |
+| RTL/long name/font scales در renderer | Pass در پیکربندی تست | سه scale فرم و رگرسیون target/LTR/wrap؛ layout واقعی گوشی نیست |
+| تصویر Android، target/wrap/overlap/Alert در RTL scale1/1.5/2 | Not run | runtime/adb/emulator/project Android وجود ندارد؛ screenshot-plan فقط برنامهٔ اجراست |
+| P03-015/P03-016 پذیرش گوشی | Not run / باز و الزامی | دریافت اعلان/علت رخداد اولیه تأیید نشده؛ QA گوشی Deferred نیست |
+| TalkBack | Deferred / Not run | تنها QA فعلاً تعویق‌داده‌شده |
+| TZ unset/undefined و fixture progress Tehran | Not run در این مرحله / Known Issues باز | Failهای تاریخی FIX01/FIX02 محفوظ؛ بی‌دلیل بسته یا skip نشده |
+
+pending hide فقط پس از حذف واقعی UI و آزمون حالت‌ها در این checkpoint بسته شد. D03/X32…37/X41/X48/X95 رزرو و بدون قابلیت فعال؛ D08/X99…101 رزرو طراحی. چهار طرح و countdown Undo اجرا نشدند؛ P03-014/P03-019 باز. نتایج118/97 جای نتایج مرحله‌های قبلی برای این سورس هستند؛ بخش‌های زیر عین سابقه‌اند.
+
+---
+
+## سوابق حفظ‌شده — نتایج زیر مربوط به سورس‌های پیشین‌اند
+
 # Checkpoint جاری — RC3-ID-01 / Rev02
 
 تاریخ2026-10-12، Asia/Tehran؛ شاخه rc3-id01-ui-identifiers. SHA سورس آزمون‌شده77ded971005be832233955dbd5df8b52bff99fe4 از مبنای FIX02ffa7bfc1dcb18c747611d585553bed4d4e4d5359. commit تحویل بعدی فقط docs/evidence دارد؛ SHA آن از Git این سند/پاسخ تحویل خوانده شود. گزارش: RC3_ID_01_Report_Rev02_FA.md؛ build/device/APK Not Available.

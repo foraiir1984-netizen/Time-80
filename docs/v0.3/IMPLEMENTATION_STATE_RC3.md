@@ -1,3 +1,23 @@
+# IMPLEMENTATION_STATE_RC3 — checkpoint RC3-ICATUS-HIDE-01 — Rev01
+
+تاریخ: 2026-10-12، Asia/Tehran. پرامپت۷ در سورس و تست رفتار UI تکمیل شد؛ پذیرش گوشی هنوز باز است. متن پایین سابقهٔ دقیق مراحل پیشین است و وضعیت جاری را جایگزین نمی‌کند.
+
+- مبنا/HEAD شروع:50a54992a2b28690b73755a7848319b533c12e69؛ branch قبلی rc3-id01-ui-identifiers، clean، ancestry0/0 و remote همان SHA. شاخهٔ تازه rc3-icatus-hide01-ui از همان checkout شامل FIX01/FIX02/ID01؛ بدون reset/checkout قدیمی.
+- سورس آزمون‌شده:3ecbd2910f65733b69ac62d6cd32d941062c94e9. commit تحویل بعدی فقط docs/evidence؛ SHA کامل پس از commit و خواندن remote در پاسخ نهایی و Git این سند مشخص است. source-manifest۹۵ فایل و protected-files۹۱ فایل byte-identical با مبنا/آزمون را ثبت می‌کنند.
+- ICATUS UI واقعاً حذف شد: D02 picker/default-help، A06 view/picker/change/default و وعدهٔ D05، A03 buckets/unmapped/classification coverage، متن A11 و فایل UI ClassificationPicker. pending hide در سورس/رفتار UI بسته؛ Android و پذیرش بصری Not run.
+- ActivityEditor code/revision/snapshot/loaded guard و save موجود را حفظ می‌کند؛ rename/icon دستهٔ قبلی را پاک نمی‌کند. A06 انتخاب دستی نمی‌فرستد و expectedClassificationRevision را نگه می‌دارد؛ تغییر فعالیت طبق سیاست مبنا پیش‌فرض فعالیت جدید را می‌گیرد. same activity/Undo/revision/duplicate محفوظ؛ UI error mapping خطا را فارسی و قابل‌دیدن نگه می‌دارد.
+- صرف ورود/refocus فرم/A06 write ندارد. report mount همان دو write ترجیح قبلی را حفظ می‌کند؛ مقایسهٔ مبنا/نهایی برابر، بدون write تازهٔ طبقه‌بندی. schema/migration/dataset/repository/services/scheduler/assignment/history/FIX01/FIX02 تغییر نکردند.
+- Registry RC3-ID-01-Rev03:۱۲۲ تخصیص ثابت،۱۰۸فعال و۱۴رزرو؛۱۲۹ binding/۱۴۳ ردیف coverage،active Pending=0. D03/X32…37/X41/X48/X95 رزرو با sites خالی، D08/X99…101 رزرو طراحی. X18/X38/X102/X75 و همهٔ activeها ثابت؛ guide/CSV تولیدشده با registry/current source مطابق.
+- نهایی: typecheck Pass؛ UTC118/118؛ مرتبط Tehran97/97،fail0/skip0. مقایسهٔ رفتار archive مبنا UTC14/14. core interval fixture در تهران روی مبنا و نهایی Fail2/3، Known Issue مستقل؛ محصول/انتظار تست یا skip تغییر نکرد. TZ unset و fixture progress تهران همچنان باز، Not run این مرحله.
+- گزارش RC3_ICATUS_HIDE_01_Report_Rev01_FA.md؛ پوشش/نتایج تک‌آزمون/لاگ/hash/screenshot-plan در rc3-icatus-hide01؛ ضمیمهٔ Rev04 ورودی عیناً محفوظ. گزارش‌های تاریخی FIX01/FIX02/ID01/RC2 تغییر نکردند.
+- Android screenshots/RTL/scaling/target واقعی Not run، runtime موجود نیست؛ renderer شاهد گوشی نیست. فقط TalkBack Deferred/Not run. P03-015/P03-016 پذیرش گوشی باز و الزامی؛ P03-014/P03-019 باز. چهار طرح/دارایی، APK/build/upgrade اجرا نشدند؛ countdown Undo تصویب نشده و Undo غیرقابل‌دسترسی فعال نشد.
+
+قدم بعدی پس از بررسی دفتر: QA Android روی build/commit معلوم با fixture تاریخی و سه font scale؛ اجرای مرحلهٔ بعد در این task شروع نمی‌شود. commit/push روی همین شاخه با تأیید remote؛ بدون merge/force-push/workflow/APK/Release.
+
+---
+
+## سوابق حفظ‌شده — وضعیت جاری بالا ملاک این checkpoint است
+
 # IMPLEMENTATION_STATE_RC3
 
 Checkpoint جاری: **RC3-ID-01 / تحویل Rev02**، 2026-10-12، Asia/Tehran. محدودهٔ فعال پرامپت۶ و الحاقیه‌های۶-الف/۶-ب در سورس تکمیل شد؛ پذیرش بصری نهایی RC3/AC-ID و گوشی هنوز باز است.

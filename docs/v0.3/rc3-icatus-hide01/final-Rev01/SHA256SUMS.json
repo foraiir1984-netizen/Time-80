@@ -1,0 +1,15 @@
+{
+  "baseline-core-Asia-Tehran.log": "bdcfd59473a2d969520484869e8d5c3188e766af63c1d33947049e3934d05b77",
+  "baseline-policy-UTC.log": "12b204da6bc296834ea4b4b14cf0250da0af0a54bbb5caa28b3e331772bead1b",
+  "current-core-Asia-Tehran.log": "f5d4335ca5424a2548b23c43db7f7cf0033b7d668099cdcd0fc74a74b597a2cc",
+  "initial-broad-Asia-Tehran.log": "32215effcd170595c680984b4d3fad1c42143ad029ddf87d2937e8742ee32f04",
+  "initial-new-tests-UTC.log": "3f94424b09bec49b94d12e2f0bf7dfd76eb5033f66b414982f819014cd29e35d",
+  "new-tests-round2-UTC.log": "c6cc6636a2c436e4501318d5baa0cdb8097aaf98c9de7a36775e123251ed91fb",
+  "npm-test-UTC.log": "8a48d3bd9c5774f2ca598b5f03759b05e73b13466bee63dd0cc755d70953c96e",
+  "protected-files.json": "6111b458e6b862925cbaa5401af4cbc3db7b954095f9e952b0cba822d93afea8",
+  "related-Asia-Tehran.log": "f932aaa4ba142ef8c449fa4ccf437ed87b7469158fa48823a2523670e977dce4",
+  "review-Rev01.json": "9b76bfe74f82899f19682c33b06127136740e1fc2babb3d55b64a62ffadcc8bb",
+  "tested-source-manifest.json": "0e3521cbf5a7c58033d3dff114502fb485eb97ade4440f0ba7f59909facce6af",
+  "typecheck.log": "d6ca608876cf368c7a3a9062373724fe9bc7049b941687508bdff1278631e9c7",
+  "validation-record.json": "d3d96aaf918d9e5c1d6e9c6ccb620fe89f05ce73a1ed0165682b41d35fe36a34"
+}
