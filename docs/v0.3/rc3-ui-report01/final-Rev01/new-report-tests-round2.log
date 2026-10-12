@@ -1,0 +1,67 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ M-01 normal view has five presets; D08 open/close/backdrop never changes query, reads or history (117.00215ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ every existing mode keeps its query/range/result; absolute X100 differs from relative X85 and presets reset offset (482.822098ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ custom dates remain draft until X90, invalid/reversed dates show errors, valid end date remains inclusive (74.858774ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ day/week/month boundaries, calendar and week-start preferences keep existing contracts and metadata (148.48797ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ M-04 known five-hour result: three principal rows and exact Other, all inline with unchanged total/query and no read/write (31.557296ms)
+✖ projection preserves service order and fractional minutes; rounding affects labels only (3.316707ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ zero/loading/error retain A03 and controls; retry recovers current result without stale successful totals (46.962723ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ out-of-order reads and cleanup keep latest query/result; mere refocus and report interactions add no data writes (38.703332ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RTL/long names/font scale 1: code shares one 48dp target, wraps, no badge on donut and no ICATUS (38.83851ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RTL/long names/font scale 1.5: code shares one 48dp target, wraps, no badge on donut and no ICATUS (38.379106ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RTL/long names/font scale 2: code shares one 48dp target, wraps, no badge on donut and no ICATUS (39.301714ms)
+✔ font IO loading/failure remains usable with explicit fallback and never changes report query or data (14.179604ms)
+✔ available explicit allocations stay pinned; duplicate, retired reuse and invalid kind are rejected (96.745534ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ complete generated guide and CSV match the registry and include reserved allocations (8.510147ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 1 (29.783158ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 1.5 (7.369743ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 2 (6.927658ms)
+✔ real diagnostics keeps allocated action codes through loading, read failure and success; reservations stay absent (19.464942ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 17
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2129.628169
+
+✖ failing tests:
+
+test at tests/v03ReportUI.test.tsx:2:15691
+✖ projection preserves service order and fractional minutes; rounding affects labels only (3.316707ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 271.701
+  - 271.70099999999996
+          ^
+  
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:434:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 271.701,
+    expected: 271.70099999999996,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,663 @@
+{
+  "status": "Pass",
+  "baseline": "ddc320ffa45867f2db3a38261e1489c91ff672d6",
+  "source_files_reviewed": [
+    "docs/v0.3/RC3_UI_Code_Guide_FA.csv",
+    "docs/v0.3/RC3_UI_Code_Guide_FA.md",
+    "package-lock.json",
+    "package.json",
+    "scripts/generate-ui-code-coverage.ts",
+    "scripts/generate-ui-code-guide.ts",
+    "src/components/Ui.tsx",
+    "src/components/uiIdentifiers.ts",
+    "src/screens/InsightsScreen.tsx",
+    "tests/register.mjs",
+    "tests/v03IcatusHideUI.test.tsx",
+    "tests/v03IdentifierFlows.test.tsx",
+    "assets/fonts/vazirmatn/OFL.txt",
+    "assets/fonts/vazirmatn/Vazirmatn-Bold.ttf",
+    "assets/fonts/vazirmatn/Vazirmatn-Medium.ttf",
+    "assets/fonts/vazirmatn/Vazirmatn-Regular.ttf",
+    "assets/fonts/vazirmatn/Vazirmatn-SemiBold.ttf",
+    "assets/fonts/vazirmatn/source.json",
+    "docs/v0.3/rc3-ui-report01/design-inputs/00_README/MOCKUP_INDEX_FA.md",
+    "docs/v0.3/rc3-ui-report01/design-inputs/00_README/README_FA.md",
+    "docs/v0.3/rc3-ui-report01/design-inputs/01_Product_Decisions/Time80_Approved_UI_Decisions_FA.md",
+    "docs/v0.3/rc3-ui-report01/design-inputs/02_Design_System/Color_Direction_Note_FA.md",
+    "docs/v0.3/rc3-ui-report01/design-inputs/02_Design_System/Time80_Typography_Normalization_v1.0_FA.md",
+    "docs/v0.3/rc3-ui-report01/design-inputs/02_Design_System/Time80_Visual_System_Normalization_v1.0_FA.md",
+    "docs/v0.3/rc3-ui-report01/design-inputs/03_Approved_Mockups/M-01_Report_Time_Range_APPROVED.png",
+    "docs/v0.3/rc3-ui-report01/design-inputs/03_Approved_Mockups/M-04_Activity_Summary_Donut_APPROVED.png",
+    "docs/v0.3/rc3-ui-report01/design-inputs/RC3_Product_Handoff.md",
+    "docs/v0.3/rc3-ui-report01/design-source-manifest.json",
+    "src/components/ReportActivitySummary.tsx",
+    "src/components/ReportButton.tsx",
+    "src/components/ReportRangeControls.tsx",
+    "src/theme/reportTheme.ts",
+    "tests/fonts.mjs",
+    "tests/svg.mjs",
+    "tests/v03ReportUI.test.tsx"
+  ],
+  "sensitive_findings": [],
+  "binary_source_assets": "Approved reference PNGs and official Vazirmatn TTFs; hashes/license reviewed",
+  "protected_files": [
+    {
+      "path": ".github/workflows/build-android-apk.yml",
+      "sha256": "a625ef06cd9eb3b40ff864326f8fb1a3ef1423d26003083e2a89ab15cfebc7d0",
+      "unchanged": true
+    },
+    {
+      "path": ".github/workflows/build-android-rc.yml",
+      "sha256": "f5c17cd28d5e3e5b534f2d8df7fa41310edf562a7f64b62b275b30279cba3db0",
+      "unchanged": true
+    },
+    {
+      "path": ".github/workflows/verify-android-native.yml",
+      "sha256": "8118ceb30379f6fc34228109923596f407e7efc897729847655f06a0d5d65817",
+      "unchanged": true
+    },
+    {
+      "path": "App.tsx",
+      "sha256": "40338f5267241d40e88373e4b7dc9d17d7826576bd5783e98b7849be5f610d34",
+      "unchanged": true
+    },
+    {
+      "path": "app.json",
+      "sha256": "cb5b1107b010970e8b9888e9ae534d2507b51630843088a3b991ee11b55cddc1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/RC3_FIX_01_Report_FA.md",
+      "sha256": "78e85d53dca523aa7f1b089cf67aba4deff26ef7db9fce0d059e1c30031336aa",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/RC3_FIX_02_Report_FA.md",
+      "sha256": "87894539d1fbd159db95b2a415aafd5a7ff66eee5ea5a5b2927cac4ca23b63d0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/RC3_ICATUS_HIDE_01_Report_Rev01_FA.md",
+      "sha256": "25b7c2cebbe7856f318dcce82608b9ef86a36f9d25995ef684476b3f9dd8890a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/RC3_ID_01_Report_Rev02_FA.md",
+      "sha256": "19e2c27c8c87ea0017409f120faaf599a3320efcd874a9bd2825f255fcd82f18",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/RC3_UI_Identifiers_Addendum_6B_Rev01.md",
+      "sha256": "95d53fafe97e4c3663a50be1d41023d2b35acd1bf4bc3065d040c297b3e4e3ff",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/RC3_UI_Identifiers_Reference_Rev01.md",
+      "sha256": "6e8baff2e5cf03ad49190de80361905474368d995c8c073aaa86d0e76d327983",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/RC3-FIX-01-source-tests.patch",
+      "sha256": "e8355470be59a57ce878dc7ef95aa8fe242542ccfe9a4ad548572dd8ad5071ca",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/SHA256SUMS.json",
+      "sha256": "1ddac08f8101112c9b32a83e3f2acc7ed2774cb9616d67809415e799aaab0429",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/baseline-visualIntegration.log",
+      "sha256": "922407986de836b31e930f7350969c12551e87fb12f997cfd9457d54f8dda056",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/checkout-verification.json",
+      "sha256": "aa2055c9fe15acd0208225a7c34cb1c378910708c14acccc84edd880f1b61c1c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/npm-test.log",
+      "sha256": "14d0785833ceedd4b6ffec472a4a46cf4904a6318f2cfb8a0e39b953f3cfa5f0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/patch-info.json",
+      "sha256": "939c74541976401446885a8c61cc7447a89c75877abd27b50b0f3aa1ed26f5e1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/rc3-qa-01/probe-results.json",
+      "sha256": "3e063cfe26b859e831faf10c4ef5fd762af1afd020b343ad8baf12ecf4cbe81d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/rc3-qa-01/run_probes.mjs",
+      "sha256": "9daeb939913b8bebf2b1c951ef25e67b4f9a2691b5cd800bd63d229a31ccfcad",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/rc3-qa-01/validation-record.json",
+      "sha256": "b4516d943bd009793f8b744e6f48f6062ed2f9364801bcae78ebc7f2530289a5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/remote-final.json",
+      "sha256": "a95ef60ccc8d5e92a1a71e6f659f2f1a40ff115c730785320dfbb123061e1a98",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix01/validation-record.json",
+      "sha256": "e2aa29fe12cf9a5c051f65171a425610eb716705ae2da2f515f83fbda2a024b4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix02/SHA256SUMS.json",
+      "sha256": "cdf9b4592188c2b1704e2fb51d4b70d70b6429d5ab03518cdae59f987a3bdf68",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix02/baseline-visual-Asia-Tehran.log",
+      "sha256": "be5b4ee9fad6b4890805180d08675f7bebe6ad45ec3f053c3053ae41f9cf9040",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix02/lifecycle-initial-UTC.log",
+      "sha256": "20dee344718213abb48c3f994447d89a51c29ec73412830c34730babe9877e40",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix02/npm-test-UTC.log",
+      "sha256": "8bf79f1c83c8ea42961020b240435b27b7aa8f6d95c65ae4c765705516e1416b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix02/protected-files.json",
+      "sha256": "632e4390ec7b7307c76acf2025170ccd308d8fff14f69bf381d3675cc112a5d1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix02/related-Asia-Tehran.log",
+      "sha256": "7589839bd905986eb64c12b0e5c63a51e752a43557ec975e7b7582d939aa32fc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix02/related-task-Asia-Tehran.log",
+      "sha256": "87d3f4b9bc674b5e22528a2d28f20ae5e94aa13c235d705f173a1bc7b155397b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix02/typecheck-initial.log",
+      "sha256": "4e768dbf17f4b7ddabd35d4c542c14631f3eb42e789e5c470035081fd51cbaeb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix02/typecheck.log",
+      "sha256": "eb4e5aa67102d26e1442b7103bde4cbebf431d6417a5d05e55cda5eb23c53557",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-fix02/validation-record.json",
+      "sha256": "9911f12cc2e1295659506e4d3ad4003f0e80c375d8d6e1bdf1e3056688b489e0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/RC3_UI_Coverage_Rev01_FA.md",
+      "sha256": "0bd68599f1f0051c4c277c13a1520b10857690d320f810ebad8256c149f3a400",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/README_Rev01_FA.md",
+      "sha256": "e4cdfbdc8848c0743b9f3f6eaab098720e6a8372470c16a22bf6a49d87dd768a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/coverage-Rev01.csv",
+      "sha256": "ed1ffbcc70fee3cf1bf2252251e4b2e5401e8fab34a9ffd5924ab9c810896cfe",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/current-source-uses.json",
+      "sha256": "b544c2defeee7c4716b0c2552c98b3d1b2011995c69615273b9aaff37428dac2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/SHA256SUMS.json",
+      "sha256": "e0a8f8728cb77dedc8899cbeaf81e5f6bf230790171f498161fa429d98489d44",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/baseline-core-Asia-Tehran.log",
+      "sha256": "bdcfd59473a2d969520484869e8d5c3188e766af63c1d33947049e3934d05b77",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/baseline-policy-UTC.log",
+      "sha256": "12b204da6bc296834ea4b4b14cf0250da0af0a54bbb5caa28b3e331772bead1b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/current-core-Asia-Tehran.log",
+      "sha256": "f5d4335ca5424a2548b23c43db7f7cf0033b7d668099cdcd0fc74a74b597a2cc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/initial-broad-Asia-Tehran.log",
+      "sha256": "32215effcd170595c680984b4d3fad1c42143ad029ddf87d2937e8742ee32f04",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/initial-new-tests-UTC.log",
+      "sha256": "3f94424b09bec49b94d12e2f0bf7dfd76eb5033f66b414982f819014cd29e35d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/new-tests-round2-UTC.log",
+      "sha256": "c6cc6636a2c436e4501318d5baa0cdb8097aaf98c9de7a36775e123251ed91fb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/npm-test-UTC.log",
+      "sha256": "8a48d3bd9c5774f2ca598b5f03759b05e73b13466bee63dd0cc755d70953c96e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/protected-files.json",
+      "sha256": "6111b458e6b862925cbaa5401af4cbc3db7b954095f9e952b0cba822d93afea8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/related-Asia-Tehran.log",
+      "sha256": "f932aaa4ba142ef8c449fa4ccf437ed87b7469158fa48823a2523670e977dce4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/review-Rev01.json",
+      "sha256": "9b76bfe74f82899f19682c33b06127136740e1fc2babb3d55b64a62ffadcc8bb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/tested-source-manifest.json",
+      "sha256": "0e3521cbf5a7c58033d3dff114502fb485eb97ade4440f0ba7f59909facce6af",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/typecheck.log",
+      "sha256": "d6ca608876cf368c7a3a9062373724fe9bc7049b941687508bdff1278631e9c7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/final-Rev01/validation-record.json",
+      "sha256": "d3d96aaf918d9e5c1d6e9c6ccb620fe89f05ce73a1ed0165682b41d35fe36a34",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/inputs/IMPLEMENTATION_STATE_RC3_Rev04.md",
+      "sha256": "4974253dc446391820267ccf6c6ffcf2e1797b1018013838c29e9f7018b8b8dd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/rendered-code-evidence-Tehran.json",
+      "sha256": "27f161e74c74401d1540011bfc5bdad2fa4fc86f14fc785139e84005191599c0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/rendered-code-evidence-UTC.json",
+      "sha256": "09e2bd215ad6ba3d1ad7d45cbcc8249a5dd71bdc9e27bc2d51a099551ec74f36",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/screenshot-plan-Rev01.json",
+      "sha256": "b6566180821b962f822cde1ba36ceacee04fe7f0b72804ceb64bc54c9e15bc8c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-icatus-hide01/test-results-Rev01.csv",
+      "sha256": "b854c02b0a96610403a628cd0d1d09c7bb133dc1ea13e869a7475ec43eee08a1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/RC3_UI_Coverage_Rev02_FA.md",
+      "sha256": "af994a9493339a66f3545f1ed1d8b9043d40b0216213f3ee0b4b6dfa94e80eba",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/README_Rev02_FA.md",
+      "sha256": "cfd0ca3eedc3ac253fe579a8af6f708fb11751f30794d12633ed1d390cd840b2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/allocations-Rev01.json",
+      "sha256": "4db269133a3760b3b0f5f95120dd94a60307d129b22ebab9a7a41a62ed4b15a6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/allocations-Rev02.json",
+      "sha256": "75ffc137f1be2e6bf5b76915103745b7b96babece6fc26f17a0fa701410b5524",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/coverage-Rev02.csv",
+      "sha256": "1cc193ddd055aa067f7ecaadb1f2aca60168f6f96c3deb10ab7f339339597543",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/coverage.csv",
+      "sha256": "ca89c4f7d1254578be3b0a5cfb7a713198855647e338946465f685beb7ac3b03",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/current-source-uses.json",
+      "sha256": "6401685d3cda74036d12afe2ff3d048ecf15819b5e8b5969ae6fb68b49681f34",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/final-Rev02/SHA256SUMS.json",
+      "sha256": "0a925bc8fc21feb8924d74e5014bbda8dfe17504c95ffa9efed2a3cabdb6aa14",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/final-Rev02/npm-test-UTC.log",
+      "sha256": "f53647826472a28332fbaa866daf4cd7ca7c0da31b95d6a1b7325725cf81844c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/final-Rev02/precommit-review.json",
+      "sha256": "02c013291f3161338c3826c0935bbe042c2bcc0565eb7132fb60127fece4fccb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/final-Rev02/related-Asia-Tehran.log",
+      "sha256": "55bc4d75e6745c8c7c73562327ac1ef0cbb577a1c93e9eec4f1d161aee4690c0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/final-Rev02/review-record.json",
+      "sha256": "a9a87b2c215eeeb715ad67fe7e78052fa1594ca4336b1a0234ea801da79e35f3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/final-Rev02/typecheck.log",
+      "sha256": "eb4e5aa67102d26e1442b7103bde4cbebf431d6417a5d05e55cda5eb23c53557",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/final-Rev02/validation-record.json",
+      "sha256": "d007690ffb9fe4562ac71dc45e87e953a90d290db4a2a1282750bcc51cb30caf",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/identifiers-UTC.log",
+      "sha256": "11143e37875d88eaf3e52e07cc259b977bc1ff822dabffb53ccea64fb5380326",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/iterations-Rev02/flows-initial-UTC.log",
+      "sha256": "7df5b86680621fbfca480ff2bef74f7d45414f510ed971bc100bee7504d3f903",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/iterations-Rev02/flows-second-UTC.log",
+      "sha256": "6ec05a2d4496e958f4f089f092fb039fdf03807f0f231f2f120dec79eb469f45",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/iterations-Rev02/npm-test-interim-UTC.log",
+      "sha256": "f8d3f1ba50fb9d24a559002a23128bb8033866d0c7caf1353c384f85bdd5e99e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/iterations-Rev02/typecheck-flow.log",
+      "sha256": "d067227b74e47cbf0626ecf81e9ff5ecd614bb0faaeba283d0567bc3984b5582",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/iterations-Rev02/typecheck-initial.log",
+      "sha256": "eb4e5aa67102d26e1442b7103bde4cbebf431d6417a5d05e55cda5eb23c53557",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/npm-test-UTC.log",
+      "sha256": "fb14486ed85e56f748bbb2a42e8f260b1b3d404913a011b13b8af3fb93b187fd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/npm-test-initial-UTC.log",
+      "sha256": "8157b6c7a8794b876e2534be422af3c05730589b96fdf3d59bc90c8f4daa4663",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/related-Asia-Tehran.log",
+      "sha256": "2b100cfa8c6dfb7688b00886bfe08a8fbce6efc473b5f468b06b34e0a78ace2d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/rendered-code-evidence-Tehran.json",
+      "sha256": "db692c5c4ab54e00cef325b82ef03b448392dab0ef44cab29e0e0d8e4d1eb9b9",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/rendered-code-evidence-UTC.json",
+      "sha256": "3e2502383e4be8d20b1e52f4043415e8299830d42d22c552dd0b7bf121e7b564",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/review-record.json",
+      "sha256": "ab2ea32883b0e474addf43f23f969114481fe2795e47b700abb8e427c4b53518",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/screenshot-plan-Rev02.json",
+      "sha256": "bd1f9bfa85a253faf169ea781b76704ecdb922d6b969b69c6ddc578082177c78",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/source-controls.json",
+      "sha256": "8d81f7b6ae84b70145117fcf125bb54270a78be8d30b88e8ad0feae10ea6548a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/typecheck.log",
+      "sha256": "eb4e5aa67102d26e1442b7103bde4cbebf431d6417a5d05e55cda5eb23c53557",
+      "unchanged": true
+    },
+    {
+      "path": "docs/v0.3/rc3-id01/validation-record.json",
+      "sha256": "84d1f81e779ca0dabeac0ac03e83c00061a01533dde8ed946cb190c7dadbb45e",
+      "unchanged": true
+    },
+    {
+      "path": "src/components/ActivityEditor.tsx",
+      "sha256": "dca283e075f974a86a08693307741aa626f68eadb4103340aa253bbcdc03fdbc",
+      "unchanged": true
+    },
+    {
+      "path": "src/components/ActivityIcon.tsx",
+      "sha256": "32ff88d38cfc2dac899df2b3b6819d0a0b8a5e39f9c8a10a9d2b9d9ae2733839",
+      "unchanged": true
+    },
+    {
+      "path": "src/data/icatus-fa.json",
+      "sha256": "40875a903d2c3a9dc6c27601465edc0f82dea399032f3b59a218fe326708c07f",
+      "unchanged": true
+    },
+    {
+      "path": "src/data/icatus2016.json",
+      "sha256": "8f5ba3a5a7c288f1c9b852a6b668fa28b7a1710dfef0a3f7a87c99eb52fb8016",
+      "unchanged": true
+    },
+    {
+      "path": "src/db/backup.ts",
+      "sha256": "91691d654c8c65cc14647ab2cb780b1ca0ffd1d2ec62b3a81f06bfd579919af6",
+      "unchanged": true
+    },
+    {
+      "path": "src/db/classificationRepository.ts",
+      "sha256": "12a11c37d93a6984b36e0a882a72234c1f538f79bf43615123dbd4cffcb288b7",
+      "unchanged": true
+    },
+    {
+      "path": "src/db/connection.ts",
+      "sha256": "477b7fd6a2db34bd746d7307bcc4c46a1225af56e0abad98ed9100df15c2c69d",
+      "unchanged": true
+    },
+    {
+      "path": "src/db/database.ts",
+      "sha256": "2dea9cd45993a4498dd6b4f8b9a91353270fbcaa27e483f3bd2983d6ea93d072",
+      "unchanged": true
+    },
+    {
+      "path": "src/db/entryContextRepository.ts",
+      "sha256": "2b927113816f08fd8c6cbcf2f8a866d0119fed1c6b31ba940b5a390d3acbc92a",
+      "unchanged": true
+    },
+    {
+      "path": "src/db/metaRepository.ts",
+      "sha256": "621e1ea37a84e15f18f48717d3f20497b54d5ff07de8e1a46262c5f9b127b22b",
+      "unchanged": true
+    },
+    {
+      "path": "src/db/migrations.ts",
+      "sha256": "ad0eb3e90a9c10d4b5b8a39f866ddb2090001e9dfb5b045dd71823605cb63311",
+      "unchanged": true
+    },
+    {
+      "path": "src/db/schema.ts",
+      "sha256": "e80c2bd5a5bdada3f5741c381a5df3106d3b98dcc73450b0e30316d1bd84ce8f",
+      "unchanged": true
+    },
+    {
+      "path": "src/db/schemaFingerprint.json",
+      "sha256": "4e494b62e6a9bff0673e1cdf93657585feae0336e34dd4b4d982a92711b6f868",
+      "unchanged": true
+    },
+    {
+      "path": "src/db/slotRepository.ts",
+      "sha256": "592eebbf0239138ea5981270fee3e015b840f9bbb7ba2493ad4f1de86faa4ce3",
+      "unchanged": true
+    },
+    {
+      "path": "src/icons/iconAssets.ts",
+      "sha256": "6c0798743e8e4f8af3bc25fe0c28fe9a2aed0a6c8acb7038688118ff2c35efb4",
+      "unchanged": true
+    },
+    {
+      "path": "src/icons/iconModel.ts",
+      "sha256": "47e1eb36229c41f143b8a17d2d085cd2230585ebd22bd955c8f965446d28105a",
+      "unchanged": true
+    },
+    {
+      "path": "src/icons/iconRepository.ts",
+      "sha256": "3a27bed297ca50fe21b69c7e583482090cf84010200a1807d6831f88ad49520f",
+      "unchanged": true
+    },
+    {
+      "path": "src/notifications/diagnostics.ts",
+      "sha256": "ceb1d22589fbf45d24c71051db86366fa96e86323559b9acf30830033aa064e3",
+      "unchanged": true
+    },
+    {
+      "path": "src/notifications/notificationContracts.ts",
+      "sha256": "f642311bad23ce35daef402f0f8dc7578a31c7a3991597b058498edacdc99d4c",
+      "unchanged": true
+    },
+    {
+      "path": "src/notifications/notificationPlatform.ts",
+      "sha256": "27d5e2657424247e2180911d3fe3afb448583a454b8accd1d7e0dcf0f25188f0",
+      "unchanged": true
+    },
+    {
+      "path": "src/notifications/notificationResponseService.ts",
+      "sha256": "01ac908cda5b3e2500c387f12935982e03b5c90713aec209b42a8d37b4fe1f66",
+      "unchanged": true
+    },
+    {
+      "path": "src/notifications/plan.ts",
+      "sha256": "5c62a6705e6800c9d7cbef2cfe56a11e48aef0cce7befd8d0f9f8081fbe7d8af",
+      "unchanged": true
+    },
+    {
+      "path": "src/notifications/scheduler.ts",
+      "sha256": "24b61c800e92bb2b7c9af9355508c4a8ecb2cb6c4223238ced147374ac4ea702",
+      "unchanged": true
+    },
+    {
+      "path": "src/screens/CheckInScreen.tsx",
+      "sha256": "013313bae419ee0df25a0988c08fdc605e29024792ee9a65d06ed8cd86ce18b4",
+      "unchanged": true
+    },
+    {
+      "path": "src/screens/NotificationDiagnosticsScreen.tsx",
+      "sha256": "a157cfcd7693d8a5d94d8f3356002161d1744058eec728290d98adc6242d9d52",
+      "unchanged": true
+    },
+    {
+      "path": "src/services/activityService.ts",
+      "sha256": "d6f851c8be49065c41dc15fbe4ed45b34c77cd54e5284958a647b8a39555a0a2",
+      "unchanged": true
+    },
+    {
+      "path": "src/services/checkInService.ts",
+      "sha256": "d16b63a69b721d4907a655448e63a5b6c960def3acfc1afb0436d1e45c699668",
+      "unchanged": true
+    },
+    {
+      "path": "src/services/classificationDataset.ts",
+      "sha256": "b80c6d41210571cd8a3a9bf946e41c490c6ff633d69f6512b0bd9f67138bab33",
+      "unchanged": true
+    },
+    {
+      "path": "src/services/classificationService.ts",
+      "sha256": "24ab48efcca242195f5ae89c915285ccdc053c1f7fc89b16c65b94e00b09741d",
+      "unchanged": true
+    },
+    {
+      "path": "src/services/dayScopeService.ts",
+      "sha256": "5cd5becf0fe8ddb99e571d645b3655321fab4e4443db03c2f54b915518013095",
+      "unchanged": true
+    },
+    {
+      "path": "src/services/reportService.ts",
+      "sha256": "be63a441df833c050db066a98446d41283100d37c17d8340360079a463ea7ccf",
+      "unchanged": true
+    },
+    {
+      "path": "src/services/settingsService.ts",
+      "sha256": "3729cf6a9c91394ed59415004b6400ee2bfc4f8d0d912d39a45401cb66d549e0",
+      "unchanged": true
+    },
+    {
+      "path": "src/services/slotService.ts",
+      "sha256": "e6e84e7edfef85e8967ed131045dd392809288617b53e5a94d126ab1d62c7cd9",
+      "unchanged": true
+    },
+    {
+      "path": "src/theme/time80Theme.ts",
+      "sha256": "b4d3f4819e9530b0227776eb4b435f1976f82f4ef72143df45ea8700a9639576",
+      "unchanged": true
+    },
+    {
+      "path": "src/types/domain.ts",
+      "sha256": "14f89daa85297c774ce396f771fb48daec1da3a150fc70ddf22758030fec2aca",
+      "unchanged": true
+    },
+    {
+      "path": "src/types/models.ts",
+      "sha256": "7f626252d2b7ed9be75d9cb3fcde6e4b6fb36ec3478d615b3912496e0b167566",
+      "unchanged": true
+    }
+  ],
+  "old_package_versions_changed": [],
+  "font_hoist_same_version": true,
+  "new_direct_dependencies": {
+    "expo-font": "57.0.4 (already transitive; explicit import/root declaration)",
+    "react-native-svg": "15.15.4 (Expo57 bundled version)"
+  },
+  "notes": [
+    "Report query/service/period engine byte-identical",
+    "Shared Ui changes are opt-in presentation styles/icons/font only; native callbacks/guards retained",
+    "Existing tests adapted only for new modal locations and four authorized activations; no removal/skip",
+    "All imported normalization/decisions/mockup bytes preserved",
+    "Original OFL license whitespace preserved"
+  ]
+}

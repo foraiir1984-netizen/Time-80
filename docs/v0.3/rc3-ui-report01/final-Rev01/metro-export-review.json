@@ -1,0 +1,31 @@
+{
+  "status": "Pass",
+  "scope": "Android-platform JavaScript and asset export; not native APK/build/runtime",
+  "command": "CI=1 EXPO_OFFLINE=1 EXPO_NO_TELEMETRY=1 node node_modules/expo/bin/cli export --platform android --no-bytecode --output-dir <work>/metro-android",
+  "source_sha": "03d410279f9e1e122c4cfc823a5efd8d77bade3a",
+  "fonts_exported": [
+    {
+      "source_font": "assets/fonts/vazirmatn/Vazirmatn-SemiBold.ttf",
+      "exported_asset": "assets/a11a0c156bba19a2977e82bd0ad28e45",
+      "sha256": "3f239d8364c14ee32c46b6839fa197c28958358b82a9673d2c6acc8506d78bc5"
+    },
+    {
+      "source_font": "assets/fonts/vazirmatn/Vazirmatn-Bold.ttf",
+      "exported_asset": "assets/4ac4426bc38f337534dfc45b3dbd9283",
+      "sha256": "f635fdbea28f265de395ba83b4b1570dcf2f58d13c65469e61903b1c2d2ae723"
+    },
+    {
+      "source_font": "assets/fonts/vazirmatn/Vazirmatn-Medium.ttf",
+      "exported_asset": "assets/24d05392e628925dcb1722a1f20952d3",
+      "sha256": "b986623e4ddef10755e04be39f8ea7bcb1dc08bfe8dd0aa6af395736f256ad4a"
+    },
+    {
+      "source_font": "assets/fonts/vazirmatn/Vazirmatn-Regular.ttf",
+      "exported_asset": "assets/e8e9648f5b8fc824da409750ff331221",
+      "sha256": "b69fd4c680b8f3f225feabcc655a2c585d97627b8f5f5c0f9985e894069f3a56"
+    }
+  ],
+  "full_mockup_images_bundled": false,
+  "APK_produced": false,
+  "native_runtime": "Not run"
+}

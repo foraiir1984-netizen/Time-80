@@ -1,0 +1,254 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ M-01 normal view has five presets; D08 open/close/backdrop never changes query, reads or history (85.243634ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ every existing mode keeps its query/range/result; absolute X100 differs from relative X85 and presets reset offset (21.77959ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ custom dates remain draft until X90, invalid/reversed dates show errors, valid end date remains inclusive (20.323272ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ day/week/month boundaries, calendar and week-start preferences keep existing contracts and metadata (18.002664ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ M-04 known five-hour result: three principal rows and exact Other, all inline with unchanged total/query and no read/write (23.491584ms)
+✖ projection preserves service order and fractional minutes; rounding affects labels only (0.706422ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ zero/loading/error retain A03 and controls; retry recovers current result without stale successful totals (16.363381ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ out-of-order reads and cleanup keep latest query/result; mere refocus and report interactions add no data writes (13.454339ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ RTL/long names/font scale 1: code shares one 48dp target, wraps, no badge on donut and no ICATUS (13.821281ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ RTL/long names/font scale 1.5: code shares one 48dp target, wraps, no badge on donut and no ICATUS (14.504818ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ RTL/long names/font scale 2: code shares one 48dp target, wraps, no badge on donut and no ICATUS (17.155651ms)
+✔ font IO loading/failure remains usable with explicit fallback and never changes report query or data (25.116815ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 1
+ℹ fail 11
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 579.378234
+
+✖ failing tests:
+
+test at tests/v03ReportUI.test.tsx:2:6356
+✖ M-01 normal view has five presets; D08 open/close/backdrop never changes query, reads or history (85.243634ms)
+  AssertionError [ERR_ASSERTION]: X99
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at press (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:73:10)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:171:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03ReportUI.test.tsx:2:7786
+✖ every existing mode keeps its query/range/result; absolute X100 differs from relative X85 and presets reset offset (21.77959ms)
+  AssertionError [ERR_ASSERTION]: X99
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at press (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:73:10)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:193:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03ReportUI.test.tsx:2:10203
+✖ custom dates remain draft until X90, invalid/reversed dates show errors, valid end date remains inclusive (20.323272ms)
+  AssertionError [ERR_ASSERTION]: X99
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at press (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:73:10)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:271:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03ReportUI.test.tsx:2:11913
+✖ day/week/month boundaries, calendar and week-start preferences keep existing contracts and metadata (18.002664ms)
+  AssertionError [ERR_ASSERTION]: X99
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at press (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:73:10)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:324:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03ReportUI.test.tsx:2:13495
+✖ M-04 known five-hour result: three principal rows and exact Other, all inline with unchanged total/query and no read/write (23.491584ms)
+  AssertionError [ERR_ASSERTION]: X82
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at press (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:73:10)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:419:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03ReportUI.test.tsx:2:15689
+✖ projection preserves service order and fractional minutes; rounding affects labels only (0.706422ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 271.701
+  - 271.70099999999996
+          ^
+  
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:434:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 271.701,
+    expected: 271.70099999999996,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03ReportUI.test.tsx:2:16901
+✖ zero/loading/error retain A03 and controls; retry recovers current result without stale successful totals (16.363381ms)
+  AssertionError [ERR_ASSERTION]: X100
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at press (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:73:10)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:455:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03ReportUI.test.tsx:2:18317
+✖ out-of-order reads and cleanup keep latest query/result; mere refocus and report interactions add no data writes (13.454339ms)
+  AssertionError [ERR_ASSERTION]: X82
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at press (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:73:10)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:503:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03ReportUI.test.tsx:2:19917
+✖ RTL/long names/font scale 1: code shares one 48dp target, wraps, no badge on donut and no ICATUS (13.821281ms)
+  AssertionError [ERR_ASSERTION]: X99
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at press (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:73:10)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:539:11)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03ReportUI.test.tsx:2:19917
+✖ RTL/long names/font scale 1.5: code shares one 48dp target, wraps, no badge on donut and no ICATUS (14.504818ms)
+  AssertionError [ERR_ASSERTION]: X99
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at press (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:73:10)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:539:11)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03ReportUI.test.tsx:2:19917
+✖ RTL/long names/font scale 2: code shares one 48dp target, wraps, no badge on donut and no ICATUS (17.155651ms)
+  AssertionError [ERR_ASSERTION]: X99
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at press (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:73:10)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:539:11)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

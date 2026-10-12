@@ -1,3 +1,24 @@
+# IMPLEMENTATION_STATE_RC3 — RC3-UI-REPORT-01 — Rev01
+
+2026-10-12، Asia/Tehran. M-01/M-04 در سورس و رفتار قابل‌آزمون اجرا شدند؛ پذیرش بصری و دستگاهی باز است. بخش پایین سابقهٔ دقیق مراحل پیشین است.
+
+- مبنای شروع: ddc320ffa45867f2db3a38261e1489c91ff672d6؛ شاخهٔ قبلی rc3-icatus-hide01-ui، working tree پاک، ancestry0/0 و remote همان SHA. شاخهٔ تازه rc3-ui-report01 از همان checkout کامل ساخته شد؛ FIX01/FIX02/ID01/HIDE01 حفظ شدند و reset/checkout قدیمی انجام نشد.
+- Handoff1.0 و D03-005، تصمیم‌ها، normalization1.0 و PNGهای M-01/M-04 واقعاً خوانده شدند. ZIP داخلی باز و۱۲ checksum معتبر بود. design-inputs/manifest عین منابع‌اند؛ تصویر اجرای گوشی نیستند. فونت رسمی Vazirmatn v33.003 با OFL/hash تهیه شد.
+- A03 پنج preset دارد؛ D08 هر۸ mode، تقویم/شروع هفته، custom و ناوبری دوره را نگه می‌دارد. X100 فقط day/-1، X85 نسبی و X86 فقط offset0 است. بازکردن/بستن فقط UI state است و انتخاب قبلاً اعمال‌شده rollback نمی‌شود. query،reportPeriods و reportService تغییر نکردند.
+- M-04 عنوان «خلاصه فعالیت‌ها»، Donut سهم زمان،۳ فعالیت اصلی و سایر دقیق دارد. X101 همهٔ همان result را inline بدون query/read/write نشان می‌دهد؛ آیکون/سهم تجمعی legacy محفوظ. زمان کل مجاور Donut و rounding فقط نمایشی است. frame۵۲dp آیکون فهرست کامل در برابر۴۰ normalization، اختلاف محدود ثبت‌شده است؛ main summary normalized و layout واقعی Not run است.
+- Registry RC3-ID-01-Rev04:۱۲۲ تخصیص،۱۱۲ فعال،۱۰ رزرو ICATUS؛ فقط D08/X99/X100/X101 فعال شدند.۱۳۹ binding و۱۴۹ ردیف coverage،active Pending0؛ guide/CSV از registry. X18 همان close بدون commit تازه در D01/D08؛ code/key/name قبلی ثابت و ICATUS همچنان پنهان است.
+- expo-font57.0.4 همان نسخهٔ transitive به صورت مستقیم/hoist و react-native-svg15.15.4 مطابق Expo57 لازم بودند؛ هیچ dependency قدیمی upgrade نشد. shared Ui فقط presentation اختیاری دارد و callback/guard/ref/disabled/input defaults حفظ شدند.
+- SHA آزمون‌شده:03d410279f9e1e122c4cfc823a5efd8d77bade3a؛ typecheck Pass،UTC130/130 و منتخب Tehran109/109،fail0/skip0. Android-platform JS/assets export Pass با۴ TTF و بدون موکاپ کامل بود؛ APK/native build نیست. commit تحویل بعدی فقط docs/evidence است؛ SHA کامل پس از Git/remoteverify در پاسخ نهایی خوانده شود. manifest۱۱۶ فایل و۱۲۱ protected فایل برابر با مبنا را ثبت می‌کند.
+- core interval fixture تهران روی مبناDDC و نهایی هرکدام Fail2/3 است؛ source/expectation تغییر نکرد. TZ unset و fixture progress Tehran باز و این مرحله Not run هستند. هیچ تست قدیمی حذف/skip یا انتظار داده/زمان تغییر نکرد.
+- گزارش RC3_UI_REPORT_01_Report_Rev01_FA.md و پوشش/guide/test results/log/hash/screenshot plan در rc3-ui-report01؛ سوابق FIX/ID/HIDE/RC2 دست‌نخورده‌اند.
+- Android screenshots،RTL،scales1/1.5/2،target و فونت واقعی Not run؛ renderer/exportJS شاهد گوشی نیست. اعلان P03-015/P03-016 و upgrade QA باز و الزامی؛ فقط TalkBack Deferred/Not run. P03-014/P03-019 باز و M-02/M-10/دارایی‌ها pending هستند؛ countdown Undo اضافه نشد.
+
+قدم بعدی پس از بررسی دفتر: QA Android روی build معلوم برای M-01/M-04/D08/full/zero/error و سه font scale با fixture۵h/۷ فعالیت و اندازه‌گیری target. پس از commit/push/remote SHA همین task متوقف می‌شود؛ merge/force-push/workflow/APK/Release/مرحله بعد انجام نمی‌شود.
+
+---
+
+## سوابق حفظ‌شده — checkpoint بالا وضعیت جاری است
+
 # IMPLEMENTATION_STATE_RC3 — checkpoint RC3-ICATUS-HIDE-01 — Rev01
 
 تاریخ: 2026-10-12، Asia/Tehran. پرامپت۷ در سورس و تست رفتار UI تکمیل شد؛ پذیرش گوشی هنوز باز است. متن پایین سابقهٔ دقیق مراحل پیشین است و وضعیت جاری را جایگزین نمی‌کند.

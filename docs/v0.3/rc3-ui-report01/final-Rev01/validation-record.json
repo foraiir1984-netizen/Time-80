@@ -1,0 +1,187 @@
+{
+  "task": "RC3-UI-REPORT-01",
+  "revision": "Rev01",
+  "recorded_utc": "2026-10-12T20:11:20.230436+00:00",
+  "recorded_Asia_Tehran": "2026-10-12T23:41:20.230659+03:30",
+  "baseline_delivery_sha": "ddc320ffa45867f2db3a38261e1489c91ff672d6",
+  "tested_source_sha": "03d410279f9e1e122c4cfc823a5efd8d77bade3a",
+  "delivery_sha": "Commit containing this report/evidence; exact SHA read after commit/push in final response. Documentation/evidence only differs from tested SHA.",
+  "branch": "rc3-ui-report01",
+  "start": {
+    "HEAD": "ddc320ffa45867f2db3a38261e1489c91ff672d6",
+    "branch": "rc3-icatus-hide01-ui",
+    "working_tree": "clean",
+    "ancestry": {
+      "ahead": 0,
+      "behind": 0
+    },
+    "remote_baseline_sha": "ddc320ffa45867f2db3a38261e1489c91ff672d6",
+    "dedicated_branch_existed": false
+  },
+  "registry": {
+    "version": "RC3-ID-01-Rev04",
+    "entries": 122,
+    "active": 112,
+    "reserved": 10,
+    "explicit_bindings": 139,
+    "coverage_rows": 149,
+    "pending_active": 0,
+    "activated_existing_allocations": [
+      "D08",
+      "X99",
+      "X100",
+      "X101"
+    ],
+    "new_or_reassigned_codes": [],
+    "classification_ui": "hidden; all ten allocations still reserved"
+  },
+  "runs": [
+    {
+      "id": "typecheck",
+      "result": "Pass",
+      "source_sha": "03d410279f9e1e122c4cfc823a5efd8d77bade3a",
+      "command": "npm run typecheck",
+      "log": "typecheck.log",
+      "exit_code": 0
+    },
+    {
+      "id": "UTC-full",
+      "result": "Pass",
+      "source_sha": "03d410279f9e1e122c4cfc823a5efd8d77bade3a",
+      "command": "TZ=UTC TIME80_UI_EVIDENCE_DIR=<work>/final-UTC npm test",
+      "log": "npm-test-UTC.log",
+      "exit_code": 0,
+      "timezone": "UTC",
+      "tests": 130,
+      "pass": 130,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "id": "Tehran-related",
+      "result": "Pass",
+      "source_sha": "03d410279f9e1e122c4cfc823a5efd8d77bade3a",
+      "command": "TZ=Asia/Tehran TIME80_UI_EVIDENCE_DIR=<work>/final-Tehran node --import ./tests/register.mjs --import tsx --test tests/v03ReportUI.test.tsx tests/v03ClassificationPolicy.test.ts tests/v03IcatusHideUI.test.tsx tests/v03Data.test.ts tests/v03IdentifierFlows.test.tsx tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx",
+      "log": "related-Asia-Tehran.log",
+      "exit_code": 0,
+      "timezone": "Asia/Tehran",
+      "tests": 109,
+      "pass": 109,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "id": "Metro-JS-export",
+      "result": "Pass",
+      "source_sha": "03d410279f9e1e122c4cfc823a5efd8d77bade3a",
+      "command": "CI=1 EXPO_OFFLINE=1 EXPO_NO_TELEMETRY=1 node node_modules/expo/bin/cli export --platform android --no-bytecode --output-dir <work>/metro-android",
+      "log": "metro-android-JS-export.log",
+      "exit_code": 0,
+      "limitation": "JavaScript/assets only; native binary/device/layout Not run"
+    },
+    {
+      "id": "baseline-core-Tehran",
+      "result": "Fail",
+      "source_sha": "ddc320ffa45867f2db3a38261e1489c91ff672d6",
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/core.test.ts",
+      "log": "baseline-core-Asia-Tehran.log",
+      "exit_code": 1,
+      "timezone": "Asia/Tehran",
+      "tests": 3,
+      "pass": 2,
+      "fail": 1,
+      "skipped": 0,
+      "limitation": "Baseline archive only; interval fixture assumes UTC slot"
+    },
+    {
+      "id": "current-core-Tehran",
+      "result": "Fail",
+      "source_sha": "03d410279f9e1e122c4cfc823a5efd8d77bade3a",
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test tests/core.test.ts",
+      "log": "current-core-Asia-Tehran.log",
+      "exit_code": 1,
+      "timezone": "Asia/Tehran",
+      "tests": 3,
+      "pass": 2,
+      "fail": 1,
+      "skipped": 0,
+      "limitation": "Same baseline-known interval fixture; no product or test change"
+    }
+  ],
+  "summary_choice": {
+    "approved_range": "3–5",
+    "chosen": 3,
+    "source": "M-04 decision and reference PNG",
+    "other": "sum of activities.slice(3), raw minutes; total denominator remains r.total",
+    "expanded": "all r.activities inline, original order; no query/read/write; cumulative share/icons preserved"
+  },
+  "known_fixture": {
+    "now_utc": "2026-10-12T12:00:00.000Z",
+    "zone": "run TZ (UTC or Asia/Tehran)",
+    "minutes": [
+      150,
+      90,
+      30,
+      15,
+      10,
+      3,
+      2
+    ],
+    "total": 300,
+    "main_minutes": [
+      150,
+      90,
+      30
+    ],
+    "other_minutes": 30,
+    "percentages": [
+      50,
+      30,
+      10,
+      10
+    ]
+  },
+  "source_review": "source-review.json: 121 protected files identical; existing dependency versions not upgraded",
+  "source_manifest_count": 116,
+  "native": {
+    "APK": "Not Available / not built",
+    "Android_runtime": "Not run: adb/emulator/native project absent",
+    "screenshots": [],
+    "RTL_font_scales": [
+      1,
+      1.5,
+      2
+    ],
+    "actual_layout_touch_measurements": "Not run",
+    "font_rendering_on_phone": "Not run"
+  },
+  "open": [
+    "Native M-01/M-04/D08/full/zero/error QA and target/RTL/font scale acceptance",
+    "P03-015/P03-016 notification phone acceptance required/open",
+    "Device upgrade QA open",
+    "P03-014/P03-019 open",
+    "TZ unset/undefined historical fixture issue",
+    "Tehran Today progress fixture historical issue",
+    "Tehran interval fixture baseline-confirmed",
+    "TalkBack Deferred / Not run",
+    "M-02/M-10 and assets are next tasks, not implemented",
+    "No Undo countdown authorized"
+  ],
+  "initial_results": {
+    "initial_typecheck": "Failed new segment color inference/cross-component optional style insertion; corrected before source commit. New mock Error|null type and actual ActivityIcon API (24px, not 20px) also compiler-checked.",
+    "initial_existing_UI": "32/35; plain default content style shape changed. Restored original default style object; no old expectation modified.",
+    "initial_new_UI": "1/12; new helper assumed React component default disabled prop was explicit false, plus grouped float strict equality. Fixed helper and floating ULP assertion only.",
+    "round2": "17/18 including six existing identifier checks; final one new fractional assertion adjusted for machine arithmetic grouping, while raw other/main values stayed exact.",
+    "npm_install_initial": "Fail: cache mkdir under /home/agent/.npm unavailable; retry with task work cache Pass, no HOME/credential override."
+  },
+  "whitespace_review": "Code/generated docs Pass. Raw original normalization README Markdown hard-break spaces, original OFL license and raw logs preserved/excluded; no normalization source altered.",
+  "prepush_remote_check": {
+    "dedicated_branch_exists": false,
+    "baseline_branch_sha": "ddc320ffa45867f2db3a38261e1489c91ff672d6"
+  },
+  "ancestry_confirmed": [
+    "22cfac2895e35845382b4f41edfeb171e544f2c7",
+    "ffa7bfc1dcb18c747611d585553bed4d4e4d5359",
+    "ddc320ffa45867f2db3a38261e1489c91ff672d6"
+  ]
+}

@@ -1,3 +1,30 @@
+# RC3 QA Retest — RC3-UI-REPORT-01 — Rev01
+
+2026-10-12،Asia/Tehran؛ مبناddc320ffa45867f2db3a38261e1489c91ff672d6،سورس آزمون‌شده03d410279f9e1e122c4cfc823a5efd8d77bade3a،شاخه rc3-ui-report01. commit تحویل بعدی فقط docs/evidence؛ SHA کامل پس از push/remoteverify در پاسخ نهایی/Git. گزارش و validation-record فرمان‌ها و حد شاهد را ثبت می‌کنند.
+
+| مورد | وضعیت | شاهد و حد |
+| --- | --- | --- |
+| npm run typecheck | Pass | final-Rev01/typecheck.log،exit0 |
+| TZ=UTC npm test | Pass |130/130،fail0/skip0؛118 قبلی+12 جدید؛npm-test-UTC.log |
+| منتخب مرتبط TZ=Asia/Tehran | Pass |109/109،fail0/skip0؛report/policy/hide/data/identifiers/lifecycle/response/notifications/UI؛فرمان دقیق در گزارش/validation-record |
+| Android-platform JS/assets export | Pass | Metro offline،۴TTF hash-equal،بدون موکاپ کامل؛metro-export-review/log؛APK/native build نیست |
+| core interval fixture تهران در مبنا و نهایی | Fail / Known Issue | هرکدام2/3،slot10:00…10:30 fixture غایب؛baseline/current core logs؛source/expectation ثابت |
+| پنج preset/۸mode/D08/absolute و relative/reset | Pass UI/service | query/range واقعی مطابق getReport؛open/close بدون read/write؛target helper داخل Modal |
+| custom invalid/reversed/end inclusive/calendar/week/day bounds | Pass | clock/data معلوم،UTC/Tehran؛draft read0 و X90 apply؛date picker تازه ساخته نشد |
+| M-04 اصلی/سایر/مجموع/سهم/full/zero/error/async cleanup | Pass | fixture300min/۷فعالیت،150/90/30+other30؛full بدون query/read/write؛fractional raw/ULP؛icons/cumulative محفوظ |
+| تاریخچه/ICATUS hide/شناسه‌ها/FIX01/FIX02 | Pass |۱۲۱ protected برابر با مبنا؛۱۱۲active/۱۰reserve و۱۳۹binding؛هر active مشاهده شده؛تست قدیمی حذف/skip نشد |
+| RTL/نام بلند/scales/code/font/contrast/target config | Pass در پیکربندی renderer | یک handler،code14/LTR،wrap و contrast≥4.5؛layout/اندازه‌گیری واقعی گوشی نیست |
+| Android screenshot/font/SVG/layout/keyboard/target در سه scale | Not run | runtime/adb/emulator/native project/device/APK موجود نیست؛screenshot plan برنامه و PNG مرجع است |
+| اعلان P03-015/P03-016 و ارتقا گوشی | Not run / باز و الزامی | Deferred نیست؛تحویل اعلان یا ارتقا اثبات نشده |
+| TalkBack | Deferred / Not run | تنها QA فعلاً تعویق‌داده‌شده |
+| TZ unset/undefined و fixture progress Tehran | Not run این task / Known Issues باز | سوابق FIX/HIDE محفوظ؛بی‌دلیل بسته یا skip نشده‌اند |
+
+منابع/ZIP داخلی/۲PNG/۱۲checksum و normalization در design-inputs/manifest؛جدول تطبیق بندها و اختلاف frame۵۲ legacy full با۴۰ normalization در گزارش صریح است. پذیرش native باز است. guide/CSV/coverage و۲۴۵ نتیجهٔ تک‌آزمون مربوط به سورس نهایی‌اند؛M-02/M-10/countdown/Release اجرا نشدند. بخش پایین عین سابقه است.
+
+---
+
+## سوابق حفظ‌شده — نتایج زیر برای سورس‌های پیشین‌اند
+
 # RC3 QA Retest — RC3-ICATUS-HIDE-01 — Rev01
 
 2026-10-12، Asia/Tehran؛ مبنا50a54992a2b28690b73755a7848319b533c12e69، سورس آزمون‌شده3ecbd2910f65733b69ac62d6cd32d941062c94e9، شاخه rc3-icatus-hide01-ui. SHA commit تحویل بعدی از Git/پاسخ نهایی خوانده شود؛ فقط docs/evidence با سورس آزمون تفاوت دارند. گزارش مستقل RC3_ICATUS_HIDE_01_Report_Rev01_FA.md و final-Rev01/validation-record.json فرمان/حد شاهد را ثبت می‌کنند.

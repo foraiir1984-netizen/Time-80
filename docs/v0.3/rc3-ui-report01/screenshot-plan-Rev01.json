@@ -1,0 +1,36 @@
+{
+  "status": "Not run",
+  "reason": "No Android runtime/build/device; JS export is not a native screenshot",
+  "tested_source_sha": "03d410279f9e1e122c4cfc823a5efd8d77bade3a",
+  "registry_version": "RC3-ID-01-Rev04",
+  "RTL": true,
+  "font_scales": [
+    1,
+    1.5,
+    2
+  ],
+  "cases": [
+    "M-01 default five presets/A03 and current-range metadata",
+    "D08 all eight modes, relative navigation/calendar/week start",
+    "D08 custom valid/invalid/reversed dates with keyboard",
+    "M-04 fixture 5h, top3+Other and all7 inline",
+    "zero/loading/error and font IO failure fallback",
+    "long activity names, large totals, mixed Gregorian/Farsi dates/codes"
+  ],
+  "measure": [
+    "Each native coded target >=48x48dp, no overlap",
+    "Code14sp/scaling/LTR and one handler in same target",
+    "Real Vazirmatn weights and truncation/wrap/scroll",
+    "Native SVG arcs/legend, layout order and color contrast",
+    "Keyboard/safe-area/backdrop/system-back behavior"
+  ],
+  "build_device_metadata": [
+    "exact build commit/registry",
+    "APK checksum/applicationId/versionName/versionCode",
+    "device/model/Android/viewport/font scale",
+    "clock/timezone/data fixture",
+    "expected/observed/screenshots/target measurements"
+  ],
+  "notification_and_upgrade_QA": "Open / Not run, mandatory; not Deferred",
+  "TalkBack": "Deferred / Not run"
+}
