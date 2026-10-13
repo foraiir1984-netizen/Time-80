@@ -12,7 +12,7 @@
 | A01 | today | امروز | نمای اصلی امروز، ساعت و مسیرهای ثبت/مرور | screen | فعال | src/components/TodayOverview.tsx:49 (IdentifierTitle.code) |
 | A02 | activities | فعالیت‌ها | گرید مدیریت؛ فعال/بایگانی فیلتر همین صفحه است | screen | فعال | src/screens/ActivitiesScreen.tsx:106 (IdentifierTitle.code) |
 | A03 | timeReport | گزارش زمان | هشت حالت بازه؛ M-01 و M-04 بخش‌های همین صفحه‌اند | screen | فعال | src/screens/InsightsScreen.tsx:126 (IdentifierTitle.code) |
-| A04 | reminderSettings | تنظیمات یادآوری | ویرایش تنظیمات موجود و ورود به بررسی اعلان | screen | فعال | src/screens/SettingsScreen.tsx:156 (IdentifierTitle.code)؛ src/screens/SettingsScreen.tsx:176 (IdentifierTitle.code) |
+| A04 | reminderSettings | تنظیمات یادآوری | ویرایش تنظیمات موجود و ورود به بررسی اعلان | screen | فعال | src/screens/SettingsScreen.tsx:157 (IdentifierTitle.code)؛ src/screens/SettingsScreen.tsx:177 (IdentifierTitle.code) |
 | A05 | dayTimeline | مرور روز / خط زمان | نمای review=true در همان کامپوننت؛ route مستقل ندارد | screen | فعال | src/screens/TodayScreen.tsx:101 (IdentifierTitle.code) |
 | A06 | checkIn | ثبت و مشاهدهٔ بازه | ثبت تازه، مشاهده، ویرایش و بازه ردشده؛ کد ثابت | screen | فعال | App.tsx:80 (stackPageCodes.CheckIn)؛ src/screens/CheckInScreen.tsx:141 (IdentifierTitle.code)؛ src/screens/CheckInScreen.tsx:342 (IdentifierTitle.code) |
 | A07 | saveResult | نتیجهٔ ثبت | نتیجه، شمارش همان روز، Undo و مشاهده ثبت | screen | فعال | App.tsx:82 (stackPageCodes.SaveResult)؛ src/screens/SaveResultScreen.tsx:48 (IdentifierTitle.code) |
@@ -24,7 +24,7 @@
 | D01 | activityManagementDialog | گزینه‌های مدیریت فعالیت | Bottom Sheet واقعی با Modal؛ ویرایش، بایگانی یا بازگردانی | dialog | فعال | src/screens/ActivitiesScreen.tsx:327 (IdentifierTitle.code) |
 | D02 | activityEditorDialog | فرم فعالیت جدید / ویرایش فعالیت | فرم مشترک با دو حالت؛ ایجاد/به‌روزرسانی کدهای جدا | dialog | فعال | src/components/ActivityEditor.tsx:139 (IdentifierTitle.code) |
 | D03 | classificationDialog | انتخاب دستهٔ ICATUS | انتخاب اختیاری، جست‌وجو و سلسله‌مراتب؛ رابط حذف شده؛ Deferred/Reserved | dialog | رزرو | — |
-| D04 | unsavedSettingsDialog | ویرایش ذخیره‌نشده | ادامه ویرایش یا کنارگذاشتن تغییر ناقص هنگام beforeRemove | dialog | فعال | src/screens/SettingsScreen.tsx:107 (identifierAlert.title) |
+| D04 | unsavedSettingsDialog | ویرایش ذخیره‌نشده | ادامه ویرایش یا کنارگذاشتن تغییر ناقص هنگام beforeRemove | dialog | فعال | src/screens/SettingsScreen.tsx:108 (identifierAlert.title) |
 | D05 | changeEntryDialog | تأیید تغییر ثبت | تأیید تغییر فعالیت ثبت موجود؛ سیاست دادهٔ سرویس محفوظ است | dialog | فعال | src/screens/CheckInScreen.tsx:119 (identifierAlert.title) |
 | D06 | confirmTimezoneDialog | تأیید منطقهٔ زمانی | تأیید context زمانی ثبت | dialog | فعال | src/screens/CheckInScreen.tsx:250 (identifierAlert.title) |
 | D07 | skipSlotDialog | تأیید ردکردن بازه | ردکردن بازه یا انصراف | dialog | فعال | src/screens/CheckInScreen.tsx:313 (identifierAlert.title) |
@@ -87,16 +87,16 @@
 | X56 | returnToMainToday | تمام / بازگشت به امروز | navigate("Main",{screen:"Today"}) | action | فعال | src/screens/NotificationResolutionScreen.tsx:35 (Button.actionCode)؛ src/screens/SaveResultScreen.tsx:130 (Button.actionCode) |
 | X57 | selectDueSlot | انتخاب از بازه‌های سررسیدشده | replace("Backlog") بدون scope؛ A08 | action | فعال | src/screens/NotificationResolutionScreen.tsx:30 (Button.actionCode) |
 | X58 | retryBacklogRead | تلاش دوباره برای بازه‌های ثبت‌نشده | load(true)؛ بازنشانی cursor و خواندن فهرست | action | فعال | src/screens/BacklogScreen.tsx:77 (Button.actionCode) |
-| X59 | toggleReminders | فعال / غیرفعال‌کردن یادآوری | ذخیره notification_enabled؛ در فعال‌سازی درخواست مجوز موجود | action | فعال | src/screens/SettingsScreen.tsx:201 (CodedSwitch.actionCode) |
-| X60 | editReminderInterval | ویرایش و ذخیرهٔ فاصله | draft تایپ؛ ذخیره مقدار تغییرکرده روی onBlur | action | فعال | src/screens/SettingsScreen.tsx:214 (Input.actionCode) |
-| X61 | editDayStart | ویرایش و ذخیرهٔ شروع روز | draft و ذخیره onBlur | action | فعال | src/screens/SettingsScreen.tsx:251 (Input.actionCode) |
-| X62 | editDayEnd | ویرایش و ذخیرهٔ پایان روز | draft و ذخیره onBlur | action | فعال | src/screens/SettingsScreen.tsx:268 (Input.actionCode) |
-| X63 | toggleActiveDay | تغییر روز فعال | افزودن/حذف از active_days و ذخیره | action | فعال | src/screens/SettingsScreen.tsx:320 (Button.actionCode) |
-| X64 | toggleSound | تغییر صدا | ذخیره sound_enabled | action | فعال | src/screens/SettingsScreen.tsx:374 (CodedSwitch.actionCode) |
-| X65 | toggleVibration | تغییر لرزش | ذخیره vibration_enabled | action | فعال | src/screens/SettingsScreen.tsx:390 (CodedSwitch.actionCode) |
-| X66 | openNotificationDiagnostics | بررسی اعلان‌ها | ورود A09 | action | فعال | src/screens/SettingsScreen.tsx:397 (Button.actionCode) |
-| X67 | continueSettingsDraft | ادامهٔ ویرایش | بستن D04 و ماندن در ویرایش | action | فعال | src/screens/SettingsScreen.tsx:113 (identifierAlert.actionCode) |
-| X68 | discardIncompleteSettingsDraft | کنارگذاشتن تغییر ناقص | همان navigation action متوقف‌شده اجرا شود؛ ذخیره‌های قبلی برنمی‌گردند | action | فعال | src/screens/SettingsScreen.tsx:117 (identifierAlert.actionCode) |
+| X59 | toggleReminders | فعال / غیرفعال‌کردن یادآوری | ذخیره notification_enabled؛ در فعال‌سازی درخواست مجوز موجود | action | فعال | src/screens/SettingsScreen.tsx:202 (CodedSwitch.actionCode) |
+| X60 | editReminderInterval | ویرایش و ذخیرهٔ فاصله | draft تایپ؛ ذخیره مقدار تغییرکرده روی onBlur | action | فعال | src/screens/SettingsScreen.tsx:215 (Input.actionCode) |
+| X61 | editDayStart | ویرایش و ذخیرهٔ شروع روز | draft و ذخیره onBlur | action | فعال | src/screens/SettingsScreen.tsx:252 (Input.actionCode) |
+| X62 | editDayEnd | ویرایش و ذخیرهٔ پایان روز | draft و ذخیره onBlur | action | فعال | src/screens/SettingsScreen.tsx:269 (Input.actionCode) |
+| X63 | toggleActiveDay | تغییر روز فعال | افزودن/حذف از active_days و ذخیره | action | فعال | src/screens/SettingsScreen.tsx:321 (Button.actionCode) |
+| X64 | toggleSound | تغییر صدا | ذخیره sound_enabled | action | فعال | src/screens/SettingsScreen.tsx:375 (CodedSwitch.actionCode) |
+| X65 | toggleVibration | تغییر لرزش | ذخیره vibration_enabled | action | فعال | src/screens/SettingsScreen.tsx:391 (CodedSwitch.actionCode) |
+| X66 | openNotificationDiagnostics | بررسی اعلان‌ها | ورود A09 | action | فعال | src/screens/SettingsScreen.tsx:398 (Button.actionCode) |
+| X67 | continueSettingsDraft | ادامهٔ ویرایش | بستن D04 و ماندن در ویرایش | action | فعال | src/screens/SettingsScreen.tsx:114 (identifierAlert.actionCode) |
+| X68 | discardIncompleteSettingsDraft | کنارگذاشتن تغییر ناقص | همان navigation action متوقف‌شده اجرا شود؛ ذخیره‌های قبلی برنمی‌گردند | action | فعال | src/screens/SettingsScreen.tsx:118 (identifierAlert.actionCode) |
 | X69 | requestNotificationPermission | درخواست مجوز اعلان | ensureNotificationPermission و خواندن مجدد diagnostics | action | فعال | src/screens/NotificationDiagnosticsScreen.tsx:185 (Button.actionCode) |
 | X70 | openPhoneNotificationSettings | بازکردن تنظیمات گوشی | Linking.openSettings؛ مدیریت خطا/refresh FIX02 محفوظ | action | فعال | src/screens/NotificationDiagnosticsScreen.tsx:201 (Button.actionCode) |
 | X71 | sendTestNotification | اعلان آزمایشی در ۱۰ ثانیه | همان sendTestNotification | action | فعال | src/screens/NotificationDiagnosticsScreen.tsx:206 (Button.actionCode)؛ src/screens/OnboardingScreen.tsx:60 (Button.actionCode) |

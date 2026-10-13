@@ -44,6 +44,7 @@ function SettingsCard({
 export function SettingsScreen({ navigation }: any) {
   const [fontsReady, fontError] = useFonts(reportFontSources);
   const typography = reportTypography(fontsReady);
+  const errorTypography = { ...typography.body, color: theme.danger };
   const { width, fontScale } = useWindowDimensions();
   const compactHours = width - 64 >= 264 && fontScale < 1.5;
   const green = iconTones.green.foreground;
@@ -157,7 +158,7 @@ export function SettingsScreen({ navigation }: any) {
           textProps={{ style: typography.pageTitle }}
           codeTextStyle={typography.code}
         />
-        <ErrorText error={error} textStyle={typography.body} />
+        <ErrorText error={error} textStyle={errorTypography} />
         {!error && (
           <Text allowFontScaling style={typography.body}>
             در حال بارگذاری…
@@ -192,7 +193,7 @@ export function SettingsScreen({ navigation }: any) {
           {message}
         </Text>
       )}
-      <ErrorText error={error} textStyle={typography.body} />
+      <ErrorText error={error} textStyle={errorTypography} />
       <SettingsCard id="settings-reminder-card">
         <CodedSwitch
           {...switchPresentation}

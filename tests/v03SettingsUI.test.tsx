@@ -11,6 +11,7 @@ import { getMeta } from "../src/db/metaRepository";
 import { dimensions, I18nManager, alertState } from "./react-native.mjs";
 import { readFailures, readIO } from "./sqlite.mjs";
 import { notificationReads, state } from "./notifications.mjs";
+import { theme } from "../src/theme/time80Theme";
 import { fontState } from "./fonts.mjs";
 
 (globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
@@ -368,6 +369,10 @@ test("M-02 loading/read error and font fallback retain A04 without writes on ent
   const failed = await mount();
   assert.match(text(failed.r), /A04/);
   assert.match(text(failed.r), /Injected read failure/);
+  const alertText = failed.r.root
+    .findAllByType("Text" as any)
+    .find((t) => t.props.accessibilityRole === "alert")!;
+  assert.equal(flatten(alertText.props.style).color, theme.danger);
   assert.doesNotMatch(text(failed.r), /در حال بارگذاری/);
   readFailures.match = null;
   fontState.ready = false;

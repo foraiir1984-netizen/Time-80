@@ -78,8 +78,8 @@ export const uiIdentifiers = {
     kind: "screen",
     status: "active",
     sites: [
-      "src/screens/SettingsScreen.tsx:156 (IdentifierTitle.code)",
-      "src/screens/SettingsScreen.tsx:176 (IdentifierTitle.code)",
+      "src/screens/SettingsScreen.tsx:157 (IdentifierTitle.code)",
+      "src/screens/SettingsScreen.tsx:177 (IdentifierTitle.code)",
     ],
   },
   dayTimeline: {
@@ -193,7 +193,7 @@ export const uiIdentifiers = {
     effectFa: "ادامه ویرایش یا کنارگذاشتن تغییر ناقص هنگام beforeRemove",
     kind: "dialog",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:107 (identifierAlert.title)"],
+    sites: ["src/screens/SettingsScreen.tsx:108 (identifierAlert.title)"],
   },
   changeEntryDialog: {
     code: "D05",
@@ -731,7 +731,7 @@ export const uiIdentifiers = {
     effectFa: "ذخیره notification_enabled؛ در فعال‌سازی درخواست مجوز موجود",
     kind: "action",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:201 (CodedSwitch.actionCode)"],
+    sites: ["src/screens/SettingsScreen.tsx:202 (CodedSwitch.actionCode)"],
   },
   editReminderInterval: {
     code: "X60",
@@ -739,7 +739,7 @@ export const uiIdentifiers = {
     effectFa: "draft تایپ؛ ذخیره مقدار تغییرکرده روی onBlur",
     kind: "action",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:214 (Input.actionCode)"],
+    sites: ["src/screens/SettingsScreen.tsx:215 (Input.actionCode)"],
   },
   editDayStart: {
     code: "X61",
@@ -747,7 +747,7 @@ export const uiIdentifiers = {
     effectFa: "draft و ذخیره onBlur",
     kind: "action",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:251 (Input.actionCode)"],
+    sites: ["src/screens/SettingsScreen.tsx:252 (Input.actionCode)"],
   },
   editDayEnd: {
     code: "X62",
@@ -755,7 +755,7 @@ export const uiIdentifiers = {
     effectFa: "draft و ذخیره onBlur",
     kind: "action",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:268 (Input.actionCode)"],
+    sites: ["src/screens/SettingsScreen.tsx:269 (Input.actionCode)"],
   },
   toggleActiveDay: {
     code: "X63",
@@ -763,7 +763,7 @@ export const uiIdentifiers = {
     effectFa: "افزودن/حذف از active_days و ذخیره",
     kind: "action",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:320 (Button.actionCode)"],
+    sites: ["src/screens/SettingsScreen.tsx:321 (Button.actionCode)"],
   },
   toggleSound: {
     code: "X64",
@@ -771,7 +771,7 @@ export const uiIdentifiers = {
     effectFa: "ذخیره sound_enabled",
     kind: "action",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:374 (CodedSwitch.actionCode)"],
+    sites: ["src/screens/SettingsScreen.tsx:375 (CodedSwitch.actionCode)"],
   },
   toggleVibration: {
     code: "X65",
@@ -779,7 +779,7 @@ export const uiIdentifiers = {
     effectFa: "ذخیره vibration_enabled",
     kind: "action",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:390 (CodedSwitch.actionCode)"],
+    sites: ["src/screens/SettingsScreen.tsx:391 (CodedSwitch.actionCode)"],
   },
   openNotificationDiagnostics: {
     code: "X66",
@@ -787,7 +787,7 @@ export const uiIdentifiers = {
     effectFa: "ورود A09",
     kind: "action",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:397 (Button.actionCode)"],
+    sites: ["src/screens/SettingsScreen.tsx:398 (Button.actionCode)"],
   },
   continueSettingsDraft: {
     code: "X67",
@@ -795,7 +795,7 @@ export const uiIdentifiers = {
     effectFa: "بستن D04 و ماندن در ویرایش",
     kind: "action",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:113 (identifierAlert.actionCode)"],
+    sites: ["src/screens/SettingsScreen.tsx:114 (identifierAlert.actionCode)"],
   },
   discardIncompleteSettingsDraft: {
     code: "X68",
@@ -804,7 +804,7 @@ export const uiIdentifiers = {
       "همان navigation action متوقف‌شده اجرا شود؛ ذخیره‌های قبلی برنمی‌گردند",
     kind: "action",
     status: "active",
-    sites: ["src/screens/SettingsScreen.tsx:117 (identifierAlert.actionCode)"],
+    sites: ["src/screens/SettingsScreen.tsx:118 (identifierAlert.actionCode)"],
   },
   requestNotificationPermission: {
     code: "X69",
