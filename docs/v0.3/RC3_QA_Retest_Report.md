@@ -1,3 +1,31 @@
+# RC3 QA Retest — RC3-UI-SETTINGS-01 — Rev01
+
+2026-10-13، Asia/Tehran؛ مبناe1278bb3e812ef3ae636546bfdf2b1e28050014c؛ شاخهrc3-ui-settings01. fixture source1759ff8a1de181074ae41f6f33e0aa04dd66af93؛M-02 source نهایی711b6eb8a457934f298ab5c72b132ae59101b6f8؛delivery فقطdocs/evidence پس ازآن،SHA/remote درپاسخ نهایی/Git.
+
+| مورد | وضعیت | شاهد / حد |
+| --- | --- | --- |
+| fixture X07/hook،گروهUTC/Tehran پیش ازM-02 | Pass117/117 و110/110 | clockfix logs؛normal command setup داخلیDate-only؛انتظار/hook حذف/skip نشد |
+| outerhost۲۰۲۴/۲۰۳۱،هر دوTZ | Pass،هرکدام17/17 | clockfixhostlogs؛constructor restoration پس ازهرtest؛وابستگی بهروز واقعی۱۲اکتبر رفع |
+| typecheck نهایی | Pass | npm run typecheck،exit0؛rc3-ui-settings01/typecheck.log |
+| suite کاملUTC نهایی | Pass138/138 | TZ=UTC npm test؛full-UTC.log؛۷تازه+۱۳۱قبلی،fail/skip/cancel0 |
+| مرتبطTehran نهایی | Pass117/117 | فرمان دقیق درگزارش/validation-record؛settings/report/data/hide/identifiers/lifecycle/response/notifications/UI؛نهfullTehran |
+| M-02valid/invalid interval/hours،blur/reload | Pass | realSQLite،revision یک‌بار،permissionread reconcile یک‌بار،draft تاblur؛invalidبدونsuccessکاذب |
+| D04/X67/X68 | Pass | continuedraft/dispatchdiscard،تنظیم معتبر قبلی محفوظ،reload صحیح |
+| days/sound/vibration/enable/denied/A04→A09 | Pass | policy/service موجود؛denied قصدفعال‌بودن راsave وreconcilewarning نمایش؛deliveryادعا نمی‌شود |
+| M-02RTL/نامبلند/scales/targets/code/glyph/busy/loading/error | Pass درsource/renderer | normalizedfonts،40/20/12،target48config،onehandler،code14/LTR؛nativeنیست |
+| M-01/M-04/ICATUS/شناسه‌ها/FIX01/FIX02 وsharedcaller | Pass | fullUTC/selectedTehran؛۳۰۰protectedbyte-identical،۱۳۹binding،۱۱۲code witnessed |
+| visualTehran روی81d88cb | Fail / Known Issue6/7 | progress65≠50؛همانشواهدپیشین؛test/TodayOverview در711b6eb unchanged |
+| TZunset/coreTehranfixture | Not run اینtask / KnownIssuesباز | منابع تاریخی محفوظ؛منطق/expectation تغییرنکرد |
+| nativeM-02/D04/screenshots/RTL/3scales/keyboard/scroll/touch | Not run | runtime-check؛device/build/adb/emulator/nativeproject موجودنیست؛PNGمرجعrendererشاهدگوشی نیست |
+| اعلانP03-015/P03-016 وارتقا گوشی | Not run / بازوالزامی | Deferred نیست؛P03-014/P03-019 نیزباز |
+| TalkBack | Deferred / Not run | فقطاینQAتعویق‌داده‌شده |
+
+منابعPNG واقعاً مشاهده‌شده وnormalization،جدولM-02،۲۶۸نتیجهphaseنهایی و۲۹۵نتیجهclock،coverage۱۴۹ردیف،guide/CSV/hash/logs درگزارش‌ها/پوشه‌های جدیدند. X07fixtureResolved مستقل ازKnownIssuesنامرتبط است. Nativeپذیرش باز؛M-10/countdown/Release اجرا نشده‌اند. پایین دقیقاًسوابق قبلی است.
+
+---
+
+## سوابق حفظ‌شده — نتایج زیر برای سورس‌های پیشین‌اند
+
 # RC3 QA Retest — RC3-UI-REPORT-01-FIX01 — Rev01
 
 2026-10-13،Asia/Tehran؛مبنا69e7be150c0e030b4cf9e5217e9957f10bc15e72؛سورس نهایی آزمون‌شده34f215a04cf74c5795da74e5679082c37af71bd2؛شاخهrc3-ui-report01-fix01-icons. commit تحویل بعدی فقطdocs/evidence است؛SHA کامل/remote درپاسخ نهایی وGit سند. شرح دقیق/فرمان‌ها درگزارشFIX01 وvalidation-record.json.

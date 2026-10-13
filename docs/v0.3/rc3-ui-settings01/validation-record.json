@@ -1,0 +1,65 @@
+{
+  "date_Asia_Tehran": "2026-10-13",
+  "tested_source_sha": "711b6eb8a457934f298ab5c72b132ae59101b6f8",
+  "clock_fix_sha": "1759ff8a1de181074ae41f6f33e0aa04dd66af93",
+  "M02_initial_code_commit": "81d88cb6d5842a94283d9bc98139a6aff8b0b741",
+  "final_error_color_review_commit": "711b6eb8a457934f298ab5c72b132ae59101b6f8",
+  "jobs": [
+    {
+      "name": "typecheck",
+      "cmd": "npm run typecheck",
+      "source_sha": "711b6eb8a457934f298ab5c72b132ae59101b6f8",
+      "counts": {},
+      "exit_code": 0,
+      "status": "Pass",
+      "log": "typecheck.log"
+    },
+    {
+      "name": "full-UTC",
+      "cmd": "TIME80_UI_EVIDENCE_DIR=/workspace/work/rc3-ui-settings01/settings-final-reviewed/witness-UTC TZ=UTC npm test",
+      "source_sha": "711b6eb8a457934f298ab5c72b132ae59101b6f8",
+      "counts": {
+        "tests": 138,
+        "pass": 138,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "status": "Pass",
+      "log": "full-UTC.log"
+    },
+    {
+      "name": "related-Asia-Tehran",
+      "cmd": "TIME80_UI_EVIDENCE_DIR=/workspace/work/rc3-ui-settings01/settings-final-reviewed/witness-Tehran TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03SettingsUI.test.tsx tests/v03ReportUI.test.tsx tests/v03ClassificationPolicy.test.ts tests/v03IcatusHideUI.test.tsx tests/v03Data.test.ts tests/v03IdentifierFlows.test.tsx tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx",
+      "source_sha": "711b6eb8a457934f298ab5c72b132ae59101b6f8",
+      "counts": {
+        "tests": 117,
+        "pass": 117,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "status": "Pass",
+      "log": "related-Asia-Tehran.log"
+    },
+    {
+      "name": "visual-known-issue-Asia-Tehran",
+      "source_sha": "81d88cb6d5842a94283d9bc98139a6aff8b0b741",
+      "cmd": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/visualIntegration.test.tsx",
+      "status": "Fail / Known Issue",
+      "exit_code": 1,
+      "counts": {
+        "tests": 7,
+        "pass": 6,
+        "fail": 1,
+        "skipped": 0
+      },
+      "log": "visual-known-issue-Asia-Tehran.log",
+      "final_error_color_change_did_not_touch_test_or_caller": true
+    }
+  ],
+  "no_skip_or_old_expectation_change": true,
+  "after_test_delivery_changes": "docs/evidence only"
+}

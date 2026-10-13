@@ -1,0 +1,13 @@
+
+> time80@0.3.0 typecheck
+> tsc --noEmit
+
+src/screens/SettingsScreen.tsx(156,11): error TS2322: Type '{ title: string; code: "A04"; style: TextStyle; codeTextStyle: { fontFamily: string | undefined; fontVariant: "tabular-nums"[]; }; }' is not assignable to type 'IntrinsicAttributes & { title: string; code: "D03" | "X32" | "X33" | "X34" | "X35" | "X36" | "X37" | "X41" | "X48" | "X95" | "X102" | "A01" | "A02" | "A03" | "A04" | ... 106 more ... | "X101"; titleRef?: Ref<...> | undefined; textProps?: TextProps | undefined; codeTextStyle?: StyleProp<...>; }'.
+  Property 'style' does not exist on type 'IntrinsicAttributes & { title: string; code: "D03" | "X32" | "X33" | "X34" | "X35" | "X36" | "X37" | "X41" | "X48" | "X95" | "X102" | "A01" | "A02" | "A03" | "A04" | ... 106 more ... | "X101"; titleRef?: Ref<...> | undefined; textProps?: TextProps | undefined; codeTextStyle?: StyleProp<...>; }'.
+src/screens/SettingsScreen.tsx(177,9): error TS2322: Type '{ title: string; code: "A04"; style: TextStyle; codeTextStyle: { fontFamily: string | undefined; fontVariant: "tabular-nums"[]; }; }' is not assignable to type 'IntrinsicAttributes & { title: string; code: "D03" | "X32" | "X33" | "X34" | "X35" | "X36" | "X37" | "X41" | "X48" | "X95" | "X102" | "A01" | "A02" | "A03" | "A04" | ... 106 more ... | "X101"; titleRef?: Ref<...> | undefined; textProps?: TextProps | undefined; codeTextStyle?: StyleProp<...>; }'.
+  Property 'style' does not exist on type 'IntrinsicAttributes & { title: string; code: "D03" | "X32" | "X33" | "X34" | "X35" | "X36" | "X37" | "X41" | "X48" | "X95" | "X102" | "A01" | "A02" | "A03" | "A04" | ... 106 more ... | "X101"; titleRef?: Ref<...> | undefined; textProps?: TextProps | undefined; codeTextStyle?: StyleProp<...>; }'.
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

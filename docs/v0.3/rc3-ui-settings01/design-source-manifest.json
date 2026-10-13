@@ -1,0 +1,32 @@
+{
+  "bundle": "Time80_Product_UI_Handoff_2026-10-06.zip",
+  "bundle_sha256": "f42852923f84c9d09253aa0f8853509b6d5996e9ec57a4f38a5fa77b21d70706",
+  "mockup_viewed": true,
+  "not_native_screenshot": true,
+  "mockup_dimensions": [
+    1122,
+    1402
+  ],
+  "sources_read": [
+    {
+      "path": "docs/v0.3/rc3-ui-report01/design-inputs/RC3_Product_Handoff.md",
+      "sha256": "acc8174b63cd2bfcc0493ecdd13e8a3eb5103b7351292e857b3100b684fd72d6"
+    },
+    {
+      "path": "docs/v0.3/rc3-ui-report01/design-inputs/01_Product_Decisions/Time80_Approved_UI_Decisions_FA.md",
+      "sha256": "67afdeff817a2a424a04ae873110a4eb5f3974761592865beaa2f228a07aa144"
+    },
+    {
+      "path": "docs/v0.3/rc3-ui-report01/design-inputs/02_Design_System/Time80_Typography_Normalization_v1.0_FA.md",
+      "sha256": "08f1859a80f4199ded5512b8013d1b8eaa546835c2937f8552e6e38a0ecf6ef5"
+    },
+    {
+      "path": "docs/v0.3/rc3-ui-report01/design-inputs/02_Design_System/Time80_Visual_System_Normalization_v1.0_FA.md",
+      "sha256": "5cba86bf9bd4d3053f1847d0873d50c1e86bc37d00afdb3a061fffaf419c13ba"
+    },
+    {
+      "path": "docs/v0.3/rc3-ui-settings01/design-inputs/M-02_Reminder_Settings_APPROVED.png",
+      "sha256": "6326888908cd2a7837940d46c5def66afe7fab968cecea786372e39276aab8b9"
+    }
+  ]
+}

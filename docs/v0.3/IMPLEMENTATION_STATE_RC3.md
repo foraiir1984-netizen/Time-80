@@ -1,3 +1,25 @@
+# IMPLEMENTATION_STATE_RC3 — RC3-UI-SETTINGS-01 — Rev01
+
+2026-10-13، Asia/Tehran؛ پرامپت۹. اصلاح مستقل fixture X07 و M-02 در سورس/آزمون تکمیل شدند؛ پذیرش گوشی باز است. پایین عین سابقهٔ مراحل قبل است.
+
+- مبنا/HEAD شروع e1278bb3e812ef3ae636546bfdf2b1e28050014c؛ شاخه قبلی rc3-ui-report01-fix01-icons،clean وancestry0/0؛ remote همان SHA. شاخه تازه rc3-ui-settings01 از checkout کامل؛بدونreset/حذف تغییر جدیدتر.
+- بخش اول:commit مستقل1759ff8a1de181074ae41f6f33e0aa04dd66af93 فقطfixture test؛شواهد مستقل79d93116f26d9d896ca8ecf7f549fac221a82a83 پیش ازM-02. Date-only context clock قبل ازDBsetup،fallback ازروز محلی fixture وcleanup/restoration پس ازUI؛فرمان عادی بهimport شواهد نیاز ندارد. items.find/route/hook/pending/future محصول/آزمون محفوظ؛assert بازه دقیق قوی‌تر شد.
+- gate بخش اول:UTC117/117،Tehran110/110؛outerhost۲۰۲۴/۲۰۳۱ درهر دوTZ هرکدام17/17 و۱۱۲شناسه دیده‌شده. شکست تاریخ‌وابستهX07 درآزمونResolved؛KnownIssuesنامرتبط تغییرنکردند؛M-02 بدونتأیید مجدد طبقپرامپت ادامه یافت.
+- M-02 مستقل81d88cb6d5842a94283d9bc98139a6aff8b0b741؛بازبینی نهایی رنگ error و **سورس آزمون‌شده711b6eb8a457934f298ab5c72b132ae59101b6f8**. commit تحویل بعدی فقطdocs/evidence؛SHA کامل/remote درپاسخ نهایی/Git سند،نههمانSHAآزمون.
+- A04:کارت‌های یادآوری/فاصله/ساعات/روزها/صداولرزش،Chips وCTA A09؛PNG M-02 واقعاً مشاهده وnormalization اجرا شد. Vazirmatn/palette موجود،glyphs20/frame40،font/code/RTL/wrap وtargets48؛هیچکنترلsave/cancel عمومی،date picker یاactivityasset key تازه نیست.
+- X59…X66،D04/X67/X68،draft/onBlur،requestPermission/apply/reconcile وسیاستdenied موجود محفوظ. message موفقیت قبلی آغازsave تازه پاک می‌شود تاinvalidvalue موفقیت کاذب ندهد. semanticerrorcolor محفوظ. switch/glyph handler مضاعف ندارد؛focus/ref/blur default callerهایInput محفوظ.
+- RegistryRev04 با همان۱۲۲تخصیص/۱۱۲active/۱۰reserved؛فقطsites sync وguide/CSV تولید شدند.۱۳۹binding+۱۰reserve=۱۴۹coverage،activePending0؛هر۱۱۲code باUI/Alert دیده شد. ICATUS hide/X102/FIX01/FIX02 وM-01/M-04 محفوظ‌اند.
+- نهایی روی711b6eb:typecheck Pass؛ **TZ=UTC npm test 138/138**؛مرتبطTehran117/117،fail0/skip0/cancel0.۷تست تازهM-02،۱۳۱قبلی؛fullsuiteTehran نیست. visualTehran روی81d88cb Fail6/7 همانprogress65≠50؛test/caller در711b6eb تغییرنکرده‌اند. TZunset/coreTehran اینtask Not run وKnownIssuesباز.
+- manifest۳۰۹فایل آزمون‌شده و۳۰۰protected byte-identical باe127؛App/services/scheduler/schema/repository/data/report engine/icons/dependencies/workflow ثابت‌اند.۹فایلsource/guide مرتبط تغییرکرده‌اند؛سوابق تاریخی وگزارش‌های قبلی دست‌نخورده‌اند.
+- گزارش‌هایRC3_TEST_CLOCK_FIX_01_Report_Rev01_FA.md وRC3_UI_SETTINGS_01_Report_Rev01_FA.md؛۲۹۵نتیجهfixture درrc3-test-clock-fix01،۲۶۸نتیجهM-02/Notrun/KI وcoverage/logs/hash/sourcePNG درrc3-ui-settings01. PNG مرجع است،نهتصویر گوشی.
+- AndroidM-02/D04/screenshots/RTL/scales1/1.5/2/keyboard/scroll/target اندازه‌گیری واقعی Not run؛build/device/adb/emulator/nativeproject نیست. QA اعلانP03-015/P03-016 وارتقا بازوالزامی؛P03-014/P03-019 باز. فقطTalkBack Deferred/Not run؛M-10/countdown/انتشار اجرا نشد.
+
+قدم بعدی پس ازبررسی دفتر:QA گوشی رویbuild/device معلوم برایM-02/D04 وtargets/keyboard/scroll،سپس دستور جدا. اینtask پس ازcommit/push/remoteverify متوقف می‌شود؛بدونmerge/force-push/workflow/Release یاM-10.
+
+---
+
+## سوابق حفظ‌شده — checkpoint بالا وضعیت جاری است
+
 # IMPLEMENTATION_STATE_RC3 — checkpoint RC3-UI-REPORT-01-FIX01 — Rev01
 
 2026-10-13،Asia/Tehran؛پرامپت۸-الف. اصلاح محدود آیکون فهرست کامل A03 در سورس تکمیل شد؛پذیرش native همچنان باز است. متن پایین سابقهٔ دقیق مراحل قبلی است.

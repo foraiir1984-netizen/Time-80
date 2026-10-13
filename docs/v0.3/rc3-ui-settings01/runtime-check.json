@@ -1,0 +1,23 @@
+{
+  "adb": null,
+  "emulator": null,
+  "native_android_project": false,
+  "Android_screenshots_M02_D04_RTL_scales": [
+    {
+      "scale": 1,
+      "status": "Not run"
+    },
+    {
+      "scale": 1.5,
+      "status": "Not run"
+    },
+    {
+      "scale": 2,
+      "status": "Not run"
+    }
+  ],
+  "actual_keyboard_scroll_focus_touch_measurements": "Not run",
+  "build_device_ids": "Not Available",
+  "TalkBack": "Deferred / Not run",
+  "P03_015_P03_016_and_upgrade_QA": "Not run / open and mandatory"
+}
