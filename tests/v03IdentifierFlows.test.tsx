@@ -20,6 +20,7 @@ import {
 } from "../src/components/Ui";
 import { uiIdentifiers } from "../src/components/uiIdentifiers";
 import { TodayScreen } from "../src/screens/TodayScreen";
+import { TodayOverview } from "../src/components/TodayOverview";
 import { ActivitiesScreen } from "../src/screens/ActivitiesScreen";
 import { ActivityEditor } from "../src/components/ActivityEditor";
 import { InsightsScreen } from "../src/screens/InsightsScreen";
@@ -61,6 +62,8 @@ const live = new Set<ReactTestRenderer>(),
   seen = new Map<string, Set<string>>(),
   renderedSites = new Map<string, Set<string>>();
 const openSettings = Linking.openSettings;
+const hostDate = Date;
+const fixtureNow = Date.parse("2026-10-12T12:00:00.000Z");
 let scenario = "";
 const tick = () => new Promise<void>((r) => setImmediate(r));
 function note(code: string) {
@@ -201,13 +204,17 @@ async function setup() {
   await initDatabase();
 }
 function uiTest(name: string, fn: () => Promise<void>) {
-  test(name, async () => {
+  test(name, async (t) => {
+    // Date only: native timer/async behavior remains real. Automatic setup is
+    // owned by this test context and explicitly reset after UI cleanup.
+    t.mock.timers.enable({ apis: ["Date"], now: fixtureNow });
+    assert.equal(Date.now(), fixtureNow);
     scenario = name;
     await setup();
     await fn();
   });
 }
-afterEach(async () => {
+afterEach(async (t) => {
   for (const r of [...live]) await close(r);
   readIO.before = null;
   readFailures.remaining = 0;
@@ -224,6 +231,9 @@ afterEach(async () => {
   emitFocus(true);
   assert.equal(appStateListenerCount(), 0);
   assert.equal(focusListenerCount(), 0);
+  assert.ok("mock" in t);
+  t.mock.timers.reset();
+  assert.equal(Date, hostDate);
 });
 
 uiTest(
@@ -257,18 +267,38 @@ uiTest(
     } else {
       // Ensure a due pending row exists, then refresh the unchanged focus loader.
       const tx = await db();
+      const dueStart = new Date();
+      dueStart.setHours(0, 0, 0, 0);
+      const dueEnd = new Date(+dueStart + 30 * 60000);
       await tx.runAsync(
         "INSERT OR IGNORE INTO expected_slots(period_start,period_end,duration_minutes,state,created_at,updated_at) VALUES(?,?,30,'pending',?,?)",
-        "2026-10-12T00:00:00.000Z",
-        "2026-10-12T00:30:00.000Z",
-        "2026-10-12T00:00:00.000Z",
-        "2026-10-12T00:00:00.000Z",
+        dueStart.toISOString(),
+        dueEnd.toISOString(),
+        dueStart.toISOString(),
+        dueStart.toISOString(),
       );
       await run(() => emitFocus(false));
       await run(() => emitFocus(true));
       await press(r, "X07");
       assert.equal(routes.at(-1)[0], "CheckIn");
     }
+    const pending = r.root.findByType(TodayOverview).props.pending;
+    assert.ok(pending);
+    assert.ok(+new Date(pending.period_end) <= Date.now());
+    assert.equal(
+      new Date(pending.period_start).toDateString(),
+      new Date().toDateString(),
+    );
+    assert.deepEqual(routes.at(-1), [
+      "CheckIn",
+      {
+        start: pending.period_start,
+        end: pending.period_end,
+        source: "manual",
+        slotId: pending.slot?.id,
+        entryState: pending.slot?.state,
+      },
+    ]);
     await press(r, "X08");
     assert.ok(codedButton(r, "X07"));
     await press(r, "X07");
