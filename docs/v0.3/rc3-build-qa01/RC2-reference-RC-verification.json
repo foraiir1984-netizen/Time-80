@@ -1,0 +1,20 @@
+{
+  "candidate": "RC2; device QA only; not release-ready",
+  "commit": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+  "applicationId": "com.personal.time80",
+  "versionName": "0.3.0",
+  "versionCode": 4,
+  "debuggable": false,
+  "apk": "Time80-v0.3.0-RC2.apk",
+  "apkBytes": 86612460,
+  "apkSha256": "f79228c789843ac5b97c5441f75d191c1e7eea436b8fa85d5c761da483dc06d8",
+  "signingCertificateSha256": "a9b10ace1c5b633458542bb3af73e4254334660718afe79f579e51c03ebbcb7d",
+  "signingMatchesPinnedV02Identity": true,
+  "schemaVersion": 3,
+  "schemaFingerprintFileSha256": "4e494b62e6a9bff0673e1cdf93657585feae0336e34dd4b4d982a92711b6f868",
+  "baselineSourcePreservation": true,
+  "temporaryKeystoreRemoved": true,
+  "githubReleaseCreated": false,
+  "finalTagCreated": false,
+  "branchMerged": false
+}

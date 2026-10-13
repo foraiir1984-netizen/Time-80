@@ -1,0 +1,77 @@
+[
+  {
+    "path": "docs/v0.3/RC3_ID_01_Report_Rev02_FA.md",
+    "sha256": "19e2c27c8c87ea0017409f120faaf599a3320efcd874a9bd2825f255fcd82f18",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/RC3_UI_SETTINGS_01_Report_Rev01_FA.md",
+    "sha256": "0cea3b263ea444b17f1916990eae280be315f0e395306d4bd0c9c52e8a4db64c",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/RC3_QA_Retest_Report.md",
+    "sha256": "d1d4e7257566b3c8daa40c9de69b7d9967c2ae31dc26061255154017bc06a8c3",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/RC3_TEST_CLOCK_FIX_01_Report_Rev01_FA.md",
+    "sha256": "3cdf417dbd9b803082705a322cb9b4e766b699908b31717e57532939fceb46b1",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/RC3_FIX_01_Report_FA.md",
+    "sha256": "78e85d53dca523aa7f1b089cf67aba4deff26ef7db9fce0d059e1c30031336aa",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/RC3_FIX_02_Report_FA.md",
+    "sha256": "87894539d1fbd159db95b2a415aafd5a7ff66eee5ea5a5b2927cac4ca23b63d0",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/RC3_UI_TODAY_01_Report_Rev01_FA.md",
+    "sha256": "1dd77d82beb7b02aa097b8145eed9d3e09cd9f7613cefa120561f589dadc85f3",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/RC3_ICATUS_HIDE_01_Report_Rev01_FA.md",
+    "sha256": "25b7c2cebbe7856f318dcce82608b9ef86a36f9d25995ef684476b3f9dd8890a",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/RC3_UI_REPORT_01_FIX01_Report_Rev01_FA.md",
+    "sha256": "18b151d6f78579abb276acb0268d03dbc123f9d34d313ac11e239dab251762bf",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/RC3_UI_REPORT_01_Report_Rev01_FA.md",
+    "sha256": "023c849ad100e01ac6ab6a9cbb2dd277d4b3b7c0ac8383820a5202aa808be458",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/RC3_ID_01_Report_FA.md",
+    "sha256": "8686b6779b711c0568f0f0d0c6b858d3d3d0b3422dc9d7d928c627c8440d6547",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/IMPLEMENTATION_STATE_RC3.md",
+    "sha256": "74264c19b302db24b88cea187e99a32b557b1e90b41f0ca56b02c42618d3f6c9",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/rc3-ui-today01/design-inputs/RC3_Product_Handoff.md",
+    "sha256": "acc8174b63cd2bfcc0493ecdd13e8a3eb5103b7351292e857b3100b684fd72d6",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/rc3-ui-today01/design-inputs/ADR-003-04_Local_Day_Contract.md",
+    "sha256": "7b515fbf91903db780f1cb9a229f0ffb375baef5c9b811e6669991fbbf461780",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  },
+  {
+    "path": "docs/v0.3/rc3-ui-today01/design-inputs/ADR-003-05_Icon_Compatibility.md",
+    "sha256": "64bcb836572c77b4733b1a40a7112fa882b2ca82ad923939aa083c8fa6df0846",
+    "status": "Read / stage report or current checkpoint / unchanged reference"
+  }
+]

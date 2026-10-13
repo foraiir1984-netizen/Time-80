@@ -1,0 +1,97 @@
+{
+  "sha": "e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+  "base": "d66b42a47d3fc519692c025d7df696d8a19bb12e",
+  "fresh_phases": [
+    {
+      "name": "full-UTC.log",
+      "command": "TZ=UTC npm test",
+      "status": "Pass",
+      "counts": {
+        "tests": 146,
+        "pass": 146,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "related-Tehran.log",
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03TodayUI.test.tsx tests/visualIntegration.test.tsx tests/v03SettingsUI.test.tsx tests/v03ReportUI.test.tsx tests/v03ClassificationPolicy.test.ts tests/v03IcatusHideUI.test.tsx tests/v03Data.test.ts tests/v03IdentifierFlows.test.tsx tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx tests/v03PatchAssets.test.ts",
+      "status": "Pass",
+      "counts": {
+        "tests": 135,
+        "pass": 135,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "known-core-Tehran.log",
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/core.test.ts",
+      "status": "Fail",
+      "counts": {
+        "tests": 3,
+        "pass": 2,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "other_checks": [
+    [
+      "typecheck.log",
+      "Pass",
+      "npm run typecheck",
+      "static"
+    ],
+    [
+      "patch-check.log",
+      "Pass",
+      "npm run patch:check",
+      "source patch manifest,notpackaged proof"
+    ],
+    [
+      "icons-check.log",
+      "Pass",
+      "npm run icons:check",
+      "asset source integrity"
+    ],
+    [
+      "export-android.log",
+      "Pass",
+      "CI=1 EXPO_NO_TELEMETRY=1 node node_modules/expo/bin/cli export --platform android --output-dir /workspace/work/rc3-build-qa01/export --clear",
+      "real Hermes export;notAPK/native"
+    ],
+    [
+      "prebuild-audit.log",
+      "Pass",
+      "CI=1 EXPO_NO_TELEMETRY=1 node node_modules/expo/bin/cli prebuild /workspace/work/rc3-build-qa01/native-audit --platform android --no-install",
+      "isolatedgeneratedproject;notmergedmanifest"
+    ],
+    [
+      "guide-regeneration",
+      "Pass",
+      "node --import tsx scripts/generate-ui-code-guide.ts /workspace/work/rc3-build-qa01/generated-guide;cmp currentguide/CSV",
+      "exact byte match"
+    ],
+    [
+      "autolinking-expo.json",
+      "Pass",
+      "node node_modules/expo-modules-autolinking/bin/expo-modules-autolinking.js resolve --platform android --json",
+      "native compilation notrun"
+    ],
+    [
+      "autolinking-rn.json",
+      "Pass",
+      "node node_modules/expo-modules-autolinking/bin/expo-modules-autolinking.js react-native-config --platform android --json",
+      "native compilation notrun"
+    ]
+  ],
+  "source_changes": [
+    "app.json: versionCode4->5"
+  ],
+  "APK": "Not run;noActionsrun yet",
+  "docs_commit": "Separate frompreparedbuildsha;not a completedAPKbuild"
+}

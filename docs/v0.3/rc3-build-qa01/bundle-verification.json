@@ -1,0 +1,42 @@
+{
+  "sha": "e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+  "asset_count": 187,
+  "bundle": "_expo/static/js/android/AppEntry-7dcfa8ede0f4523ec4ed1a74303b54ad.hbc",
+  "bundle_sha256": "a55197cad4bef713e5dc4d99f83174c5c5d8c7dc20797f9f226cabe80ec81199",
+  "bundle_bytes": 3056580,
+  "verified_assets": [
+    {
+      "source": "assets/fonts/vazirmatn/Vazirmatn-Bold.ttf",
+      "sha256": "f635fdbea28f265de395ba83b4b1570dcf2f58d13c65469e61903b1c2d2ae723",
+      "export": "assets/4ac4426bc38f337534dfc45b3dbd9283",
+      "status": "Pass"
+    },
+    {
+      "source": "assets/fonts/vazirmatn/Vazirmatn-Medium.ttf",
+      "sha256": "b986623e4ddef10755e04be39f8ea7bcb1dc08bfe8dd0aa6af395736f256ad4a",
+      "export": "assets/24d05392e628925dcb1722a1f20952d3",
+      "status": "Pass"
+    },
+    {
+      "source": "assets/fonts/vazirmatn/Vazirmatn-SemiBold.ttf",
+      "sha256": "3f239d8364c14ee32c46b6839fa197c28958358b82a9673d2c6acc8506d78bc5",
+      "export": "assets/a11a0c156bba19a2977e82bd0ad28e45",
+      "status": "Pass"
+    },
+    {
+      "source": "assets/fonts/vazirmatn/Vazirmatn-Regular.ttf",
+      "sha256": "b69fd4c680b8f3f225feabcc655a2c585d97627b8f5f5c0f9985e894069f3a56",
+      "export": "assets/e8e9648f5b8fc824da409750ff331221",
+      "status": "Pass"
+    },
+    {
+      "source": "assets/illustrations/today-mountain-v1.png",
+      "sha256": "ed896d418b038151fc7116174eb0607fd44c5853bc975e963ede854bd710eed0",
+      "export": "assets/c070c8858490bf43d40b5c10f86e55ed",
+      "status": "Pass"
+    }
+  ],
+  "hermes_bytecode": true,
+  "native_rendering": "Not run",
+  "SVG": "Candle/Donut JS geometry exported with real react-native-svg modules; native package compilation not yet verified"
+}

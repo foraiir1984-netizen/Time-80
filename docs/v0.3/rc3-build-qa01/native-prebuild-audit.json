@@ -1,0 +1,20 @@
+{
+  "sha": "e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+  "isolated_audit_path": "/workspace/work/rc3-build-qa01/native-audit",
+  "status": "Pass",
+  "applicationId": "com.personal.time80",
+  "versionName": "0.3.0",
+  "versionCode": 5,
+  "existing_source_targetSdk": 36,
+  "targetSdk_source": "node_modules/react-native/gradle/libs.versions.toml",
+  "actual_packaged_targetSdk": "Not run;APK not available",
+  "full_merged_manifest": "Not run;no Gradle build/Android SDK",
+  "signing_guard": "Generated release signingConfig null until stable env credentials;release task fails if absent;not debug fallback",
+  "autolinked": [
+    "expo-font",
+    "expo-notifications",
+    "react-native-svg"
+  ],
+  "notification_patch_compiled_packaged": "Not run;source patch verified but noAPK",
+  "prebuild_warning": "expo-system-ui absent for userInterfaceStyle automatic;unchanged baseline warning;no dependency added"
+}

@@ -1,0 +1,5 @@
+
+> time80@0.3.0 icons:check
+> node scripts/generate-icons.cjs --check
+
+Verified 15 approved icons, 180 PNG variants

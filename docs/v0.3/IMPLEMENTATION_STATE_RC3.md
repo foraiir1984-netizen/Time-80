@@ -1,3 +1,25 @@
+# IMPLEMENTATION_STATE_RC3 — RC3-BUILD-QA-01 Rev01 — checkpoint در انتظار Actions
+
+2026-10-13، Asia/Tehran. بررسی یکپارچه و سورس آماده است؛ **APK ساخته نشده است**. تمام سوابق قبلی پایین حفظ شده‌اند.
+
+- مبنا/HEAD شروع d66b42a47d3fc519692c025d7df696d8a19bb12e،شاخهrc3-ui-today01،clean وancestry0/0؛شاخه اختصاصیrc3-build-qa01.
+- مستندات رویشاخهجدا rc3-build-qa01-handoff ثبت می‌شوند؛branchساخت rc3-build-qa01 رویe6fa5c ثابت باقی می‌ماند تاdispatch همانSHAآزمون‌شده را بسازد.
+- commit آماده ساخت/آزمون **e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85**،فقطapp.json versionCode4→5. versionName0.3.0 وapplicationIdcom.personal.time80 ثابت؛history1/2/3/4 وتمامشاخه‌هایمرتبط بررسیشدند؛remoteهمانSHAتأییدشد.
+- FIX01/FIX02،registry/guide/CSV،ICATUS hide،fixtureX07/progress وM-01/M-02/M-04/M-10 محفوظ؛۳۲۱فایلsource/native/tests/assets/signing/workflow برابر بایتی مبنا.
+- آزمون‌های تازه همین task: typecheckPass،fullUTC۱۴۶/۱۴۶،relatedTehran۱۳۵/۱۳۵،skip/fail/cancel0. coreTehran جدا۲/۳Failهمانfixtureinterval؛TZunsetNot run.
+- exportAndroid/Hermes Pass؛۱۱۶۴module،۱۸۷asset،۴fontVazirmatn وheaderhash تأیید؛شمع/DonutSVGدرbundle. prebuildدرarchiveجداPass،stable signingguard/version5/autolinkingfont/SVG/notificationمحفوظ. nativecompile/APKpackagedproof نیست.
+- مسیر موجودbuild-android-apk.yml باdispatchrelease=true قابل استفاده؛buildscript/plugin موجود ازکلیدstable استفاده وdebugfallbackرا منع می‌کنند. workflow/secret/keystore/dependency تغییرنکرد.
+- **مانع جاری:** ghAPIبرایapi.github.com باForbiddenرد می‌شود؛policyrestricted/enforced ودامنه درallowedhostsنیست. GitHubconnectorخواندن داردولیdispatchcallableندارد. درخواستاصلاحnetworkارسالشد؛مجوزActionsپرامپت۱۱موجود است.
+- **ActionsrunID،APK،checksum،certificateverify،actualmetadata/mergedmanifest/targetSDK: Not run /Not Available.** هیچoldrunیاexport بهجایbuildتازه معرفی نشده. target36 فقطsourcehint است؛P03-019باز.
+- runtimeامروز:adb/emulator/SDK/device/KVMنیست؛nativeUI/RTL/scales/targets/screenshots/upgrade Not run. QAاعلان/ارتقا الزامی؛فقطTalkBackDeferred؛P03-014/015/016/019باز.
+- گزارشRC3_BUILD_QA_01_Report_Rev01_FA.md وDeviceGuide آماده؛checkpoint.json فرمانآخر،SHAوقدمبعدیرا دارد. اینتحویلcheckpoint است،نهبستهAPK یاتأییدrelease.
+
+فرمان بعدی پس از رفعnetwork وکنترلواقعیrepo: gh workflow run build-android-apk.yml --repo foraiir1984-netizen/Time-80 --ref rc3-build-qa01 -f release=true. سپسreadrun/head_sha،downloadartifact،verifymetadata/certRC2/manifest/assets/dex،بستهAPK/checksum وبه‌روزرسانیگزارش. commit مستندات باcommit آمادهساخت جداست؛بعدازادامه اجراهایقبلی ازاجراهایجدید تفکیک شوند. merge/forcepush/Release انجامنشده است.
+
+---
+
+## سوابق محفوظ — checkpoint بالا وضعیت جاری است
+
 # IMPLEMENTATION_STATE_RC3 — RC3-UI-TODAY-01 — Rev01
 
 2026-10-13، Asia/Tehran؛ پرامپت۱۰. M-10 در سورس تکمیل و آزمون شد؛ پذیرش Android باز است. پایین عین تاریخچهٔ قبلی است.

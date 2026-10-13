@@ -1,0 +1,32 @@
+[
+  {
+    "sha": "e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+    "versionName": "0.3.0",
+    "versionCode": 5,
+    "applicationId": "com.personal.time80"
+  },
+  {
+    "sha": "8e1cef5c0bdf0d471a0ed6cfbd02872b127f7634",
+    "versionName": "0.3.0",
+    "versionCode": 4,
+    "applicationId": "com.personal.time80"
+  },
+  {
+    "sha": "f957798b4c18bd32a949b0451fd51eb3431bd59e",
+    "versionName": "0.3.0",
+    "versionCode": 3,
+    "applicationId": "com.personal.time80"
+  },
+  {
+    "sha": "70b61b4fc8a9de2f56861c3dd46e2fcf92c0fb07",
+    "versionName": "0.2.0",
+    "versionCode": 2,
+    "applicationId": "com.personal.time80"
+  },
+  {
+    "sha": "0aaa9fce997935a8032a38abb806aa9623e66c55",
+    "versionName": "0.1.0",
+    "versionCode": 1,
+    "applicationId": "com.personal.time80"
+  }
+]

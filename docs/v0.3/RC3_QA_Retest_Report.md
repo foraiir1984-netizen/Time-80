@@ -1,3 +1,29 @@
+# RC3 QA Retest — RC3-BUILD-QA-01 Rev01 — checkpoint پیش از ساخت
+
+2026-10-13،Asia/Tehran؛سورسآمادهe6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85 رویrc3-build-qa01،مبناd66b42a47d3fc519692c025d7df696d8a19bb12e. فقطversionCode5؛commit مستندات جدا وAPKهنوزنیست.
+
+| مورد | نتیجه | شاهد / حد |
+| --- | --- | --- |
+| typecheck | Pass | اجرای تازهtypecheck.log |
+| fullUTC | Pass۱۴۶/۱۴۶ | suiteکاملتازه،fail/skip/cancel0 |
+| relatedTehran | Pass۱۳۵/۱۳۵ | ۱۴فایل،FIXها/UI/data/patch؛fullsuiteTehranنیست |
+| X07/progressfixtures،registry/guide/CSV،manual/past/report/settings/notificationresponse/Undo | Pass خودکار | realmodules/SQLite،nativeportsmock؛پذیرشگوشینیست |
+| patch/icons/export/Hermes/assets | Pass | ۱۵icon/۱۸۰PNG؛۱۸۷exportasset و۴font/headerhash؛APKنیست |
+| prebuild/autolinking/stablesigningguard | Pass درتولیدproject | archiveجدا؛nativecompile یاامضایواقعیNot run |
+| coreintervalTehran | Fail۲/۳ KnownIssue | همانslot10:00–10:30fixture؛source/testتغییرنکرد |
+| fullTZunset | Not run | سابقه محفوظ،بسته اعلامنشد |
+| Actionsdispatch/releaseAPK/actualcert/checksum | Not run | APIForbidden/networkpolicy؛runIDنداریم |
+| mergedmanifest/actualtargetSdk/packagedpatch/font/SVG | Not run | target36sourcehint،APKنبود؛P03-019باز |
+| nativeM-01/M-02/M-04/M-10 screenshots/RTL/scales/targets | Not run | adb/emulator/SDK/device/KVM موجودنیست؛renderer/exportمرجعnativeنیست |
+| deviceupgrade/P03-014/015/016/019 | Not run؛بازوالزامی | فقطTalkBackDeferred است |
+| TalkBack | Deferred /Not run | شمارشمعکوسUndoاضافه نشد |
+
+گزارشRC3_BUILD_QA_01_Report_Rev01_FA.md،DeviceGuide،checkpointدقیق،۲۹۸نتیجه/فرمان،نسخه/RC2publicsigner وmanifestحفاظتدرrc3-build-qa01ثبتاست. آمادهساخت ازساختواقعیجداست. پس از رفع دسترسیAPI اجرایمجازworkflowموجود وverifyartifactواقعی ادامهیابد؛تاریخچهقبلیپایین دست‌نخورده است.
+
+---
+
+## سوابق محفوظ — نتایج زیر متعلق به مراحل قبلی‌اند
+
 # RC3 QA Retest — RC3-UI-TODAY-01 — Rev01
 
 2026-10-13، Asia/Tehran؛ مبنا51728c49acfaba52412b6500f719c80a31848d7a، سورس آزمون‌شده **b8d798d454236b2f66eefc6d318033b50777a233**، شاخهrc3-ui-today01. commit تحویل فقط docs/evidence و SHA دقیق در پاسخ نهایی/Git گزارش است. منابع و بندهای کامل در RC3_UI_TODAY_01_Report_Rev01_FA.md؛ فرمان هرcase در validation-record.json/test-results.csv همان پوشه.

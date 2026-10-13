@@ -1,0 +1,55 @@
+{
+  "task": "RC3-BUILD-QA-01 Rev01",
+  "date": "2026-10-13 Asia/Tehran",
+  "baseline": "d66b42a47d3fc519692c025d7df696d8a19bb12e",
+  "branch": "rc3-build-qa01",
+  "prepared_build_sha": "e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+  "remote_sha_confirmed": "e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+  "initial_status": "clean",
+  "initial_ancestry": [
+    0,
+    0
+  ],
+  "completed": [
+    "All referenced stages preserved; only app.json versionCode4->5",
+    "Fresh typecheck Pass / UTC146/146 / relatedTehran135/135",
+    "Fresh Hermes Android export Pass;4font/header hashes verified",
+    "Fresh patch/icon checks Pass",
+    "Prebuild isolated audit Pass;stable signing guard and version5 generated",
+    "Native dependencies autolinked;no dependency or workflow changes"
+  ],
+  "last_commands": [
+    "node node_modules/expo-modules-autolinking/bin/expo-modules-autolinking.js react-native-config --platform android --json",
+    "git ls-remote origin refs/heads/rc3-build-qa01"
+  ],
+  "current_command": null,
+  "known_issue": "coreTehran2/3 old interval fixture fail;kept separate",
+  "actions_dispatch": {
+    "status": "Not run",
+    "reason": "gh API requests to api.github.com return Forbidden;effective allowed hosts do not contain domain;GitHub connector callable tools lack dispatch",
+    "workflow_file": "build-android-apk.yml",
+    "release_input": true,
+    "branch": "rc3-build-qa01",
+    "run_id": null
+  },
+  "next_command_after_network_fix": "gh workflow run build-android-apk.yml --repo foraiir1984-netizen/Time-80 --ref rc3-build-qa01 -f release=true",
+  "next_steps": [
+    "Recheck current network policy and gh API authorization",
+    "Dispatch existing release workflow at exact prepared SHA and record runID/head_sha",
+    "Download actual artifact;verify APK metadata/certificate againstRC2/package/assets/manifest/dex",
+    "Signed APK +checksum +DeviceGuide/report;Android QA only if actualruntimeavailable"
+  ],
+  "runtime": {
+    "adb": null,
+    "emulator": null,
+    "kvm": false,
+    "sdk_environment_names_present": [],
+    "android_device_tests": "Not run"
+  },
+  "capacity": "Exact checkpoint; prior results are not future rerun results",
+  "deliverable_state": "APK not built/downloaded;no checksum,signer or run success claimed",
+  "documentation_branch": "rc3-build-qa01-handoff",
+  "checkout_branch": "rc3-build-qa01-handoff",
+  "build_branch_remains_pinned": "rc3-build-qa01 at e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+  "reason_for_separate_docs_branch": "Keep dispatch branch pinned to exact tested source SHA while recording blocked checkpoint/documents"
+}
