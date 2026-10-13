@@ -1,0 +1,102 @@
+{
+  "tested_source_sha": "1759ff8a1de181074ae41f6f33e0aa04dd66af93",
+  "baseline": "e1278bb3e812ef3ae636546bfdf2b1e28050014c",
+  "jobs": [
+    {
+      "name": "related-UTC",
+      "cmd": "TZ=UTC node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03ReportUI.test.tsx tests/v03ClassificationPolicy.test.ts tests/v03IcatusHideUI.test.tsx tests/v03Data.test.ts tests/v03IdentifierFlows.test.tsx tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx tests/visualIntegration.test.tsx",
+      "source_sha": "1759ff8a1de181074ae41f6f33e0aa04dd66af93",
+      "status": "Pass",
+      "exit_code": 0,
+      "counts": {
+        "tests": 117,
+        "pass": 117,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "related-UTC.log"
+    },
+    {
+      "name": "related-Asia-Tehran",
+      "cmd": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03ReportUI.test.tsx tests/v03ClassificationPolicy.test.ts tests/v03IcatusHideUI.test.tsx tests/v03Data.test.ts tests/v03IdentifierFlows.test.tsx tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx",
+      "source_sha": "1759ff8a1de181074ae41f6f33e0aa04dd66af93",
+      "status": "Pass",
+      "exit_code": 0,
+      "counts": {
+        "tests": 110,
+        "pass": 110,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "related-Asia-Tehran.log"
+    },
+    {
+      "name": "host-2024-UTC",
+      "cmd": "TIME80_SIMULATED_HOST_DATE=2024-05-20T03:00:00Z TZ=UTC node --import /workspace/work/rc3-ui-settings01/simulated-host-date.mjs --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03IdentifierFlows.test.tsx",
+      "source_sha": "1759ff8a1de181074ae41f6f33e0aa04dd66af93",
+      "status": "Pass",
+      "exit_code": 0,
+      "counts": {
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "host-2024-UTC.log"
+    },
+    {
+      "name": "host-2031-UTC",
+      "cmd": "TIME80_SIMULATED_HOST_DATE=2031-12-31T18:00:00Z TZ=UTC node --import /workspace/work/rc3-ui-settings01/simulated-host-date.mjs --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03IdentifierFlows.test.tsx",
+      "source_sha": "1759ff8a1de181074ae41f6f33e0aa04dd66af93",
+      "status": "Pass",
+      "exit_code": 0,
+      "counts": {
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "host-2031-UTC.log"
+    },
+    {
+      "name": "host-2024-Asia-Tehran",
+      "cmd": "TIME80_SIMULATED_HOST_DATE=2024-05-20T03:00:00Z TZ=Asia/Tehran node --import /workspace/work/rc3-ui-settings01/simulated-host-date.mjs --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03IdentifierFlows.test.tsx",
+      "source_sha": "1759ff8a1de181074ae41f6f33e0aa04dd66af93",
+      "status": "Pass",
+      "exit_code": 0,
+      "counts": {
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "host-2024-Asia-Tehran.log"
+    },
+    {
+      "name": "host-2031-Asia-Tehran",
+      "cmd": "TIME80_SIMULATED_HOST_DATE=2031-12-31T18:00:00Z TZ=Asia/Tehran node --import /workspace/work/rc3-ui-settings01/simulated-host-date.mjs --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03IdentifierFlows.test.tsx",
+      "source_sha": "1759ff8a1de181074ae41f6f33e0aa04dd66af93",
+      "status": "Pass",
+      "exit_code": 0,
+      "counts": {
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "host-2031-Asia-Tehran.log"
+    }
+  ],
+  "product_files_byte_identical": 266,
+  "fixture_file_sha256": "be27dfdc34fcf27e92b1d51cefa67e7c076b4b548078831fb6982d9162d7ec00",
+  "all_112_active_identifiers_observed": true,
+  "clock_restoration_asserted_after_each": true,
+  "normal_test_command_requires_no_extra_import": true,
+  "initial_typecheck_failure": "TS2339 afterEach TestContext|SuiteContext narrowed by assertion; test-only fix"
+}
