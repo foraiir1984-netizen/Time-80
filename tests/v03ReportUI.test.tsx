@@ -37,6 +37,9 @@ import {
 import { emitFocus, focusListenerCount } from "./navigation.mjs";
 import { fontState } from "./fonts.mjs";
 import type { Mode } from "../src/utils/reportPeriods";
+import { ActivityIcon, AssetIcon } from "../src/components/ActivityIcon";
+import { ICON_ASSETS } from "../src/icons/iconAssets";
+import { iconTone, theme } from "../src/theme/time80Theme";
 
 (globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
 const now = new Date("2026-10-12T12:00:00.000Z"),
@@ -448,6 +451,123 @@ test("M-04 known five-hour result: three principal rows and exact Other, all inl
   await press(r, "X82");
   assert.equal(button(r, "X101").props.disabled, false);
   noClassification(r);
+});
+
+test("full-report icons opt into 40/20 with a direct 12dp name gap; existing defaults and literal scaled legacy survive", async () => {
+  const parentView = (node: any) => {
+    let parent = node.parent;
+    while (parent && parent.type !== "View") parent = parent.parent;
+    assert.ok(parent);
+    return parent;
+  };
+  const asset = {
+    kind: "asset",
+    key: "exercise",
+    raw: "🏃",
+    unresolved: false,
+  } as const;
+  // Existing consumers retain every raster size, frame, tint and legacy default.
+  for (const size of [24, 30, 32] as const) {
+    const r = await mount(<ActivityIcon icon={asset} size={size} />);
+    const image = r.root.findByType("Image" as any);
+    assert.equal(image.props.style.width, size);
+    assert.equal(image.props.style.height, size);
+    assert.equal(image.props.source, ICON_ASSETS.exercise[size]);
+    assert.equal(image.props.style.tintColor, iconTone("exercise").foreground);
+    assert.equal(parentView(image).props.style.width, 52);
+    assert.equal(parentView(image).props.style.height, 52);
+  }
+  const defaultAsset = await mount(<ActivityIcon icon={asset} />);
+  assert.equal(
+    defaultAsset.root.findByType("Image" as any).props.style.width,
+    32,
+  );
+  const bare = await mount(<AssetIcon iconKey="exercise" />);
+  assert.equal(bare.root.findByType("Image" as any).props.style.width, 24);
+  assert.equal(bare.root.findAllByType("View" as any).length, 0);
+  const raw = 'متن قدیمی بسیار بلند 👨‍👩‍👦 work {"kind":"asset"}\nسطر دوم';
+  const legacy = await mount(<ActivityIcon legacy={raw} />);
+  const legacyText = legacy.root.findByType("Text" as any);
+  assert.equal(legacyText.children.join(""), raw);
+  assert.equal(legacyText.props.style.fontSize, 32);
+  assert.equal(parentView(legacyText).props.style.width, theme.frame);
+  assert.equal(parentView(legacyText).props.style.minHeight, theme.frame);
+
+  for (const scale of [1, 1.5, 2]) {
+    dimensions.fontScale = scale;
+    assert.equal(I18nManager.isRTL, true);
+    const rows = [
+      {
+        id: 301,
+        name: "نام فارسی بسیار بلند فعالیت با آیکون دارایی",
+        minutes: 5,
+        icon: asset.raw,
+        icon_view: asset,
+      },
+      {
+        id: 302,
+        name: "نام فارسی بلند با رشتهٔ خام و ناشناخته",
+        minutes: 3,
+        icon: raw,
+        icon_view: { kind: "legacy", raw, unresolved: true } as const,
+      },
+      { id: 303, name: "فعالیت با آیکون خانواده", minutes: 2, icon: "👨‍👩‍👦" },
+    ];
+    const before = JSON.stringify(rows);
+    const r = await mount(
+      <ReportActivitySummary
+        activities={rows}
+        total={10}
+        typography={reportTypography(true)}
+      />,
+    );
+    await press(r, "X101");
+    const icons = r.root.findAllByType(ActivityIcon);
+    assert.equal(icons.length, rows.length);
+    for (const [i, icon] of icons.entries()) {
+      const pair = parentView(icon);
+      assert.equal(pair.props.style.gap, 12);
+      assert.equal(pair.props.style.flexDirection, "row-reverse");
+      // Icon and name are direct siblings; no intervening color marker.
+      const children = pair.children;
+      assert.equal(children.length, 2);
+      assert.equal(children[0], icon);
+      const name = pair
+        .findAllByType("Text" as any)
+        .find((t) => t.children.join("") === rows[i]!.name)!;
+      assert.ok(name);
+      assert.equal(name.props.allowFontScaling, true);
+      assert.equal(name.props.numberOfLines, undefined);
+      const target = icon.findAllByType("Pressable" as any);
+      assert.equal(target.length, 0);
+      if (i === 0) {
+        assert.equal(icon.findByType(AssetIcon).props.iconKey, asset.key);
+        assert.equal(icon.findByType(AssetIcon).props.size, 24);
+        const image = icon.findByType("Image" as any);
+        assert.equal(image.props.source, ICON_ASSETS.exercise[24]);
+        assert.equal(image.props.style.width, 20);
+        assert.equal(image.props.style.height, 20);
+        assert.equal(parentView(image).props.style.width, 40);
+        assert.equal(parentView(image).props.style.height, 40);
+      } else {
+        const t = icon.findByType("Text" as any);
+        assert.equal(t.children.join(""), rows[i]!.icon);
+        assert.equal(t.props.style.fontSize, 20);
+        assert.equal(t.props.style.width, "100%");
+        assert.equal(t.props.allowFontScaling, true);
+        assert.equal(t.props.numberOfLines, undefined);
+        assert.equal(t.props.adjustsFontSizeToFit, undefined);
+        assert.equal(t.props.maxFontSizeMultiplier, undefined);
+        assert.equal(parentView(t).props.style.width, 40);
+        assert.equal(parentView(t).props.style.minHeight, 40);
+        assert.equal(parentView(t).props.style.height, undefined);
+        assert.equal(parentView(t).props.style.overflow, undefined);
+      }
+    }
+    assert.equal(JSON.stringify(rows), before);
+    assert.equal(r.root.findByType(ReportActivitySummary).props.total, 10);
+    assert.equal(r.root.findAllByType("Pressable" as any).length, 1);
+  }
 });
 
 test("projection preserves service order and fractional minutes; rounding affects labels only", async () => {

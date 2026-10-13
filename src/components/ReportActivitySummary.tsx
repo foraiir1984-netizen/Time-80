@@ -223,13 +223,6 @@ export function ReportActivitySummary({
                   gap: 8,
                 }}
               >
-                {row.activity && (
-                  <ActivityIcon
-                    icon={row.activity.icon_view}
-                    legacy={row.activity.icon}
-                    size={24}
-                  />
-                )}
                 <View
                   accessible={false}
                   style={{
@@ -239,9 +232,34 @@ export function ReportActivitySummary({
                     backgroundColor: row.color,
                   }}
                 />
-                <Text allowFontScaling style={[typography.body, { flex: 1 }]}>
-                  {row.name}
-                </Text>
+                {row.activity ? (
+                  <View
+                    style={{
+                      flexDirection: "row-reverse",
+                      alignItems: "center",
+                      gap: 12,
+                      flex: 1,
+                      minWidth: 0,
+                    }}
+                  >
+                    <ActivityIcon
+                      icon={row.activity.icon_view}
+                      legacy={row.activity.icon}
+                      size={24}
+                      presentation={{ containerSize: 40, iconSize: 20 }}
+                    />
+                    <Text
+                      allowFontScaling
+                      style={[typography.body, { flex: 1 }]}
+                    >
+                      {row.name}
+                    </Text>
+                  </View>
+                ) : (
+                  <Text allowFontScaling style={[typography.body, { flex: 1 }]}>
+                    {row.name}
+                  </Text>
+                )}
               </View>
               <View
                 style={{
