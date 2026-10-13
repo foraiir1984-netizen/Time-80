@@ -461,7 +461,7 @@ test("M-04 known five-hour result: three principal rows and exact Other, all inl
 test("full-report icons opt into 40/20 with a direct 12dp name gap; existing defaults and literal scaled legacy survive", async () => {
   const parentView = (node: ReactTestInstance) => {
     let parent = node.parent;
-    while (parent && parent.type !== "View") parent = parent.parent;
+    while (parent && String(parent.type) !== "View") parent = parent.parent;
     assert.ok(parent);
     return parent;
   };
