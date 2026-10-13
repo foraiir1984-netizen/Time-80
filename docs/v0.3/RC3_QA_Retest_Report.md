@@ -1,3 +1,20 @@
+# RC3 QA Retest — پیگیری ۱۱-ج / راهنمای دستی
+
+2026-10-13، Asia/Tehran؛اینمرحله فقط راهنمای Run workflow وcheckpoint است. SHA آمادهٔ ساخت e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85 درremoteدوباره تأییدشد؛تست/ساخت/گوشی تازه اجرا نشد.
+
+| بررسی | نتیجه | حد شاهد |
+| --- | --- | --- |
+| workflow درrefساخت وmain،branch/defaultbranch/input/guard/artifact | Pass | فایل‌های واقعیGitHub وGit،snapshot/hash؛inputساختrelease=true تنهاگزینهcustomاست |
+| روشSHArun | Pass درراهنما | fullcommitSHA/URL وcheckoutgitlog1؛runواقعیوجودندارد |
+| فرمRunworkflow واردشده/اجرای دستی | Not run | maininputsندارد،شاخهساختreleaseدارد؛فرمحساباینجامشاهده‌نشده؛نبودinputلازم=>توقف |
+| APKامضاشده/signature/metadata/checksum وnative/phone/upgrade | Not run | Pass اعلام نشد؛فقطTalkBackDeferred |
+
+راهنماRC3_Manual_Build_Guide_11C_Rev01_FA.md وcheckpoint.json به‌روز شدند؛networkرفع آنطبق دستور متوقف،محیطبازسازی نشد وsource/workflowتغییرنکرد. نتایج پایین مربوط اجراهای قبلی‌اند.
+
+---
+
+## سوابق قبلی
+
 # RC3 QA Retest — RC3-BUILD-QA-01 Rev01 — checkpoint پیش از ساخت
 
 2026-10-13،Asia/Tehran؛سورسآمادهe6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85 رویrc3-build-qa01،مبناd66b42a47d3fc519692c025d7df696d8a19bb12e. فقطversionCode5؛commit مستندات جدا وAPKهنوزنیست.

@@ -1,0 +1,71 @@
+name: Time80 validation and Android build
+on:
+  pull_request:
+  push:
+    branches: [main, "feat/**"]
+  workflow_dispatch:
+    inputs:
+      release:
+        description: Build with the configured stable release key
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: time80-android-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: TZ=UTC npm test
+      - run: npx expo export --platform android
+  release:
+    if: github.event_name == 'workflow_dispatch' && inputs.release
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      CI: "1"
+      EXPO_NO_TELEMETRY: "1"
+      TIME80_KEYSTORE_PASSWORD: ${{ secrets.TIME80_KEYSTORE_PASSWORD }}
+      TIME80_KEY_ALIAS: ${{ secrets.TIME80_KEY_ALIAS }}
+      TIME80_KEY_PASSWORD: ${{ secrets.TIME80_KEY_PASSWORD }}
+      TIME80_SIGNER_SHA256: ${{ secrets.TIME80_SIGNER_SHA256 }}
+    steps:
+      - name: Set signing key path
+        run: printf 'TIME80_KEYSTORE_PATH=%s/time80-release.jks\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - name: Restore stable signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.TIME80_KEYSTORE_BASE64 }}
+        run: |
+          test -n "$KEYSTORE_BASE64"
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$TIME80_KEYSTORE_PATH"
+          chmod 600 "$TIME80_KEYSTORE_PATH"
+      - run: bash scripts/build-android-release.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Time80-v0.2-APK
+          path: dist/Time80-v0.2.apk*
+          if-no-files-found: error
+      - if: always()
+        run: rm -f "$TIME80_KEYSTORE_PATH"

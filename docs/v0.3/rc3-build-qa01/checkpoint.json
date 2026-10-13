@@ -34,10 +34,9 @@
   },
   "next_command_after_network_fix": "gh workflow run build-android-apk.yml --repo foraiir1984-netizen/Time-80 --ref rc3-build-qa01 -f release=true",
   "next_steps": [
-    "Recheck current network policy and gh API authorization",
-    "Dispatch existing release workflow at exact prepared SHA and record runID/head_sha",
-    "Download actual artifact;verify APK metadata/certificate againstRC2/package/assets/manifest/dex",
-    "Signed APK +checksum +DeviceGuide/report;Android QA only if actualruntimeavailable"
+    "11-C ends with exact manual guide;no build/device Pass",
+    "Product owner/office inspect authenticated Runworkflow form;selectrc3-build-qa01 andsetrelease=trueonlyifexactinputpresent",
+    "Ifexecuted,recordrunID/head_sha/jobrelease/artifact;laterverificationrequiresseparateresume"
   ],
   "runtime": {
     "adb": null,
@@ -51,5 +50,21 @@
   "documentation_branch": "rc3-build-qa01-handoff",
   "checkout_branch": "rc3-build-qa01-handoff",
   "build_branch_remains_pinned": "rc3-build-qa01 at e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
-  "reason_for_separate_docs_branch": "Keep dispatch branch pinned to exact tested source SHA while recording blocked checkpoint/documents"
+  "reason_for_separate_docs_branch": "Keep dispatch branch pinned to exact tested source SHA while recording blocked checkpoint/documents",
+  "followup": "11-C:manual guide delivered;network investigation stopped",
+  "network_investigation": "Stopped by user;noenvironment/conversation recreation or removal",
+  "manual_guide": "docs/v0.3/RC3_Manual_Build_Guide_11C_Rev01_FA.md",
+  "manual_dispatch": {
+    "workflow": "build-android-apk.yml",
+    "branch": "rc3-build-qa01",
+    "sha": "e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+    "inputs": {
+      "release": true
+    },
+    "main_inputs": {},
+    "authenticated_form": "Not run",
+    "gate": "If exactreleaseinputnotpresent,stop;UIfeasibilityunverified",
+    "SHA_check": "runcommitfullURL/SHA pluscheckoutgitlog1fullhash",
+    "result": "Not run"
+  }
 }

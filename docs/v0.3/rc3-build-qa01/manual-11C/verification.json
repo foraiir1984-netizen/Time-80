@@ -1,0 +1,39 @@
+{
+  "followup": "11-C",
+  "date": "2026-10-13 Asia/Tehran",
+  "default_branch": "main",
+  "default_head": "5c45240ab1dc967cfbbabcdede73b27bb0f468e8",
+  "build_branch": "rc3-build-qa01",
+  "build_sha": "e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+  "workflow_page": "https://github.com/foraiir1984-netizen/Time-80/actions/workflows/build-android-apk.yml",
+  "workflow_input": {
+    "name": "release",
+    "description": "Build with the configured stable release key",
+    "type": "boolean",
+    "default": false,
+    "required_value": true
+  },
+  "other_custom_inputs": [],
+  "main_custom_inputs": [],
+  "public_page_title": "Build Android APK",
+  "authenticated_dispatch_form": "Not run;not observable in this environment",
+  "manual_gate": "If exact release input is present,settrue;if absent,stop;no definiteUIrenderingclaim",
+  "sources": [
+    {
+      "ref": "e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+      "file": ".github/workflows/build-android-apk.yml",
+      "copy": "build-workflow.yml",
+      "sha256": "a625ef06cd9eb3b40ff864326f8fb1a3ef1423d26003083e2a89ab15cfebc7d0"
+    },
+    {
+      "ref": "5c45240ab1dc967cfbbabcdede73b27bb0f468e8",
+      "file": ".github/workflows/build-android-apk.yml",
+      "copy": "default-main-workflow.yml",
+      "sha256": "42094668158a12bc7c436638f5324a962b2932af4a64724db56677a046e87fe3"
+    }
+  ],
+  "network": "Investigation stopped by explicit11-C;noapi retry",
+  "environment_recreated": false,
+  "workflow_changed": false,
+  "build_native_phone": "Not run"
+}

@@ -1,3 +1,17 @@
+# IMPLEMENTATION_STATE_RC3 — پیگیری ۱۱-ج / راهنمای اجرای دستی
+
+2026-10-13، Asia/Tehran. طبق دستور، رفع شبکه متوقف و محیط/گفت‌وگو حذف یا بازسازی نشد. این پیگیری با تحویل راهنمای دقیق پایان می‌یابد؛ ساخت و آزمون گوشی Not run باقی‌اند.
+
+- شاخهٔ ساخت rc3-build-qa01 همچنان روی e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85 ثابت و remote دوباره تأیید شد؛ checkout مستندات rc3-build-qa01-handoff از80f43bfc… ادامه یافت،بدون تغییر سورس/workflow.
+- workflow واقعی build-android-apk.yml؛درشاخهٔ ساخت نامTime80 validation and Android build،تنهاinputrelease/boolean باdescription دقیقBuild with the configured stable release key؛مقدارلازمtrue وdefaultfalse.
+- default branch واقعی main،SHA5c45240ab1dc967cfbbabcdede73b27bb0f468e8؛نسخهworkflow آنname=Build Android APK وinputsندارد. فرم واردشدهٔ حساب کاربر اینجا قابل مشاهده نیست؛اگر بعد انتخاب شاخه release حاضرنبود،توقف،چونjobrelease بهinputs.release وابسته است. نمایشUI یااجرایآن تأییدنشده است.
+- راهنمای RC3_Manual_Build_Guide_11C_Rev01_FA.md لینک مستقیم،branch/SHA/ورودی دقیق،روشcheckSHAباcommitURL وcheckoutlogs ونامartifactتاریخی را دارد. snapshotهایYAML/hash درrc3-build-qa01/manual-11C وcheckpoint به‌روزند.
+- مانع قبلی شبکه APIForbidden درcheckpoint محفوظ؛دراینپیگیری API دوبارهآزمایش یاnetworkتغییرنکرد. RunID/APK/checksum/signing/native/phoneNot run؛هیچنتیجهقبلی اجرای تازه معرفی نشد.
+
+---
+
+## سابقهٔ checkpoint پیشین
+
 # IMPLEMENTATION_STATE_RC3 — RC3-BUILD-QA-01 Rev01 — checkpoint در انتظار Actions
 
 2026-10-13، Asia/Tehran. بررسی یکپارچه و سورس آماده است؛ **APK ساخته نشده است**. تمام سوابق قبلی پایین حفظ شده‌اند.
