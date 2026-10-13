@@ -1,0 +1,9 @@
+{
+  "sensitive_pattern_matches": [],
+  "scanned_files": 31,
+  "review": "Reviewed synthetic fixtures/assertions, source paths, timing and hashes; no credentials/private user data. No APK/ZIP/node_modules staged.",
+  "protected_historical_checkpoint_suffixes_verified": true,
+  "tested_manifest_files": 308,
+  "protected_files": 305,
+  "registry_guide_csv_locations_unchanged": true
+}

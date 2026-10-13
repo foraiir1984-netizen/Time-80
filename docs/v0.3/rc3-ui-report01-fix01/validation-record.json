@@ -1,0 +1,175 @@
+{
+  "date_Asia_Tehran": "2026-10-13",
+  "recorded_at_UTC": "2026-10-13T05:21:18.006603+00:00",
+  "baseline": "69e7be150c0e030b4cf9e5217e9957f10bc15e72",
+  "tested_source_sha": "34f215a04cf74c5795da74e5679082c37af71bd2",
+  "jobs": [
+    {
+      "name": "typecheck",
+      "cmd": "npm run typecheck",
+      "cwd": "/workspace/work/rc3-fix01/repo",
+      "sha": "34f215a04cf74c5795da74e5679082c37af71bd2",
+      "clock": "host",
+      "counts": {},
+      "exit_code": 0,
+      "status": "Pass",
+      "log": "typecheck.log"
+    },
+    {
+      "name": "related-UTC",
+      "cmd": "TZ=UTC node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03ReportUI.test.tsx tests/v03ClassificationPolicy.test.ts tests/v03IcatusHideUI.test.tsx tests/v03Data.test.ts tests/v03IdentifierFlows.test.tsx tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx tests/visualIntegration.test.tsx",
+      "cwd": "/workspace/work/rc3-fix01/repo",
+      "sha": "34f215a04cf74c5795da74e5679082c37af71bd2",
+      "clock": "host",
+      "counts": {
+        "tests": 118,
+        "pass": 116,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "exit_code": 1,
+      "status": "Fail",
+      "log": "related-UTC.log"
+    },
+    {
+      "name": "related-Asia-Tehran",
+      "cmd": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03ReportUI.test.tsx tests/v03ClassificationPolicy.test.ts tests/v03IcatusHideUI.test.tsx tests/v03Data.test.ts tests/v03IdentifierFlows.test.tsx tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx",
+      "cwd": "/workspace/work/rc3-fix01/repo",
+      "sha": "34f215a04cf74c5795da74e5679082c37af71bd2",
+      "clock": "host",
+      "counts": {
+        "tests": 111,
+        "pass": 109,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "exit_code": 1,
+      "status": "Fail",
+      "log": "related-Asia-Tehran.log"
+    },
+    {
+      "name": "visual-Asia-Tehran",
+      "cmd": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/visualIntegration.test.tsx",
+      "cwd": "/workspace/work/rc3-fix01/repo",
+      "sha": "34f215a04cf74c5795da74e5679082c37af71bd2",
+      "clock": "host",
+      "counts": {
+        "tests": 7,
+        "pass": 6,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "exit_code": 1,
+      "status": "Fail",
+      "log": "visual-Asia-Tehran.log"
+    },
+    {
+      "name": "identifiers-fixture-date-UTC",
+      "cmd": "TZ=UTC node --import /workspace/work/rc3-ui-report01-fix01/freeze-fixture-date.mjs --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03IdentifierFlows.test.tsx",
+      "cwd": "/workspace/work/rc3-fix01/repo",
+      "sha": "34f215a04cf74c5795da74e5679082c37af71bd2",
+      "clock": "2026-10-12T12:00:00.000Z (supplementary)",
+      "counts": {
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "status": "Pass",
+      "log": "identifiers-fixture-date-UTC.log"
+    },
+    {
+      "name": "baseline-identifiers-fixture-date-UTC",
+      "cmd": "TZ=UTC node --import /workspace/work/rc3-ui-report01-fix01/freeze-fixture-date.mjs --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03IdentifierFlows.test.tsx",
+      "cwd": "/workspace/work/rc3-ui-report01-fix01/baseline",
+      "sha": "69e7be150c0e030b4cf9e5217e9957f10bc15e72",
+      "clock": "2026-10-12T12:00:00.000Z (supplementary)",
+      "counts": {
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "status": "Pass",
+      "log": "baseline-identifiers-fixture-date-UTC.log"
+    },
+    {
+      "name": "identifiers-fixture-date-Asia-Tehran",
+      "cmd": "TZ=Asia/Tehran node --import /workspace/work/rc3-ui-report01-fix01/freeze-fixture-date.mjs --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03IdentifierFlows.test.tsx",
+      "cwd": "/workspace/work/rc3-fix01/repo",
+      "sha": "34f215a04cf74c5795da74e5679082c37af71bd2",
+      "clock": "2026-10-12T12:00:00.000Z (supplementary)",
+      "counts": {
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "status": "Pass",
+      "log": "identifiers-fixture-date-Asia-Tehran.log"
+    },
+    {
+      "name": "baseline-identifiers-fixture-date-Asia-Tehran",
+      "cmd": "TZ=Asia/Tehran node --import /workspace/work/rc3-ui-report01-fix01/freeze-fixture-date.mjs --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03IdentifierFlows.test.tsx",
+      "cwd": "/workspace/work/rc3-ui-report01-fix01/baseline",
+      "sha": "69e7be150c0e030b4cf9e5217e9957f10bc15e72",
+      "clock": "2026-10-12T12:00:00.000Z (supplementary)",
+      "counts": {
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "status": "Pass",
+      "log": "baseline-identifiers-fixture-date-Asia-Tehran.log"
+    },
+    {
+      "name": "baseline-identifiers-UTC",
+      "sha": "69e7be150c0e030b4cf9e5217e9957f10bc15e72",
+      "clock": "host 2026-10-13",
+      "cwd": "/workspace/work/rc3-ui-report01-fix01/baseline",
+      "cmd": "TZ=UTC node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03IdentifierFlows.test.tsx",
+      "status": "Fail",
+      "exit_code": 1,
+      "log": "baseline-identifiers-UTC.log",
+      "counts": {
+        "tests": 18,
+        "pass": 16,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "baseline-identifiers-Asia-Tehran",
+      "sha": "69e7be150c0e030b4cf9e5217e9957f10bc15e72",
+      "clock": "host 2026-10-13",
+      "cwd": "/workspace/work/rc3-ui-report01-fix01/baseline",
+      "cmd": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03IdentifierFlows.test.tsx",
+      "status": "Fail",
+      "exit_code": 1,
+      "log": "baseline-identifiers-Asia-Tehran.log",
+      "counts": {
+        "tests": 18,
+        "pass": 16,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "supplementary_clock_setup_sha256": "a56bb9d70ace12452102f950fb34c50739af745774ff2a094b46af245a05f419",
+  "no_skip_or_test_expectation_change": true,
+  "not_native_evidence": true
+}

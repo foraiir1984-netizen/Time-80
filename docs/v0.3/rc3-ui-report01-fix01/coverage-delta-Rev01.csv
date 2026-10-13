@@ -1,0 +1,7 @@
+surface,before,after,status,evidence,limit
+A03/X101 expanded asset,frame52/image24/source24,frame40/image20/source24,Pass,v03ReportUI focused test,source/config; native Not run
+A03/X101 expanded legacy,width52/minHeight52/font24,width40/minHeight40/font20/scaling/raw exact,Pass,v03ReportUI focused test,height may grow; native Not run
+A03/X101 icon/name,"marker intervenes, gap8","direct pair gap12, marker external",Pass,v03ReportUI focused test,native layout Not run
+other ActivityIcon/AssetIcon consumers,defaults52/32;bare24;sizes24/30/32,unchanged defaults,Pass,focused test and visual/UI/identifier flows,date-bound flow fails separately at host clock
+"registry,guide,CSV,source sites",Rev04;122/112/10;139bindings,byte-identical,Pass,source-review + registry tests,native ID acceptance open
+real phone RTL scales1/1.5/2 with asset/legacy/long names,Not run,Not run,Not run,runtime-check.json,no build/device available

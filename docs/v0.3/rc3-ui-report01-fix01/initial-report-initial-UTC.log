@@ -1,0 +1,53 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ M-01 normal view has five presets; D08 open/close/backdrop never changes query, reads or history (126.228249ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ every existing mode keeps its query/range/result; absolute X100 differs from relative X85 and presets reset offset (454.295064ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ custom dates remain draft until X90, invalid/reversed dates show errors, valid end date remains inclusive (89.31146ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ day/week/month boundaries, calendar and week-start preferences keep existing contracts and metadata (154.542152ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ M-04 known five-hour result: three principal rows and exact Other, all inline with unchanged total/query and no read/write (28.312481ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ full-report icons opt into 40/20 with a direct 12dp name gap; existing defaults and literal scaled legacy survive (4.539456ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ projection preserves service order and fractional minutes; rounding affects labels only (7.07616ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ zero/loading/error retain A03 and controls; retry recovers current result without stale successful totals (32.052896ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ out-of-order reads and cleanup keep latest query/result; mere refocus and report interactions add no data writes (38.090123ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RTL/long names/font scale 1: code shares one 48dp target, wraps, no badge on donut and no ICATUS (35.687419ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RTL/long names/font scale 1.5: code shares one 48dp target, wraps, no badge on donut and no ICATUS (35.412266ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RTL/long names/font scale 2: code shares one 48dp target, wraps, no badge on donut and no ICATUS (44.982987ms)
+✔ font IO loading/failure remains usable with explicit fallback and never changes report query or data (12.341277ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1467.396573
+
+✖ failing tests:
+
+test at tests/v03ReportUI.test.tsx:2:16676
+✖ full-report icons opt into 40/20 with a direct 12dp name gap; existing defaults and literal scaled legacy survive (4.539456ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  24 !== 52
+  
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03ReportUI.test.tsx:471:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 24,
+    expected: 52,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

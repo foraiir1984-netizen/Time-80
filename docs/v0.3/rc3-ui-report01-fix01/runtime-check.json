@@ -1,0 +1,16 @@
+{
+  "tested_sha": "34f215a04cf74c5795da74e5679082c37af71bd2",
+  "adb": null,
+  "emulator": null,
+  "native_android_project": false,
+  "Android_native_layout_screenshots_touch_measurement": "Not run",
+  "scales_requested": [
+    1,
+    1.5,
+    2
+  ],
+  "build_device_ids": "Not Available",
+  "screenshots": [],
+  "notification_and_upgrade_acceptance": "Not run / open and mandatory",
+  "TalkBack": "Deferred / Not run"
+}

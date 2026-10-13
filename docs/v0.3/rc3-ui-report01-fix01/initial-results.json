@@ -1,0 +1,7 @@
+{
+  "draft_report_failure": "wrong renderer parent, fixed in new test only",
+  "a3377c9e6174b6b8949617c6e7f0977922286200_typecheck": "Fail TS7006 new test helper callback",
+  "0fef963bdc41c388e4f83b7f97cb77af602f7511_typecheck": "Fail TS2367 mock host type comparison",
+  "34f215a04cf74c5795da74e5679082c37af71bd2_typecheck": "Pass",
+  "old_tests_expectations_or_skip_changed": false
+}

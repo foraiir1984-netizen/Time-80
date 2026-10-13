@@ -1,0 +1,78 @@
+TAP version 13
+# react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+# Subtest: approved warm tokens, tab hierarchy, icon tones and responsive boundaries
+ok 1 - approved warm tokens, tab hierarchy, icon tones and responsive boundaries
+  ---
+  duration_ms: 1.754347
+  type: 'test'
+  ...
+# react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+# react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+# Subtest: buttons/inputs expose focus and disabled state, retain handlers, errors include text
+ok 2 - buttons/inputs expose focus and disabled state, retain handlers, errors include text
+  ---
+  duration_ms: 186.240761
+  type: 'test'
+  ...
+# react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+# react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+# Subtest: picker retains full caller ranking and immediate taps with two/one columns, no search or persistent selection
+ok 3 - picker retains full caller ranking and immediate taps with two/one columns, no search or persistent selection
+  ---
+  duration_ms: 18.719996
+  type: 'test'
+  ...
+# react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+# Subtest: Style A hosts are 52dp, symbols 32dp, legacy icon strings remain literal
+ok 4 - Style A hosts are 52dp, symbols 32dp, legacy icon strings remain literal
+  ---
+  duration_ms: 4.154096
+  type: 'test'
+  ...
+# react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+# Subtest: Today overview is read-only, shows clock/context/reminder/due count and preserves callback target
+not ok 5 - Today overview is read-only, shows clock/context/reminder/due count and preserves callback target
+  ---
+  duration_ms: 25.492087
+  type: 'test'
+  location: '/workspace/work/rc3-fix01/repo/tests/visualIntegration.test.tsx:2:7710'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    65 !== 50
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 50
+  actual: 65
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/visualIntegration.test.tsx:214:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+# Subtest: Today landing/review retain exact CheckIn routing, previous-day access, Backlog and all slot rows
+ok 6 - Today landing/review retain exact CheckIn routing, previous-day access, Backlog and all slot rows
+  ---
+  duration_ms: 1350.481422
+  type: 'test'
+  ...
+# react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+# react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+# Subtest: timeline keeps disabled future and neutral pending/skipped states with accessible exact times
+ok 7 - timeline keeps disabled future and neutral pending/skipped states with accessible exact times
+  ---
+  duration_ms: 24.20352
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 6
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2674.408234

@@ -1,3 +1,24 @@
+# IMPLEMENTATION_STATE_RC3 — checkpoint RC3-UI-REPORT-01-FIX01 — Rev01
+
+2026-10-13،Asia/Tehran؛پرامپت۸-الف. اصلاح محدود آیکون فهرست کامل A03 در سورس تکمیل شد؛پذیرش native همچنان باز است. متن پایین سابقهٔ دقیق مراحل قبلی است.
+
+- مبنا/HEAD شروع:69e7be150c0e030b4cf9e5217e9957f10bc15e72؛شاخه قبلی rc3-ui-report01،clean و ancestry0/0. شاخه اختصاصی rc3-ui-report01-fix01-icons از همان checkout کامل؛بدون reset یا برگشت به مبنای قدیمی. remote هم‌نام در بررسی اولیه وجود نداشت.
+- سورس نهایی آزمون‌شده:34f215a04cf74c5795da74e5679082c37af71bd2؛تحویل بعدی فقط docs/evidence،از جمله helper بازتولید ساعت fixture،دارد. SHA کامل تحویل/remote در پاسخ نهایی و Git سند اعلام می‌شود؛این SHAها یکی فرض نشده‌اند.
+- Asset فهرست کامل:source PNG24 موجود،نمایش20،قاب40×40؛کلید/دارایی20 تازه ساخته نشد. raw/هویت/tint محفوظ. آیکون ونام فرزندان مستقیم با gap12؛marker بیرون گروه است. آیکون target یاhandler ندارد.
+- Legacy:پایه20sp،scaling فعال،عرض40 وminHeight40،بدون height سخت/برش/shrink-to-fit؛raw آزادِ چندخطی به ارتفاع بیشتر نیاز دارد. این استثنا در گزارش باfixture واقعی مشخص است؛ارتفاعnative Not run. defaultهای سایرcallerها52/32 وAssetIcon24بدونframe محفوظ‌اند.
+- فقط ActivityIcon.tsx،ReportActivitySummary.tsx ویک تست متمرکز تازه درv03ReportUI تغییرکردند. ۳۰۵فایل حفاظت‌شده با مبنا byte-identical؛manifest۳۰۸فایل سورس آزمون. query/محاسبات/Donut/۳+سایر/X101/FIX01/FIX02/ICATUS hide/services/data/dependency وcallerهای دیگر دست‌نخورده‌اند.
+- Registry/guide/CSV وsites تغییر نکردند؛Rev04،۱۲۲تخصیص/۱۱۲فعال/۱۰رزرو/۱۳۹binding. تطابق در تست پاس؛پوشش تاریخی مرحله۸ محفوظ،delta درrc3-ui-report01-fix01/coverage-delta-Rev01.csv.
+- نهایی:typecheck Pass؛۱۳/۱۳تست گزارش درهر دوTZ Pass. گروه مرتبطUTC Fail116/118 وTehran Fail109/111:یکX07 تاریخ‌ثابت+hook وابسته. مبنا نیز درهر دوTZ Fail16/18 باهمانX07 است. اجرای تکمیلیِ۱۷سناریو باclock2026-10-12T12Z درمبنا/نهایی وهر دوTZ Pass17/17؛خطایclockجاری را رفع/پنهان نمی‌کند.
+- visual Tehran Fail6/7 همانKnownIssue progress65≠50؛TZunset وcoreTehran دراین اصلاح Not run وKnownIssues باز. fullUTC suite درخواست این اصلاح نبود وNot run؛نتایج مرحله۸ جای نتایج نهایی معرفی نشدند. هیچ تست قدیمی حذف/skip یاانتظار داده/زمان تغییر نکرد.
+- گزارش RC3_UI_REPORT_01_FIX01_Report_Rev01_FA.md،جدول قبل/بعد/استثنایlegacy،۳۴۷نتیجه،logs/hash/security/runtime درrc3-ui-report01-fix01. Rev01 قبلی وتمام سوابق تاریخی محفوظ‌اند.
+- Native Android screenshots/RTL/scale1/1.5/2/target Not run؛renderer شاهدگوشی نیست. QA Android،اعلانP03-015/P03-016 وارتقا باز والزامی؛فقطTalkBack Deferred/Not run. P03-014/P03-019 وM-02/M-10 باز؛countdownUndo اضافه نشد.
+
+قدم بعدی پس از بررسی دفتر:QA دستگاه باasset/legacy/متن بلند واندازه‌گیریtarget؛اصلاح fixture تاریخ‌ثابت نیازمند دامنهٔ آزمون جدا است. بعد ازcommit/push/remoteverify همینtask متوقف می‌شود؛بدونmerge/force-push/Release/مرحلهبعد.
+
+---
+
+## سوابق حفظ‌شده — checkpoint بالا وضعیت جاری است
+
 # IMPLEMENTATION_STATE_RC3 — RC3-UI-REPORT-01 — Rev01
 
 2026-10-12، Asia/Tehran. M-01/M-04 در سورس و رفتار قابل‌آزمون اجرا شدند؛ پذیرش بصری و دستگاهی باز است. بخش پایین سابقهٔ دقیق مراحل پیشین است.

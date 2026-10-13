@@ -1,3 +1,30 @@
+# RC3 QA Retest — RC3-UI-REPORT-01-FIX01 — Rev01
+
+2026-10-13،Asia/Tehran؛مبنا69e7be150c0e030b4cf9e5217e9957f10bc15e72؛سورس نهایی آزمون‌شده34f215a04cf74c5795da74e5679082c37af71bd2؛شاخهrc3-ui-report01-fix01-icons. commit تحویل بعدی فقطdocs/evidence است؛SHA کامل/remote درپاسخ نهایی وGit سند. شرح دقیق/فرمان‌ها درگزارشFIX01 وvalidation-record.json.
+
+| مورد | وضعیت | شاهد و حد |
+| --- | --- | --- |
+| npm run typecheck | Pass | typecheck.log،exit0 |
+|۱۳تست گزارش UTC وTehran | Pass | درهر دوگروه مرتبط؛یک تست تازه defaultها/40/20/12/raw/scales؛native نیست |
+| گروه مرتبطUTC شاملcallerها وFIXها | Fail؛116/118 | related-UTC.log؛X07 تاریخ‌ثابت+hook؛سایر116پاس؛suite کامل نیست |
+| گروه مرتبطTehran | Fail؛109/111 | related-Asia-Tehran.log؛همانX07+hook؛سایر109پاس |
+| flows مبنا،clockجاری،UTC/Tehran | Fail؛هرکدام16/18 | baseline-identifiers logs؛همانfixture12اکتبر درروزجاری13اکتبر؛محصول/تست قدیمی تغییرنکرد |
+| flows مکمل،clock تاریخfixture،مبنا/نهایی وهر دوTZ | Pass؛هرکدام17/17 | identifiers-fixture-date logs؛2026-10-12T12Z؛جای clockجاری نیست،شکست بالابازاست |
+| visualIntegration Tehran | Fail / Known Issue؛6/7 | progress65≠50؛همانشاهدتاریخیFIX02؛انتظار/منطق تغییرنکرد |
+| source asset40/20 وgap مستقیم12 | Pass | تصویرهمانraster24،ناموآیکونdirectsiblings،markerبیرون؛تست متمرکز وdiff |
+| legacy/نامبلند/scales1/1.5/2 | Pass درconfig/children | rawدقیق،font20/scaling/wrap،width40/minHeight40،ارتفاعآزاد؛مربع‌ثابت40برایrawچندخطی ادعانمی‌شود |
+| defaultها/شناسه‌ها/ICATUS/FIXها/query/داده | Pass درتست‌های مربوط وdiff | ۳۰۵protectedbyte-identical؛Rev04/۱۳۹binding،guideCSVunchanged؛X101بدونquery/writeجدید |
+| native asset/legacy/نامبلند/سهscale وtarget48 | Not run | runtime-check.json؛adb/emulator/nativeproject/build/deviceوجودندارد |
+| fullUTC،TZunset وcoreTehranfixture | Not run این اصلاح | scope آزمون مرتبط؛KnownIssuesقبلیباز،بی‌دلیل‌بسته‌نشده |
+| QA گوشیAndroid،اعلانP03-015/P03-016 وارتقا | Not run / بازوالزامی | Deferred نیست؛rendererشاهدگوشی نیست |
+| TalkBack | Deferred / Not run | تنهاQAتعویق‌داده‌شده |
+
+اختلاف52/24/markerمیانی درsource رفعشد؛استثنایارتفاعrawlegacy ومحدودیتnative درگزارش جدیدصریح است. initialFailهایhelper/typecheck محفوظ؛نهاییtypecheck/۱۳گزارشپاس. ۳۴۷ردیفنتیجه،فرمان/SHA/log/limit ثبت‌شدند؛aggregateclockجاری سبزاعلام‌نشده است. M-02/M-10/dependency/countdown/Release اجرا نشدند. پایین عین سابقه است.
+
+---
+
+## سوابق حفظ‌شده — نتایج زیر برای سورس‌های پیشین‌اند
+
 # RC3 QA Retest — RC3-UI-REPORT-01 — Rev01
 
 2026-10-12،Asia/Tehran؛ مبناddc320ffa45867f2db3a38261e1489c91ff672d6،سورس آزمون‌شده03d410279f9e1e122c4cfc823a5efd8d77bade3a،شاخه rc3-ui-report01. commit تحویل بعدی فقط docs/evidence؛ SHA کامل پس از push/remoteverify در پاسخ نهایی/Git. گزارش و validation-record فرمان‌ها و حد شاهد را ثبت می‌کنند.

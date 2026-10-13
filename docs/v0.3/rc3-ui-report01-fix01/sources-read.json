@@ -1,0 +1,18 @@
+[
+  {
+    "path": "/workspace/work/rc3-fix01/repo/docs/v0.3/RC3_UI_REPORT_01_Report_Rev01_FA.md",
+    "sha256": "023c849ad100e01ac6ab6a9cbb2dd277d4b3b7c0ac8383820a5202aa808be458"
+  },
+  {
+    "path": "/workspace/work/rc3-fix01/repo/docs/v0.3/rc3-ui-report01/design-inputs/02_Design_System/Time80_Visual_System_Normalization_v1.0_FA.md",
+    "sha256": "5cba86bf9bd4d3053f1847d0873d50c1e86bc37d00afdb3a061fffaf419c13ba"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/contracts/02_Architecture/v0.3/ADR-003-05_Icon_Compatibility.md",
+    "sha256": "64bcb836572c77b4733b1a40a7112fa882b2ca82ad923939aa083c8fa6df0846"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/contracts/02_Architecture/v0.3/Architecture_Icon_Review_v0.3.md",
+    "sha256": "537bec2ac55e226682d9b155cec790302b43e42580bd5b37260bcb724edc57cb"
+  }
+]
