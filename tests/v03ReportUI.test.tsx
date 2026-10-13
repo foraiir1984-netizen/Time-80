@@ -1,7 +1,12 @@
 import React from "react";
 import { test, before, after, afterEach, mock } from "node:test";
 import assert from "node:assert/strict";
-import { act, create, type ReactTestRenderer } from "react-test-renderer";
+import {
+  act,
+  create,
+  type ReactTestRenderer,
+  type ReactTestInstance,
+} from "react-test-renderer";
 import { InsightsScreen } from "../src/screens/InsightsScreen";
 import { ReportRangeControls } from "../src/components/ReportRangeControls";
 import {
@@ -454,7 +459,7 @@ test("M-04 known five-hour result: three principal rows and exact Other, all inl
 });
 
 test("full-report icons opt into 40/20 with a direct 12dp name gap; existing defaults and literal scaled legacy survive", async () => {
-  const parentView = (node: any) => {
+  const parentView = (node: ReactTestInstance) => {
     let parent = node.parent;
     while (parent && parent.type !== "View") parent = parent.parent;
     assert.ok(parent);
