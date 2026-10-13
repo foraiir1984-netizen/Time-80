@@ -5,5 +5,6 @@
   "protected_historical_checkpoint_suffixes_verified": true,
   "tested_manifest_files": 308,
   "protected_files": 305,
-  "registry_guide_csv_locations_unchanged": true
+  "registry_guide_csv_locations_unchanged": true,
+  "generated_csv_line_endings": "LF; cell values unchanged; historic guide CSV untouched"
 }
