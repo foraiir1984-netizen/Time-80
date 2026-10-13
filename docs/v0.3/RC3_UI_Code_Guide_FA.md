@@ -9,11 +9,11 @@
 
 | کد | کلید ثابت | نام فارسی | اثر | نوع | وضعیت | محل‌های استفاده |
 | --- | --- | --- | --- | --- | --- | --- |
-| A01 | today | امروز | نمای اصلی امروز، ساعت و مسیرهای ثبت/مرور | screen | فعال | src/components/TodayOverview.tsx:49 (IdentifierTitle.code) |
+| A01 | today | امروز | نمای اصلی امروز، ساعت و مسیرهای ثبت/مرور | screen | فعال | src/components/TodayOverview.tsx:79 (IdentifierTitle.code) |
 | A02 | activities | فعالیت‌ها | گرید مدیریت؛ فعال/بایگانی فیلتر همین صفحه است | screen | فعال | src/screens/ActivitiesScreen.tsx:106 (IdentifierTitle.code) |
 | A03 | timeReport | گزارش زمان | هشت حالت بازه؛ M-01 و M-04 بخش‌های همین صفحه‌اند | screen | فعال | src/screens/InsightsScreen.tsx:126 (IdentifierTitle.code) |
 | A04 | reminderSettings | تنظیمات یادآوری | ویرایش تنظیمات موجود و ورود به بررسی اعلان | screen | فعال | src/screens/SettingsScreen.tsx:157 (IdentifierTitle.code)؛ src/screens/SettingsScreen.tsx:177 (IdentifierTitle.code) |
-| A05 | dayTimeline | مرور روز / خط زمان | نمای review=true در همان کامپوننت؛ route مستقل ندارد | screen | فعال | src/screens/TodayScreen.tsx:101 (IdentifierTitle.code) |
+| A05 | dayTimeline | مرور روز / خط زمان | نمای review=true در همان کامپوننت؛ route مستقل ندارد | screen | فعال | src/screens/TodayScreen.tsx:167 (IdentifierTitle.code) |
 | A06 | checkIn | ثبت و مشاهدهٔ بازه | ثبت تازه، مشاهده، ویرایش و بازه ردشده؛ کد ثابت | screen | فعال | App.tsx:80 (stackPageCodes.CheckIn)؛ src/screens/CheckInScreen.tsx:141 (IdentifierTitle.code)؛ src/screens/CheckInScreen.tsx:342 (IdentifierTitle.code) |
 | A07 | saveResult | نتیجهٔ ثبت | نتیجه، شمارش همان روز، Undo و مشاهده ثبت | screen | فعال | App.tsx:82 (stackPageCodes.SaveResult)؛ src/screens/SaveResultScreen.tsx:48 (IdentifierTitle.code) |
 | A08 | backlog | بازه‌های ثبت‌نشده | فهرست عمومی یا محدود به dayScope | screen | فعال | App.tsx:81 (stackPageCodes.Backlog)؛ src/screens/BacklogScreen.tsx:56 (IdentifierTitle.code) |
@@ -34,14 +34,14 @@
 | X03 | selectInsightsTab | تب گزارش | انتخاب تب Insights | action | فعال | App.tsx:165 (Tabs.Screen.options) |
 | X04 | selectSettingsTab | تب تنظیمات | انتخاب تب Settings | action | فعال | App.tsx:176 (Tabs.Screen.options) |
 | X05 | navigateBack | بازگشت به صفحهٔ قبلی | بازگشت پشته؛ مقصد وابسته به مسیر ورود | action | فعال | src/screens/CheckInScreen.tsx:196 (Button.actionCode)؛ src/screens/CheckInScreen.tsx:280 (Button.actionCode)؛ src/components/Ui.tsx:309 (Button.actionCode) |
-| X06 | openSelectedSlot | بازکردن بازهٔ انتخاب‌شده | navigate("CheckIn") با زمان/context همان بازه؛ آینده غیرفعال | action | فعال | src/components/SlotRow.tsx:77 (IdentifierBadge.code) |
-| X07 | completePendingSlot | تکمیل آخرین بازهٔ ثبت‌نشده | بازکردن pending انتخاب‌شده در A06؛ items.find نخستین واجد شرط را انتخاب می‌کند؛ نام و منطق فعلی حفظ شوند | action | فعال | src/screens/TodayScreen.tsx:153 (Button.actionCode)؛ src/components/TodayOverview.tsx:143 (Button.actionCode) |
-| X08 | openTodayTimeline | مرور امروز / خط زمان | setReview(true)؛ A05 | action | فعال | src/components/TodayOverview.tsx:151 (Button.actionCode) |
-| X09 | returnToTodayOverview | بازگشت به نمای اصلی امروز | تاریخ امروز و review=false؛ A01 | action | فعال | src/screens/TodayScreen.tsx:91 (Button.actionCode) |
-| X10 | previousTimelineDay | روز قبل در خط زمان | یک روز کاهش تاریخ و فعال‌کردن مرور | action | فعال | src/screens/TodayScreen.tsx:119 (Button.actionCode) |
-| X11 | currentTimelineDay | امروز در خط زمان | فقط تاریخ امروز؛ review تغییر نمی‌کند | action | فعال | src/screens/TodayScreen.tsx:130 (Button.actionCode) |
-| X12 | nextTimelineDay | روز بعد در خط زمان | یک روز افزایش تاریخ؛ در امروز غیرفعال | action | فعال | src/screens/TodayScreen.tsx:136 (Button.actionCode) |
-| X13 | openGeneralBacklog | بازه‌های ثبت‌نشدهٔ روزهای قبل | navigate("Backlog") بدون scope؛ A08 | action | فعال | src/screens/TodayScreen.tsx:160 (Button.actionCode) |
+| X06 | openSelectedSlot | بازکردن بازهٔ انتخاب‌شده | navigate("CheckIn") با زمان/context همان بازه؛ آینده غیرفعال | action | فعال | src/components/SlotRow.tsx:150 (IdentifierBadge.code) |
+| X07 | completePendingSlot | تکمیل آخرین بازهٔ ثبت‌نشده | بازکردن pending انتخاب‌شده در A06؛ items.find نخستین واجد شرط را انتخاب می‌کند؛ نام و منطق فعلی حفظ شوند | action | فعال | src/screens/TodayScreen.tsx:263 (Button.actionCode)؛ src/components/TodayOverview.tsx:138 (Button.actionCode) |
+| X08 | openTodayTimeline | مرور امروز / خط زمان | setReview(true)؛ A05 | action | فعال | src/components/TodayOverview.tsx:149 (Button.actionCode) |
+| X09 | returnToTodayOverview | بازگشت به نمای اصلی امروز | تاریخ امروز و review=false؛ A01 | action | فعال | src/screens/TodayScreen.tsx:156 (Button.actionCode) |
+| X10 | previousTimelineDay | روز قبل در خط زمان | یک روز کاهش تاریخ و فعال‌کردن مرور | action | فعال | src/screens/TodayScreen.tsx:218 (Button.actionCode) |
+| X11 | currentTimelineDay | امروز در خط زمان | فقط تاریخ امروز؛ review تغییر نمی‌کند | action | فعال | src/screens/TodayScreen.tsx:232 (Button.actionCode) |
+| X12 | nextTimelineDay | روز بعد در خط زمان | یک روز افزایش تاریخ؛ در امروز غیرفعال | action | فعال | src/screens/TodayScreen.tsx:241 (Button.actionCode) |
+| X13 | openGeneralBacklog | بازه‌های ثبت‌نشدهٔ روزهای قبل | navigate("Backlog") بدون scope؛ A08 | action | فعال | src/screens/TodayScreen.tsx:273 (Button.actionCode) |
 | X14 | createActivity | افزودن فعالیت | بازکردن D02 با activity=null | action | فعال | src/screens/ActivitiesScreen.tsx:113 (Button.actionCode)؛ src/screens/ActivitiesScreen.tsx:229 (Button.actionCode) |
 | X15 | showArchivedActivities | دیدن بایگانی‌شده‌ها | تغییر فیلتر به بایگانی | action | فعال | src/screens/ActivitiesScreen.tsx:122 (Button.actionCode)؛ src/screens/ActivitiesScreen.tsx:221 (Button.actionCode) |
 | X16 | showActiveActivities | دیدن فعال‌ها | تغییر فیلتر به فعال | action | فعال | src/screens/ActivitiesScreen.tsx:121 (Button.actionCode)؛ src/screens/ActivitiesScreen.tsx:220 (Button.actionCode) |
@@ -134,4 +134,4 @@
 
 کدهای رزرو badge فعال ندارند؛ وجود آن‌ها قابلیت تازه‌ای ایجاد نمی‌کند. کد بازنشسته دوباره تخصیص داده نمی‌شود و با نام/اثر قبلی در registry باقی می‌ماند. مرجع این نسخه کد بازنشسته‌ای اعلام نکرده است. تاریخچهٔ تخصیص Rev01 و الحاقیه در rc3-id01/allocations-Rev01.json و allocations-Rev02.json حفظ می‌شود؛ generator راهنما این تاریخچه را بازنویسی نمی‌کند.
 
-رابط قابل‌دسترسی ICATUS در RC3-ICATUS-HIDE-01 حذف شده است؛ داده‌ها و سیاست سرویس حفظ شده‌اند. D03/X32…X37/X41/X48/X95 رزرو و بدون محل استفادهٔ فعال‌اند. D08/X99/X100/X101 در M-01/M-04 فعال و در UI پیاده شده‌اند. شواهد پنهان‌سازی و پوشش جاری در گزارش پنهان‌سازی و rc3-icatus-hide01 محفوظ‌اند؛ پوشش جاری پس از M-02 در rc3-ui-settings01 ثبت است؛ پذیرش گوشی جدا و باز است.
+رابط قابل‌دسترسی ICATUS در RC3-ICATUS-HIDE-01 حذف شده است؛ داده‌ها و سیاست سرویس حفظ شده‌اند. D03/X32…X37/X41/X48/X95 رزرو و بدون محل استفادهٔ فعال‌اند. D08/X99/X100/X101 در M-01/M-04 فعال و در UI پیاده شده‌اند. شواهد پنهان‌سازی و پوشش جاری در گزارش پنهان‌سازی و rc3-icatus-hide01 محفوظ‌اند؛ پوشش جاری پس از M-10 در rc3-ui-today01 ثبت است؛ پذیرش گوشی جدا و باز است.

@@ -53,7 +53,7 @@ export const uiIdentifiers = {
     effectFa: "نمای اصلی امروز، ساعت و مسیرهای ثبت/مرور",
     kind: "screen",
     status: "active",
-    sites: ["src/components/TodayOverview.tsx:49 (IdentifierTitle.code)"],
+    sites: ["src/components/TodayOverview.tsx:79 (IdentifierTitle.code)"],
   },
   activities: {
     code: "A02",
@@ -88,7 +88,7 @@ export const uiIdentifiers = {
     effectFa: "نمای review=true در همان کامپوننت؛ route مستقل ندارد",
     kind: "screen",
     status: "active",
-    sites: ["src/screens/TodayScreen.tsx:101 (IdentifierTitle.code)"],
+    sites: ["src/screens/TodayScreen.tsx:167 (IdentifierTitle.code)"],
   },
   checkIn: {
     code: "A06",
@@ -269,7 +269,7 @@ export const uiIdentifiers = {
     effectFa: 'navigate("CheckIn") با زمان/context همان بازه؛ آینده غیرفعال',
     kind: "action",
     status: "active",
-    sites: ["src/components/SlotRow.tsx:77 (IdentifierBadge.code)"],
+    sites: ["src/components/SlotRow.tsx:150 (IdentifierBadge.code)"],
   },
   completePendingSlot: {
     code: "X07",
@@ -279,8 +279,8 @@ export const uiIdentifiers = {
     kind: "action",
     status: "active",
     sites: [
-      "src/screens/TodayScreen.tsx:153 (Button.actionCode)",
-      "src/components/TodayOverview.tsx:143 (Button.actionCode)",
+      "src/screens/TodayScreen.tsx:263 (Button.actionCode)",
+      "src/components/TodayOverview.tsx:138 (Button.actionCode)",
     ],
   },
   openTodayTimeline: {
@@ -289,7 +289,7 @@ export const uiIdentifiers = {
     effectFa: "setReview(true)؛ A05",
     kind: "action",
     status: "active",
-    sites: ["src/components/TodayOverview.tsx:151 (Button.actionCode)"],
+    sites: ["src/components/TodayOverview.tsx:149 (Button.actionCode)"],
   },
   returnToTodayOverview: {
     code: "X09",
@@ -297,7 +297,7 @@ export const uiIdentifiers = {
     effectFa: "تاریخ امروز و review=false؛ A01",
     kind: "action",
     status: "active",
-    sites: ["src/screens/TodayScreen.tsx:91 (Button.actionCode)"],
+    sites: ["src/screens/TodayScreen.tsx:156 (Button.actionCode)"],
   },
   previousTimelineDay: {
     code: "X10",
@@ -305,7 +305,7 @@ export const uiIdentifiers = {
     effectFa: "یک روز کاهش تاریخ و فعال‌کردن مرور",
     kind: "action",
     status: "active",
-    sites: ["src/screens/TodayScreen.tsx:119 (Button.actionCode)"],
+    sites: ["src/screens/TodayScreen.tsx:218 (Button.actionCode)"],
   },
   currentTimelineDay: {
     code: "X11",
@@ -313,7 +313,7 @@ export const uiIdentifiers = {
     effectFa: "فقط تاریخ امروز؛ review تغییر نمی‌کند",
     kind: "action",
     status: "active",
-    sites: ["src/screens/TodayScreen.tsx:130 (Button.actionCode)"],
+    sites: ["src/screens/TodayScreen.tsx:232 (Button.actionCode)"],
   },
   nextTimelineDay: {
     code: "X12",
@@ -321,7 +321,7 @@ export const uiIdentifiers = {
     effectFa: "یک روز افزایش تاریخ؛ در امروز غیرفعال",
     kind: "action",
     status: "active",
-    sites: ["src/screens/TodayScreen.tsx:136 (Button.actionCode)"],
+    sites: ["src/screens/TodayScreen.tsx:241 (Button.actionCode)"],
   },
   openGeneralBacklog: {
     code: "X13",
@@ -329,7 +329,7 @@ export const uiIdentifiers = {
     effectFa: 'navigate("Backlog") بدون scope؛ A08',
     kind: "action",
     status: "active",
-    sites: ["src/screens/TodayScreen.tsx:160 (Button.actionCode)"],
+    sites: ["src/screens/TodayScreen.tsx:273 (Button.actionCode)"],
   },
   createActivity: {
     code: "X14",

@@ -1,5 +1,5 @@
 import React from "react";
-import { test } from "node:test";
+import { test, beforeEach, afterEach } from "node:test";
 import assert from "node:assert/strict";
 import { act, create, type ReactTestRenderer } from "react-test-renderer";
 import {
@@ -22,6 +22,17 @@ import { dimensions, FlatList } from "./react-native.mjs";
 import { initDatabase } from "../src/db/database";
 import { db } from "../src/db/connection";
 (globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
+beforeEach((t) => {
+  assert.ok("mock" in t);
+  t.mock.timers.enable({
+    apis: ["Date"],
+    now: Date.parse("2026-10-12T12:00:00Z"),
+  });
+});
+afterEach((t) => {
+  assert.ok("mock" in t);
+  t.mock.timers.reset();
+});
 async function mount(element: React.ReactElement) {
   let r!: ReactTestRenderer;
   await act(async () => {
@@ -171,7 +182,7 @@ test("Style A hosts are 52dp, symbols 32dp, legacy icon strings remain literal",
   assert.ok(JSON.stringify(legacy.toJSON()).includes("👨‍👩‍👦"));
   await close(legacy);
 });
-test("Today overview is read-only, shows clock/context/reminder/due count and preserves callback target", async () => {
+test("M-10 overview is read-only, shows configured-day clock/progress and preserves callback target", async () => {
   const now = new Date("2026-06-04T12:00:00Z");
   const items = [
     {
@@ -196,7 +207,8 @@ test("Today overview is read-only, shows clock/context/reminder/due count and pr
     <TodayOverview
       now={now}
       items={items}
-      next="۱۲:۳۰"
+      settings={{ day_start: "08:00", day_end: "16:00" }}
+      displayTimezone="UTC"
       pending={items[0]}
       onDue={() => actions.push(items[0])}
       onReview={() => actions.push("review")}
@@ -205,9 +217,7 @@ test("Today overview is read-only, shows clock/context/reminder/due count and pr
   const output = JSON.stringify(r.toJSON());
   for (const text of [
     "زمان اکنون",
-    "یادآوری بعدی",
-    "آخرین بازهٔ تکمیل‌شده",
-    "بازهٔ جاری",
+    "امروزت را مرور کن",
     "بازه‌های سررسیدشدهٔ ثبت‌نشده",
   ])
     assert.ok(output.includes(text));
@@ -227,15 +237,29 @@ test("Today overview is read-only, shows clock/context/reminder/due count and pr
   assert.equal(actions[0], items[0]);
   assert.equal(JSON.stringify(items), before);
   await close(r);
-  assert.equal(dayPresentationProgress(new Date("2026-06-04T00:00:00Z")), 0);
-  const previousZone = process.env.TZ;
-  try {
-    process.env.TZ = "America/New_York";
-    const noon = new Date("2026-03-08T12:00:00-04:00");
-    assert.equal(dayPresentationProgress(noon), 11 / 23);
-  } finally {
-    process.env.TZ = previousZone;
-  }
+  const hours = { day_start: "08:00", day_end: "16:00" };
+  assert.equal(
+    dayPresentationProgress(new Date("2026-06-04T00:00:00Z"), hours, "UTC"),
+    0,
+  );
+  // Tehran local noon, not UTC noon: configured elapsed=4h, duration=8h.
+  assert.equal(
+    dayPresentationProgress(
+      new Date("2026-06-04T08:30:00Z"),
+      hours,
+      "Asia/Tehran",
+    ),
+    0.5,
+  );
+  // Actual zoned endpoints: spring-forward 00:00–16:00 lasts 15 hours.
+  assert.equal(
+    dayPresentationProgress(
+      new Date("2026-03-08T12:00:00-04:00"),
+      { day_start: "00:00", day_end: "16:00" },
+      "America/New_York",
+    ),
+    11 / 15,
+  );
 });
 test("Today landing/review retain exact CheckIn routing, previous-day access, Backlog and all slot rows", async () => {
   await initDatabase();
@@ -259,7 +283,7 @@ test("Today landing/review retain exact CheckIn routing, previous-day access, Ba
   );
   const byTitle = (title: string) =>
     r.root.findAllByType(Button).find((p) => p.props.title === title)!;
-  assert.equal(r.root.findByType(FlatList).props.data.length, 0);
+  assert.ok(r.root.findByType(FlatList).props.data.length > 0);
   await click(byTitle("تکمیل آخرین بازهٔ ثبت‌نشده").props.onPress);
   assert.equal(calls[0][0], "CheckIn");
   assert.equal(calls[0][1].start, start);
@@ -272,7 +296,7 @@ test("Today landing/review retain exact CheckIn routing, previous-day access, Ba
   await click(byTitle("بازه‌های ثبت‌نشدهٔ روزهای قبل").props.onPress);
   assert.deepEqual(calls[1], ["Backlog"]);
   await click(byTitle("بازگشت به امروز").props.onPress);
-  assert.equal(r.root.findByType(FlatList).props.data.length, 0);
+  assert.ok(r.root.findByType(FlatList).props.data.length > 0);
   await close(r);
 });
 test("timeline keeps disabled future and neutral pending/skipped states with accessible exact times", async () => {

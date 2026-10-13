@@ -1,0 +1,19 @@
+{
+  "asset_version": "today-mountain-v1",
+  "path": "assets/illustrations/today-mountain-v1.png",
+  "sha256": "ed896d418b038151fc7116174eb0607fd44c5853bc975e963ede854bd710eed0",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "bytes": 2647202,
+  "source": "OpenAI image_gen.imagegen; original generation 2026-10-13 Asia/Tehran",
+  "generation_reference": "exec-8b8ec987-f6e1-4e07-98fa-4b2ae05b3c34",
+  "model_version": "Not Available from tool",
+  "reference_image_inputs": [],
+  "method": "Generated standalone mountain/evergreen illustration from text; original PNG copied byte-for-byte. Runtime cover crop only. No extraction from M-10 mockup.",
+  "rights": "OpenAI generated output: as between user and OpenAI, output rights belong to user to the extent permitted by applicable law under OpenAI Terms of Use. Product owner authorized creation/use in Prompt 10. No external stock asset or additional third-party image license used; exclusivity not claimed.",
+  "limitations": "Original composition differs from approved reference photo; same alpine mountain/forest/warm-light direction. Android rendering and crop Not run.",
+  "runtime": "React Native Image local require; no network load/no target",
+  "status": "Production source asset integrated; native QA Not run"
+}

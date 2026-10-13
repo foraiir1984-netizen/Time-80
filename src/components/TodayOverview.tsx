@@ -1,140 +1,135 @@
 import { uiIdentifiers } from "./uiIdentifiers";
 import { IdentifierTitle } from "./Ui";
 import React from "react";
-import { Text, View } from "react-native";
-import type { SlotView } from "../types/domain";
+import { Image, Text, View, useWindowDimensions } from "react-native";
+import type { AppSettings, SlotView } from "../types/domain";
 import { theme } from "../theme/time80Theme";
-import { ActivityIcon } from "./ActivityIcon";
-import { Button, ui } from "./Ui";
-// Local-day progress is a visual clock only. It never creates/resizes slots or report periods.
-export function dayPresentationProgress(now: Date) {
-  const start = new Date(now);
-  start.setHours(0, 0, 0, 0);
-  const end = new Date(start);
-  end.setDate(end.getDate() + 1);
-  return Math.max(0, Math.min(1, (+now - +start) / (+end - +start)));
-}
+import { reportTypography } from "../theme/reportTheme";
+import { Button } from "./Ui";
+import { DayPassage } from "./DayPassage";
+import { dayPresentationProgress } from "./todayPresentation";
+export { dayPresentationProgress } from "./todayPresentation";
+
 export function TodayOverview({
   now,
   items,
-  next,
   pending,
   onDue,
   onReview,
+  settings = null,
+  displayTimezone,
+  fontReady = false,
 }: {
   now: Date;
   items: SlotView[];
-  next: string;
   pending?: SlotView;
   onDue: () => void;
   onReview: () => void;
+  settings?: Pick<AppSettings, "day_start" | "day_end"> | null;
+  displayTimezone?: string;
+  fontReady?: boolean;
 }) {
-  const current = items.find(
-    (i) => +new Date(i.period_start) <= +now && +new Date(i.period_end) > +now,
-  );
-  const latest = [...items]
-    .reverse()
-    .find(
-      (i) => i.entry?.status === "logged" && +new Date(i.period_end) <= +now,
-    );
+  const { fontScale, width } = useWindowDimensions();
+  const typography = reportTypography(fontReady);
+  const compact = fontScale < 1.5 && width >= 360;
+  const progress = dayPresentationProgress(now, settings, displayTimezone);
   const dueCount = items.filter(
     (i) =>
       !i.entry &&
       i.slot?.state === "pending" &&
       +new Date(i.period_end) <= +now,
   ).length;
-  const progress = Math.round(dayPresentationProgress(now) * 100);
   return (
     <>
-      <IdentifierTitle title="امروز" code={uiIdentifiers.today.code} />
-      <Text style={ui.muted}>
-        {now.toLocaleDateString("fa-IR", {
-          weekday: "long",
-          month: "long",
-          day: "numeric",
-        })}
-      </Text>
       <View
-        style={[
-          ui.card,
-          { paddingVertical: 32, marginTop: 16, alignItems: "center" },
-        ]}
+        testID="today-header"
+        style={{
+          flexDirection: compact ? "row" : "column",
+          direction: "ltr",
+          gap: 8,
+          alignItems: "stretch",
+          marginBottom: 12,
+        }}
       >
-        <Text style={ui.small}>زمان اکنون</Text>
-        <Text
-          accessibilityLabel={`زمان اکنون ${now.toLocaleTimeString("fa-IR", { hour: "2-digit", minute: "2-digit" })}`}
+        <Image
+          source={require("../../assets/illustrations/today-mountain-v1.png")}
+          accessibilityIgnoresInvertColors
+          accessible={false}
           style={{
-            fontSize: 56,
-            lineHeight: 80,
-            fontWeight: "600",
-            fontVariant: ["tabular-nums"],
-            color: theme.text,
-            textAlign: "center",
+            flex: compact ? 1 : undefined,
+            width: compact ? undefined : "100%",
+            height: 144,
+            borderRadius: 16,
+          }}
+          resizeMode="cover"
+        />
+        <View
+          style={{
+            flex: compact ? 1 : undefined,
+            minWidth: 0,
+            backgroundColor: theme.surface,
+            padding: 16,
+            borderRadius: 16,
+            justifyContent: "center",
+            gap: 8,
           }}
         >
+          <IdentifierTitle
+            title="امروز"
+            code={uiIdentifiers.today.code}
+            textProps={{ style: typography.pageTitle }}
+            codeTextStyle={typography.code}
+          />
+          <Text allowFontScaling style={typography.secondary}>
+            {now.toLocaleDateString("fa-IR", {
+              timeZone: displayTimezone,
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+            })}
+          </Text>
+        </View>
+      </View>
+      <View
+        style={{
+          padding: 16,
+          borderRadius: 16,
+          backgroundColor: theme.surface,
+        }}
+      >
+        <Text
+          allowFontScaling
+          style={[typography.sectionTitle, { fontSize: 19, lineHeight: 28 }]}
+        >
+          امروزت را مرور کن
+        </Text>
+      </View>
+      <View style={{ alignItems: "center", marginTop: 24 }}>
+        <Text allowFontScaling style={typography.secondary}>
+          زمان اکنون
+        </Text>
+        <Text
+          allowFontScaling
+          accessibilityLabel={`زمان اکنون ${now.toLocaleTimeString("fa-IR", { timeZone: displayTimezone, hour: "2-digit", minute: "2-digit" })}`}
+          style={[
+            typography.pageTitle,
+            {
+              fontSize: 42,
+              lineHeight: 50,
+              textAlign: "center",
+              writingDirection: "ltr",
+            },
+          ]}
+        >
           {now.toLocaleTimeString("fa-IR", {
+            timeZone: displayTimezone,
             hour: "2-digit",
             minute: "2-digit",
           })}
         </Text>
-        <View
-          accessible
-          accessibilityRole="progressbar"
-          accessibilityLabel="گذشت روز محلی؛ نمایش زمان"
-          accessibilityValue={{ min: 0, max: 100, now: progress }}
-          style={{
-            width: "100%",
-            height: 8,
-            borderRadius: 4,
-            backgroundColor: theme.border,
-            overflow: "hidden",
-            marginVertical: 16,
-          }}
-        >
-          <View
-            style={{
-              height: 8,
-              width: `${progress}%`,
-              alignSelf: "flex-end",
-              borderRadius: 4,
-              backgroundColor: theme.accent,
-            }}
-          />
-        </View>
-        <Text style={ui.small}>
-          {progress.toLocaleString("fa-IR")}٪ از روز گذشته است
-        </Text>
       </View>
-      <Text style={ui.muted}>یادآوری بعدی: {next}</Text>
-      {current && (
-        <View style={[ui.card, { marginTop: 12 }]}>
-          <Text style={ui.small}>بازهٔ جاری</Text>
-          <Text style={ui.text}>
-            {new Date(current.period_start).toLocaleTimeString("fa-IR", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}{" "}
-            تا{" "}
-            {new Date(current.period_end).toLocaleTimeString("fa-IR", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </Text>
-        </View>
-      )}
-      {latest && (
-        <View style={[ui.card, ui.row]}>
-          <ActivityIcon
-            icon={latest.entry!.activity_icon_view}
-            legacy={latest.entry!.activity_icon}
-          />
-          <View style={{ flex: 1 }}>
-            <Text style={ui.small}>آخرین بازهٔ تکمیل‌شده</Text>
-            <Text style={ui.text}>{latest.entry!.activity_name}</Text>
-          </View>
-        </View>
-      )}
-      <Text style={ui.text}>
+      <DayPassage progress={progress} typography={typography} />
+      <Text allowFontScaling style={typography.secondary}>
         بازه‌های سررسیدشدهٔ ثبت‌نشده: {dueCount.toLocaleString("fa-IR")}
       </Text>
       {pending && (
@@ -142,6 +137,9 @@ export function TodayOverview({
           title="تکمیل آخرین بازهٔ ثبت‌نشده"
           actionCode={uiIdentifiers.completePendingSlot.code}
           onPress={onDue}
+          style={{ minHeight: 48, minWidth: 48, borderRadius: 16 }}
+          textStyle={[typography.control, { color: theme.onAccent }]}
+          codeTextStyle={typography.code}
         />
       )}
       <Button
@@ -150,6 +148,9 @@ export function TodayOverview({
         title="مرور امروز / خط زمان"
         actionCode={uiIdentifiers.openTodayTimeline.code}
         onPress={onReview}
+        style={{ minHeight: 48, minWidth: 48, borderRadius: 16 }}
+        textStyle={typography.control}
+        codeTextStyle={typography.code}
       />
     </>
   );
