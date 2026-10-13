@@ -240,8 +240,20 @@ export function CodedSwitch({
   onValueChange,
   disabled,
   value,
+  containerStyle,
+  labelStyle,
+  codeTextStyle,
+  labelIcon,
   ...props
-}: SwitchProps & { actionCode: UiActionCode }) {
+}: SwitchProps & {
+  actionCode: UiActionCode;
+  containerStyle?: StyleProp<ViewStyle>;
+  labelStyle?: StyleProp<TextStyle>;
+  codeTextStyle?: StyleProp<TextStyle>;
+  labelIcon?: React.ReactNode;
+}) {
+  const base = [ui.row, { minWidth: 48, minHeight: 48, padding: 8 }];
+  const labelBase = [ui.text, { flexShrink: 1 }];
   return (
     <InteractivePressable
       accessibilityRole="switch"
@@ -250,10 +262,16 @@ export function CodedSwitch({
       disabled={disabled}
       preserveCodeContrast
       onPress={() => onValueChange?.(!value)}
-      style={[ui.row, { minWidth: 48, minHeight: 48, padding: 8 }]}
+      style={containerStyle ? [...base, containerStyle] : base}
     >
-      <Text style={[ui.text, { flexShrink: 1 }]}>{accessibilityLabel}</Text>
-      <IdentifierBadge code={actionCode} />
+      {labelIcon}
+      <Text
+        allowFontScaling
+        style={labelStyle ? [...labelBase, labelStyle] : labelBase}
+      >
+        {accessibilityLabel}
+      </Text>
+      <IdentifierBadge code={actionCode} textStyle={codeTextStyle} />
       <Switch
         {...props}
         accessible={false}
@@ -416,9 +434,23 @@ export const Input = React.forwardRef<
     actionCode?: UiActionCode;
     labelStyle?: StyleProp<TextStyle>;
     codeTextStyle?: StyleProp<TextStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
+    labelContainerStyle?: StyleProp<ViewStyle>;
+    labelIcon?: React.ReactNode;
   }
 >(function Input(
-  { style, onFocus, onBlur, actionCode, labelStyle, codeTextStyle, ...props },
+  {
+    style,
+    onFocus,
+    onBlur,
+    actionCode,
+    labelStyle,
+    codeTextStyle,
+    containerStyle,
+    labelContainerStyle,
+    labelIcon,
+    ...props
+  },
   ref,
 ) {
   const [focused, setFocused] = useState(false);
@@ -457,9 +489,16 @@ export const Input = React.forwardRef<
       preserveCodeContrast
       disabled={props.editable === false}
       onPress={() => native.current?.focus()}
-      style={{ minWidth: 48, minHeight: 48 }}
+      style={
+        containerStyle
+          ? [{ minWidth: 48, minHeight: 48 }, containerStyle]
+          : { minWidth: 48, minHeight: 48 }
+      }
     >
-      <View style={ui.row}>
+      <View
+        style={labelContainerStyle ? [ui.row, labelContainerStyle] : ui.row}
+      >
+        {labelIcon}
         <Text allowFontScaling style={[ui.text, { flexShrink: 1 }, labelStyle]}>
           {props.accessibilityLabel}
         </Text>
