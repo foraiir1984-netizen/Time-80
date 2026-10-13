@@ -1,0 +1,978 @@
+{
+  "note": "Explicit bindings, not native/layout evidence",
+  "uses": [
+    {
+      "key": "checkIn",
+      "code": "A06",
+      "file": "App.tsx",
+      "line": 80,
+      "context": "stackPageCodes.CheckIn"
+    },
+    {
+      "key": "backlog",
+      "code": "A08",
+      "file": "App.tsx",
+      "line": 81,
+      "context": "stackPageCodes.Backlog"
+    },
+    {
+      "key": "saveResult",
+      "code": "A07",
+      "file": "App.tsx",
+      "line": 82,
+      "context": "stackPageCodes.SaveResult"
+    },
+    {
+      "key": "notificationResolution",
+      "code": "A10",
+      "file": "App.tsx",
+      "line": 83,
+      "context": "stackPageCodes.NotificationResolution"
+    },
+    {
+      "key": "notificationDiagnostics",
+      "code": "A09",
+      "file": "App.tsx",
+      "line": 84,
+      "context": "stackPageCodes.Diagnostics"
+    },
+    {
+      "key": "selectTodayTab",
+      "code": "X01",
+      "file": "App.tsx",
+      "line": 144,
+      "context": "Tabs.Screen.options"
+    },
+    {
+      "key": "selectActivitiesTab",
+      "code": "X02",
+      "file": "App.tsx",
+      "line": 155,
+      "context": "Tabs.Screen.options"
+    },
+    {
+      "key": "selectInsightsTab",
+      "code": "X03",
+      "file": "App.tsx",
+      "line": 165,
+      "context": "Tabs.Screen.options"
+    },
+    {
+      "key": "selectSettingsTab",
+      "code": "X04",
+      "file": "App.tsx",
+      "line": 176,
+      "context": "Tabs.Screen.options"
+    },
+    {
+      "key": "retryNotificationResponse",
+      "code": "X75",
+      "file": "App.tsx",
+      "line": 365,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "bootstrap",
+      "code": "A12",
+      "file": "App.tsx",
+      "line": 397,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "retryBootstrap",
+      "code": "X76",
+      "file": "App.tsx",
+      "line": 407,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "activities",
+      "code": "A02",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 106,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "createActivity",
+      "code": "X14",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 113,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "showActiveActivities",
+      "code": "X16",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 121,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "showArchivedActivities",
+      "code": "X15",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 122,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "openActivityManagement",
+      "code": "X17",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 174,
+      "context": "IdentifierBadge.code"
+    },
+    {
+      "key": "openActivityManagement",
+      "code": "X17",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 199,
+      "context": "IdentifierBadge.code"
+    },
+    {
+      "key": "showActiveActivities",
+      "code": "X16",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 220,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "showArchivedActivities",
+      "code": "X15",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 221,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "createActivity",
+      "code": "X14",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 229,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "retryActivitiesRead",
+      "code": "X23",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 240,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "undoActivityArchive",
+      "code": "X22",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 252,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "closeSelectionDialog",
+      "code": "X18",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 305,
+      "context": "IdentifierBadge.code"
+    },
+    {
+      "key": "activityManagementDialog",
+      "code": "D01",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 327,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "restoreArchivedActivity",
+      "code": "X21",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 333,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "editActivity",
+      "code": "X19",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 347,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "archiveActivity",
+      "code": "X20",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 358,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "closeSelectionDialog",
+      "code": "X18",
+      "file": "src/screens/ActivitiesScreen.tsx",
+      "line": 371,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "backlog",
+      "code": "A08",
+      "file": "src/screens/BacklogScreen.tsx",
+      "line": 56,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "retryBacklogRead",
+      "code": "X58",
+      "file": "src/screens/BacklogScreen.tsx",
+      "line": 77,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "changeEntryDialog",
+      "code": "D05",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 119,
+      "context": "identifierAlert.title"
+    },
+    {
+      "key": "cancelConfirmation",
+      "code": "X38",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 125,
+      "context": "identifierAlert.actionCode"
+    },
+    {
+      "key": "confirmCheckInChange",
+      "code": "X42",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 130,
+      "context": "identifierAlert.actionCode"
+    },
+    {
+      "key": "checkIn",
+      "code": "A06",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 141,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "retrySelectedCheckIn",
+      "code": "X44",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 181,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "reopenSkippedSlot",
+      "code": "X45",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 191,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "navigateBack",
+      "code": "X05",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 196,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "editConfirmedTimezone",
+      "code": "X96",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 239,
+      "context": "Input.actionCode"
+    },
+    {
+      "key": "requestTimezoneConfirmation",
+      "code": "X49",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 246,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "confirmTimezoneDialog",
+      "code": "D06",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 250,
+      "context": "identifierAlert.title"
+    },
+    {
+      "key": "cancelConfirmation",
+      "code": "X38",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 256,
+      "context": "identifierAlert.actionCode"
+    },
+    {
+      "key": "confirmEntryTimezone",
+      "code": "X50",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 260,
+      "context": "identifierAlert.actionCode"
+    },
+    {
+      "key": "editCheckIn",
+      "code": "X43",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 275,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "navigateBack",
+      "code": "X05",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 280,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "openActivitiesFromEmptyCheckIn",
+      "code": "X102",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 299,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "requestSkipSlot",
+      "code": "X46",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 310,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "skipSlotDialog",
+      "code": "D07",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 313,
+      "context": "identifierAlert.title"
+    },
+    {
+      "key": "cancelConfirmation",
+      "code": "X38",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 319,
+      "context": "identifierAlert.actionCode"
+    },
+    {
+      "key": "confirmSkipSlot",
+      "code": "X47",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 323,
+      "context": "identifierAlert.actionCode"
+    },
+    {
+      "key": "checkIn",
+      "code": "A06",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 342,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "retryCheckInRead",
+      "code": "X51",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 348,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "requestCheckInChange",
+      "code": "X40",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 368,
+      "context": "ActivityGrid.actionCode"
+    },
+    {
+      "key": "commitNewCheckIn",
+      "code": "X39",
+      "file": "src/screens/CheckInScreen.tsx",
+      "line": 369,
+      "context": "ActivityGrid.actionCode"
+    },
+    {
+      "key": "timeReport",
+      "code": "A03",
+      "file": "src/screens/InsightsScreen.tsx",
+      "line": 126,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "retryReportRead",
+      "code": "X91",
+      "file": "src/screens/InsightsScreen.tsx",
+      "line": 160,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "retryReportPreferences",
+      "code": "X92",
+      "file": "src/screens/InsightsScreen.tsx",
+      "line": 161,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "openMoreReports",
+      "code": "X99",
+      "file": "src/screens/InsightsScreen.tsx",
+      "line": 229,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "notificationDiagnostics",
+      "code": "A09",
+      "file": "src/screens/NotificationDiagnosticsScreen.tsx",
+      "line": 124,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "requestNotificationPermission",
+      "code": "X69",
+      "file": "src/screens/NotificationDiagnosticsScreen.tsx",
+      "line": 185,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "openPhoneNotificationSettings",
+      "code": "X70",
+      "file": "src/screens/NotificationDiagnosticsScreen.tsx",
+      "line": 201,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "sendTestNotification",
+      "code": "X71",
+      "file": "src/screens/NotificationDiagnosticsScreen.tsx",
+      "line": 206,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "reconcileNotificationsManually",
+      "code": "X72",
+      "file": "src/screens/NotificationDiagnosticsScreen.tsx",
+      "line": 211,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "notificationResolution",
+      "code": "A10",
+      "file": "src/screens/NotificationResolutionScreen.tsx",
+      "line": 11,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "selectDueSlot",
+      "code": "X57",
+      "file": "src/screens/NotificationResolutionScreen.tsx",
+      "line": 30,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "returnToMainToday",
+      "code": "X56",
+      "file": "src/screens/NotificationResolutionScreen.tsx",
+      "line": 35,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "onboarding",
+      "code": "A11",
+      "file": "src/screens/OnboardingScreen.tsx",
+      "line": 45,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "enableOnboardingReminders",
+      "code": "X73",
+      "file": "src/screens/OnboardingScreen.tsx",
+      "line": 55,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "sendTestNotification",
+      "code": "X71",
+      "file": "src/screens/OnboardingScreen.tsx",
+      "line": 60,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "completeOnboarding",
+      "code": "X74",
+      "file": "src/screens/OnboardingScreen.tsx",
+      "line": 69,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "saveResult",
+      "code": "A07",
+      "file": "src/screens/SaveResultScreen.tsx",
+      "line": 48,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "retryRemainingCount",
+      "code": "X52",
+      "file": "src/screens/SaveResultScreen.tsx",
+      "line": 76,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "openSameDayBacklog",
+      "code": "X53",
+      "file": "src/screens/SaveResultScreen.tsx",
+      "line": 90,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "undoEntryEdit",
+      "code": "X54",
+      "file": "src/screens/SaveResultScreen.tsx",
+      "line": 99,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "viewSavedEntry",
+      "code": "X55",
+      "file": "src/screens/SaveResultScreen.tsx",
+      "line": 123,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "returnToMainToday",
+      "code": "X56",
+      "file": "src/screens/SaveResultScreen.tsx",
+      "line": 130,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "unsavedSettingsDialog",
+      "code": "D04",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 108,
+      "context": "identifierAlert.title"
+    },
+    {
+      "key": "continueSettingsDraft",
+      "code": "X67",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 114,
+      "context": "identifierAlert.actionCode"
+    },
+    {
+      "key": "discardIncompleteSettingsDraft",
+      "code": "X68",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 118,
+      "context": "identifierAlert.actionCode"
+    },
+    {
+      "key": "reminderSettings",
+      "code": "A04",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 157,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "reminderSettings",
+      "code": "A04",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 177,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "toggleReminders",
+      "code": "X59",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 202,
+      "context": "CodedSwitch.actionCode"
+    },
+    {
+      "key": "editReminderInterval",
+      "code": "X60",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 215,
+      "context": "Input.actionCode"
+    },
+    {
+      "key": "editDayStart",
+      "code": "X61",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 252,
+      "context": "Input.actionCode"
+    },
+    {
+      "key": "editDayEnd",
+      "code": "X62",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 269,
+      "context": "Input.actionCode"
+    },
+    {
+      "key": "toggleActiveDay",
+      "code": "X63",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 321,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "toggleSound",
+      "code": "X64",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 375,
+      "context": "CodedSwitch.actionCode"
+    },
+    {
+      "key": "toggleVibration",
+      "code": "X65",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 391,
+      "context": "CodedSwitch.actionCode"
+    },
+    {
+      "key": "openNotificationDiagnostics",
+      "code": "X66",
+      "file": "src/screens/SettingsScreen.tsx",
+      "line": 398,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "returnToTodayOverview",
+      "code": "X09",
+      "file": "src/screens/TodayScreen.tsx",
+      "line": 156,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "dayTimeline",
+      "code": "A05",
+      "file": "src/screens/TodayScreen.tsx",
+      "line": 167,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "previousTimelineDay",
+      "code": "X10",
+      "file": "src/screens/TodayScreen.tsx",
+      "line": 218,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "currentTimelineDay",
+      "code": "X11",
+      "file": "src/screens/TodayScreen.tsx",
+      "line": 232,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "nextTimelineDay",
+      "code": "X12",
+      "file": "src/screens/TodayScreen.tsx",
+      "line": 241,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "completePendingSlot",
+      "code": "X07",
+      "file": "src/screens/TodayScreen.tsx",
+      "line": 263,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "openGeneralBacklog",
+      "code": "X13",
+      "file": "src/screens/TodayScreen.tsx",
+      "line": 273,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "activityEditorDialog",
+      "code": "D02",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 139,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "retryActivityEditorRead",
+      "code": "X31",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 147,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "editActivityName",
+      "code": "X93",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 155,
+      "context": "Input.actionCode"
+    },
+    {
+      "key": "toggleIconPicker",
+      "code": "X24",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 168,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "keepExistingIcon",
+      "code": "X25",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 176,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "selectAssetIcon",
+      "code": "X26",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 207,
+      "context": "IdentifierBadge.code"
+    },
+    {
+      "key": "editIconSearch",
+      "code": "X94",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 224,
+      "context": "Input.actionCode"
+    },
+    {
+      "key": "selectLegacyIcon",
+      "code": "X27",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 229,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "selectLegacyIcon",
+      "code": "X27",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 258,
+      "context": "IdentifierBadge.code"
+    },
+    {
+      "key": "saveActivityEdit",
+      "code": "X30",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 276,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "saveNewActivity",
+      "code": "X29",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 277,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "cancelActivityEditor",
+      "code": "X28",
+      "file": "src/components/ActivityEditor.tsx",
+      "line": 285,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "commitNewCheckIn",
+      "code": "X39",
+      "file": "src/components/ActivityGrid.tsx",
+      "line": 14,
+      "context": "shared component default"
+    },
+    {
+      "key": "expandAllResultActivities",
+      "code": "X101",
+      "file": "src/components/ReportActivitySummary.tsx",
+      "line": 123,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "reportDay",
+      "code": "X77",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 35,
+      "context": "modeCodes.day"
+    },
+    {
+      "key": "reportCalendarWeek",
+      "code": "X78",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 36,
+      "context": "modeCodes.week"
+    },
+    {
+      "key": "reportCalendarMonth",
+      "code": "X79",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 37,
+      "context": "modeCodes.month"
+    },
+    {
+      "key": "reportUsageWeek",
+      "code": "X80",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 38,
+      "context": "modeCodes.usage7"
+    },
+    {
+      "key": "reportUsageMonth",
+      "code": "X81",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 39,
+      "context": "modeCodes.usage30"
+    },
+    {
+      "key": "reportRollingWeek",
+      "code": "X82",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 40,
+      "context": "modeCodes.rolling7"
+    },
+    {
+      "key": "reportRollingMonth",
+      "code": "X83",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 41,
+      "context": "modeCodes.rolling30"
+    },
+    {
+      "key": "reportCustomRange",
+      "code": "X84",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 42,
+      "context": "modeCodes.custom"
+    },
+    {
+      "key": "reportDay",
+      "code": "X77",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 106,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "showPreviousCalendarDay",
+      "code": "X100",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 115,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "reportRollingWeek",
+      "code": "X82",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 124,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "reportRollingMonth",
+      "code": "X83",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 133,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "openMoreReports",
+      "code": "X99",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 142,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "closeSelectionDialog",
+      "code": "X18",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 186,
+      "context": "IdentifierBadge.code"
+    },
+    {
+      "key": "moreReportsDialog",
+      "code": "D08",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 207,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "closeSelectionDialog",
+      "code": "X18",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 214,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "previousReportPeriod",
+      "code": "X85",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 234,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "currentReportPeriod",
+      "code": "X86",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 242,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "nextReportPeriod",
+      "code": "X87",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 248,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "toggleReportCalendar",
+      "code": "X88",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 263,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "changeReportWeekStart",
+      "code": "X89",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 275,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "editCustomReportStart",
+      "code": "X97",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 298,
+      "context": "Input.actionCode"
+    },
+    {
+      "key": "editCustomReportEnd",
+      "code": "X98",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 314,
+      "context": "Input.actionCode"
+    },
+    {
+      "key": "applyCustomReportDates",
+      "code": "X90",
+      "file": "src/components/ReportRangeControls.tsx",
+      "line": 325,
+      "context": "ReportButton.actionCode"
+    },
+    {
+      "key": "openSelectedSlot",
+      "code": "X06",
+      "file": "src/components/SlotRow.tsx",
+      "line": 150,
+      "context": "IdentifierBadge.code"
+    },
+    {
+      "key": "today",
+      "code": "A01",
+      "file": "src/components/TodayOverview.tsx",
+      "line": 79,
+      "context": "IdentifierTitle.code"
+    },
+    {
+      "key": "completePendingSlot",
+      "code": "X07",
+      "file": "src/components/TodayOverview.tsx",
+      "line": 138,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "openTodayTimeline",
+      "code": "X08",
+      "file": "src/components/TodayOverview.tsx",
+      "line": 149,
+      "context": "Button.actionCode"
+    },
+    {
+      "key": "navigateBack",
+      "code": "X05",
+      "file": "src/components/Ui.tsx",
+      "line": 309,
+      "context": "Button.actionCode"
+    }
+  ]
+}

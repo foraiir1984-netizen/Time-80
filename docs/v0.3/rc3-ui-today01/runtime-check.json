@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-13 Asia/Tehran",
+  "command_checks": [
+    "command -v adb",
+    "command -v emulator",
+    "test -d android"
+  ],
+  "adb": null,
+  "emulator": null,
+  "native_android_project": false,
+  "device": "Not Available",
+  "build": "Not run — APK not authorized in this task",
+  "screenshots": "Not run",
+  "rtl_scales": [
+    1,
+    1.5,
+    2
+  ],
+  "native_layout_targets": "Not run",
+  "simulation": "Only node test clocks and fixtures; no simulated runtime presented as device clock",
+  "talkback": "Deferred / Not run",
+  "notification_upgrade_qa": "Open / mandatory"
+}

@@ -1,0 +1,9 @@
+
+> time80@0.3.0 typecheck
+> tsc --noEmit
+
+src/components/SlotRow.tsx(115,43): error TS2339: Property 'caption' does not exist on type 'never'.
+src/components/SlotRow.tsx(143,27): error TS2339: Property 'body' does not exist on type 'never'.
+tests/v03TodayUI.test.tsx(218,7): error TS2532: Object is possibly 'undefined'.
+tests/v03TodayUI.test.tsx(219,7): error TS2532: Object is possibly 'undefined'.
+tests/v03TodayUI.test.tsx(220,7): error TS2532: Object is possibly 'undefined'.

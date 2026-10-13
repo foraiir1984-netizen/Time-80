@@ -1,0 +1,90 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ configured-day progress derives from explicit zoned endpoints, clamps and rejects unsupported settings (31.668236ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ candle and donut share the exact progress; only displayed percent is rounded; no false percentage for unknown (26.645793ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ timeline sorts a copy; live A01/A05 preserve original X07, exact X06 manual/past/skipped context and disabled future (92.212359ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ foreground minute is UI-only; background/focus resume refresh actual time/settings; cleanup stops reads and timers (17.383022ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ midnight and timezone refresh pair timeline/date/progress context; no recording writes (20.170274ms)
+✖ loading/error/empty retain screen identity; stale/unmounted reads cannot overwrite newer focus response (14.423402ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ M-10 source layout at scales 1/1.5/2 keeps full names, asset/legacy identity, code inside one target and shared caller defaults (3.631902ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 2
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 548.788265
+
+✖ failing tests:
+
+test at tests/v03TodayUI.test.tsx:2:7525
+✖ timeline sorts a copy; live A01/A05 preserve original X07, exact X06 manual/past/skipped context and disabled future (92.212359ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(expected)
+  
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03TodayUI.test.tsx:249:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/v03TodayUI.test.tsx:2:10532
+✖ foreground minute is UI-only; background/focus resume refresh actual time/settings; cleanup stops reads and timers (17.383022ms)
+  Error: no such table: entry_classification_history
+      at Object.getAllAsync (/workspace/work/rc3-fix01/repo/tests/sqlite.mjs:47:10)
+      at async Promise.all (index 2) {
+    code: 'ERR_SQLITE_ERROR',
+    errcode: 1,
+    errstr: 'SQL logic error'
+  }
+
+test at tests/v03TodayUI.test.tsx:2:12732
+✖ midnight and timezone refresh pair timeline/date/progress context; no recording writes (20.170274ms)
+  Error: no such table: entry_classification_history
+      at Object.getAllAsync (/workspace/work/rc3-fix01/repo/tests/sqlite.mjs:47:10)
+      at async Promise.all (index 2) {
+    code: 'ERR_SQLITE_ERROR',
+    errcode: 1,
+    errstr: 'SQL logic error'
+  }
+
+test at tests/v03TodayUI.test.tsx:2:14073
+✖ loading/error/empty retain screen identity; stale/unmounted reads cannot overwrite newer focus response (14.423402ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0.5
+  
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03TodayUI.test.tsx:414:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0.5,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/v03TodayUI.test.tsx:2:16583
+✖ M-10 source layout at scales 1/1.5/2 keeps full names, asset/legacy identity, code inside one target and shared caller defaults (3.631902ms)
+  Error: Expected 1 but found 2 instances with node type: "Image"
+      at expectOne (/workspace/work/rc3-fix01/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15161:13)
+      at process.env.NODE_ENV._proto.findByType (/workspace/work/rc3-fix01/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17211:18)
+      at TestContext.<anonymous> (/workspace/work/rc3-fix01/repo/tests/v03TodayUI.test.tsx:476:26)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

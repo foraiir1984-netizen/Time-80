@@ -1,0 +1,8 @@
+{
+  "review_date": "2026-10-13 Asia/Tehran",
+  "text_files_reviewed": 32,
+  "credential_patterns_found": 0,
+  "manual_review": "Text logs contain synthetic fixtures, injected failures, source paths, public hashes/commands. No user data export, credentials, APK, ZIP, node_modules or workflow changes. Design PNG is reference; generated PNG is the explicitly authorized asset.",
+  "history": "prior checkpoint/report suffix preserved byte-for-byte",
+  "final_source_diff": "No src/tests/scripts/assets/guide changes after tested commit"
+}

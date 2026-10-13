@@ -1,3 +1,27 @@
+# IMPLEMENTATION_STATE_RC3 — RC3-UI-TODAY-01 — Rev01
+
+2026-10-13، Asia/Tehran؛ پرامپت۱۰. M-10 در سورس تکمیل و آزمون شد؛ پذیرش Android باز است. پایین عین تاریخچهٔ قبلی است.
+
+- شروع HEAD `51728c49acfaba52412b6500f719c80a31848d7a`، شاخه rc3-ui-settings01، clean، ancestry0/0. شاخه اختصاصی rc3-ui-today01؛ checkout کامل شامل FIX01/FIX02، شناسه‌ها، hide،clock fix و M-01/M-02/M-04 حفظ شد؛ reset یا مبنای قدیمی استفاده نشد.
+- **SHA سورس نهایی آزمون‌شده `b8d798d454236b2f66eefc6d318033b50777a233`**؛ commit تحویل بعدی فقط docs/evidence است؛ SHA دقیق تحویل/remote در پاسخ نهایی و Git گزارش خوانده شود، با SHA آزمون یکی نیست.
+- Handoff/D03-005، تصمیمات و normalization v1.0، موکاپ نهایی M-10 با ابزار تصویر، D03-004/Release Brief1.2 و ADR روز/آیکون0.1 واقعاً خوانده شدند؛ ZIP داخلی و۱۲checksum معتبر. نام/نسخه/مسیر/hash در sources-manifest؛ Library فرض نشد.
+- A01: هدر مستقل کوهستان چپ/تاریخ راست، متن «امروزت را مرور کن»، ساعت واقعی42/50، شمع برداری خنثی و Donut. Vazirmatn و SVG موجود؛ بدون dependency تازه. تصویر مستقل generated output و مجوز/منشأ/source hash، شمع CC0 در assets README؛ native rendering/crop Not run.
+- progress از دو مرز ساعات تنظیم‌شده در همان روز/zone و زمان واقعی، clamped؛ شمع/Donut یک عدد دارند؛ فقط درصد نوشته‌شده rounding. invalid/equal/overnight مطابق رد سرویس unknown است؛ سیاست تازه روز ساخته نشد. DST،میانه/بیرون ساعات،midnight وzone بررسی شدند.
+- minute tick فقط UI و هیچ DB read/write؛ focus/resume/date/zone داده را تازه می‌کنند، timer/listener cleanup و sequence/alive رعایت شد. horizon maintenance موجود در load باقی است؛ cache/meta write آن با write ثبت فرق دارد. snapshot entry/classification history/context در مرور/گذشت زمان ثابت ماند.
+- Timeline در A01/A05 نزولی روی کپی؛ سرویس از قبل DESC بود؛ items.find و نام X07 همان‌اند. X06 context/source manual/period/slotId/state؛ X01/X09/X11/X56 وpast/backlog/disabledfuture حفظ شدند؛ هیچ فعالیت گذشته خودکار جاری نشد. کارت‌های مستقل legacy حذف شدند؛ ثبت حذف نشد.
+- SlotRow فقط prop اختیاری typography برای Today دارد؛ Backlog defaultها و ActivityIcon دست‌نخورده. src App/services/scheduler/schema/data/report/settings/icons/deps/workflow ثابت؛ manifest۲۹۳protected و۳۱۶فایل آزمون‌شده. هیچ تنظیم یا کنترل تازه نیست.
+- RegistryRev04 با۱۲۲تخصیص ثابت؛۱۱۲active/۱۰reserved؛۱۳۹binding+۱۰reserve=۱۴۹coverage،Pendingactive0. راهنما/CSV از registry؛همه۱۱۲code درUTC/Tehran دیده شدند؛ ICATUS hide و X102/FIXها محفوظ‌اند.
+- نهایی: typecheck Pass؛fullUTC۱۴۶/۱۴۶،relatedTehran۱۳۲/۱۳۲،fail/skip/cancel0. outerhost۲۰۳۱UTC و۲۰۲۴Tehran برایToday/visual/IdentifierFlows هرکدام۳۲/۳۲.۸تست تازهToday،fixturevisual قرارداد صحیح configuredday/zone؛ هیچ آزمون حذف/skip نشده است.
+- Known Issue progress تهران در همین دامنه با قرارداد noon محلی ۸–۱۶ وDST Resolved شد؛ تغییر صرف انتظار۵۰→۶۵ نیست. coreTehran مستقل۲/۳ Fail قبلی slot10:00–10:30؛ source/expectation/engine ثابت،KnownIssue باز. fullTZunset Not run و سابقه بسته اعلام نشد. initial failures جدا ثبت شده‌اند.
+- گزارش `RC3_UI_TODAY_01_Report_Rev01_FA.md` وپوشهrc3-ui-today01:matrixتمام‌بندها،asset/source/protected/testmanifest،فرمان‌ها و۳۵۳case/status،logs وcoverage. تصویر طراحی/تولیدی یاrenderer شاهد native نیست.
+- Android/screenshots/RTL/scales1/1.5/2/target اندازه‌گیری/scroll/crop Not run؛device/build/adb/emulator/nativeproject نیست. QA اعلانP03-015/P03-016 وارتقا بازوالزامی؛P03-014/P03-019 باز. فقطTalkBack Deferred/Not run؛countdown Undo و motion پیچیده/feedback احساسی/بهره‌وری اضافه نشد.
+
+قدم بعدی فقط پس از بررسی دفتر: دستور جدا برای APK و QA یکپارچه Android. این task پس از commit/push و remoteverify متوقف می‌شود؛ بدون merge/force-push/انتشار یا مرحله بعد.
+
+---
+
+## سوابق حفظ‌شده — checkpoint بالا وضعیت جاری است
+
 # IMPLEMENTATION_STATE_RC3 — RC3-UI-SETTINGS-01 — Rev01
 
 2026-10-13، Asia/Tehran؛ پرامپت۹. اصلاح مستقل fixture X07 و M-02 در سورس/آزمون تکمیل شدند؛ پذیرش گوشی باز است. پایین عین سابقهٔ مراحل قبل است.

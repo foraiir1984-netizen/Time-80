@@ -1,0 +1,133 @@
+{
+  "task": "RC3-UI-TODAY-01 Rev01",
+  "date": "2026-10-13 Asia/Tehran",
+  "tested_source_sha": "b8d798d454236b2f66eefc6d318033b50777a233",
+  "baseline": "51728c49acfaba52412b6500f719c80a31848d7a",
+  "initial_branch": "rc3-ui-settings01",
+  "initial_status": "clean",
+  "initial_ancestry_left_right": [
+    0,
+    0
+  ],
+  "branch": "rc3-ui-today01",
+  "phases": [
+    {
+      "log": "full-UTC.log",
+      "command": "TIME80_UI_EVIDENCE_DIR=/workspace/work/rc3-ui-today01/final/witness-UTC TZ=UTC npm test",
+      "status": "Pass",
+      "counts": {
+        "tests": 146,
+        "pass": 146,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "scope": "Final source",
+      "limit": "Node/renderer + real SQLite logic; no Android/native proof"
+    },
+    {
+      "log": "related-Tehran.log",
+      "command": "TIME80_UI_EVIDENCE_DIR=/workspace/work/rc3-ui-today01/final/witness-Tehran TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03TodayUI.test.tsx tests/visualIntegration.test.tsx tests/v03SettingsUI.test.tsx tests/v03ReportUI.test.tsx tests/v03ClassificationPolicy.test.ts tests/v03IcatusHideUI.test.tsx tests/v03Data.test.ts tests/v03IdentifierFlows.test.tsx tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx",
+      "status": "Pass",
+      "counts": {
+        "tests": 132,
+        "pass": 132,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "scope": "Final source",
+      "limit": "Node/renderer + real SQLite logic; no Android/native proof"
+    },
+    {
+      "log": "known-core-Tehran.log",
+      "command": "TZ=Asia/Tehran node --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/core.test.ts",
+      "status": "Fail",
+      "counts": {
+        "tests": 3,
+        "pass": 2,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "scope": "Known Issue, separate from related task group",
+      "limit": "Node/renderer + real SQLite logic; no Android/native proof"
+    },
+    {
+      "log": "host-2031-UTC.log",
+      "command": "TIME80_SIMULATED_HOST_DATE=2031-07-20T04:00:00Z TZ=UTC node --import ./docs/v0.3/rc3-test-clock-fix01/simulated-host-date.mjs --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03TodayUI.test.tsx tests/visualIntegration.test.tsx tests/v03IdentifierFlows.test.tsx",
+      "status": "Pass",
+      "counts": {
+        "tests": 32,
+        "pass": 32,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "scope": "Final source",
+      "limit": "Node/renderer + real SQLite logic; no Android/native proof"
+    },
+    {
+      "log": "host-2024-Tehran.log",
+      "command": "TIME80_SIMULATED_HOST_DATE=2024-02-20T04:00:00Z TZ=Asia/Tehran node --import ./docs/v0.3/rc3-test-clock-fix01/simulated-host-date.mjs --import ./tests/register.mjs --import tsx --test --test-reporter=tap tests/v03TodayUI.test.tsx tests/visualIntegration.test.tsx tests/v03IdentifierFlows.test.tsx",
+      "status": "Pass",
+      "counts": {
+        "tests": 32,
+        "pass": 32,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "scope": "Final source",
+      "limit": "Node/renderer + real SQLite logic; no Android/native proof"
+    }
+  ],
+  "typecheck": {
+    "status": "Pass",
+    "command": "npm run typecheck",
+    "log": "typecheck.log"
+  },
+  "not_run": [
+    {
+      "case": "Android M-10 screenshots RTL 1/1.5/2, start/mid/end,empty,error,timeline,past",
+      "status": "Not run",
+      "limit": "No adb/emulator/native project/device/build"
+    },
+    {
+      "case": "Native target measurement >=48dp, non-overlap, long text/layout",
+      "status": "Not run",
+      "limit": "Style/renderer does not measure native layout"
+    },
+    {
+      "case": "Android generated asset crop, raster quality and vector candle",
+      "status": "Not run",
+      "limit": "Asset source integrated; runtime absent"
+    },
+    {
+      "case": "P03-015/P03-016 notification device retest",
+      "status": "Not run",
+      "limit": "Open and mandatory"
+    },
+    {
+      "case": "Upgrade/data preservation on installed Android",
+      "status": "Not run",
+      "limit": "Open and mandatory; no APK in this task"
+    },
+    {
+      "case": "TalkBack",
+      "status": "Not run",
+      "limit": "Deferred / Not run only"
+    },
+    {
+      "case": "Full suite TZ unset",
+      "status": "Not run",
+      "limit": "Historical Known Issue carried; not rerun in this task"
+    }
+  ],
+  "delivery_commit": "Docs/evidence-only child of tested_source_sha; exact SHA supplied in final delivery and Git history of report"
+}

@@ -1,3 +1,33 @@
+# RC3 QA Retest — RC3-UI-TODAY-01 — Rev01
+
+2026-10-13، Asia/Tehran؛ مبنا51728c49acfaba52412b6500f719c80a31848d7a، سورس آزمون‌شده **b8d798d454236b2f66eefc6d318033b50777a233**، شاخهrc3-ui-today01. commit تحویل فقط docs/evidence و SHA دقیق در پاسخ نهایی/Git گزارش است. منابع و بندهای کامل در RC3_UI_TODAY_01_Report_Rev01_FA.md؛ فرمان هرcase در validation-record.json/test-results.csv همان پوشه.
+
+| مورد | نتیجه | شاهد / محدودیت |
+| --- | --- | --- |
+| npm run typecheck | Pass | typecheck.log؛ static،native نیست |
+| TZ=UTC npm test | Pass؛۱۴۶/۱۴۶ | suite کامل،fail/skip/cancel0؛full-UTC.log |
+| گروه مرتبط۱۳فایل TZ=Asia/Tehran | Pass؛۱۳۲/۱۳۲ | Today8/visual7/Settings/Report/data/policy/hide/identifiers وFIXها؛fullsuiteTehran نیست |
+| progress start/mid/end/outside،samevalue،invalid/equal/overnight | Pass | UI/helper واقعی،unknown بدون NaN؛source/runtime day policy جدا |
+| midnight/zone/focus/resume/cleanup و stale/unmounted response | Pass | timer دقیقه‌ای scoped؛SQLite serialized واقعی؛Android background Not run |
+| descendingcopy وX07/items.find،A01/A05→A06/manual/past/backlog/future | Pass | exactroute/context،اصل items ثابت،singlehandler |
+| no recording writes/old classification+context intact | Pass | realSQLite snapshots؛tick معمولی total_changes ثابت؛horizon cache maintenance قبلی باقی است |
+| scales1/1.5/2،fullrawlegacy/asset،code14LTR/defaultcaller | Pass در سورس/renderer | wrap/stack وsingle48target props؛native layout/measurement Not run |
+| M-01/M-02/M-04،ICATUS hide،FIX01/FIX02 وکدها | Pass در گروه رگرسیون | protectedsource+suite؛اعلان گوشی تأیید نمی‌شود |
+| registry/guide/CSV/coverage | Pass | Rev04،۱۲۲stable/۱۱۲active/۱۰reserved،۱۳۹binding و۱۴۹row،Pendingactive0؛۱۱۲code هرTZ |
+| outerhost۲۰۳۱UTC و۲۰۲۴Tehran | Pass؛هرکدام۳۲/۳۲ | ۳ فایلToday/visual/IdentifierFlows،fixture مستقل ازتاریخ میزبان،cleanup |
+| progressfixtureتهران | Resolved در دامنه M-10 | configured08–16،noonlocal08:30Z=1/2؛UTCهمانinstant1/16،DSTendpoint واقعی؛نه تغییر۵۰به۶۵ |
+| coreTehran intervaltransition | Fail؛۲/۳ /KnownIssueباز | slot10:00–10:30 غایب؛source/expectation/engine برابر مبنا،known-core-Tehran.log |
+| fullTZunset | Not run /KnownIssueتاریخی | بسته اعلام نشده؛logهای تاریخی محفوظ |
+| nativeM-10/screenshots RTL/scales/empty/error/past/crop/targets | Not run | adb/emulator/device/build/nativeproject نیست؛renderer/PNG/تولیدتصویر شاهدگوشی نیست |
+| P03-015/P03-016 اعلان وupgrade گوشی | Not run؛بازوالزامی | Deferred نیست؛P03-014/P03-019 همباز |
+| TalkBack | Deferred /Not run | فقط اینQA تعویق‌داده‌شده |
+
+شواهد نهایی۳۵۳case/status،manifest۳۱۶فایل آزمون‌شده و۲۹۳protected،design/source/asset hashes وmatrixM-10 ثبت‌اند. initial-* خطاهای ساختfixture/typeها و نتیجه نهایی ازهم جدا هستند. پذیرش Android باز؛ APK/countdown/انتشار/task بعدی اجرا نشد. پایین عین تاریخچهٔ قبلی است.
+
+---
+
+## سوابق حفظ‌شده — نتایج زیر برای سورس‌های پیشین‌اند
+
 # RC3 QA Retest — RC3-UI-SETTINGS-01 — Rev01
 
 2026-10-13، Asia/Tehran؛ مبناe1278bb3e812ef3ae636546bfdf2b1e28050014c؛ شاخهrc3-ui-settings01. fixture source1759ff8a1de181074ae41f6f33e0aa04dd66af93؛M-02 source نهایی711b6eb8a457934f298ab5c72b132ae59101b6f8؛delivery فقطdocs/evidence پس ازآن،SHA/remote درپاسخ نهایی/Git.

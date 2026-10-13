@@ -1,0 +1,99 @@
+[
+  {
+    "name": "MOCKUP_INDEX_FA.md",
+    "version": "Approved index / 2026-10-06",
+    "read_path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/00_README/MOCKUP_INDEX_FA.md",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/00_README/MOCKUP_INDEX_FA.md",
+    "sha256": "511561a471c101e35f83b6a527650169f6400fad13957b3630c4b79999765231",
+    "status": "Read"
+  },
+  {
+    "name": "Time80_Approved_UI_Decisions_FA.md",
+    "version": "Approved decisions / 2026-10-06",
+    "read_path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/01_Product_Decisions/Time80_Approved_UI_Decisions_FA.md",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/01_Product_Decisions/Time80_Approved_UI_Decisions_FA.md",
+    "sha256": "67afdeff817a2a424a04ae873110a4eb5f3974761592865beaa2f228a07aa144",
+    "status": "Read"
+  },
+  {
+    "name": "M10_Behavior_and_Open_Items_FA.md",
+    "version": "M-10 behavior / 2026-10-06",
+    "read_path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/01_Product_Decisions/M10_Behavior_and_Open_Items_FA.md",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/01_Product_Decisions/M10_Behavior_and_Open_Items_FA.md",
+    "sha256": "03dd6f0b5bfcb898c9cecef2efaab24b2b7ff470100a10f7f3f8b9aa83e433ad",
+    "status": "Read"
+  },
+  {
+    "name": "Time80_Typography_Normalization_v1.0_FA.md",
+    "version": "1.0",
+    "read_path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/02_Design_System/Time80_Typography_Normalization_v1.0_FA.md",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/02_Design_System/Time80_Typography_Normalization_v1.0_FA.md",
+    "sha256": "08f1859a80f4199ded5512b8013d1b8eaa546835c2937f8552e6e38a0ecf6ef5",
+    "status": "Read"
+  },
+  {
+    "name": "Time80_Visual_System_Normalization_v1.0_FA.md",
+    "version": "1.0",
+    "read_path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/02_Design_System/Time80_Visual_System_Normalization_v1.0_FA.md",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/02_Design_System/Time80_Visual_System_Normalization_v1.0_FA.md",
+    "sha256": "5cba86bf9bd4d3053f1847d0873d50c1e86bc37d00afdb3a061fffaf419c13ba",
+    "status": "Read"
+  },
+  {
+    "name": "Color_Direction_Note_FA.md",
+    "version": "2026-10-06",
+    "read_path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/02_Design_System/Color_Direction_Note_FA.md",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/02_Design_System/Color_Direction_Note_FA.md",
+    "sha256": "e613a7ce81594edb2bc4a04d5adc5283c0ffb1698a0593a0025631eacc8591ab",
+    "status": "Read"
+  },
+  {
+    "name": "M-10_Today_Final_Visual_Reference_APPROVED.png",
+    "version": "Final Approved / 2026-10-06",
+    "read_path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/03_Approved_Mockups/M-10_Today_Final_Visual_Reference_APPROVED.png",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/03_Approved_Mockups/M-10_Today_Final_Visual_Reference_APPROVED.png",
+    "sha256": "f63844850813c9541cd72fea8aead8bacf06d0f66a24a3b2036ab4a90dc91e5e",
+    "status": "Read / PNG viewed"
+  },
+  {
+    "name": "RC3_Product_Handoff.md",
+    "version": "1.0 / D03-005",
+    "read_path": "/workspace/work/rc3-fix01/repo/docs/v0.3/rc3-ui-report01/design-inputs/RC3_Product_Handoff.md",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/RC3_Product_Handoff.md",
+    "sha256": "acc8174b63cd2bfcc0493ecdd13e8a3eb5103b7351292e857b3100b684fd72d6",
+    "status": "Read"
+  },
+  {
+    "name": "Release_Brief_v0.3.md",
+    "version": "1.2 / D03-004",
+    "read_path": "/workspace/work/rc3-inspection/current/01_Product/Release_Brief_v0.3.md",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/Release_Brief_v0.3.md",
+    "sha256": "b520d0b91c93d94c20044941e671f3228dfff5e80950de1355200f0c5d4c3e6e",
+    "status": "Read"
+  },
+  {
+    "name": "ADR-003-04_Local_Day_Contract.md",
+    "version": "0.1 Accepted",
+    "read_path": "/workspace/work/rc3-inspection/contracts/02_Architecture/v0.3/ADR-003-04_Local_Day_Contract.md",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/ADR-003-04_Local_Day_Contract.md",
+    "sha256": "7b515fbf91903db780f1cb9a229f0ffb375baef5c9b811e6669991fbbf461780",
+    "status": "Read"
+  },
+  {
+    "name": "ADR-003-05_Icon_Compatibility.md",
+    "version": "0.1 Accepted",
+    "read_path": "/workspace/work/rc3-inspection/contracts/02_Architecture/v0.3/ADR-003-05_Icon_Compatibility.md",
+    "repository_copy": "docs/v0.3/rc3-ui-today01/design-inputs/ADR-003-05_Icon_Compatibility.md",
+    "sha256": "64bcb836572c77b4733b1a40a7112fa882b2ca82ad923939aa083c8fa6df0846",
+    "status": "Read"
+  },
+  {
+    "name": "Time80_Product_UI_Handoff_2026-10-06.zip",
+    "version": "2026-10-06",
+    "read_path": "/workspace/work/rc3-inspection/original/unpacked/inputs/Time80_Product_UI_Handoff_2026-10-06.zip",
+    "sha256": "f42852923f84c9d09253aa0f8853509b6d5996e9ec57a4f38a5fa77b21d70706",
+    "internal_hashes_verified": 12,
+    "status": "Opened / internal PNG extracted and viewed",
+    "repository_copy": null
+  }
+]
