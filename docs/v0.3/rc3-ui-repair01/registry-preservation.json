@@ -1,0 +1,11 @@
+{
+  "status": "Pass",
+  "source_sha": "4dbc92978dad73036dc4ab021f62b2a21d186572",
+  "base": "e53be49da51dd79fb5d282520060ba50fc26328e",
+  "registry_version": "RC3-ID-01-Rev04",
+  "entries": 122,
+  "active": 112,
+  "reserved": 10,
+  "semantics_identical_to_base": true,
+  "sites_updated": true
+}

@@ -1,3 +1,23 @@
+# IMPLEMENTATION_STATE_RC3 — checkpoint RC3-UI-REPAIR-01 Rev01
+
+2026-10-16. چهار طرح M-01/M-02/M-04/M-10 در سورس بازچینی شدند؛ **پذیرش بصری Android و APK تازه هنوز Not run / مسدودند**. این checkpoint پایان تمام معیارهای پرامپت ۱۲ نیست.
+
+- مبنای واقعی e53be49da51dd79fb5d282520060ba50fc26328e، شاخه rc3-build-qa01-handoff، working tree تمیز؛ دو commit مستنداتی بعد از e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85 حفظ شدند.
+- سورس آزمون‌شده/آمادهٔ ساخت و remote تأییدشده: **4dbc92978dad73036dc4ab021f62b2a21d186572** روی شاخه ثابت `rc3-ui-repair01`. شاخه `rc3-ui-repair01-handoff` فقط برای مستندات این تحویل است؛ commit مستندات با commit APK ساخته‌شده اشتباه نشود. APK این task هنوز وجود ندارد.
+- presetهای پنج‌گانه هم‌عرض با icon/title/code جدا؛ کارت اطلاعات گزارش با edit کم‌قاب و divider؛ حلقه چپ/سهم‌ها راست و total داخل حلقه در عرض عادی؛ X101 و سه+سایر و آیکون 40/20/12 محفوظ‌اند.
+- تنظیمات با ورودی فاصله کوچک و header هماهنگ شروع/پایان؛ draft/onBlur/validation/D04 و CTA اعلان محفوظ‌اند. Today هدر/شمع کوچک‌تر و فاصله کمتر، توضیح داخل حلقه، X08 کنار عنوان و Timeline مستقیم؛ کنترل‌های مرور A01 بعد از ردیف‌ها. X07 items.find و همه مسیرها/guardها محفوظ‌اند.
+- source/registry/guide تطبیق؛ Rev04 و ۱۱۲ active/۱۰ reserved بدون تخصیص یا تغییر معنا؛ ۱۵۰ ردیف coverage، Pending=0. کوه و هندسه شمع پذیرفته‌شده بازسازی نشدند. ۲۴۹ فایل داده/سرویس/scheduler/دارایی/قرارداد/dependency برابر مبنا هستند.
+- آزمون نهایی روی SHA بالا: typecheck **Pass**، UTC **149/149 Pass**، گروه ۱۵ فایل تهران **138/138 Pass**؛ fail/skip/cancel=0. export Android/Hermes با ۱۸۷ asset **Pass**؛ hash فونت‌ها و هدر مطابق. export، APK یا پذیرش native نیست. Known Issues تاریخی TZ unset/core تهران بسته نشده‌اند؛ fixtureهای قبلی X07/progress بی‌تغییر و رگرسیون پاس‌اند.
+- آخرین run واقعی مشاهده‌شده 38385334458 از e6fa5c…، validate/release موفق و versionCode سورس ۵ بود. app.json اصلاحی فقط versionCode=6 دارد؛ applicationId/0.3.0 و مسیر امضای ثابت محفوظ‌اند. اسکریپت ساخت metadata واقعی APK را ثبت می‌کند؛ workflow فقط نام/path artifact را اصلاح کرده است.
+- فرمان dispatch همین سورس **Fail**: `Get "https://api.github.com/repos/foraiir1984-netizen/Time-80/actions/workflows/build-android-apk.yml": Forbidden`. run جدید، APK، checksum و fingerprint تازه فرض نشده‌اند. Android محلی/SDK/KVM و ورودی‌های امضا موجود نیستند. محیط/شبکه بازسازی یا دور زده نشد.
+- گزارش: `RC3_UI_REPAIR_01_Report_Rev01_FA.md`، شواهد و نتایج در `rc3-ui-repair01/`؛ راهنمای عملی ساخت `RC3_UI_REPAIR_01_Build_Guide_FA.md`. پنج تصویر کاربر شاهد قبل از اصلاح‌اند و شاهد اجرای نسخه تازه نیستند.
+
+قدم بعدی همین task: اجرای workflow موجود روی شاخه ثابت و `release=true` (درخواست لینک run مطرح شده)، تأیید SHA دقیق و success validate/release، دریافت و تطبیق APK/امضا/manifest/checksum، سپس QA Android/گوشی در RTL و scaleهای ۱/۱٫۵/۲ و ارتقا بدون حذف داده. پذیرش اعلان P03-014/P03-015/P03-016/P03-019 و ارتقا باز و الزامی؛ فقط TalkBack Deferred. مرحله بعد، merge، force push و انتشار آغاز نشدند.
+
+---
+
+## سوابق حفظ‌شده — checkpoint بالا وضعیت جاری است
+
 # IMPLEMENTATION_STATE_RC3 — پیگیری ۱۱-ج / راهنمای اجرای دستی
 
 2026-10-13، Asia/Tehran. طبق دستور، رفع شبکه متوقف و محیط/گفت‌وگو حذف یا بازسازی نشد. این پیگیری با تحویل راهنمای دقیق پایان می‌یابد؛ ساخت و آزمون گوشی Not run باقی‌اند.

@@ -1,0 +1,92 @@
+[
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/00_README/APPROVED_MOCKUPS_CONTACT_SHEET.png",
+    "sha256": "cbd62e4ff3e87d8b98492c78e1394f042e6e3f84c4764c716fa7c8f81001b298",
+    "review": "Checksum verified; primary four PNGs individually viewed"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/00_README/MOCKUP_INDEX_FA.md",
+    "sha256": "511561a471c101e35f83b6a527650169f6400fad13957b3630c4b79999765231",
+    "review": "Read"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/00_README/README_FA.md",
+    "sha256": "747c527ec6cf17f9c6a83caf51dfb0228b61d32afc3cd181a20211601c4f7ee7",
+    "review": "Read"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/00_README/SHA256SUMS.txt",
+    "sha256": "7f19a9a5d7a132d531fb0e29dff3db2c531a5491968f472cf8f37f0758010ab5",
+    "review": "Read"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/01_Product_Decisions/M10_Behavior_and_Open_Items_FA.md",
+    "sha256": "03dd6f0b5bfcb898c9cecef2efaab24b2b7ff470100a10f7f3f8b9aa83e433ad",
+    "review": "Read"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/01_Product_Decisions/Time80_Approved_UI_Decisions_FA.md",
+    "sha256": "67afdeff817a2a424a04ae873110a4eb5f3974761592865beaa2f228a07aa144",
+    "review": "Read"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/02_Design_System/Color_Direction_Note_FA.md",
+    "sha256": "e613a7ce81594edb2bc4a04d5adc5283c0ffb1698a0593a0025631eacc8591ab",
+    "review": "Read"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/02_Design_System/Time80_Typography_Normalization_v1.0_FA.md",
+    "sha256": "08f1859a80f4199ded5512b8013d1b8eaa546835c2937f8552e6e38a0ecf6ef5",
+    "review": "Read"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/02_Design_System/Time80_Visual_System_Normalization_v1.0_FA.md",
+    "sha256": "5cba86bf9bd4d3053f1847d0873d50c1e86bc37d00afdb3a061fffaf419c13ba",
+    "review": "Read"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/03_Approved_Mockups/M-01_Report_Time_Range_APPROVED.png",
+    "sha256": "d0280b9ed55abc4e85f546e512fa1118566ed27bd314b4287f0166ecc35699eb",
+    "review": "Viewed"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/03_Approved_Mockups/M-02_Reminder_Settings_APPROVED.png",
+    "sha256": "6326888908cd2a7837940d46c5def66afe7fab968cecea786372e39276aab8b9",
+    "review": "Viewed"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/03_Approved_Mockups/M-04_Activity_Summary_Donut_APPROVED.png",
+    "sha256": "dc742a7bfc0367c343dce4ffe8101bcf1cf9c4a4dfcd7f4624f3d3036205395f",
+    "review": "Viewed"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/design/Time80_Product_UI_Handoff_2026-10-06/03_Approved_Mockups/M-10_Today_Final_Visual_Reference_APPROVED.png",
+    "sha256": "f63844850813c9541cd72fea8aead8bacf06d0f66a24a3b2036ab4a90dc91e5e",
+    "review": "Viewed"
+  },
+  {
+    "path": "docs/v0.3/rc3-ui-today01/design-inputs/RC3_Product_Handoff.md",
+    "sha256": "acc8174b63cd2bfcc0493ecdd13e8a3eb5103b7351292e857b3100b684fd72d6",
+    "review": "Read"
+  },
+  {
+    "path": "docs/v0.3/rc3-ui-today01/design-inputs/Release_Brief_v0.3.md",
+    "sha256": "b520d0b91c93d94c20044941e671f3228dfff5e80950de1355200f0c5d4c3e6e",
+    "review": "Read"
+  },
+  {
+    "path": "docs/v0.3/rc3-ui-today01/design-inputs/ADR-003-04_Local_Day_Contract.md",
+    "sha256": "7b515fbf91903db780f1cb9a229f0ffb375baef5c9b811e6669991fbbf461780",
+    "review": "Read"
+  },
+  {
+    "path": "docs/v0.3/rc3-ui-today01/design-inputs/ADR-003-05_Icon_Compatibility.md",
+    "sha256": "64bcb836572c77b4733b1a40a7112fa882b2ca82ad923939aa083c8fa6df0846",
+    "review": "Read"
+  },
+  {
+    "path": "/workspace/work/rc3-inspection/original/unpacked/inputs/Time80_Product_UI_Handoff_2026-10-06.zip",
+    "sha256": "f42852923f84c9d09253aa0f8853509b6d5996e9ec57a4f38a5fa77b21d70706",
+    "review": "Opened; all text and four primary PNGs read/viewed"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "source_sha": "4dbc92978dad73036dc4ab021f62b2a21d186572",
+  "branch": "rc3-ui-repair01",
+  "command": "gh workflow run build-android-apk.yml --repo foraiir1984-netizen/Time-80 --ref rc3-ui-repair01 -f release=true",
+  "exit_code": 1,
+  "error": "Get \"https://api.github.com/repos/foraiir1984-netizen/Time-80/actions/workflows/build-android-apk.yml\": Forbidden",
+  "dispatch_confirmed": false,
+  "new_run_id": null,
+  "apk": null,
+  "build_status": "Not run",
+  "dispatch_status": "Fail"
+}

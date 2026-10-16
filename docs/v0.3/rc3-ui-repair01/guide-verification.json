@@ -1,0 +1,15 @@
+{
+  "status": "Pass",
+  "files": [
+    {
+      "path": "docs/v0.3/RC3_UI_Code_Guide_FA.md",
+      "sha256": "bb64e2d3fc104e2d297481fbb8a3cbee63885bb797ec25cb7ae88a82d3db4231",
+      "identical_to_tested_commit": true
+    },
+    {
+      "path": "docs/v0.3/RC3_UI_Code_Guide_FA.csv",
+      "sha256": "6d377fb7b48ab977912537f42cdf86ac0923e544b5478d3b1c97d1c7cf54786e",
+      "identical_to_tested_commit": true
+    }
+  ]
+}

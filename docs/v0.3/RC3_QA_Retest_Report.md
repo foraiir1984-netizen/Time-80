@@ -1,3 +1,29 @@
+# RC3 QA Retest — checkpoint RC3-UI-REPAIR-01 Rev01
+
+2026-10-16؛ سورس آزمون‌شده `4dbc92978dad73036dc4ab021f62b2a21d186572`، شاخه ساخت ثابت `rc3-ui-repair01`، مبنای واقعی `e53be49da51dd79fb5d282520060ba50fc26328e`. شاخه تحویل مستندات `rc3-ui-repair01-handoff` است؛ سورس تازه‌ای پس از آزمون وارد نشده است.
+
+| بررسی | وضعیت | شاهد / حد |
+| --- | --- | --- |
+| typecheck | Pass | rc3-ui-repair01/logs/typecheck.log |
+| suite کامل UTC | Pass، 149/149 | logs/tests-UTC.log؛ بدون fail/skip/cancel |
+| ۱۵ فایل مرتبط تهران | Pass، 138/138 | logs/tests-Tehran.log؛ full suite تهران نیست |
+| export Android/Hermes و فونت/تصویر | Pass | ۱۸۷ asset؛ export-verification.json؛ APK/اجرای native نیست |
+| registry/guide/CSV | Pass | Rev04، ۱۱۲ فعال/۱۰ رزرو، ۱۵۰ ردیف coverage، Pending=0؛ source/renderer نه اندازه‌گیری گوشی |
+| اصلاح چهار ترکیب‌بندی | Pass در سورس | گزارش RC3_UI_REPAIR_01_Report_Rev01_FA.md و جدول بندها |
+| اجرای Actions تازه | Fail | dispatch-attempt.json؛ Forbidden؛ موفقیت ساخت فرض نشد |
+| APK اصلاحی، امضا، checksum و metadata واقعی | Not run | run جدید/باینری ساخته نشده است |
+| چهار طرح/D08/D04/فهرست کامل/Today و Timeline روی Android | Not run | SDK/adb/emulator/device موجود نیست؛ هر سه scale/RTL/متن بلند/صفر/خطا/disabled و target/safe area باز |
+| اعلان→بازه→ثبت، duplicate/Undo و ارتقا روی گوشی | Not run | رگرسیون خودکار پاس؛ پذیرش گوشی الزامی و باز |
+| TalkBack | Deferred / Not run | فقط همین مورد Deferred است |
+
+X07 همچنان items.find و progress همان قرارداد روز است؛ fixtureهای قبلی تغییر نکردند و رگرسیون UTC/تهران پاس است. شکست تاریخی core در تهران و سابقه TZ unset در این task دوباره اجرا یا بسته اعلام نشدند. ICATUS hidden و داده/سرویس/Undo/FIX01/FIX02 محفوظ‌اند. تصاویر ارسالی کاربر فقط قبل از اصلاح‌اند؛ renderer، موکاپ و export شاهد native تازه نیستند.
+
+آخرین run قدیمی 38385334458 اکنون به‌صورت read-only تأیید شد؛ e6fa5c… با versionCode سورس ۵. این موفقیت به سورس اصلاحی نسبت داده نشده است. سورس آماده دارای versionCode=6 است؛ دستور ساخت و شرط تطبیق SHA در RC3_UI_REPAIR_01_Build_Guide_FA.md ثبت شد. task تا دریافت APK اصلاحی و شواهد لازم کامل نیست؛ مرحله بعد آغاز نشده است.
+
+---
+
+## سوابق RC3 حفظ‌شده — گزارش RC2 بازنویسی نشده است
+
 # RC3 QA Retest — پیگیری ۱۱-ج / راهنمای دستی
 
 2026-10-13، Asia/Tehran؛اینمرحله فقط راهنمای Run workflow وcheckpoint است. SHA آمادهٔ ساخت e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85 درremoteدوباره تأییدشد؛تست/ساخت/گوشی تازه اجرا نشد.

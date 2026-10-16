@@ -1,0 +1,1868 @@
+{
+  "source_sha": "4dbc92978dad73036dc4ab021f62b2a21d186572",
+  "host_date": "2026-10-16",
+  "fixtures": "Frozen 2026-10-12 with cleanup; not device time",
+  "commands": [
+    {
+      "command": "npm run typecheck",
+      "status": "Pass",
+      "log": "logs/typecheck.log"
+    },
+    {
+      "command": "TZ=UTC TIME80_UI_EVIDENCE_DIR=/workspace/work/rc3-ui-repair01/final/witness-UTC timeout 120 npm test",
+      "status": "Pass",
+      "pass": 149,
+      "fail": 0,
+      "skip": 0,
+      "log": "logs/tests-UTC.log"
+    },
+    {
+      "command": "TZ=Asia/Tehran timeout 120 node --import ./tests/register.mjs --import tsx --test tests/v03UIRepair.test.tsx tests/v03TodayUI.test.tsx tests/visualIntegration.test.tsx tests/v03SettingsUI.test.tsx tests/v03ReportUI.test.tsx tests/v03ClassificationPolicy.test.ts tests/v03IcatusHideUI.test.tsx tests/v03Data.test.ts tests/v03IdentifierFlows.test.tsx tests/v03UIIdentifiers.test.tsx tests/v03LifecycleUI.test.tsx tests/v03ResponseUI.test.tsx tests/v03Notifications.test.ts tests/v03UI.test.tsx tests/v03PatchAssets.test.ts",
+      "status": "Pass",
+      "pass": 138,
+      "fail": 0,
+      "skip": 0,
+      "log": "logs/tests-Tehran.log"
+    },
+    {
+      "command": "CI=1 EXPO_NO_TELEMETRY=1 npx expo export --platform android --output-dir /workspace/work/rc3-ui-repair01/export",
+      "status": "Pass",
+      "log": "logs/export-android.log",
+      "limit": "Not APK; not native runtime"
+    },
+    {
+      "command": "bash -n scripts/build-android-release.sh",
+      "status": "Pass",
+      "limit": "Syntax only; metadata extraction not yet run against APK"
+    }
+  ],
+  "results": [
+    {
+      "group": "UTC",
+      "name": "baseline, immutable snapshots, conflicts, undo and non-destructive startup",
+      "status": "Pass",
+      "duration_ms": 19.811839
+    },
+    {
+      "group": "UTC",
+      "name": "interval transition preserves current slot and anchors subsequent slots",
+      "status": "Pass",
+      "duration_ms": 339.003801
+    },
+    {
+      "group": "UTC",
+      "name": "report proportional clipping, unmapped time, empty coverage and calendar periods",
+      "status": "Pass",
+      "duration_ms": 10.946406
+    },
+    {
+      "group": "UTC",
+      "name": "DDL failure rolls back all tables and version; old databases are detected without modification",
+      "status": "Pass",
+      "duration_ms": 33.400246
+    },
+    {
+      "group": "UTC",
+      "name": "reference dataset integrity and complete parent relationships",
+      "status": "Pass",
+      "duration_ms": 1.089105
+    },
+    {
+      "group": "UTC",
+      "name": "explicit null, no-op, confirmed time context, archive and ranking preserve history",
+      "status": "Pass",
+      "duration_ms": 22.970672
+    },
+    {
+      "group": "UTC",
+      "name": "report reads share a stable snapshot while a queued edit waits",
+      "status": "Pass",
+      "duration_ms": 0.44606
+    },
+    {
+      "group": "UTC",
+      "name": "OS partial failure remains dirty and reconciles without duplicates; disabling cancels owned alarms",
+      "status": "Pass",
+      "duration_ms": 328.875631
+    },
+    {
+      "group": "UTC",
+      "name": "day-start change uses dated transition only until next full day and then persistent weekly triggers",
+      "status": "Pass",
+      "duration_ms": 2.161786
+    },
+    {
+      "group": "UTC",
+      "name": "delayed weekly notification resolves absolute scheduled occurrence; ambiguous old payload opens backlog",
+      "status": "Pass",
+      "duration_ms": 1.16548
+    },
+    {
+      "group": "UTC",
+      "name": "RC gate fails closed for other SHA/repo/branch, failed/missing tests and a release job; accepts only exact successful push evidence",
+      "status": "Pass",
+      "duration_ms": 4.322749
+    },
+    {
+      "group": "UTC",
+      "name": "unchanged classification policy: historical default, same activity, changed activity, Undo, revision and duplicate guards",
+      "status": "Pass",
+      "duration_ms": 17.885317
+    },
+    {
+      "group": "UTC",
+      "name": "baseline UI read policy: editor/CheckIn entry and refocus write nothing; report persists only existing two preferences",
+      "status": "Pass",
+      "duration_ms": 136.121721
+    },
+    {
+      "group": "UTC",
+      "name": "icon resolver preserves free-form legacy and unknown/malformed/binding-mismatched metadata without interpretation",
+      "status": "Pass",
+      "duration_ms": 2.586874
+    },
+    {
+      "group": "UTC",
+      "name": "asset create/select, unknown keep, stale icon/default and transactional failures preserve schema 3 and raw legacy",
+      "status": "Pass",
+      "duration_ms": 16.482952
+    },
+    {
+      "group": "UTC",
+      "name": "archive Undo is bounded, rejects newer edits, and retains metadata/history; last active can be archived",
+      "status": "Pass",
+      "duration_ms": 5.279195
+    },
+    {
+      "group": "UTC",
+      "name": "full-list ranking uses valid seven-calendar-day counts, stable ties and zero histories; ignores recording date/future/invalid",
+      "status": "Pass",
+      "duration_ms": 6.604293
+    },
+    {
+      "group": "UTC",
+      "name": "DayScope uses calendar midnights including DST and start-day attribution",
+      "status": "Pass",
+      "duration_ms": 9.4663
+    },
+    {
+      "group": "UTC",
+      "name": "same-day COUNT exceeds page size, excludes logged/skipped/future, and counts crossing midnight only after completion",
+      "status": "Pass",
+      "duration_ms": 14.204332
+    },
+    {
+      "group": "UTC",
+      "name": "explicit selection of existing effective classification is semantic no-op with unchanged history/context",
+      "status": "Pass",
+      "duration_ms": 3.639964
+    },
+    {
+      "group": "UTC",
+      "name": "previous-day report uses target local date, current labels/icons and unchanged ICATUS totals",
+      "status": "Pass",
+      "duration_ms": 7.271955
+    },
+    {
+      "group": "UTC",
+      "name": "full SQLite backup and reopen preserve durable icon namespace, unknown orphan metadata and all v0.2 logical records",
+      "status": "Pass",
+      "duration_ms": 23.658484
+    },
+    {
+      "group": "UTC",
+      "name": "hidden editor keeps historical category/revision during rename and icon selection at scales 1/1.5/2; entry alone never writes",
+      "status": "Pass",
+      "duration_ms": 240.78484
+    },
+    {
+      "group": "UTC",
+      "name": "new/empty and loading/error editor have no category path; stale hidden revision still rolls back edits",
+      "status": "Pass",
+      "duration_ms": 48.442487
+    },
+    {
+      "group": "UTC",
+      "name": "fresh/view/edit CheckIn have no manual classification; same activity retains snapshot and changed activity inherits existing service default",
+      "status": "Pass",
+      "duration_ms": 66.84475
+    },
+    {
+      "group": "UTC",
+      "name": "CheckIn stale hidden assignment and invalid scheme show Persian errors without false save or loss of guards",
+      "status": "Pass",
+      "duration_ms": 65.010607
+    },
+    {
+      "group": "UTC",
+      "name": "loading/error/empty/skipped CheckIn preserves A06/X102 and focus/resume only reads",
+      "status": "Pass",
+      "duration_ms": 34.505766
+    },
+    {
+      "group": "UTC",
+      "name": "reports show activity time but no buckets/coverage/unmapped categories, including empty/loading/error; onboarding makes no classification promise",
+      "status": "Pass",
+      "duration_ms": 264.256564
+    },
+    {
+      "group": "UTC",
+      "name": "UI error mapping keeps validation visible, hides internal details and preserves all reserved/active allocations",
+      "status": "Pass",
+      "duration_ms": 1.052039
+    },
+    {
+      "group": "UTC",
+      "name": "Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "status": "Pass",
+      "duration_ms": 1161.364126
+    },
+    {
+      "group": "UTC",
+      "name": "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "status": "Pass",
+      "duration_ms": 163.221169
+    },
+    {
+      "group": "UTC",
+      "name": "activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "status": "Pass",
+      "duration_ms": 41.397025
+    },
+    {
+      "group": "UTC",
+      "name": "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "status": "Pass",
+      "duration_ms": 81.09863
+    },
+    {
+      "group": "UTC",
+      "name": "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "status": "Pass",
+      "duration_ms": 584.415909
+    },
+    {
+      "group": "UTC",
+      "name": "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft",
+      "status": "Pass",
+      "duration_ms": 651.37882
+    },
+    {
+      "group": "UTC",
+      "name": "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "status": "Pass",
+      "duration_ms": 58.151627
+    },
+    {
+      "group": "UTC",
+      "name": "skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "status": "Pass",
+      "duration_ms": 22.472861
+    },
+    {
+      "group": "UTC",
+      "name": "failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "status": "Pass",
+      "duration_ms": 25.824336
+    },
+    {
+      "group": "UTC",
+      "name": "result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent",
+      "status": "Pass",
+      "duration_ms": 35.498705
+    },
+    {
+      "group": "UTC",
+      "name": "backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope",
+      "status": "Pass",
+      "duration_ms": 17.439473
+    },
+    {
+      "group": "UTC",
+      "name": "A06 empty activity navigation uses product-assigned X102 and performs no create/restore",
+      "status": "Pass",
+      "duration_ms": 6.384639
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership",
+      "status": "Pass",
+      "duration_ms": 44.060464
+    },
+    {
+      "group": "UTC",
+      "name": "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks",
+      "status": "Pass",
+      "duration_ms": 51.941511
+    },
+    {
+      "group": "UTC",
+      "name": "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "status": "Pass",
+      "duration_ms": 30.830134
+    },
+    {
+      "group": "UTC",
+      "name": "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "status": "Pass",
+      "duration_ms": 54.000392
+    },
+    {
+      "group": "UTC",
+      "name": "future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "status": "Pass",
+      "duration_ms": 25.739268
+    },
+    {
+      "group": "UTC",
+      "name": "App denied -> granted -> resume clears only its warning after a real reconcile",
+      "status": "Pass",
+      "duration_ms": 332.981752
+    },
+    {
+      "group": "UTC",
+      "name": "resume success preserves response error; X75 success owns only its response error",
+      "status": "Pass",
+      "duration_ms": 46.656107
+    },
+    {
+      "group": "UTC",
+      "name": "bootstrap failure survives not-ready X75; successful bootstrap cannot clear response read failure",
+      "status": "Pass",
+      "duration_ms": 14.624515
+    },
+    {
+      "group": "UTC",
+      "name": "App older resume failure cannot overwrite a newer resume result",
+      "status": "Pass",
+      "duration_ms": 18.45217
+    },
+    {
+      "group": "UTC",
+      "name": "App older resume success cannot overwrite a newer resume result",
+      "status": "Pass",
+      "duration_ms": 23.566268
+    },
+    {
+      "group": "UTC",
+      "name": "App bootstrap unmount stops pending continuation and removes listeners",
+      "status": "Pass",
+      "duration_ms": 3.903169
+    },
+    {
+      "group": "UTC",
+      "name": "App resume unmount stops pending continuation and removes listeners",
+      "status": "Pass",
+      "duration_ms": 39.947783
+    },
+    {
+      "group": "UTC",
+      "name": "pending response resolution cannot route after App unmount",
+      "status": "Pass",
+      "duration_ms": 19.847496
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics distinguishes loading, unknown and denied without false dirty=false",
+      "status": "Pass",
+      "duration_ms": 13.871745
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics independently renders granted display, closed channel and unknown exact",
+      "status": "Pass",
+      "duration_ms": 4.948269
+    },
+    {
+      "group": "UTC",
+      "name": "X70 return and repeated focus refresh data with one listener and no repair or refresh loop",
+      "status": "Pass",
+      "duration_ms": 13.956402
+    },
+    {
+      "group": "UTC",
+      "name": "failed refresh never presents previous granted data as newly confirmed",
+      "status": "Pass",
+      "duration_ms": 8.521172
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics successful refresh or another action cannot clear unresolved permission error",
+      "status": "Pass",
+      "duration_ms": 40.822174
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics successful refresh or another action cannot clear unresolved test error",
+      "status": "Pass",
+      "duration_ms": 21.373848
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics successful refresh or another action cannot clear unresolved reconcile error",
+      "status": "Pass",
+      "duration_ms": 21.602691
+    },
+    {
+      "group": "UTC",
+      "name": "X70 opening failure is visible and cleared only after X70 succeeds",
+      "status": "Pass",
+      "duration_ms": 11.695558
+    },
+    {
+      "group": "UTC",
+      "name": "new action/read failure removes an old success message without claiming delivery",
+      "status": "Pass",
+      "duration_ms": 42.403118
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics older read failure cannot replace a newer snapshot/error",
+      "status": "Pass",
+      "duration_ms": 6.073658
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics older read success cannot replace a newer snapshot/error",
+      "status": "Pass",
+      "duration_ms": 6.063452
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics older X70 failure cannot overwrite a newer X70 outcome or start another refresh",
+      "status": "Pass",
+      "duration_ms": 8.136645
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics older X70 success cannot overwrite a newer X70 outcome or start another refresh",
+      "status": "Pass",
+      "duration_ms": 8.090546
+    },
+    {
+      "group": "UTC",
+      "name": "blur invalidates an old diagnostics read; refocus gets a new snapshot",
+      "status": "Pass",
+      "duration_ms": 4.980577
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostics unmount cancels read/action updates and follow-up refreshes",
+      "status": "Pass",
+      "duration_ms": 3.369589
+    },
+    {
+      "group": "UTC",
+      "name": "RTL X75 is inside one target at font scale 1, with scaling/wrap and one handler",
+      "status": "Pass",
+      "duration_ms": 64.437427
+    },
+    {
+      "group": "UTC",
+      "name": "RTL X75 is inside one target at font scale 1.5, with scaling/wrap and one handler",
+      "status": "Pass",
+      "duration_ms": 28.890376
+    },
+    {
+      "group": "UTC",
+      "name": "RTL X75 is inside one target at font scale 2, with scaling/wrap and one handler",
+      "status": "Pass",
+      "duration_ms": 31.47743
+    },
+    {
+      "group": "UTC",
+      "name": "response retry exposes empty/not-ready/running/completion and keeps repeated touches deduplicated",
+      "status": "Pass",
+      "duration_ms": 8.129584
+    },
+    {
+      "group": "UTC",
+      "name": "response retry after resolve failure preserves completed stages and returns failure/success",
+      "status": "Pass",
+      "duration_ms": 1.382425
+    },
+    {
+      "group": "UTC",
+      "name": "response retry after route failure preserves completed stages and returns failure/success",
+      "status": "Pass",
+      "duration_ms": 0.819831
+    },
+    {
+      "group": "UTC",
+      "name": "response retry after dismiss failure preserves completed stages and returns failure/success",
+      "status": "Pass",
+      "duration_ms": 0.747793
+    },
+    {
+      "group": "UTC",
+      "name": "response retry after ack failure preserves completed stages and returns failure/success",
+      "status": "Pass",
+      "duration_ms": 0.867303
+    },
+    {
+      "group": "UTC",
+      "name": "failed dismiss does not lose independent response B; subsequent retry only completes A",
+      "status": "Pass",
+      "duration_ms": 0.564668
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostic retry reports success without resolving/routing or writing ledger",
+      "status": "Pass",
+      "duration_ms": 8.463466
+    },
+    {
+      "group": "UTC",
+      "name": "v3 immutable identity resolves original period independent of click date; v2 absolute and dated compatibility",
+      "status": "Pass",
+      "duration_ms": 2.783679
+    },
+    {
+      "group": "UTC",
+      "name": "unknown, malformed, conflicting and future payloads return typed unresolved without guessing",
+      "status": "Pass",
+      "duration_ms": 3.004521
+    },
+    {
+      "group": "UTC",
+      "name": "read-only resolver handles original ledger period, missing/future/conflicting and skipped targets",
+      "status": "Pass",
+      "duration_ms": 1.808946
+    },
+    {
+      "group": "UTC",
+      "name": "cold/listener duplicate and before-ready A/B produce one route each and do not lose the second response",
+      "status": "Pass",
+      "duration_ms": 1.122324
+    },
+    {
+      "group": "UTC",
+      "name": "startup/resolve failure remains retryable; accepted navigation is not repeated after cleanup failure",
+      "status": "Pass",
+      "duration_ms": 0.723746
+    },
+    {
+      "group": "UTC",
+      "name": "diagnostic response cleans up without resolving or routing",
+      "status": "Pass",
+      "duration_ms": 0.302665
+    },
+    {
+      "group": "UTC",
+      "name": "occurrence/action dedupe keys differ for A/B and normalize absolute v2 occurrence",
+      "status": "Pass",
+      "duration_ms": 0.229334
+    },
+    {
+      "group": "UTC",
+      "name": "manual stale-cache repair actually calls scheduling even when all identifiers remain; partial failure retries cleanly",
+      "status": "Pass",
+      "duration_ms": 236.976512
+    },
+    {
+      "group": "UTC",
+      "name": "capability adapter reports unknown native capabilities and preserves owned-only v2 Expo scheduling outside Android",
+      "status": "Pass",
+      "duration_ms": 170.921337
+    },
+    {
+      "group": "UTC",
+      "name": "disabling notifications cancels only owned future schedules and preserves user records and durable icon metadata",
+      "status": "Pass",
+      "duration_ms": 3.319834
+    },
+    {
+      "group": "UTC",
+      "name": "locked native patch applies from v0.2 preimages, is idempotent and rejects partial/corrupt/version-changed sources without further writes",
+      "status": "Pass",
+      "duration_ms": 212.606036
+    },
+    {
+      "group": "UTC",
+      "name": "all 15 approved icons and 180 transparent density outputs reproduce from pinned SVG sources",
+      "status": "Pass",
+      "duration_ms": 4367.755288
+    },
+    {
+      "group": "UTC",
+      "name": "Android autolinking compiles exactly the patched notification module from source",
+      "status": "Pass",
+      "duration_ms": 0.207632
+    },
+    {
+      "group": "UTC",
+      "name": "M-01 normal view has five presets; D08 open/close/backdrop never changes query, reads or history",
+      "status": "Pass",
+      "duration_ms": 155.697303
+    },
+    {
+      "group": "UTC",
+      "name": "every existing mode keeps its query/range/result; absolute X100 differs from relative X85 and presets reset offset",
+      "status": "Pass",
+      "duration_ms": 584.350641
+    },
+    {
+      "group": "UTC",
+      "name": "custom dates remain draft until X90, invalid/reversed dates show errors, valid end date remains inclusive",
+      "status": "Pass",
+      "duration_ms": 139.356492
+    },
+    {
+      "group": "UTC",
+      "name": "day/week/month boundaries, calendar and week-start preferences keep existing contracts and metadata",
+      "status": "Pass",
+      "duration_ms": 91.625405
+    },
+    {
+      "group": "UTC",
+      "name": "M-04 known five-hour result: three principal rows and exact Other, all inline with unchanged total/query and no read/write",
+      "status": "Pass",
+      "duration_ms": 26.341356
+    },
+    {
+      "group": "UTC",
+      "name": "full-report icons opt into 40/20 with a direct 12dp name gap; existing defaults and literal scaled legacy survive",
+      "status": "Pass",
+      "duration_ms": 14.620215
+    },
+    {
+      "group": "UTC",
+      "name": "projection preserves service order and fractional minutes; rounding affects labels only",
+      "status": "Pass",
+      "duration_ms": 4.843457
+    },
+    {
+      "group": "UTC",
+      "name": "zero/loading/error retain A03 and controls; retry recovers current result without stale successful totals",
+      "status": "Pass",
+      "duration_ms": 43.923682
+    },
+    {
+      "group": "UTC",
+      "name": "out-of-order reads and cleanup keep latest query/result; mere refocus and report interactions add no data writes",
+      "status": "Pass",
+      "duration_ms": 27.743152
+    },
+    {
+      "group": "UTC",
+      "name": "RTL/long names/font scale 1: code shares one 48dp target, wraps, no badge on donut and no ICATUS",
+      "status": "Pass",
+      "duration_ms": 38.143508
+    },
+    {
+      "group": "UTC",
+      "name": "RTL/long names/font scale 1.5: code shares one 48dp target, wraps, no badge on donut and no ICATUS",
+      "status": "Pass",
+      "duration_ms": 37.63898
+    },
+    {
+      "group": "UTC",
+      "name": "RTL/long names/font scale 2: code shares one 48dp target, wraps, no badge on donut and no ICATUS",
+      "status": "Pass",
+      "duration_ms": 47.481917
+    },
+    {
+      "group": "UTC",
+      "name": "font IO loading/failure remains usable with explicit fallback and never changes report query or data",
+      "status": "Pass",
+      "duration_ms": 11.774621
+    },
+    {
+      "group": "UTC",
+      "name": "real App X75 handler renders empty feedback and preserves independent reconcile error",
+      "status": "Pass",
+      "duration_ms": 212.641338
+    },
+    {
+      "group": "UTC",
+      "name": "not-ready X75 feedback preserves independent init error and queued response",
+      "status": "Pass",
+      "duration_ms": 11.564495
+    },
+    {
+      "group": "UTC",
+      "name": "real handler reports failure, running/repeated touch and success; clears only response error",
+      "status": "Pass",
+      "duration_ms": 15.056962
+    },
+    {
+      "group": "UTC",
+      "name": "bootstrap retry remains separate; X75 success preserves subsequent independent reconcile error",
+      "status": "Pass",
+      "duration_ms": 15.176412
+    },
+    {
+      "group": "UTC",
+      "name": "accepted navigation removes retry feedback; response taps/retries and dedupe do not write ledger",
+      "status": "Pass",
+      "duration_ms": 15.222551
+    },
+    {
+      "group": "UTC",
+      "name": "real App resolved tap targets the original period without ledger writes",
+      "status": "Pass",
+      "duration_ms": 17.705551
+    },
+    {
+      "group": "UTC",
+      "name": "old immediate retry result cannot overwrite a newer automatic run completion",
+      "status": "Pass",
+      "duration_ms": 7.903335
+    },
+    {
+      "group": "UTC",
+      "name": "old pending-response read failure cannot overwrite newer read/processing success",
+      "status": "Pass",
+      "duration_ms": 6.792926
+    },
+    {
+      "group": "UTC",
+      "name": "M-02 valid/invalid interval and hours retain draft, save once on blur, reload and never advertise stale success",
+      "status": "Pass",
+      "duration_ms": 346.419208
+    },
+    {
+      "group": "UTC",
+      "name": "M-02 D04 continue/discard keeps incomplete draft separate from earlier persisted settings",
+      "status": "Pass",
+      "duration_ms": 65.452468
+    },
+    {
+      "group": "UTC",
+      "name": "M-02 chips and single switch targets preserve save/permission policy and A04 to A09",
+      "status": "Pass",
+      "duration_ms": 116.135234
+    },
+    {
+      "group": "UTC",
+      "name": "M-02 RTL scale 1: normalized cards, wrapping targets, long labels, busy codes and keyboard inputs",
+      "status": "Pass",
+      "duration_ms": 27.906347
+    },
+    {
+      "group": "UTC",
+      "name": "M-02 RTL scale 1.5: normalized cards, wrapping targets, long labels, busy codes and keyboard inputs",
+      "status": "Pass",
+      "duration_ms": 14.662129
+    },
+    {
+      "group": "UTC",
+      "name": "M-02 RTL scale 2: normalized cards, wrapping targets, long labels, busy codes and keyboard inputs",
+      "status": "Pass",
+      "duration_ms": 14.833536
+    },
+    {
+      "group": "UTC",
+      "name": "M-02 loading/read error and font fallback retain A04 without writes on entry",
+      "status": "Pass",
+      "duration_ms": 9.195866
+    },
+    {
+      "group": "UTC",
+      "name": "configured-day progress derives from explicit zoned endpoints, clamps and rejects unsupported settings",
+      "status": "Pass",
+      "duration_ms": 32.554164
+    },
+    {
+      "group": "UTC",
+      "name": "candle and donut share the exact progress; only displayed percent is rounded; no false percentage for unknown",
+      "status": "Pass",
+      "duration_ms": 24.852871
+    },
+    {
+      "group": "UTC",
+      "name": "timeline sorts a copy; live A01/A05 preserve original X07, exact X06 manual/past/skipped context and disabled future",
+      "status": "Pass",
+      "duration_ms": 197.212066
+    },
+    {
+      "group": "UTC",
+      "name": "foreground minute is UI-only; background/focus resume refresh actual time/settings; cleanup stops reads and timers",
+      "status": "Pass",
+      "duration_ms": 73.400265
+    },
+    {
+      "group": "UTC",
+      "name": "midnight and timezone refresh pair timeline/date/progress context; no recording writes",
+      "status": "Pass",
+      "duration_ms": 85.196606
+    },
+    {
+      "group": "UTC",
+      "name": "loading/error/empty retain screen identity; stale/unmounted reads cannot overwrite newer focus response",
+      "status": "Pass",
+      "duration_ms": 89.761464
+    },
+    {
+      "group": "UTC",
+      "name": "invalid/equal/overnight configured hours expose a read error without percent or recording writes",
+      "status": "Pass",
+      "duration_ms": 27.712705
+    },
+    {
+      "group": "UTC",
+      "name": "M-10 source layout at scales 1/1.5/2 keeps full names, asset/legacy identity, code inside one target and shared caller defaults",
+      "status": "Pass",
+      "duration_ms": 46.81916
+    },
+    {
+      "group": "UTC",
+      "name": "management body/menu open the same activity sheet, archive/Undo preserve history, large text switches to one column",
+      "status": "Pass",
+      "duration_ms": 191.30759
+    },
+    {
+      "group": "UTC",
+      "name": "editor read failure blocks saving and keeps draft; retry loads metadata before rename",
+      "status": "Pass",
+      "duration_ms": 11.266654
+    },
+    {
+      "group": "UTC",
+      "name": "single-touch check-in writes once and navigates only after commit to a fixed-day result; recent section is removed",
+      "status": "Pass",
+      "duration_ms": 21.277614
+    },
+    {
+      "group": "UTC",
+      "name": "post-commit count read failure shows saved outcome and retry only reads without replaying the write",
+      "status": "Pass",
+      "duration_ms": 6.117985
+    },
+    {
+      "group": "UTC",
+      "name": "reports retain a read error until preference retry, then expose a dated previous-day empty state",
+      "status": "Pass",
+      "duration_ms": 29.844566
+    },
+    {
+      "group": "UTC",
+      "name": "available explicit allocations stay pinned; duplicate, retired reuse and invalid kind are rejected",
+      "status": "Pass",
+      "duration_ms": 97.409742
+    },
+    {
+      "group": "UTC",
+      "name": "complete generated guide and CSV match the registry and include reserved allocations",
+      "status": "Pass",
+      "duration_ms": 11.693586
+    },
+    {
+      "group": "UTC",
+      "name": "coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 1",
+      "status": "Pass",
+      "duration_ms": 21.335161
+    },
+    {
+      "group": "UTC",
+      "name": "coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 1.5",
+      "status": "Pass",
+      "duration_ms": 6.826578
+    },
+    {
+      "group": "UTC",
+      "name": "coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 2",
+      "status": "Pass",
+      "duration_ms": 6.365426
+    },
+    {
+      "group": "UTC",
+      "name": "real diagnostics keeps allocated action codes through loading, read failure and success; reservations stay absent",
+      "status": "Pass",
+      "duration_ms": 17.487154
+    },
+    {
+      "group": "UTC",
+      "name": "repair: actual screens render native-safe text at scale 1; Today footer keeps actions without duplicate targets",
+      "status": "Pass",
+      "duration_ms": 338.24651
+    },
+    {
+      "group": "UTC",
+      "name": "repair: actual screens render native-safe text at scale 1.5; Today footer keeps actions without duplicate targets",
+      "status": "Pass",
+      "duration_ms": 127.414969
+    },
+    {
+      "group": "UTC",
+      "name": "repair: actual screens render native-safe text at scale 2; Today footer keeps actions without duplicate targets",
+      "status": "Pass",
+      "duration_ms": 92.801323
+    },
+    {
+      "group": "UTC",
+      "name": "approved warm tokens, tab hierarchy, icon tones and responsive boundaries",
+      "status": "Pass",
+      "duration_ms": 2.234234
+    },
+    {
+      "group": "UTC",
+      "name": "buttons/inputs expose focus and disabled state, retain handlers, errors include text",
+      "status": "Pass",
+      "duration_ms": 23.899631
+    },
+    {
+      "group": "UTC",
+      "name": "picker retains full caller ranking and immediate taps with two/one columns, no search or persistent selection",
+      "status": "Pass",
+      "duration_ms": 5.301539
+    },
+    {
+      "group": "UTC",
+      "name": "Style A hosts are 52dp, symbols 32dp, legacy icon strings remain literal",
+      "status": "Pass",
+      "duration_ms": 1.987364
+    },
+    {
+      "group": "UTC",
+      "name": "M-10 overview is read-only, shows configured-day clock/progress and preserves callback target",
+      "status": "Pass",
+      "duration_ms": 16.637498
+    },
+    {
+      "group": "UTC",
+      "name": "Today landing/review retain exact CheckIn routing, previous-day access, Backlog and all slot rows",
+      "status": "Pass",
+      "duration_ms": 377.703698
+    },
+    {
+      "group": "UTC",
+      "name": "timeline keeps disabled future and neutral pending/skipped states with accessible exact times",
+      "status": "Pass",
+      "duration_ms": 4.135019
+    },
+    {
+      "group": "Tehran",
+      "name": "unchanged classification policy: historical default, same activity, changed activity, Undo, revision and duplicate guards",
+      "status": "Pass",
+      "duration_ms": 15.151057
+    },
+    {
+      "group": "Tehran",
+      "name": "baseline UI read policy: editor/CheckIn entry and refocus write nothing; report persists only existing two preferences",
+      "status": "Pass",
+      "duration_ms": 88.654996
+    },
+    {
+      "group": "Tehran",
+      "name": "icon resolver preserves free-form legacy and unknown/malformed/binding-mismatched metadata without interpretation",
+      "status": "Pass",
+      "duration_ms": 1.597314
+    },
+    {
+      "group": "Tehran",
+      "name": "asset create/select, unknown keep, stale icon/default and transactional failures preserve schema 3 and raw legacy",
+      "status": "Pass",
+      "duration_ms": 9.735618
+    },
+    {
+      "group": "Tehran",
+      "name": "archive Undo is bounded, rejects newer edits, and retains metadata/history; last active can be archived",
+      "status": "Pass",
+      "duration_ms": 3.220569
+    },
+    {
+      "group": "Tehran",
+      "name": "full-list ranking uses valid seven-calendar-day counts, stable ties and zero histories; ignores recording date/future/invalid",
+      "status": "Pass",
+      "duration_ms": 7.438533
+    },
+    {
+      "group": "Tehran",
+      "name": "DayScope uses calendar midnights including DST and start-day attribution",
+      "status": "Pass",
+      "duration_ms": 3.320018
+    },
+    {
+      "group": "Tehran",
+      "name": "same-day COUNT exceeds page size, excludes logged/skipped/future, and counts crossing midnight only after completion",
+      "status": "Pass",
+      "duration_ms": 8.122599
+    },
+    {
+      "group": "Tehran",
+      "name": "explicit selection of existing effective classification is semantic no-op with unchanged history/context",
+      "status": "Pass",
+      "duration_ms": 2.080609
+    },
+    {
+      "group": "Tehran",
+      "name": "previous-day report uses target local date, current labels/icons and unchanged ICATUS totals",
+      "status": "Pass",
+      "duration_ms": 4.325605
+    },
+    {
+      "group": "Tehran",
+      "name": "full SQLite backup and reopen preserve durable icon namespace, unknown orphan metadata and all v0.2 logical records",
+      "status": "Pass",
+      "duration_ms": 8.332464
+    },
+    {
+      "group": "Tehran",
+      "name": "hidden editor keeps historical category/revision during rename and icon selection at scales 1/1.5/2; entry alone never writes",
+      "status": "Pass",
+      "duration_ms": 145.301443
+    },
+    {
+      "group": "Tehran",
+      "name": "new/empty and loading/error editor have no category path; stale hidden revision still rolls back edits",
+      "status": "Pass",
+      "duration_ms": 22.165725
+    },
+    {
+      "group": "Tehran",
+      "name": "fresh/view/edit CheckIn have no manual classification; same activity retains snapshot and changed activity inherits existing service default",
+      "status": "Pass",
+      "duration_ms": 56.526856
+    },
+    {
+      "group": "Tehran",
+      "name": "CheckIn stale hidden assignment and invalid scheme show Persian errors without false save or loss of guards",
+      "status": "Pass",
+      "duration_ms": 37.292396
+    },
+    {
+      "group": "Tehran",
+      "name": "loading/error/empty/skipped CheckIn preserves A06/X102 and focus/resume only reads",
+      "status": "Pass",
+      "duration_ms": 27.602887
+    },
+    {
+      "group": "Tehran",
+      "name": "reports show activity time but no buckets/coverage/unmapped categories, including empty/loading/error; onboarding makes no classification promise",
+      "status": "Pass",
+      "duration_ms": 130.537932
+    },
+    {
+      "group": "Tehran",
+      "name": "UI error mapping keeps validation visible, hides internal details and preserves all reserved/active allocations",
+      "status": "Pass",
+      "duration_ms": 0.663695
+    },
+    {
+      "group": "Tehran",
+      "name": "Today keeps A01/A05 in the same route and separates overview return from current timeline date",
+      "status": "Pass",
+      "duration_ms": 673.597542
+    },
+    {
+      "group": "Tehran",
+      "name": "both management targets share X17/D01; edit, archive, restore and archive Undo keep distinct codes",
+      "status": "Pass",
+      "duration_ms": 151.604847
+    },
+    {
+      "group": "Tehran",
+      "name": "activity empty filters retain both repeated add/filter locations without inventing navigation",
+      "status": "Pass",
+      "duration_ms": 11.548482
+    },
+    {
+      "group": "Tehran",
+      "name": "D02 keeps create/edit codes through validation, busy and snapshot failure; icon choices only change draft",
+      "status": "Pass",
+      "duration_ms": 166.761416
+    },
+    {
+      "group": "Tehran",
+      "name": "report mode codes retain day/usage/rolling distinctions, relative offset and explicit custom apply",
+      "status": "Pass",
+      "duration_ms": 575.492559
+    },
+    {
+      "group": "Tehran",
+      "name": "settings code targets keep onBlur autosave, switch single callback and D04 only discards incomplete draft",
+      "status": "Pass",
+      "duration_ms": 957.633985
+    },
+    {
+      "group": "Tehran",
+      "name": "A06 uses X39 for commit and X40/D05 for requests; cancellations never write, timezone and Undo remain distinct",
+      "status": "Pass",
+      "duration_ms": 72.714199
+    },
+    {
+      "group": "Tehran",
+      "name": "skip request/cancel/confirm/reopen retain A06 without enabling unreachable Undo",
+      "status": "Pass",
+      "duration_ms": 21.509
+    },
+    {
+      "group": "Tehran",
+      "name": "failed selected commit retries with X44; A06 context read retry X51 keeps its page code",
+      "status": "Pass",
+      "duration_ms": 26.402024
+    },
+    {
+      "group": "Tehran",
+      "name": "result navigation distinguishes scoped replace, view and Main/Today; count retry only reads and expired Undo is absent",
+      "status": "Pass",
+      "duration_ms": 49.088814
+    },
+    {
+      "group": "Tehran",
+      "name": "backlog general/scoped rows preserve X06 payload and automatic pagination; resolution X57 has no scope",
+      "status": "Pass",
+      "duration_ms": 23.244153
+    },
+    {
+      "group": "Tehran",
+      "name": "A06 empty activity navigation uses product-assigned X102 and performs no create/restore",
+      "status": "Pass",
+      "duration_ms": 10.602582
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics codes survive permission/settings/test/reconcile actions without changing FIX02 refresh ownership",
+      "status": "Pass",
+      "duration_ms": 82.083028
+    },
+    {
+      "group": "Tehran",
+      "name": "A12 loading/error/retry and onboarding retain codes; tabs/header keep native navigation callbacks",
+      "status": "Pass",
+      "duration_ms": 88.33442
+    },
+    {
+      "group": "Tehran",
+      "name": "future timeline code and tab label measurement preserve disabled/navigation state at scale 1",
+      "status": "Pass",
+      "duration_ms": 38.479065
+    },
+    {
+      "group": "Tehran",
+      "name": "future timeline code and tab label measurement preserve disabled/navigation state at scale 1.5",
+      "status": "Pass",
+      "duration_ms": 101.49282
+    },
+    {
+      "group": "Tehran",
+      "name": "future timeline code and tab label measurement preserve disabled/navigation state at scale 2",
+      "status": "Pass",
+      "duration_ms": 91.878202
+    },
+    {
+      "group": "Tehran",
+      "name": "App denied -> granted -> resume clears only its warning after a real reconcile",
+      "status": "Pass",
+      "duration_ms": 380.574637
+    },
+    {
+      "group": "Tehran",
+      "name": "resume success preserves response error; X75 success owns only its response error",
+      "status": "Pass",
+      "duration_ms": 29.096716
+    },
+    {
+      "group": "Tehran",
+      "name": "bootstrap failure survives not-ready X75; successful bootstrap cannot clear response read failure",
+      "status": "Pass",
+      "duration_ms": 17.322257
+    },
+    {
+      "group": "Tehran",
+      "name": "App older resume failure cannot overwrite a newer resume result",
+      "status": "Pass",
+      "duration_ms": 57.484916
+    },
+    {
+      "group": "Tehran",
+      "name": "App older resume success cannot overwrite a newer resume result",
+      "status": "Pass",
+      "duration_ms": 31.222062
+    },
+    {
+      "group": "Tehran",
+      "name": "App bootstrap unmount stops pending continuation and removes listeners",
+      "status": "Pass",
+      "duration_ms": 3.595061
+    },
+    {
+      "group": "Tehran",
+      "name": "App resume unmount stops pending continuation and removes listeners",
+      "status": "Pass",
+      "duration_ms": 11.164991
+    },
+    {
+      "group": "Tehran",
+      "name": "pending response resolution cannot route after App unmount",
+      "status": "Pass",
+      "duration_ms": 11.362989
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics distinguishes loading, unknown and denied without false dirty=false",
+      "status": "Pass",
+      "duration_ms": 44.91491
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics independently renders granted display, closed channel and unknown exact",
+      "status": "Pass",
+      "duration_ms": 7.731795
+    },
+    {
+      "group": "Tehran",
+      "name": "X70 return and repeated focus refresh data with one listener and no repair or refresh loop",
+      "status": "Pass",
+      "duration_ms": 21.809269
+    },
+    {
+      "group": "Tehran",
+      "name": "failed refresh never presents previous granted data as newly confirmed",
+      "status": "Pass",
+      "duration_ms": 19.338822
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics successful refresh or another action cannot clear unresolved permission error",
+      "status": "Pass",
+      "duration_ms": 44.286524
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics successful refresh or another action cannot clear unresolved test error",
+      "status": "Pass",
+      "duration_ms": 18.482043
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics successful refresh or another action cannot clear unresolved reconcile error",
+      "status": "Pass",
+      "duration_ms": 33.574951
+    },
+    {
+      "group": "Tehran",
+      "name": "X70 opening failure is visible and cleared only after X70 succeeds",
+      "status": "Pass",
+      "duration_ms": 41.75645
+    },
+    {
+      "group": "Tehran",
+      "name": "new action/read failure removes an old success message without claiming delivery",
+      "status": "Pass",
+      "duration_ms": 17.473361
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics older read failure cannot replace a newer snapshot/error",
+      "status": "Pass",
+      "duration_ms": 4.682716
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics older read success cannot replace a newer snapshot/error",
+      "status": "Pass",
+      "duration_ms": 4.551219
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics older X70 failure cannot overwrite a newer X70 outcome or start another refresh",
+      "status": "Pass",
+      "duration_ms": 7.105723
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics older X70 success cannot overwrite a newer X70 outcome or start another refresh",
+      "status": "Pass",
+      "duration_ms": 7.539726
+    },
+    {
+      "group": "Tehran",
+      "name": "blur invalidates an old diagnostics read; refocus gets a new snapshot",
+      "status": "Pass",
+      "duration_ms": 8.006809
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostics unmount cancels read/action updates and follow-up refreshes",
+      "status": "Pass",
+      "duration_ms": 2.608024
+    },
+    {
+      "group": "Tehran",
+      "name": "RTL X75 is inside one target at font scale 1, with scaling/wrap and one handler",
+      "status": "Pass",
+      "duration_ms": 45.480393
+    },
+    {
+      "group": "Tehran",
+      "name": "RTL X75 is inside one target at font scale 1.5, with scaling/wrap and one handler",
+      "status": "Pass",
+      "duration_ms": 26.975853
+    },
+    {
+      "group": "Tehran",
+      "name": "RTL X75 is inside one target at font scale 2, with scaling/wrap and one handler",
+      "status": "Pass",
+      "duration_ms": 21.928588
+    },
+    {
+      "group": "Tehran",
+      "name": "response retry exposes empty/not-ready/running/completion and keeps repeated touches deduplicated",
+      "status": "Pass",
+      "duration_ms": 8.337766
+    },
+    {
+      "group": "Tehran",
+      "name": "response retry after resolve failure preserves completed stages and returns failure/success",
+      "status": "Pass",
+      "duration_ms": 1.115114
+    },
+    {
+      "group": "Tehran",
+      "name": "response retry after route failure preserves completed stages and returns failure/success",
+      "status": "Pass",
+      "duration_ms": 0.777237
+    },
+    {
+      "group": "Tehran",
+      "name": "response retry after dismiss failure preserves completed stages and returns failure/success",
+      "status": "Pass",
+      "duration_ms": 1.002395
+    },
+    {
+      "group": "Tehran",
+      "name": "response retry after ack failure preserves completed stages and returns failure/success",
+      "status": "Pass",
+      "duration_ms": 0.724908
+    },
+    {
+      "group": "Tehran",
+      "name": "failed dismiss does not lose independent response B; subsequent retry only completes A",
+      "status": "Pass",
+      "duration_ms": 0.821022
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostic retry reports success without resolving/routing or writing ledger",
+      "status": "Pass",
+      "duration_ms": 7.037183
+    },
+    {
+      "group": "Tehran",
+      "name": "v3 immutable identity resolves original period independent of click date; v2 absolute and dated compatibility",
+      "status": "Pass",
+      "duration_ms": 2.757259
+    },
+    {
+      "group": "Tehran",
+      "name": "unknown, malformed, conflicting and future payloads return typed unresolved without guessing",
+      "status": "Pass",
+      "duration_ms": 3.217049
+    },
+    {
+      "group": "Tehran",
+      "name": "read-only resolver handles original ledger period, missing/future/conflicting and skipped targets",
+      "status": "Pass",
+      "duration_ms": 1.537147
+    },
+    {
+      "group": "Tehran",
+      "name": "cold/listener duplicate and before-ready A/B produce one route each and do not lose the second response",
+      "status": "Pass",
+      "duration_ms": 2.155726
+    },
+    {
+      "group": "Tehran",
+      "name": "startup/resolve failure remains retryable; accepted navigation is not repeated after cleanup failure",
+      "status": "Pass",
+      "duration_ms": 35.995794
+    },
+    {
+      "group": "Tehran",
+      "name": "diagnostic response cleans up without resolving or routing",
+      "status": "Pass",
+      "duration_ms": 0.912219
+    },
+    {
+      "group": "Tehran",
+      "name": "occurrence/action dedupe keys differ for A/B and normalize absolute v2 occurrence",
+      "status": "Pass",
+      "duration_ms": 0.434212
+    },
+    {
+      "group": "Tehran",
+      "name": "manual stale-cache repair actually calls scheduling even when all identifiers remain; partial failure retries cleanly",
+      "status": "Pass",
+      "duration_ms": 275.322824
+    },
+    {
+      "group": "Tehran",
+      "name": "capability adapter reports unknown native capabilities and preserves owned-only v2 Expo scheduling outside Android",
+      "status": "Pass",
+      "duration_ms": 176.366182
+    },
+    {
+      "group": "Tehran",
+      "name": "disabling notifications cancels only owned future schedules and preserves user records and durable icon metadata",
+      "status": "Pass",
+      "duration_ms": 5.265254
+    },
+    {
+      "group": "Tehran",
+      "name": "locked native patch applies from v0.2 preimages, is idempotent and rejects partial/corrupt/version-changed sources without further writes",
+      "status": "Pass",
+      "duration_ms": 222.820404
+    },
+    {
+      "group": "Tehran",
+      "name": "all 15 approved icons and 180 transparent density outputs reproduce from pinned SVG sources",
+      "status": "Pass",
+      "duration_ms": 4413.184338
+    },
+    {
+      "group": "Tehran",
+      "name": "Android autolinking compiles exactly the patched notification module from source",
+      "status": "Pass",
+      "duration_ms": 0.24627
+    },
+    {
+      "group": "Tehran",
+      "name": "M-01 normal view has five presets; D08 open/close/backdrop never changes query, reads or history",
+      "status": "Pass",
+      "duration_ms": 157.862017
+    },
+    {
+      "group": "Tehran",
+      "name": "every existing mode keeps its query/range/result; absolute X100 differs from relative X85 and presets reset offset",
+      "status": "Pass",
+      "duration_ms": 1111.152505
+    },
+    {
+      "group": "Tehran",
+      "name": "custom dates remain draft until X90, invalid/reversed dates show errors, valid end date remains inclusive",
+      "status": "Pass",
+      "duration_ms": 199.879218
+    },
+    {
+      "group": "Tehran",
+      "name": "day/week/month boundaries, calendar and week-start preferences keep existing contracts and metadata",
+      "status": "Pass",
+      "duration_ms": 162.040428
+    },
+    {
+      "group": "Tehran",
+      "name": "M-04 known five-hour result: three principal rows and exact Other, all inline with unchanged total/query and no read/write",
+      "status": "Pass",
+      "duration_ms": 59.896818
+    },
+    {
+      "group": "Tehran",
+      "name": "full-report icons opt into 40/20 with a direct 12dp name gap; existing defaults and literal scaled legacy survive",
+      "status": "Pass",
+      "duration_ms": 22.950899
+    },
+    {
+      "group": "Tehran",
+      "name": "projection preserves service order and fractional minutes; rounding affects labels only",
+      "status": "Pass",
+      "duration_ms": 10.095582
+    },
+    {
+      "group": "Tehran",
+      "name": "zero/loading/error retain A03 and controls; retry recovers current result without stale successful totals",
+      "status": "Pass",
+      "duration_ms": 110.456783
+    },
+    {
+      "group": "Tehran",
+      "name": "out-of-order reads and cleanup keep latest query/result; mere refocus and report interactions add no data writes",
+      "status": "Pass",
+      "duration_ms": 99.458115
+    },
+    {
+      "group": "Tehran",
+      "name": "RTL/long names/font scale 1: code shares one 48dp target, wraps, no badge on donut and no ICATUS",
+      "status": "Pass",
+      "duration_ms": 123.454225
+    },
+    {
+      "group": "Tehran",
+      "name": "RTL/long names/font scale 1.5: code shares one 48dp target, wraps, no badge on donut and no ICATUS",
+      "status": "Pass",
+      "duration_ms": 69.716737
+    },
+    {
+      "group": "Tehran",
+      "name": "RTL/long names/font scale 2: code shares one 48dp target, wraps, no badge on donut and no ICATUS",
+      "status": "Pass",
+      "duration_ms": 66.487607
+    },
+    {
+      "group": "Tehran",
+      "name": "font IO loading/failure remains usable with explicit fallback and never changes report query or data",
+      "status": "Pass",
+      "duration_ms": 14.100267
+    },
+    {
+      "group": "Tehran",
+      "name": "real App X75 handler renders empty feedback and preserves independent reconcile error",
+      "status": "Pass",
+      "duration_ms": 360.250101
+    },
+    {
+      "group": "Tehran",
+      "name": "not-ready X75 feedback preserves independent init error and queued response",
+      "status": "Pass",
+      "duration_ms": 7.512062
+    },
+    {
+      "group": "Tehran",
+      "name": "real handler reports failure, running/repeated touch and success; clears only response error",
+      "status": "Pass",
+      "duration_ms": 18.182999
+    },
+    {
+      "group": "Tehran",
+      "name": "bootstrap retry remains separate; X75 success preserves subsequent independent reconcile error",
+      "status": "Pass",
+      "duration_ms": 43.458059
+    },
+    {
+      "group": "Tehran",
+      "name": "accepted navigation removes retry feedback; response taps/retries and dedupe do not write ledger",
+      "status": "Pass",
+      "duration_ms": 22.825962
+    },
+    {
+      "group": "Tehran",
+      "name": "real App resolved tap targets the original period without ledger writes",
+      "status": "Pass",
+      "duration_ms": 65.222337
+    },
+    {
+      "group": "Tehran",
+      "name": "old immediate retry result cannot overwrite a newer automatic run completion",
+      "status": "Pass",
+      "duration_ms": 19.423381
+    },
+    {
+      "group": "Tehran",
+      "name": "old pending-response read failure cannot overwrite newer read/processing success",
+      "status": "Pass",
+      "duration_ms": 13.042288
+    },
+    {
+      "group": "Tehran",
+      "name": "M-02 valid/invalid interval and hours retain draft, save once on blur, reload and never advertise stale success",
+      "status": "Pass",
+      "duration_ms": 635.199256
+    },
+    {
+      "group": "Tehran",
+      "name": "M-02 D04 continue/discard keeps incomplete draft separate from earlier persisted settings",
+      "status": "Pass",
+      "duration_ms": 107.718303
+    },
+    {
+      "group": "Tehran",
+      "name": "M-02 chips and single switch targets preserve save/permission policy and A04 to A09",
+      "status": "Pass",
+      "duration_ms": 197.952967
+    },
+    {
+      "group": "Tehran",
+      "name": "M-02 RTL scale 1: normalized cards, wrapping targets, long labels, busy codes and keyboard inputs",
+      "status": "Pass",
+      "duration_ms": 35.064931
+    },
+    {
+      "group": "Tehran",
+      "name": "M-02 RTL scale 1.5: normalized cards, wrapping targets, long labels, busy codes and keyboard inputs",
+      "status": "Pass",
+      "duration_ms": 27.884842
+    },
+    {
+      "group": "Tehran",
+      "name": "M-02 RTL scale 2: normalized cards, wrapping targets, long labels, busy codes and keyboard inputs",
+      "status": "Pass",
+      "duration_ms": 43.592233
+    },
+    {
+      "group": "Tehran",
+      "name": "M-02 loading/read error and font fallback retain A04 without writes on entry",
+      "status": "Pass",
+      "duration_ms": 48.178439
+    },
+    {
+      "group": "Tehran",
+      "name": "configured-day progress derives from explicit zoned endpoints, clamps and rejects unsupported settings",
+      "status": "Pass",
+      "duration_ms": 66.081205
+    },
+    {
+      "group": "Tehran",
+      "name": "candle and donut share the exact progress; only displayed percent is rounded; no false percentage for unknown",
+      "status": "Pass",
+      "duration_ms": 24.597087
+    },
+    {
+      "group": "Tehran",
+      "name": "timeline sorts a copy; live A01/A05 preserve original X07, exact X06 manual/past/skipped context and disabled future",
+      "status": "Pass",
+      "duration_ms": 256.195534
+    },
+    {
+      "group": "Tehran",
+      "name": "foreground minute is UI-only; background/focus resume refresh actual time/settings; cleanup stops reads and timers",
+      "status": "Pass",
+      "duration_ms": 103.578328
+    },
+    {
+      "group": "Tehran",
+      "name": "midnight and timezone refresh pair timeline/date/progress context; no recording writes",
+      "status": "Pass",
+      "duration_ms": 156.237953
+    },
+    {
+      "group": "Tehran",
+      "name": "loading/error/empty retain screen identity; stale/unmounted reads cannot overwrite newer focus response",
+      "status": "Pass",
+      "duration_ms": 134.33425
+    },
+    {
+      "group": "Tehran",
+      "name": "invalid/equal/overnight configured hours expose a read error without percent or recording writes",
+      "status": "Pass",
+      "duration_ms": 52.337372
+    },
+    {
+      "group": "Tehran",
+      "name": "M-10 source layout at scales 1/1.5/2 keeps full names, asset/legacy identity, code inside one target and shared caller defaults",
+      "status": "Pass",
+      "duration_ms": 90.628036
+    },
+    {
+      "group": "Tehran",
+      "name": "management body/menu open the same activity sheet, archive/Undo preserve history, large text switches to one column",
+      "status": "Pass",
+      "duration_ms": 266.488207
+    },
+    {
+      "group": "Tehran",
+      "name": "editor read failure blocks saving and keeps draft; retry loads metadata before rename",
+      "status": "Pass",
+      "duration_ms": 14.213899
+    },
+    {
+      "group": "Tehran",
+      "name": "single-touch check-in writes once and navigates only after commit to a fixed-day result; recent section is removed",
+      "status": "Pass",
+      "duration_ms": 30.042081
+    },
+    {
+      "group": "Tehran",
+      "name": "post-commit count read failure shows saved outcome and retry only reads without replaying the write",
+      "status": "Pass",
+      "duration_ms": 8.290136
+    },
+    {
+      "group": "Tehran",
+      "name": "reports retain a read error until preference retry, then expose a dated previous-day empty state",
+      "status": "Pass",
+      "duration_ms": 58.735557
+    },
+    {
+      "group": "Tehran",
+      "name": "available explicit allocations stay pinned; duplicate, retired reuse and invalid kind are rejected",
+      "status": "Pass",
+      "duration_ms": 148.161794
+    },
+    {
+      "group": "Tehran",
+      "name": "complete generated guide and CSV match the registry and include reserved allocations",
+      "status": "Pass",
+      "duration_ms": 41.121715
+    },
+    {
+      "group": "Tehran",
+      "name": "coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 1",
+      "status": "Pass",
+      "duration_ms": 34.042115
+    },
+    {
+      "group": "Tehran",
+      "name": "coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 1.5",
+      "status": "Pass",
+      "duration_ms": 7.777887
+    },
+    {
+      "group": "Tehran",
+      "name": "coded target retains name, single handler, scaling and contrast in enabled/disabled/selected states at scale 2",
+      "status": "Pass",
+      "duration_ms": 9.121574
+    },
+    {
+      "group": "Tehran",
+      "name": "real diagnostics keeps allocated action codes through loading, read failure and success; reservations stay absent",
+      "status": "Pass",
+      "duration_ms": 21.622791
+    },
+    {
+      "group": "Tehran",
+      "name": "repair: actual screens render native-safe text at scale 1; Today footer keeps actions without duplicate targets",
+      "status": "Pass",
+      "duration_ms": 480.232528
+    },
+    {
+      "group": "Tehran",
+      "name": "repair: actual screens render native-safe text at scale 1.5; Today footer keeps actions without duplicate targets",
+      "status": "Pass",
+      "duration_ms": 150.037745
+    },
+    {
+      "group": "Tehran",
+      "name": "repair: actual screens render native-safe text at scale 2; Today footer keeps actions without duplicate targets",
+      "status": "Pass",
+      "duration_ms": 178.586432
+    },
+    {
+      "group": "Tehran",
+      "name": "approved warm tokens, tab hierarchy, icon tones and responsive boundaries",
+      "status": "Pass",
+      "duration_ms": 3.127389
+    },
+    {
+      "group": "Tehran",
+      "name": "buttons/inputs expose focus and disabled state, retain handlers, errors include text",
+      "status": "Pass",
+      "duration_ms": 33.098864
+    },
+    {
+      "group": "Tehran",
+      "name": "picker retains full caller ranking and immediate taps with two/one columns, no search or persistent selection",
+      "status": "Pass",
+      "duration_ms": 4.61265
+    },
+    {
+      "group": "Tehran",
+      "name": "Style A hosts are 52dp, symbols 32dp, legacy icon strings remain literal",
+      "status": "Pass",
+      "duration_ms": 1.823019
+    },
+    {
+      "group": "Tehran",
+      "name": "M-10 overview is read-only, shows configured-day clock/progress and preserves callback target",
+      "status": "Pass",
+      "duration_ms": 36.011514
+    },
+    {
+      "group": "Tehran",
+      "name": "Today landing/review retain exact CheckIn routing, previous-day access, Backlog and all slot rows",
+      "status": "Pass",
+      "duration_ms": 462.485544
+    },
+    {
+      "group": "Tehran",
+      "name": "timeline keeps disabled future and neutral pending/skipped states with accessible exact times",
+      "status": "Pass",
+      "duration_ms": 4.158688
+    },
+    {
+      "group": "Android visual",
+      "name": "M-01 RTL/font scale 1: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-01 RTL/font scale 1.5: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-01 RTL/font scale 2: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-02 RTL/font scale 1: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-02 RTL/font scale 1.5: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-02 RTL/font scale 2: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-04 RTL/font scale 1: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-04 RTL/font scale 1.5: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-04 RTL/font scale 2: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-10 RTL/font scale 1: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-10 RTL/font scale 1.5: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Android visual",
+      "name": "M-10 RTL/font scale 2: real layout/screenshot/targets",
+      "status": "Not run",
+      "limit": "No adb/SDK/emulator/device"
+    },
+    {
+      "group": "Build",
+      "name": "Actions dispatch",
+      "status": "Fail",
+      "limit": "Forbidden; no new run confirmed"
+    },
+    {
+      "group": "Build",
+      "name": "Signed task APK/hash/certificate/actual APK manifest",
+      "status": "Not run"
+    },
+    {
+      "group": "Phone",
+      "name": "Notification path, duplicate guard and Undo",
+      "status": "Not run"
+    },
+    {
+      "group": "Phone",
+      "name": "Upgrade RC2/installed RC3 without uninstall; compare durable data",
+      "status": "Not run"
+    },
+    {
+      "group": "Phone",
+      "name": "TalkBack",
+      "status": "Not run",
+      "scope": "Deferred"
+    },
+    {
+      "group": "Known historical fixture",
+      "name": "TZ unset full suite and unrelated Tehran core failure",
+      "status": "Not run",
+      "scope": "Retained, not closed by this task"
+    }
+  ]
+}

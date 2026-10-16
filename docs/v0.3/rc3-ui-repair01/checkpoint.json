@@ -1,0 +1,45 @@
+{
+  "task": "RC3-UI-REPAIR-01 Rev01",
+  "date": "2026-10-16",
+  "base_sha": "e53be49da51dd79fb5d282520060ba50fc26328e",
+  "previous_build_source": "e6fa5c1968797d5bc6bdd3e442ca1b804c4c9d85",
+  "tested_source_sha": "4dbc92978dad73036dc4ab021f62b2a21d186572",
+  "source_branch": "rc3-ui-repair01",
+  "documentation_branch": "rc3-ui-repair01-handoff",
+  "implementation": "Pass at source level; native visual acceptance Not run",
+  "typecheck": "Pass",
+  "UTC": {
+    "pass": 149,
+    "fail": 0,
+    "skip": 0
+  },
+  "Tehran_related": {
+    "pass": 138,
+    "fail": 0,
+    "skip": 0,
+    "full_suite": false
+  },
+  "export": "Pass; Hermes export, not APK",
+  "build_dispatch": "Fail: Forbidden",
+  "build_sha": null,
+  "signed_apk": null,
+  "apk_sha256": null,
+  "native_visual": "Not run",
+  "phone_notification_and_upgrade": "Not run; mandatory open",
+  "TalkBack": "Deferred / Not run",
+  "workflow": "build-android-apk.yml",
+  "inputs": {
+    "release": true
+  },
+  "expected_artifact": "Time80-v0.3.0-RC3-UI-REPAIR-01-APK",
+  "prepared_config": {
+    "applicationId": "com.personal.time80",
+    "versionName": "0.3.0",
+    "versionCode": 6,
+    "actual_apk_metadata": "Not run"
+  },
+  "next_action": "Run existing signed workflow on pinned source branch with release=true, verify exact run SHA/jobs, fetch APK/evidence; then Android/device visual QA and upgrade. User run link pending.",
+  "current_process": null,
+  "source_after_tests_changed": false,
+  "next_task_started": false
+}

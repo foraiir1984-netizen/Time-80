@@ -1,0 +1,20 @@
+{
+  "adb": null,
+  "emulator": null,
+  "aapt2": null,
+  "apksigner": null,
+  "java": "/usr/bin/java",
+  "docker": "/usr/local/bin/docker",
+  "kvm": false,
+  "android_project": false,
+  "native_visual_qa": "Not run",
+  "screenshot": "Not run",
+  "host_date": "2026-10-16T19:00:33.455767+00:00",
+  "signing_inputs_present": {
+    "TIME80_KEYSTORE_PATH": false,
+    "TIME80_KEYSTORE_PASSWORD": false,
+    "TIME80_KEY_ALIAS": false,
+    "TIME80_KEY_PASSWORD": false,
+    "TIME80_SIGNER_SHA256": false
+  }
+}
