@@ -289,7 +289,10 @@ test("Today landing/review retain exact CheckIn routing, previous-day access, Ba
   assert.equal(calls[0][1].start, start);
   assert.equal(calls[0][1].end, end);
   assert.equal(calls[0][1].source, "manual");
-  await click(byTitle("مرور امروز / خط زمان").props.onPress);
+  await click(
+    r.root.findAllByType(Button).find((p) => p.props.actionCode === "X08")!
+      .props.onPress,
+  );
   assert.ok(r.root.findByType(FlatList).props.data.length > 0);
   await click(byTitle("روز قبل").props.onPress);
   assert.ok(byTitle("بازگشت به امروز"));

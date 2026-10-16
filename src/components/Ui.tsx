@@ -437,6 +437,8 @@ export const Input = React.forwardRef<
     containerStyle?: StyleProp<ViewStyle>;
     labelContainerStyle?: StyleProp<ViewStyle>;
     labelIcon?: React.ReactNode;
+    label?: string;
+    stackLabel?: boolean;
   }
 >(function Input(
   {
@@ -449,6 +451,8 @@ export const Input = React.forwardRef<
     containerStyle,
     labelContainerStyle,
     labelIcon,
+    label,
+    stackLabel = false,
     ...props
   },
   ref,
@@ -499,10 +503,27 @@ export const Input = React.forwardRef<
         style={labelContainerStyle ? [ui.row, labelContainerStyle] : ui.row}
       >
         {labelIcon}
-        <Text allowFontScaling style={[ui.text, { flexShrink: 1 }, labelStyle]}>
-          {props.accessibilityLabel}
-        </Text>
-        <IdentifierBadge code={actionCode} textStyle={codeTextStyle} />
+        {stackLabel ? (
+          <View style={{ flex: 1, minWidth: 0, alignItems: "flex-end" }}>
+            <Text
+              allowFontScaling
+              style={[ui.text, { flexShrink: 1 }, labelStyle]}
+            >
+              {label ?? props.accessibilityLabel}
+            </Text>
+            <IdentifierBadge code={actionCode} textStyle={codeTextStyle} />
+          </View>
+        ) : (
+          <>
+            <Text
+              allowFontScaling
+              style={[ui.text, { flexShrink: 1 }, labelStyle]}
+            >
+              {label ?? props.accessibilityLabel}
+            </Text>
+            <IdentifierBadge code={actionCode} textStyle={codeTextStyle} />
+          </>
+        )}
       </View>
       {field}
     </InteractivePressable>

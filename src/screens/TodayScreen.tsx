@@ -128,6 +128,86 @@ export function TodayScreen({ navigation }: any) {
       +new Date(i.period_end) <= Date.now(),
   );
   const buttonStyle = { minHeight: 48, minWidth: 48, borderRadius: 16 };
+  const timelineControls = (
+    <View style={{ marginTop: 12 }}>
+      <View style={[ui.row, { marginVertical: 12 }]}>
+        <Button
+          variant="secondary"
+          title="روز قبل"
+          actionCode={uiIdentifiers.previousTimelineDay.code}
+          style={buttonStyle}
+          textStyle={typography.control}
+          codeTextStyle={typography.code}
+          onPress={() => {
+            const d = new Date(day);
+            d.setDate(d.getDate() - 1);
+            setDay(d);
+            setReview(true);
+          }}
+        />
+        <Button
+          variant="secondary"
+          title="امروز"
+          actionCode={uiIdentifiers.currentTimelineDay.code}
+          style={buttonStyle}
+          textStyle={typography.control}
+          codeTextStyle={typography.code}
+          onPress={() => setDay(new Date())}
+        />
+        <Button
+          variant="secondary"
+          title="روز بعد"
+          actionCode={uiIdentifiers.nextTimelineDay.code}
+          style={buttonStyle}
+          textStyle={typography.control}
+          codeTextStyle={typography.code}
+          disabled={day.toDateString() === new Date().toDateString()}
+          onPress={() => {
+            const d = new Date(day);
+            d.setDate(d.getDate() + 1);
+            setDay(d);
+            setReview(true);
+          }}
+        />
+      </View>
+      <Text allowFontScaling style={typography.secondary}>
+        بازه‌های سررسیدشدهٔ ثبت‌نشده:{" "}
+        {items
+          .filter(
+            (i) =>
+              !i.entry &&
+              i.slot?.state === "pending" &&
+              +new Date(i.period_end) <= +now,
+          )
+          .length.toLocaleString("fa-IR")}
+      </Text>
+      <Text allowFontScaling style={typography.secondary}>
+        ثبت‌شده:{" "}
+        {items
+          .filter((i) => i.entry?.status === "logged")
+          .length.toLocaleString("fa-IR")}
+      </Text>
+      {pending && (
+        <Button
+          title="تکمیل آخرین بازهٔ ثبت‌نشده"
+          actionCode={uiIdentifiers.completePendingSlot.code}
+          style={buttonStyle}
+          textStyle={[typography.control, { color: theme.onAccent }]}
+          codeTextStyle={typography.code}
+          onPress={() => open(pending)}
+        />
+      )}
+      <Button
+        variant="secondary"
+        title="بازه‌های ثبت‌نشدهٔ روزهای قبل"
+        actionCode={uiIdentifiers.openGeneralBacklog.code}
+        style={buttonStyle}
+        textStyle={typography.control}
+        codeTextStyle={typography.code}
+        onPress={() => navigation.navigate("Backlog")}
+      />
+    </View>
+  );
   return (
     <View style={[ui.page, { padding: 16 }]}>
       <FlatList
@@ -137,6 +217,7 @@ export function TodayScreen({ navigation }: any) {
           <>
             {!review && (
               <TodayOverview
+                showActions={false}
                 now={now}
                 items={items}
                 settings={loading || error ? null : settings}
@@ -197,87 +278,50 @@ export function TodayScreen({ navigation }: any) {
                 تازه‌سازی ناموفق بود؛ خط زمان قبلی نمایش داده می‌شود.
               </Text>
             )}
-            <Text
-              allowFontScaling
-              accessibilityRole="header"
+            <View
               style={[
-                typography.sectionTitle,
-                { marginTop: 24, marginBottom: 12 },
+                ui.row,
+                {
+                  marginTop: 12,
+                  marginBottom: 8,
+                  justifyContent: "space-between",
+                },
               ]}
             >
-              خط زمان {review ? "روز انتخاب‌شده" : "امروز"}
-            </Text>
-            <Text allowFontScaling style={typography.secondary}>
-              برای ثبت دستی یا ویرایش، بازهٔ پایان‌یافته را لمس کن. بازه‌های
-              جاری / آینده هنوز قابل ثبت نیستند.
-            </Text>
-            <View style={[ui.row, { marginVertical: 12 }]}>
-              <Button
-                variant="secondary"
-                title="روز قبل"
-                actionCode={uiIdentifiers.previousTimelineDay.code}
-                style={buttonStyle}
-                textStyle={typography.control}
-                codeTextStyle={typography.code}
-                onPress={() => {
-                  const d = new Date(day);
-                  d.setDate(d.getDate() - 1);
-                  setDay(d);
-                  setReview(true);
-                }}
-              />
-              <Button
-                variant="secondary"
-                title="امروز"
-                actionCode={uiIdentifiers.currentTimelineDay.code}
-                style={buttonStyle}
-                textStyle={typography.control}
-                codeTextStyle={typography.code}
-                onPress={() => setDay(new Date())}
-              />
-              <Button
-                variant="secondary"
-                title="روز بعد"
-                actionCode={uiIdentifiers.nextTimelineDay.code}
-                style={buttonStyle}
-                textStyle={typography.control}
-                codeTextStyle={typography.code}
-                disabled={day.toDateString() === new Date().toDateString()}
-                onPress={() => {
-                  const d = new Date(day);
-                  d.setDate(d.getDate() + 1);
-                  setDay(d);
-                  setReview(true);
-                }}
-              />
+              <Text
+                allowFontScaling
+                accessibilityRole="header"
+                style={typography.sectionTitle}
+              >
+                خط زمان {review ? "روز انتخاب‌شده" : "امروز"}
+              </Text>
+              {!review && (
+                <Button
+                  variant="secondary"
+                  title="مرور کامل"
+                  actionCode={uiIdentifiers.openTodayTimeline.code}
+                  onPress={() => setReview(true)}
+                  style={{
+                    ...buttonStyle,
+                    paddingHorizontal: 8,
+                    paddingVertical: 4,
+                    marginVertical: 0,
+                  }}
+                  textStyle={typography.control}
+                  codeTextStyle={typography.code}
+                />
+              )}
             </View>
-            <Text allowFontScaling style={typography.secondary}>
-              ثبت‌شده:{" "}
-              {items
-                .filter((i) => i.entry?.status === "logged")
-                .length.toLocaleString("fa-IR")}
+            <Text
+              allowFontScaling
+              style={[typography.caption, { marginBottom: 8 }]}
+            >
+              ثبت دستی یا ویرایش: بازهٔ پایان‌یافته را لمس کن.
             </Text>
-            {review && pending && (
-              <Button
-                title="تکمیل آخرین بازهٔ ثبت‌نشده"
-                actionCode={uiIdentifiers.completePendingSlot.code}
-                style={buttonStyle}
-                textStyle={[typography.control, { color: theme.onAccent }]}
-                codeTextStyle={typography.code}
-                onPress={() => open(pending)}
-              />
-            )}
-            <Button
-              variant="secondary"
-              title="بازه‌های ثبت‌نشدهٔ روزهای قبل"
-              actionCode={uiIdentifiers.openGeneralBacklog.code}
-              style={buttonStyle}
-              textStyle={typography.control}
-              codeTextStyle={typography.code}
-              onPress={() => navigation.navigate("Backlog")}
-            />
+            {review && timelineControls}
           </>
         }
+        ListFooterComponent={!review ? timelineControls : null}
         ListEmptyComponent={
           !loading && !error ? (
             <Text allowFontScaling style={typography.body}>

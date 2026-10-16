@@ -88,7 +88,8 @@ export function ReportRangeControls({
       <View
         style={{
           ...ui.row,
-          padding: 8,
+          padding: 4,
+          gap: 4,
           borderRadius: 24,
           backgroundColor: theme.surface,
           borderWidth: 1,
@@ -119,7 +120,7 @@ export function ReportRangeControls({
           {...common}
           preset
           glyph="bars"
-          title="۷ روز اخیر"
+          title="۷ روز"
           selected={q.mode === "rolling7" && q.offset === 0}
           actionCode={uiIdentifiers.reportRollingWeek.code}
           onPress={() => select("rolling7")}
@@ -128,7 +129,7 @@ export function ReportRangeControls({
           {...common}
           preset
           glyph="calendar"
-          title="۳۰ روز اخیر"
+          title="۳۰ روز"
           selected={q.mode === "rolling30" && q.offset === 0}
           actionCode={uiIdentifiers.reportRollingMonth.code}
           onPress={() => select("rolling30")}

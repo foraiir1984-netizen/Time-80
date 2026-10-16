@@ -14,7 +14,13 @@ import {
 import { useFonts } from "expo-font";
 import { theme } from "../theme/time80Theme";
 import React, { useState, useCallback, useEffect } from "react";
-import { ScrollView, View, Text, AppState } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  AppState,
+  useWindowDimensions,
+} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { ui, ErrorText, errorMessage, Loading } from "../components/Ui";
 import { getReport } from "../services/reportService";
@@ -23,6 +29,7 @@ import { db, transaction } from "../db/connection";
 import { getMeta, setMeta } from "../db/metaRepository";
 import { toPersianDuration } from "../utils/time";
 export function InsightsScreen() {
+  const { fontScale } = useWindowDimensions();
   const [fontsReady, fontError] = useFonts(reportFontSources);
   const typography = reportTypography(fontsReady);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -113,6 +120,19 @@ export function InsightsScreen() {
       };
     }, [q, refresh, preferencesReady]),
   );
+  const dateLabel = (value: string | number) =>
+    new Date(value).toLocaleDateString(
+      q.calendar === "persian" ? "fa-IR" : "en-GB",
+      {
+        timeZone: r?.range.timezone,
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      },
+    );
+  const startLabel = r ? dateLabel(r.range.start) : "";
+  const endLabel = r ? dateLabel(+new Date(r.range.end) - 1) : "";
   return (
     <ScrollView
       style={ui.screen}
@@ -174,36 +194,44 @@ export function InsightsScreen() {
               { borderRadius: 24, padding: 20, marginBottom: 24 },
             ]}
           >
-            <Text
-              allowFontScaling
-              accessibilityRole="header"
-              style={[
-                typography.cardTitle,
-                { writingDirection: q.calendar === "persian" ? "rtl" : "ltr" },
-              ]}
+            <View
+              style={{
+                flexDirection: fontScale < 1.5 ? "row-reverse" : "column",
+                alignItems: "stretch",
+                gap: 12,
+              }}
             >
-              {new Date(r.range.start).toLocaleDateString(
-                q.calendar === "persian" ? "fa-IR" : "en-GB",
-                {
-                  timeZone: r.range.timezone,
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                },
-              )}{" "}
-              تا{" "}
-              {new Date(+new Date(r.range.end) - 1).toLocaleDateString(
-                q.calendar === "persian" ? "fa-IR" : "en-GB",
-                {
-                  timeZone: r.range.timezone,
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                },
-              )}{" "}
-            </Text>
+              <Text
+                allowFontScaling
+                accessibilityRole="header"
+                style={[
+                  typography.cardTitle,
+                  {
+                    flex: fontScale < 1.5 ? 1 : undefined,
+                    minWidth: 0,
+                    writingDirection: q.calendar === "persian" ? "rtl" : "ltr",
+                  },
+                ]}
+              >
+                {startLabel}
+                {startLabel === endLabel ? "" : ` تا ${endLabel}`}
+              </Text>
+              <ReportButton
+                typography={typography}
+                glyph="edit"
+                style={{
+                  paddingHorizontal: 8,
+                  paddingVertical: 4,
+                  backgroundColor: theme.surface,
+                  borderWidth: 0,
+                  alignSelf: "flex-end",
+                }}
+                contentStyle={{ flexDirection: "column", gap: 0 }}
+                title="تغییر بازه"
+                actionCode={uiIdentifiers.openMoreReports.code}
+                onPress={() => setMoreOpen(true)}
+              />
+            </View>
             <View
               style={{
                 ...ui.row,
@@ -222,13 +250,6 @@ export function InsightsScreen() {
                   دورهٔ ناقص
                 </Text>
               )}
-              <ReportButton
-                typography={typography}
-                glyph="edit"
-                title="تغییر بازه"
-                actionCode={uiIdentifiers.openMoreReports.code}
-                onPress={() => setMoreOpen(true)}
-              />
             </View>
             <Text allowFontScaling style={typography.caption}>
               {q.calendar === "persian" ? "تقویم شمسی" : "تقویم میلادی"} · شروع
@@ -248,11 +269,18 @@ export function InsightsScreen() {
               allowFontScaling
               style={[
                 typography.metric,
-                { textAlign: "center", marginVertical: 24 },
+                { textAlign: "center", marginVertical: 16 },
               ]}
             >
               {toPersianDuration(r.total)}
             </Text>
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderColor: theme.border,
+                marginBottom: 12,
+              }}
+            />
             <Text style={typography.body}>
               دورهٔ قبل:{" "}
               {r.previousTotal === null

@@ -64,8 +64,8 @@ jobs:
       - run: bash scripts/build-android-release.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: Time80-v0.2-APK
-          path: dist/Time80-v0.2.apk*
+          name: Time80-v0.3.0-RC3-UI-REPAIR-01-APK
+          path: dist/Time80-v0.3.0-RC3-UI-REPAIR-01.apk*
           if-no-files-found: error
       - if: always()
         run: rm -f "$TIME80_KEYSTORE_PATH"

@@ -14,7 +14,8 @@ export const View = primitive("View"),
   TextInput = primitive("TextInput"),
   ScrollView = primitive("ScrollView"),
   KeyboardAvoidingView = primitive("KeyboardAvoidingView"),
-  ActivityIndicator = primitive("ActivityIndicator");
+  ActivityIndicator = primitive("ActivityIndicator"),
+  StatusBar = primitive("StatusBar");
 export const Switch = primitive("Switch");
 export function Modal(props) {
   return props.visible
@@ -22,8 +23,13 @@ export function Modal(props) {
     : null;
 }
 export function FlatList(props) {
-  const { ListHeaderComponent, ListEmptyComponent, renderItem, ...rest } =
-    props;
+  const {
+    ListHeaderComponent,
+    ListEmptyComponent,
+    ListFooterComponent,
+    renderItem,
+    ...rest
+  } = props;
   return React.createElement(
     "FlatList",
     rest,
@@ -36,6 +42,7 @@ export function FlatList(props) {
       ),
     ),
     props.data.length ? null : props.ListEmptyComponent,
+    ListFooterComponent,
   );
 }
 const listeners = new Set();

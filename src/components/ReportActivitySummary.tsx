@@ -60,8 +60,11 @@ export function ReportActivitySummary({
   const [expanded, setExpanded] = useState(false);
   const { width, fontScale } = useWindowDimensions();
   const summary = summarizeReportActivities(activities, total);
-  const compact = width - 32 - 40 >= 320 && fontScale < 1.5;
-  const diameter = compact ? 144 : Math.min(200, Math.max(96, width - 72));
+  const compact =
+    width >= 360 && fontScale < 1.5 && toPersianDuration(total).length <= 16;
+  const diameter = compact
+    ? 128
+    : Math.min(200 * Math.max(1, fontScale), Math.max(96, width - 72));
   const radius = 76,
     circumference = 2 * Math.PI * radius;
   let offset = 0;
@@ -113,12 +116,11 @@ export function ReportActivitySummary({
           >
             خلاصه فعالیت‌ها
           </Text>
-          <Text allowFontScaling style={typography.secondary}>
-            سهم فعالیت‌ها از زمان ثبت‌شدهٔ این بازه
-          </Text>
         </View>
         <ReportButton
           typography={typography}
+          style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+          contentStyle={{ flexDirection: "column", gap: 0 }}
           title={expanded ? "همهٔ فعالیت‌ها نمایش داده شد" : "مشاهده همه"}
           actionCode={uiIdentifiers.expandAllResultActivities.code}
           disabled={expanded || !activities.length}
@@ -133,61 +135,87 @@ export function ReportActivitySummary({
       <View
         style={{
           flexDirection: compact ? "row" : "column",
-          alignItems: compact ? "flex-start" : "center",
+          direction: "ltr",
+          alignItems: "center",
           gap: 16,
         }}
       >
         <View
-          style={{ alignItems: "center", width: diameter, maxWidth: "100%" }}
+          testID="activity-share-ring"
+          style={{
+            width: diameter,
+            maxWidth: "100%",
+            minHeight: diameter,
+            justifyContent: "center",
+            paddingHorizontal: diameter * 0.22,
+            paddingVertical: diameter * 0.22,
+          }}
         >
-          <Svg
-            width={diameter}
-            height={diameter}
-            viewBox="0 0 200 200"
-            accessible={false}
+          <View
             pointerEvents="none"
-            testID="activity-share-donut"
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
           >
-            <Circle
-              cx={100}
-              cy={100}
-              r={radius}
-              fill="none"
-              stroke={reportTheme.track}
-              strokeWidth={28}
-            />
-            {summary.segments
-              .filter((row) => row.share > 0)
-              .map((row) => {
-                const start = offset;
-                offset += row.share * circumference;
-                return (
-                  <Circle
-                    key={row.key}
-                    cx={100}
-                    cy={100}
-                    r={radius}
-                    fill="none"
-                    stroke={row.color}
-                    strokeWidth={28}
-                    strokeDasharray={[
-                      row.share * circumference,
-                      circumference - row.share * circumference,
-                    ]}
-                    strokeDashoffset={-start}
-                    rotation={-90}
-                    origin="100,100"
-                  />
-                );
-              })}
-          </Svg>
+            <Svg
+              width="100%"
+              height="100%"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="16 16 168 168"
+              accessible={false}
+              pointerEvents="none"
+              testID="activity-share-donut"
+            >
+              <Circle
+                cx={100}
+                cy={100}
+                r={radius}
+                fill="none"
+                stroke={reportTheme.track}
+                strokeWidth={16}
+              />
+              {summary.segments
+                .filter((row) => row.share > 0)
+                .map((row) => {
+                  const start = offset;
+                  offset += row.share * circumference;
+                  return (
+                    <Circle
+                      key={row.key}
+                      cx={100}
+                      cy={100}
+                      r={radius}
+                      fill="none"
+                      stroke={row.color}
+                      strokeWidth={16}
+                      strokeDasharray={[
+                        row.share * circumference,
+                        circumference - row.share * circumference,
+                      ]}
+                      strokeDashoffset={-start}
+                      rotation={-90}
+                      origin="100,100"
+                    />
+                  );
+                })}
+            </Svg>
+          </View>
           <Text
             allowFontScaling
-            style={[
-              typography.secondary,
-              { textAlign: "center", marginTop: 8 },
-            ]}
-          >{`مجموع: ${toPersianDuration(total)}`}</Text>
+            style={[typography.cardTitle, { textAlign: "center" }]}
+          >
+            {toPersianDuration(total)}
+          </Text>
+          <Text
+            allowFontScaling
+            style={[typography.caption, { textAlign: "center" }]}
+          >
+            مجموع
+          </Text>
         </View>
         <View
           style={{
@@ -196,15 +224,70 @@ export function ReportActivitySummary({
             minWidth: 0,
           }}
         >
-          {expanded && (
-            <Text
-              allowFontScaling
-              accessibilityRole="header"
-              style={[typography.cardTitle, { marginBottom: 12 }]}
+          {summary.segments.map((row) => (
+            <View
+              key={row.key}
+              style={{
+                paddingVertical: 8,
+                borderBottomWidth: 1,
+                borderColor: theme.border,
+                gap: 4,
+              }}
             >
-              همهٔ فعالیت‌های این بازه
-            </Text>
-          )}
+              <View
+                style={{
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                <View
+                  accessible={false}
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: 8,
+                    backgroundColor: row.color,
+                  }}
+                />
+                <Text
+                  allowFontScaling
+                  style={[typography.body, { flex: 1, minWidth: 0 }]}
+                >
+                  {row.name}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row-reverse",
+                  flexWrap: "wrap",
+                  justifyContent: "space-between",
+                  gap: 4,
+                }}
+              >
+                <Text allowFontScaling style={typography.secondary}>
+                  {toPersianDuration(row.minutes)}
+                </Text>
+                <Text
+                  allowFontScaling
+                  style={[typography.secondary, { writingDirection: "ltr" }]}
+                >
+                  {reportPercent(row.minutes, total)}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      </View>
+      {expanded && (
+        <View style={{ marginTop: 16 }}>
+          <Text
+            allowFontScaling
+            accessibilityRole="header"
+            style={typography.cardTitle}
+          >
+            همهٔ فعالیت‌های این بازه
+          </Text>
           {rows.map((row) => (
             <View
               key={row.key}
@@ -287,11 +370,7 @@ export function ReportActivitySummary({
             </View>
           ))}
         </View>
-      </View>
-      <Text allowFontScaling style={[typography.secondary, { marginTop: 16 }]}>
-        نمودار سه فعالیت نخست و مجموع سایر فعالیت‌ها را نشان می‌دهد. مدت‌ها با
-        دقت دقیقه و درصدها برای نمایش گرد می‌شوند؛ مقدار گزارش تغییر نمی‌کند.
-      </Text>
+      )}
     </View>
   );
 }

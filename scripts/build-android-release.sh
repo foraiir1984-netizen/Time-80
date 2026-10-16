@@ -30,24 +30,52 @@ npx expo prebuild --platform android --clean
 chmod +x android/gradlew
 (cd android && ./gradlew assembleRelease --no-daemon)
 mkdir -p dist
-cp android/app/build/outputs/apk/release/app-release.apk dist/Time80-v0.2.apk
+cp android/app/build/outputs/apk/release/app-release.apk dist/Time80-v0.3.0-RC3-UI-REPAIR-01.apk
 SDK_ROOT="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-}}"
 SIGNER="$(find "$SDK_ROOT/build-tools" -name apksigner -type f | sort -V | tail -1)"
 test -n "$SIGNER"
-CERT_OUTPUT="$("$SIGNER" verify --print-certs dist/Time80-v0.2.apk)"
+CERT_OUTPUT="$("$SIGNER" verify --print-certs dist/Time80-v0.3.0-RC3-UI-REPAIR-01.apk)"
 # apksigner can label signers by number, SDK range, or signature scheme. Require every
 # reported APK signer to have the same pinned identity; exclude source stamps.
 ACTUAL="$(printf '%s\n' "$CERT_OUTPUT" | sed -nE 's/^(Signer (#[0-9]+|\(.*\))|V[0-9]+(\.[0-9]+)? Signer:) certificate SHA-256 digest: (.*)$/\4/p' | tr '[:upper:]' '[:lower:]' | sed 's/[[:space:]:]//g' | sort -u)"
 if [[ ! "$ACTUAL" =~ ^[0-9a-f]{64}$ ]]; then
-  rm dist/Time80-v0.2.apk
+  rm dist/Time80-v0.3.0-RC3-UI-REPAIR-01.apk
   echo 'Could not identify one unique APK signing certificate from apksigner output.' >&2
   printf '%s\n' "$CERT_OUTPUT" >&2
   exit 1
 fi
 if [ "$ACTUAL" != "$EXPECTED" ]; then
-  rm dist/Time80-v0.2.apk
+  rm dist/Time80-v0.3.0-RC3-UI-REPAIR-01.apk
   echo 'Release certificate differs from the pinned signing identity.' >&2
   printf 'APK certificate SHA-256 (public): %s\n' "$ACTUAL" >&2
   exit 1
 fi
-sha256sum dist/Time80-v0.2.apk > dist/Time80-v0.2.apk.sha256
+printf 'Verified APK certificate SHA-256 (public): %s\n' "$ACTUAL"
+AAPT2="$(dirname "$SIGNER")/aapt2"
+test -x "$AAPT2"
+"$AAPT2" dump badging dist/Time80-v0.3.0-RC3-UI-REPAIR-01.apk > dist/Time80-v0.3.0-RC3-UI-REPAIR-01.apk.badging.txt
+python3 - "$ACTUAL" <<'PYVERIFY'
+import hashlib, json, os, re, subprocess
+from pathlib import Path
+apk = Path("dist/Time80-v0.3.0-RC3-UI-REPAIR-01.apk")
+badging = Path(str(apk) + ".badging.txt").read_text()
+package_line = next(line for line in badging.splitlines() if line.startswith("package:"))
+attrs = dict(re.findall(r"([A-Za-z]+)='([^']*)'", package_line))
+source = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+config = json.loads(Path("app.json").read_text())["expo"]
+assert attrs["name"] == config["android"]["package"] == "com.personal.time80"
+assert attrs["versionName"] == config["version"]
+assert int(attrs["versionCode"]) == config["android"]["versionCode"]
+import sys
+metadata = {
+    "source_sha": source, "applicationId": attrs["name"],
+    "versionName": attrs["versionName"], "versionCode": int(attrs["versionCode"]),
+    "sha256": hashlib.sha256(apk.read_bytes()).hexdigest(),
+    "signer_sha256": sys.argv[1],
+    "targetSdkVersion": re.search(r"targetSdkVersion:'([^']*)'", badging).group(1),
+    "run_url": f"https://github.com/{os.environ.get('GITHUB_REPOSITORY', '')}/actions/runs/{os.environ.get('GITHUB_RUN_ID', '')}",
+}
+Path(str(apk) + ".metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
+print("TIME80_APK_VERIFICATION=" + json.dumps(metadata, separators=(",", ":")))
+PYVERIFY
+sha256sum dist/Time80-v0.3.0-RC3-UI-REPAIR-01.apk | tee dist/Time80-v0.3.0-RC3-UI-REPAIR-01.apk.sha256

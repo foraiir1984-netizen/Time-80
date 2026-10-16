@@ -22,7 +22,13 @@ import {
 } from "./src/components/Ui";
 import { PlatformPressable } from "@react-navigation/elements";
 import React, { useEffect, useState, useRef } from "react";
-import { AppState, Text, View, useWindowDimensions } from "react-native";
+import {
+  AppState,
+  Text,
+  View,
+  StatusBar,
+  useWindowDimensions,
+} from "react-native";
 import {
   SafeAreaProvider,
   SafeAreaView,
@@ -122,7 +128,7 @@ export function MainTabs() {
           height:
             40 +
             Math.max(
-              72 * fontScale,
+              48 * fontScale,
               measurement.scale === fontScale ? measurement.height : 0,
             ) +
             insets.bottom,
@@ -386,6 +392,7 @@ export default function App() {
   }, [ready, onboard, navReady]);
   return (
     <SafeAreaProvider>
+      <StatusBar barStyle="dark-content" />
       <SafeAreaView
         style={{ flex: 1, backgroundColor: theme.background }}
         edges={["top", "left", "right"]}

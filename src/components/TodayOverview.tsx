@@ -19,6 +19,7 @@ export function TodayOverview({
   settings = null,
   displayTimezone,
   fontReady = false,
+  showActions = true,
 }: {
   now: Date;
   items: SlotView[];
@@ -28,6 +29,7 @@ export function TodayOverview({
   settings?: Pick<AppSettings, "day_start" | "day_end"> | null;
   displayTimezone?: string;
   fontReady?: boolean;
+  showActions?: boolean;
 }) {
   const { fontScale, width } = useWindowDimensions();
   const typography = reportTypography(fontReady);
@@ -58,7 +60,7 @@ export function TodayOverview({
           style={{
             flex: compact ? 1 : undefined,
             width: compact ? undefined : "100%",
-            height: 144,
+            height: compact ? 96 : 144,
             borderRadius: 16,
           }}
           resizeMode="cover"
@@ -68,7 +70,7 @@ export function TodayOverview({
             flex: compact ? 1 : undefined,
             minWidth: 0,
             backgroundColor: theme.surface,
-            padding: 16,
+            padding: compact ? 8 : 16,
             borderRadius: 16,
             justifyContent: "center",
             gap: 8,
@@ -104,10 +106,7 @@ export function TodayOverview({
           امروزت را مرور کن
         </Text>
       </View>
-      <View style={{ alignItems: "center", marginTop: 24 }}>
-        <Text allowFontScaling style={typography.secondary}>
-          زمان اکنون
-        </Text>
+      <View style={{ alignItems: "center", marginTop: 8 }}>
         <Text
           allowFontScaling
           accessibilityLabel={`زمان اکنون ${now.toLocaleTimeString("fa-IR", { timeZone: displayTimezone, hour: "2-digit", minute: "2-digit" })}`}
@@ -129,29 +128,32 @@ export function TodayOverview({
         </Text>
       </View>
       <DayPassage progress={progress} typography={typography} />
-      <Text allowFontScaling style={typography.secondary}>
-        بازه‌های سررسیدشدهٔ ثبت‌نشده: {dueCount.toLocaleString("fa-IR")}
-      </Text>
-      {pending && (
-        <Button
-          title="تکمیل آخرین بازهٔ ثبت‌نشده"
-          actionCode={uiIdentifiers.completePendingSlot.code}
-          onPress={onDue}
-          style={{ minHeight: 48, minWidth: 48, borderRadius: 16 }}
-          textStyle={[typography.control, { color: theme.onAccent }]}
-          codeTextStyle={typography.code}
-        />
+      {showActions && (
+        <>
+          <Text allowFontScaling style={typography.secondary}>
+            بازه‌های سررسیدشدهٔ ثبت‌نشده: {dueCount.toLocaleString("fa-IR")}
+          </Text>
+          {pending && (
+            <Button
+              title="تکمیل آخرین بازهٔ ثبت‌نشده"
+              actionCode={uiIdentifiers.completePendingSlot.code}
+              onPress={onDue}
+              style={{ minHeight: 48, minWidth: 48, borderRadius: 16 }}
+              textStyle={[typography.control, { color: theme.onAccent }]}
+              codeTextStyle={typography.code}
+            />
+          )}
+          <Button
+            variant="secondary"
+            title="مرور کامل"
+            actionCode={uiIdentifiers.openTodayTimeline.code}
+            onPress={onReview}
+            style={{ minWidth: 48, minHeight: 48, borderRadius: 16 }}
+            textStyle={typography.control}
+            codeTextStyle={typography.code}
+          />
+        </>
       )}
-      <Button
-        variant="secondary"
-        iconKey="report"
-        title="مرور امروز / خط زمان"
-        actionCode={uiIdentifiers.openTodayTimeline.code}
-        onPress={onReview}
-        style={{ minHeight: 48, minWidth: 48, borderRadius: 16 }}
-        textStyle={typography.control}
-        codeTextStyle={typography.code}
-      />
     </>
   );
 }

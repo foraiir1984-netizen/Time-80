@@ -56,7 +56,7 @@ export function ReportButton({
   glyph?: Glyph;
 }) {
   const { fontScale } = useWindowDimensions();
-  const presetWidth = Math.ceil(60 * Math.max(1, fontScale));
+  const presetWidth = fontScale < 1.5 ? 48 : Math.ceil(60 * fontScale);
   const primary = props.variant === "primary";
   const selected = !!props.selected,
     color = primary || selected ? reportTheme.onActive : reportTheme.active;
@@ -66,13 +66,23 @@ export function ReportButton({
       variant={props.variant ?? "secondary"}
       color={color}
       textStyle={[typography.control, { color, textAlign: "center" }]}
-      codeTextStyle={typography.code}
+      codeTextStyle={[typography.code, props.codeTextStyle]}
       icon={glyph && <ReportGlyph glyph={glyph} color={color} />}
-      contentStyle={preset ? { flexDirection: "column", gap: 4 } : undefined}
+      contentStyle={
+        preset
+          ? {
+              flexDirection: "column",
+              flexWrap: "nowrap",
+              alignItems: "stretch",
+              gap: 4,
+            }
+          : props.contentStyle
+      }
       style={[
         {
           minHeight: 48,
           minWidth: 48,
+          maxWidth: "100%",
           borderRadius: 16,
           marginVertical: 0,
           backgroundColor: primary
@@ -88,11 +98,11 @@ export function ReportButton({
           paddingVertical: 8,
         },
         preset && {
-          flexBasis: presetWidth,
+          flexBasis: fontScale < 1.5 ? 0 : presetWidth,
           minWidth: presetWidth,
           flexGrow: 1,
           minHeight: 96,
-          paddingHorizontal: 8,
+          paddingHorizontal: 4,
         },
         props.style,
       ]}

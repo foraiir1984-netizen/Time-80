@@ -66,8 +66,9 @@ export function SettingsScreen({ navigation }: any) {
       minHeight: 48,
       borderRadius: 12,
       borderColor: theme.border,
-      paddingVertical: 12,
-      paddingHorizontal: 12,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      marginVertical: 0,
       color: theme.text,
       textAlign: "center" as const,
       writingDirection: "ltr" as const,
@@ -212,6 +213,8 @@ export function SettingsScreen({ navigation }: any) {
         <Input
           labelIcon={<SettingsGlyph kind="clock" />}
           accessibilityLabel="فاصلهٔ یادآوری به دقیقه"
+          label="فاصلهٔ یادآوری"
+          stackLabel
           actionCode={uiIdentifiers.editReminderInterval.code}
           labelStyle={typography.cardTitle}
           codeTextStyle={typography.code}
@@ -221,10 +224,10 @@ export function SettingsScreen({ navigation }: any) {
             alignItems: "center",
             gap: 12,
           }}
-          labelContainerStyle={{ flex: 1, minWidth: 140, gap: 12 }}
+          labelContainerStyle={{ flex: 1, minWidth: 140, gap: 8 }}
           style={[
             fieldStyle,
-            { width: Math.ceil(104 * Math.max(1, fontScale)) },
+            { width: Math.ceil(88 * Math.max(1, fontScale)), maxWidth: "100%" },
           ]}
           keyboardType="number-pad"
           value={interval}
@@ -249,9 +252,17 @@ export function SettingsScreen({ navigation }: any) {
             <Input
               labelIcon={<SettingsGlyph kind="start" />}
               accessibilityLabel="شروع روز HH:MM"
+              label="شروع روز"
+              stackLabel
               actionCode={uiIdentifiers.editDayStart.code}
-              labelStyle={typography.cardTitle}
-              labelContainerStyle={{ gap: 12 }}
+              labelStyle={[typography.cardTitle, { textAlign: "center" }]}
+              labelContainerStyle={{
+                gap: 4,
+                flexDirection: "row-reverse",
+                flexWrap: "nowrap",
+                alignItems: "center",
+                marginBottom: 8,
+              }}
               codeTextStyle={typography.code}
               style={fieldStyle}
               placeholder="HH:MM"
@@ -266,9 +277,17 @@ export function SettingsScreen({ navigation }: any) {
             <Input
               labelIcon={<SettingsGlyph kind="end" />}
               accessibilityLabel="پایان روز HH:MM"
+              label="پایان روز"
+              stackLabel
               actionCode={uiIdentifiers.editDayEnd.code}
-              labelStyle={typography.cardTitle}
-              labelContainerStyle={{ gap: 12 }}
+              labelStyle={[typography.cardTitle, { textAlign: "center" }]}
+              labelContainerStyle={{
+                gap: 4,
+                flexDirection: "row-reverse",
+                flexWrap: "nowrap",
+                alignItems: "center",
+                marginBottom: 8,
+              }}
               codeTextStyle={typography.code}
               style={fieldStyle}
               placeholder="HH:MM"
